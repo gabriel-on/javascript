@@ -8,18 +8,22 @@
 </head>
 <body>
     <h1>Calculadora</h1>
-    <div>
+    <div class="back-bg">
         <p>Numero 1</p>
         <input type="number" name="n1" id="n1">
         <p>Numero 2</p>
         <input type="number" name="n2" id="n2">
 
-        <input type="button" value="Somar" onclick="somar()">
-        <input type="button" value="Subtrair" onclick="subtrair()">
-        <input type="button" value="Multiplicar" onclick="multiplicar()">
-        <input type="button" value="Dividir" onclick="dividir()">
+        <div class="action-bg">
+            <div class="action-item">
+                <input type="button" value="Somar" onclick="somar()">
+                <input type="button" value="Subtrair" onclick="subtrair()">
+                <input type="button" value="Multiplicar" onclick="multiplicar()">
+                <input type="button" value="Dividir" onclick="dividir()">
+            </div>
+        </div>
 
-        <p>O Resultado é:</p><span></span>
+        <p>O Resultado é: <span></span></p>
     </div>
 </body>
     <script src="javascript.js"></script>

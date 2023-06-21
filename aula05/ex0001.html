@@ -19,10 +19,18 @@
 
     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, quod?</p>
     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, <strong>DOM</strong>?</p>
-    <div>Clique aqui</div>
+    <div id="msg">Clique aqui</div>
 
     <script>
-        window.document.
+        var corpo = window.document.body
+        var p1 = window.document.getElementsByTagName('p')[1]
+        // var d = window.document.getElementById('msg')
+        // p1.style.color = 'red'
+        // corpo.style.background = 'black'
+        // document.write(p1.innerHTML)
+        // d.style.background = 'red'
+        var d = window.document.querySelector('div#msg')
+        d.style.color = 'red'
     </script>
 </body>
 </html>

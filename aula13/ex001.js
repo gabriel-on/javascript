@@ -5,7 +5,6 @@ do {
 } while (c <= 6)
 
 
-
 // var c = 1 // primeira opção
 // while (c <= 6){
 //     console.log('Tudo bem?')

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pais</title>
+</head>
+<body>
+    <h1>Sistema de Paises</h1>
+    vivendo em: <input type="txt" name="txtp" id="txtp">
+    <input type="button" value="Verificar" onclick="calcular()">
+
+    <div class="res">
+
+    </div>
+
+    <script>
+        function calcular(){
+            var txt = window.document.querySelector('input#txtp')
+            var res = window.document.querySelector('div#res')
+            var pais = ""
+
+            res.innerHTML = `<p>Vivendo em ${pais}</p>`
+            if (pais == "Brasil"){
+                res.innerHTML += `Vc é Brasileiro`
+            }else {
+                res.innerHTML += `Vc é Estrangeiro`
+            }
+            res.innerHTML += `<p>Dirija senpre co cinto de seguraça!</p>`
+            
+        }
+    </script>
+</body>
+</html>

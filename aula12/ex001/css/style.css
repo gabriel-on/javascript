@@ -34,6 +34,10 @@ section{
     
 }
 
+section p{
+    margin: 15px;
+}
+
 div{
     text-align: center;
     margin: 20px auto;

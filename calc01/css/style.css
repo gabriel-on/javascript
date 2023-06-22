@@ -23,7 +23,7 @@ body{
     background-color: black;
     display: flex;
     flex-wrap: wrap;
-    max-width: 300px;
+    max-width: 400px;
     margin: 20px auto;
     padding: 60px 20px;
     /* justify-content: center; */
@@ -31,37 +31,58 @@ body{
 
 .back-bg input{
     background-color: red;
-    margin: 10px;
+    max-width: 50px;
+    margin: 0px;
+    padding: 10px;
+}
+
+.back-bg .n-item{
+    color: rgb(27, 27, 27);
+    display: block;
+    background-color: rgb(95, 95, 95);
+    text-transform: uppercase;
+    /* text-align: center; */
+    max-width: 4000px;
+    margin: 10px auto;
     padding: 10px;
 }
 
 .action-bg{
     flex-wrap: wrap;
     background-color: rgb(40, 154, 255);
-    max-width: 100%;
-    margin: 20px auto;
+    max-width: 400px;
+    margin: 10px auto;
     padding: 20px;
 }
 
 .action-bg input{
-    margin: 20px auto;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0px auto;
+    padding: 20px;
+}
+
+.action-item{
+    flex: 1 1 200px;
+    max-width: 400px;
+    margin: 0px auto;
+    padding: 0px;
     justify-content: space-between;
-    padding: 20px 40px;
 }
 
 .back-bg p{
-    align-content: center;
-    display: flex;
-    flex-wrap: wrap;
-    background-color: bisque;
-    margin: 20px auto;
+    color: rgb(27, 27, 27);
+    display: block;
+    background-color: rgb(95, 95, 95);
+    text-transform: uppercase;
+    text-align: center;
     padding: 10px;
 }
 
 #n1, #n2{
-    background-color: aliceblue;
+    background-color: rgb(194, 197, 12);
     justify-content: center;
     max-width: 100%;
-    margin: 20px auto;
-    padding: 20px 0px;
+    margin: 0px auto;
+    /* padding: 10px 10px; */
 }

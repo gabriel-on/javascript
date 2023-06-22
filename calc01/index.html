@@ -9,17 +9,22 @@
 <body>
     <h1>Calculadora</h1>
     <div class="back-bg">
-        <p>Numero 1</p>
-        <input type="number" name="n1" id="n1">
-        <p>Numero 2</p>
-        <input type="number" name="n2" id="n2">
+        <div class="n-item">
+            <p>Numero 1</p>
+            <input type="number" name="n1" id="n1">
+        </div>
+        <div class="n-item">
+            <p>Numero 2</p>
+            <input type="number" name="n2" id="n2">
+        </div>
 
         <div class="action-bg">
             <div class="action-item">
-                <input type="button" value="Somar" onclick="somar()">
-                <input type="button" value="Subtrair" onclick="subtrair()">
-                <input type="button" value="Multiplicar" onclick="multiplicar()">
-                <input type="button" value="Dividir" onclick="dividir()">
+                <input type="button" value="+" onclick="somar()">
+                <input type="button" value="-" onclick="subtrair()">
+                <input type="button" value="*"
+                onclick="multiplicar()">
+                <input type="button" value="/" onclick="dividir()">
             </div>
         </div>
 

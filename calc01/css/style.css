@@ -16,7 +16,7 @@
 }
 
 body{
-    color: white;
+    color: var(--cor-4);
     background-color: var(--cor-1);
 }
 .back-bg .res{
@@ -54,7 +54,6 @@ body{
     background-color: var(--cor-4);
     border-radius: 5px;
     text-transform: uppercase;
-    /* text-align: center; */
     max-width: 400px;
     margin: 10px auto;
     padding: 10px;
@@ -74,6 +73,7 @@ body{
     color: var(--cor-0);
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     font-size: 1.2em;
     font-weight: bold;
     padding: 20px;

@@ -1,10 +1,11 @@
 @charset "UTF-8";
 
 :root{
-    --cor-0: #;
-    --cor-1: #;
-    --cor-2: #;
-    --cor-3: #;
+    --cor-0: #112200;
+    --cor-1: #366B00;
+    --cor-2: #5BB800;
+    --cor-3: #75EB00;
+    --cor-4: #9BEE47;
 }
 
 *{
@@ -16,73 +17,94 @@
 
 body{
     color: white;
-    background-color: rgb(0, 87, 87);
+    background-color: var(--cor-1);
+}
+.back-bg .res{
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 5px;
+    color: var(--cor-4);
+    background: var(--cor-1);
 }
 
 .back-bg{
-    background-color: black;
+    background-color: var(--cor-0);
+    border-radius: 5px;
     display: flex;
     flex-wrap: wrap;
     max-width: 400px;
     margin: 20px auto;
     padding: 60px 20px;
-    /* justify-content: center; */
+    justify-content: center;
 }
 
 .back-bg input{
-    background-color: red;
+    background:var(--cor-2);
+    border: 2px solid var(--cor-0);
+    border-radius: 5px;
     max-width: 50px;
     margin: 0px;
     padding: 10px;
 }
 
 .back-bg .n-item{
-    color: rgb(27, 27, 27);
+    color: var(--cor-0);
     display: block;
-    background-color: rgb(95, 95, 95);
+    background-color: var(--cor-4);
+    border-radius: 5px;
     text-transform: uppercase;
     /* text-align: center; */
-    max-width: 4000px;
+    max-width: 400px;
     margin: 10px auto;
     padding: 10px;
 }
 
 .action-bg{
+    border-radius: 5px;
+    display: flex;
     flex-wrap: wrap;
-    background-color: rgb(40, 154, 255);
+    background-color: var(--cor-4);
     max-width: 400px;
     margin: 10px auto;
     padding: 20px;
 }
 
 .action-bg input{
+    color: var(--cor-0);
+    display: flex;
+    flex-wrap: wrap;
     font-size: 1.2em;
     font-weight: bold;
-    margin: 0px auto;
     padding: 20px;
 }
 
 .action-item{
-    flex: 1 1 200px;
-    max-width: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 220px;
     margin: 0px auto;
     padding: 0px;
     justify-content: space-between;
 }
 
 .back-bg p{
-    color: rgb(27, 27, 27);
+    color: var(--cor-0);
     display: block;
-    background-color: rgb(95, 95, 95);
     text-transform: uppercase;
     text-align: center;
     padding: 10px;
 }
 
 #n1, #n2{
-    background-color: rgb(194, 197, 12);
+    color: var(--cor-4);
+    background-color: var(--cor-1);
     justify-content: center;
     max-width: 100%;
     margin: 0px auto;
     /* padding: 10px 10px; */
+}
+
+.back-bg .res span{
+    margin: 0px 5px;
 }

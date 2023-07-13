@@ -1,6 +1,6 @@
-var n1 = window.document.querySelector('#n1')
-var n2 = window.document.querySelector('#n2')
-var p = window.document.querySelector('span')
+let n1 = window.document.querySelector('#n1')
+let n2 = window.document.querySelector('#n2')
+let p = window.document.querySelector('span')
 
 function somar(){
     p.innerHTML = parseInt(n1.value) + parseInt(n2.value)

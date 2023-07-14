@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabuada Teste</title>
+</head>
+<body>
+
+    <header>
+        <h1>Tabuada Teste</h1>
+    </header>
+
+    <section>
+
+        <div>
+            <p>
+                Numero: <input type="number" name="num" id="num"> 
+            
+                <select name="options" id="options">
+                    <option value="somar">Somar</option>
+                    <option value="subtrair">Subtrair</option>
+                    <option value="dividir">Dividir</option>
+                    <option value="multiplicar">Multiplicar</option>
+                </select>
+
+                <input type="button" value="Gerar Tabuada" onclick="gerarTabuada()">
+            </p>
+        </div>
+
+        <div>
+            <select name="tabuada" id="restab" size="10">
+                <option value="">Digite um numero</option>
+            </select>
+        </div>
+
+    </section>
+
+    <footer>
+        <p>&copy; Desenvolvido por <a href="#">BLACK</a></p>
+    </footer>
+
+    <script src="../tubuada-teste-001/js/script.js"></script>
+</body>
+</html>

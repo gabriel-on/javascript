@@ -15,23 +15,23 @@
 let n1, n2, res;
 let ava = ''
 
-n1 = parseInt(console.log())
-console.log(`Nota1:`)
+n1 = 2
+console.log(`nota 1: ${n1}`)
 
-n2 = parseInt(console.log())
-console.log(`Nota2:`)
+n2 = 7
+console.log(`nota 2: ${n2}`)
 
-res = (7 + 5) / 2
+res = (n1 + n2) / 2
 
 if (res >= 6) {
-    ava = 'parabens!'
+    ava = 'parabens! vc passou.'
 
 }
 else if (res >= 5) {
-    ava = 'recuperação'
+    ava = 'foi para recuperação'
     
 } else {
-    ava = 'reprovou'
+    ava = 'vc reprovou'
 }
 
-console.log(`${res} + ${ava}`)
+console.log(`Media ${res}, ${ava}`)

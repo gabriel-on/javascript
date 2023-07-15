@@ -1,7 +1,7 @@
 let cont = 0
 
 while (cont < 10){
-    console.log(`Marks ${cont}`)
+    console.log(`Marcou ${cont}`)
 
     cont++
 }

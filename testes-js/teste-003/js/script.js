@@ -91,3 +91,10 @@ function formatTime(time) {
 function formatMilliseconds(time) {
     return time < 100 ? `${time}`.padStart(3, '0') : time
 }
+
+// -------------------------------------------------
+
+function toggleMode(){
+    const html = document.documentElement
+    html.classList.toggle('light')
+}

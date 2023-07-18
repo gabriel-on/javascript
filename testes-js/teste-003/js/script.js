@@ -24,6 +24,8 @@ pauseBtn.addEventListener('click', pauseTimer)
 resumeBtn.addEventListener('click', resumeTimer)
 resetBtn.addEventListener('click', resetTimer)
 
+// -------------------------------------------------
+
 function startTimer(){
 
     interval = setInterval(() => {
@@ -49,6 +51,8 @@ function startTimer(){
     startBtn.style.display = 'none'
     pauseBtn.style.display = 'block'
 }
+
+// -------------------------------------------------
 
 function pauseTimer(){
     isPaused = true
@@ -77,6 +81,8 @@ function resetTimer(){
     pauseBtn.style.display = 'none'
     resumeBtn.style.display = 'none'
 }
+
+// -------------------------------------------------
 
 function formatTime(time) {
     return time < 10 ? `0${time}` : time

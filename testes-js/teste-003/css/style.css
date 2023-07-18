@@ -1,13 +1,10 @@
-@charset "YTF-8";
+@charset "UTF-8";
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: 'Orbitron', sans-serif;;
-}
-
-body{
 }
 
 .container{

@@ -14,10 +14,16 @@ menuItem.forEach((item) => {
 
 let expandir = document.querySelector('#btn-exp')
 let menuLateral = document.querySelector('.menu-lateral')
+// const overlay = document.querySelector('.overlay')
 
 expandir.addEventListener('click', function(){
     menuLateral.classList.toggle('expandir')
 })
+
+// overlay.addEventListener('click', () =>{
+//     expandir.classList.remove('open')
+// })
+
 
 // -------------------------------------------------------
 

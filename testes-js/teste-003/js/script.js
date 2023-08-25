@@ -98,3 +98,13 @@ function toggleMode(){
     const html = document.documentElement
     html.classList.toggle('light')
 }
+
+// let salvarTema = function () {
+//     let tema = document.getElementById('light')
+// }
+
+// document.onchange = salvarTema
+
+// localStorage.setItem('mode', 'light')
+
+// console.log(localStorage.mode)

@@ -96,11 +96,11 @@ function formatMilliseconds(time) {
 
 const changeThemeBtn = document.querySelector("#switch")
 
-// Toggle dark mode
+// Toggle light mode
 function toggleMode() {
     document.body.classList.toggle("light")
 
-    // Save or remove dark mode from localStorage
+    // Save or remove light mode from localStorage
     localStorage.removeItem("light")
 
     if (document.body.classList.contains("light")) {

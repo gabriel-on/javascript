@@ -94,28 +94,31 @@ function formatMilliseconds(time) {
 
 // -------------------------------------------------
 
-function toggleMode(){
-    const html = document.documentElement
-    html.classList.toggle('light')
+const changeThemeBtn = document.querySelector("#switch")
+
+// Toggle dark mode
+function toggleMode() {
+    document.body.classList.toggle("light")
+
+    // Save or remove dark mode from localStorage
+    localStorage.removeItem("light")
+
+    if (document.body.classList.contains("light")) {
+        localStorage.setItem("light", 1)
+    }
 }
 
+// Load light or dark mode
 function loadTheme() {
-    const darkMode = localStorage.getItem("light");
-  
-    if (darkMode) {
-      toggleMode();
+const lightMode = localStorage.getItem("light")
+
+    if (lightMode) {
+        toggleMode()
     }
 }
-  
-loadTheme();
-  
-  changeThemeBtn.addEventListener("change", function () {
-    toggleMode();
-  
-    // Save or remove dark mode from localStorage
-    localStorage.removeItem("light");
-  
-    if (document.body.classList.contains("dark")) {
-      localStorage.setItem("dark", 1);
-    }
+
+loadTheme()
+
+changeThemeBtn.addEventListener("change", function () {
+    toggleMode()
 });

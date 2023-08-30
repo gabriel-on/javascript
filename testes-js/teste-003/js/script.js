@@ -99,12 +99,23 @@ function toggleMode(){
     html.classList.toggle('light')
 }
 
-// let salvarTema = function () {
-//     let tema = document.getElementById('light')
-// }
-
-// document.onchange = salvarTema
-
-// localStorage.setItem('mode', 'light')
-
-// console.log(localStorage.mode)
+function loadTheme() {
+    const darkMode = localStorage.getItem("light");
+  
+    if (darkMode) {
+      toggleMode();
+    }
+}
+  
+loadTheme();
+  
+  changeThemeBtn.addEventListener("change", function () {
+    toggleMode();
+  
+    // Save or remove dark mode from localStorage
+    localStorage.removeItem("light");
+  
+    if (document.body.classList.contains("dark")) {
+      localStorage.setItem("dark", 1);
+    }
+});

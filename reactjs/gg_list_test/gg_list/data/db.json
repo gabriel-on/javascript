@@ -1,0 +1,11 @@
+{
+    "posts": [
+        {
+            "id": 1,
+            "title": "Titulo",
+            "description": "Descrição",
+            "content": "Conteúdo",
+            "img": "https://cdn-products.eneba.com/resized-products/V8fK6Td_350x200_3x-0.jpg"
+        }
+    ]
+}

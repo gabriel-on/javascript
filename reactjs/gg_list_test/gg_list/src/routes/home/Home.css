@@ -1,9 +1,10 @@
 .home {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
 }
 
 
 img {
-    width: 250px;
+    width: 220px;
 }

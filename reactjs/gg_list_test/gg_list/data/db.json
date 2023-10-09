@@ -2,6 +2,14 @@
   "posts": [
     {
       "id": 1,
+      "title": "Euro Truck Simulator 1",
+      "description": "Descrição",
+      "content": "Conteúdo",
+      "img": "https://cdn-products.eneba.com/resized-products/22sZmv5fDz2mF0k1zPZmIvGv5pA1boQ0FQFmKBJzigU_350x200_1x-0.jpeg",
+      "developer": "SCS Software"
+    },
+    {
+      "id": 2,
       "title": "Euro Truck Simulator 2",
       "description": "Descrição",
       "content": "Conteúdo",
@@ -9,7 +17,7 @@
       "developer": "SCS Software"
     },
     {
-      "id": 2,
+      "id": 3,
       "title": "Cyberpunk 2077",
       "description": "Descrição",
       "content": "Conteúdo",
@@ -22,7 +30,7 @@
       "content": "fefe",
       "img": "https://store-images.s-microsoft.com/image/apps.4128.71930896676716842.b6740fa4-0359-4ca8-9e17-5d4e45c2d497.ffa292b1-579d-4a08-99ef-308ab7791f79",
       "title": "ori",
-      "id": 3
+      "id": 4
     },
     {
       "title": "Mad Max",
@@ -30,7 +38,15 @@
       "description": "Teste",
       "content": "blabla",
       "developer": "Avalanche Studios Group",
-      "id": 4
+      "id": 5
+    },
+    {
+      "title": "The Witcher 3",
+      "img": "https://image.api.playstation.com/vulcan/ap/rnd/202211/0714/ojKZ7l0T2M5egR9YHIjVhI0R.png",
+      "description": "Descrição",
+      "content": "Teste",
+      "developer": "CD Projekt RED",
+      "id": 6
     }
   ],
   "developers": [

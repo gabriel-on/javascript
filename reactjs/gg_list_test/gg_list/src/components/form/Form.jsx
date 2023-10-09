@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { api } from '../../axios/config'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const postScrema = yup.object({
   title: yup.string().required("O campo é obrigatorio"),
@@ -16,10 +16,6 @@ const postScrema = yup.object({
 export function Form({title, textButton, onActions}) {
 
   const {id} = useParams()
-
-  // const [developers, setDevelopers] = useState([])
-
-  // .then
 
   const navigate = useNavigate()
 
@@ -40,9 +36,6 @@ export function Form({title, textButton, onActions}) {
   useEffect(() => {
     getDataUpdate()
 
-    // .then((response) => {
-    //   setPosts(response.data)
-    // })
     .catch((err) => {
       console.log(err)
     })
@@ -67,18 +60,15 @@ export function Form({title, textButton, onActions}) {
       </div>
 
       <div className="field">
-        <textarea placeholder="Conteudo" {...register("content")}/>
+        <textarea  placeholder="Conteudo" {...register("content")}/>
         {errors.content?.message}
       </div>
 
       <div className="field">
         <input placeholder="Desenvolvedor" {...register("developer")}/>
         {errors.developer?.message}
-        {/* <select name="" id="">
-          <option value="">Desenvolvedor</option>
-          <option value="">{}</option>
-          <option value="">{}</option>
-        </select> */}
+
+        {/* <select name="sel" id="sel" options={developers}/> */}
       </div>
 
       <button type='submit'>{textButton}</button>

@@ -10,7 +10,7 @@ const Admin = () => {
   const deletePost = async (id) => {
     await api.delete(`/posts/${id}`)
 
-    alert("teste")
+    alert("Excluido!")
 
     const filterdPosts = posts.filter((post) => post.id !== id)
 

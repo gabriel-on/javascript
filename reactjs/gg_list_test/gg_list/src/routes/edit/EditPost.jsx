@@ -1,9 +1,23 @@
-import React from 'react'
+import { Form } from "../../components/form/Form.jsx";
+import { useNavigate, useParams } from "react-router-dom";
+import { api } from "../../axios/config.js";
 
-const EditPost = () => {
-  return (
-    <div>EditPost</div>
-  )
+export function UpdatePost() {
+
+    const navigate = useNavigate()
+
+    const {id} = useParams()
+
+    function handleUpdate(data) {
+        api.put(`/posts/${id}`, data)
+        navigate("/")
+    }
+
+    return (
+        <div>
+            <Form title={"Editar publicação"} textButton={"Editar"} onActions={handleUpdate}/>
+        </div>
+    )
 }
 
-export default EditPost
+export default UpdatePost

@@ -1,6 +1,6 @@
 import api from '../../axios/config'
 import { useEffect, useState } from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import '../home/Home.css'
 

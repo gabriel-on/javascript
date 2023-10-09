@@ -1,8 +1,24 @@
-import React from 'react'
+import '../nav/Navbar.css'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   return (
-    <div>Navbar</div>
+    <div className='navbar'>
+      <h2>
+        <Link to={"/"}>GameList</Link>
+      </h2>
+      <ul>
+        <li>
+          <Link to={"/"}>Home</Link>
+        </li>
+        <li>
+          <Link to={"/new"}>Adicionar Jogo</Link>
+        </li>
+        <li>
+          <Link to={"/admin"}>Gerenciar</Link>
+        </li>
+      </ul>
+    </div>
   )
 }
 

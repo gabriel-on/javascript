@@ -1,11 +1,26 @@
 {
-    "posts": [
-        {
-            "id": 1,
-            "title": "Titulo",
-            "description": "Descrição",
-            "content": "Conteúdo",
-            "img": "https://cdn-products.eneba.com/resized-products/V8fK6Td_350x200_3x-0.jpg"
-        }
-    ]
+  "posts": [
+    {
+      "id": 1,
+      "title": "Euro Truck Simulator 2",
+      "description": "Descrição",
+      "content": "Conteúdo",
+      "img": "https://cdn-products.eneba.com/resized-products/V8fK6Td_350x200_3x-0.jpg",
+      "developer": "SCS Software"
+    },
+    {
+      "id": 2,
+      "title": "Cyberpunk 2077",
+      "description": "Descrição",
+      "content": "Conteúdo",
+      "img": "https://store-images.s-microsoft.com/image/apps.47379.63407868131364914.bcaa868c-407e-42c2-baeb-48a3c9f29b54.89bb995b-b066-4a53-9fe4-0260ce07e894",
+      "developer": "CD Projekt RED"
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    }
+  ]
 }

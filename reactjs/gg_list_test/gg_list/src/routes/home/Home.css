@@ -1,0 +1,9 @@
+.home {
+    display: flex;
+    gap: 20px;
+}
+
+
+img {
+    width: 250px;
+}

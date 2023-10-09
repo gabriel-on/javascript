@@ -1,0 +1,14 @@
+.navbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    padding: 20px 40px;
+    background: rgb(9, 9, 75);
+}
+
+.navbar ul{
+    display: flex;
+    gap: 20px;
+}

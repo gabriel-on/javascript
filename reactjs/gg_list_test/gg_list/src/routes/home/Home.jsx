@@ -9,14 +9,14 @@ import React from 'react'
 const Home = () => {
 
   const [posts, setPosts] = useState([])
-  const [records, setRecords] = useState([])
+  // const [searchTerm, setSearchTerm] = useState("")
 
   useEffect(() => {
     api.get("/posts")
 
     .then((response) => {
       setPosts(response.data)
-      setRecords(response.data)
+      // setRecords(response.data)
     })
     .catch((err) => {
       console.log(err)
@@ -26,8 +26,9 @@ const Home = () => {
   return (
     <div className='home'>
       {/* <form>
-        <input type="text" name="" id="" onChange={(e) => setRecords(e.target.value)}/>
+        <input type="text" name="search_bar" id="search_bar" onChange={(e) => setSearchTerm(e.target.value)}/>
       </form> */}
+
       {posts.length === 0 ? (
         <p>Carregando...</p>
       ) : (

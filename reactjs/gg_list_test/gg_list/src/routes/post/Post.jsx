@@ -10,14 +10,15 @@ const Post = () => {
   const [post, setPost] = useState({})
   const [developer, setDeveloper] = useState({})
 
+  api.get(`/developers/${id}`)
+    .then(response => setDeveloper(response.data))
+    .catch(err => console.log(err))
+
   useEffect(() => {
     api.get(`/posts/${id}`)
     .then(response => setPost(response.data))
     .catch(err => console.log(err))
 
-    api.get(`/developers/${id}`)
-    .then(response => setDeveloper(response.data))
-    .catch(err => console.log(err))
   }, [])
 
   return (
@@ -25,8 +26,8 @@ const Post = () => {
       <h2>{post.title}</h2>
       <img src={post.img} alt="" />
       <p>
-        Desenvolvedor: <Link to={`/developers/${id}`}>
-        {post.developer}
+      <Link to={`/developers/?_embed=posts`}>
+        Desenvolvedor
       </Link>
       </p>
     </div>

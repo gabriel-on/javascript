@@ -2,6 +2,7 @@ import '../nav/Navbar.css'
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {
+
   return (
     <div className='navbar'>
       <h2>
@@ -17,7 +18,14 @@ const Navbar = () => {
         <li>
           <Link to={"/admin"}>Gerenciar</Link>
         </li>
+        <li>
+          <Link to={"/developers"}>Devs</Link>
+        </li>
       </ul>
+      <form>
+        <input type="search" name="" id="" />
+        <input type="submit" value="Buscar" />
+      </form>
     </div>
   )
 }

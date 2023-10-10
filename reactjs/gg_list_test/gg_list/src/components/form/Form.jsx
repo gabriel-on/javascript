@@ -13,11 +13,13 @@ const postScrema = yup.object({
   developer: yup.string().required("O campo é obrigatorio")
 })
 
-export function Form({title, textButton, onActions}) {
+export function Form({title, textButton, onActions, developers}) {
 
   const {id} = useParams()
 
   const navigate = useNavigate()
+
+  const [developer, setDeveloper] = useState([])
 
   const {register, handleSubmit, formState: {errors}, reset } = useForm({
     resolver: yupResolver(postScrema)
@@ -35,6 +37,10 @@ export function Form({title, textButton, onActions}) {
 
   useEffect(() => {
     getDataUpdate()
+
+    // api.get(`/developers/${id}`)
+    // .then(response => setDeveloper(response.data))
+    // .catch(err => console.log(err))
 
     .catch((err) => {
       console.log(err)
@@ -66,10 +72,16 @@ export function Form({title, textButton, onActions}) {
 
       <div className="field">
         <input placeholder="Desenvolvedor" {...register("developer")}/>
-        {errors.developer?.message}
+      {errors.developer?.message}
+      {/* {errors.developer?.message}
 
-        {/* <select name="sel" id="sel" options={developers}/> */}
-      </div>
+      <select name="" id="" {...register("developer")} options={developer}>
+        <option value="">--SELECIONAR--</option>
+        {developers.map((developer) => (
+          <option value={developer.id} key={developer.id}>{developer.id}</option>
+        ))}
+      </select> */}
+      </div> 
 
       <button type='submit'>{textButton}</button>
     </form>

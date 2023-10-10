@@ -27,13 +27,6 @@ export function NewPost () {
   return (
     <div>
       <Form title={"Criar"} textButton={"Adicionar"} onActions={newPost}/>
-
-      {/* <select name="sel" id="sel">
-        <option value=""></option>
-        {options.map((option) => {
-        <option value={option.id} key={option.id}>{option.name}</option>
-        })}
-      </select> */}
     </div>
   )
 }

@@ -22,10 +22,6 @@ const Navbar = () => {
           <Link to={"/developers"}>Devs</Link>
         </li>
       </ul>
-      <form>
-        <input type="search" name="" id="" />
-        <input type="submit" value="Buscar" />
-      </form>
     </div>
   )
 }

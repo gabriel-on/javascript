@@ -1,31 +1,28 @@
 import api from '../../axios/config'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-
-import '../home/Home.css'
-
+import {useForm} from 'react-hook-form'
 import React from 'react'
 
-const Home = () => {
+const searchbar = () => {
 
-  const [posts, setPosts] = useState([])
-  const [search, setSearch] = useState("")
+    const [posts, setPosts] = useState([])
+    const [search, setSearch] = useState("")
 
-  useEffect(() => {
-    api.get("/posts")
+    useEffect(() => {
+        api.get("/posts")
 
-    .then((response) => {
-      setPosts(response.data)
-      // setRecords(response.data)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }, [])
+            .then((response) => {
+                setPosts(response.data)
+                // setRecords(response.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [])
 
   return (
-    <div className='home'>
-      <form action="">
+    <div>
+        <form action="">
         <label htmlFor="search-bar">Games</label>
         <input type="search" name="search-bar" id="search-bar" onChange={(e) => setSearch(e.target.value)}/>
       </form>
@@ -55,11 +52,9 @@ const Home = () => {
             })
             .map((item) => {
               return <div key={item.id}>
-                <Link to={`/posts/${item.id}`}>
-                  <h4>{item.title}</h4>
-                  <img src={item.img} alt="" />
-                  <p>{item.description}</p>
-                </Link>
+                <h4>{item.title}</h4>
+                <img src={item.img} alt="" />
+                <p>{item.description}</p>
               </div>
             })}
         </div>
@@ -68,4 +63,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default searchbar

@@ -27,11 +27,11 @@
     },
     {
       "description": "Descrição",
-      "content": "fefe",
+      "content": "Teste",
       "img": "https://store-images.s-microsoft.com/image/apps.4128.71930896676716842.b6740fa4-0359-4ca8-9e17-5d4e45c2d497.ffa292b1-579d-4a08-99ef-308ab7791f79",
-      "title": "ori",
+      "title": "Ori and the Blind Forest Definitive Edition",
       "id": 4,
-      "developer": "feeff"
+      "developer": "Moon Studios"
     },
     {
       "title": "Mad Max",
@@ -58,7 +58,7 @@
       "developerId": 1
     },
     {
-      "title": "GTA 5",
+      "title": "Grand Theft Auto V",
       "img": "https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/1280/V.jpg",
       "description": "Grand Theft Auto V é um jogo eletrônico de ação-aventura desenvolvido pela Rockstar North e publicado pela Rockstar Games.",
       "content": "Teste",

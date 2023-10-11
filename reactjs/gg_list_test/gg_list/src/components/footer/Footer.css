@@ -1,0 +1,12 @@
+.footer {
+    align-items: center;
+    border-top: 2px solid #6f01ff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px 40px;
+    background: rgb(9, 9, 75);
+    width: 100%;
+    padding: 40px;
+    margin-top: 40px;
+}

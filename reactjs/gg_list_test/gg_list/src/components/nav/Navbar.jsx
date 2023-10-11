@@ -17,6 +17,9 @@ const Navbar = () => {
     setSearch("")
   }
 
+
+  // navigate(`/posts/${id}`)
+
   useEffect(() => {
     api.get("/posts")
 
@@ -43,9 +46,9 @@ const Navbar = () => {
           <input type="search" name="search-bar" id="search-bar" placeholder='Buscar Games' onChange={(e) => setSearch(e.target.value)} />
         </form>
 
-        {posts.length === 0 ? (
+        {/* {posts.length === 0 ? (
           <p>Carregando...</p>
-        ) : (
+        ) : ( */}
         
         <div className='search-results' key={posts}>
             {posts
@@ -68,7 +71,7 @@ const Navbar = () => {
                 </div>
               })}
           </div>
-        )}
+        {/* )} */}
       </div>
 
       {/* NAVBAR */}
@@ -77,13 +80,13 @@ const Navbar = () => {
           <Link to={"/"}>Home</Link>
         </li>
         <li>
+          <Link to={"/developers"}>Devs</Link>
+        </li>
+        <li>
           <Link to={"/new"}>Adicionar Jogo</Link>
         </li>
         <li>
           <Link to={"/admin"}>Gerenciar</Link>
-        </li>
-        <li>
-          <Link to={"/developers"}>Devs</Link>
         </li>
       </ul>
       

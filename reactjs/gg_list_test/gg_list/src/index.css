@@ -6,6 +6,16 @@
   padding: 0;
 }
 
+::-webkit-scrollbar{
+  background: none;
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb{
+  background: #6f01ff;
+  border-radius: 10px;
+}
+
 body {
   background: #141029;
   color: #fff;

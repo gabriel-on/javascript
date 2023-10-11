@@ -24,7 +24,13 @@ img {
 }
 
 .home div h2 {
-    font-size: 1.3em;
+    background: #6f01ff;
+    /* border: 1px solid rgb(255, 255, 255); */
+    font-size: 1.2em;
+    text-align: center;
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
 }
 
 .home div p {

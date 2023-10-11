@@ -26,9 +26,9 @@ const Post = () => {
       <h2>{post.title}</h2>
       <img src={post.img} alt="" />
       <p>
-      <Link to={`/developers`}>
-        Desenvolvedor
-      </Link>
+        <Link to={`/developers`}>
+          Desenvolvedor
+        </Link>
       </p>
     </div>
   )

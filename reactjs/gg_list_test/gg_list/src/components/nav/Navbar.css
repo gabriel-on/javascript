@@ -20,6 +20,7 @@
 
 .search-bar img{
     width: 80px;
+    height: 100%;
 }
 
 .search-bar input {
@@ -41,6 +42,20 @@
     z-index: 1;
 }
 
-.search-results::after {
-    overflow: hidden;
+.search-results div {
+    margin: 10px 0;
+}
+
+.search-results div > a{
+    display: flex;
+}
+
+.search-results div > a div {
+    display: flex;
+    flex-direction: column;
+    margin: 0 5px ;
+}
+
+.search-results div > a div > p{
+    font-size: 0.8em;
 }

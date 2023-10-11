@@ -4,7 +4,10 @@
     gap: 20px;
 }
 
-
 img {
     width: 220px;
+}
+
+.home p {
+    max-width: 220px;
 }

@@ -3,10 +3,11 @@
     {
       "id": 1,
       "title": "Euro Truck Simulator 1",
-      "description": "Descrição",
+      "description": "Descrição 1",
       "content": "Conteúdo",
       "img": "https://cdn-products.eneba.com/resized-products/22sZmv5fDz2mF0k1zPZmIvGv5pA1boQ0FQFmKBJzigU_350x200_1x-0.jpeg",
-      "developerId": 2
+      "developerId": 2,
+      "developer": "SCS Software"
     },
     {
       "id": 2,
@@ -59,7 +60,7 @@
     {
       "title": "GTA 5",
       "img": "https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/1280/V.jpg",
-      "description": "Descrição",
+      "description": "Grand Theft Auto V é um jogo eletrônico de ação-aventura desenvolvido pela Rockstar North e publicado pela Rockstar Games.",
       "content": "Teste",
       "developer": "Rockstar",
       "id": 8

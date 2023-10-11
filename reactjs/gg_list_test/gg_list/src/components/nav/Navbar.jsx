@@ -43,8 +43,9 @@ const Navbar = () => {
       <div className='search-bar'>
         <form>
           <label htmlFor="search-bar"></label>
-          <input type="search" name="search-bar" id="search-bar" onChange={(e) => setSearch(e.target.value)} />
+          <input type="search" name="search-bar" id="search-bar" placeholder='Buscar Games' onChange={(e) => setSearch(e.target.value)} />
         </form>
+        
         {posts.length === 0 ? (
           <p>Carregando...</p>
         ) : (
@@ -61,9 +62,11 @@ const Navbar = () => {
               .map((item) => {
                 return <div key={item.id}>
                   <Link to={`/posts/${item.id}`}>
-                    <h4>{item.title}</h4>
-                    <img src={item.img} alt="" />
-                    <p>{item.description}</p>
+                    <img src={item.img} alt="FOTO" />
+                    <div>
+                      <h4>{item.title}</h4>
+                      <p>{item.description}</p>
+                    </div>
                   </Link>
                 </div>
               })}

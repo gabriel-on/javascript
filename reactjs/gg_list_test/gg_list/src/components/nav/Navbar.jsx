@@ -3,6 +3,7 @@ import '../nav/Navbar.css'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../../axios/config'
 import { useForm } from 'react-hook-form'
+import Modal from '../modal/Modal'
 
 const Navbar = () => {
 
@@ -10,15 +11,11 @@ const Navbar = () => {
 
   const [posts, setPosts] = useState([])
   const [search, setSearch] = useState("")
-  // const {reset} = useForm 
+  const [modal, setModal] = useState(false)
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setSearch("")
+  const toggleModal = () => {
+    setModal(!modal)
   }
-
-
-  // navigate(`/posts/${id}`)
 
   useEffect(() => {
     api.get("/posts")
@@ -40,8 +37,9 @@ const Navbar = () => {
       </h2>
 
       {/* BARRA DE PESQUISA */}
-      <div className='search-bar'>
-        <form onSubmit={handleSubmit}>
+      <div className='search-bar' >
+
+        <form>
           <label htmlFor="search-bar"></label>
           <input type="search" name="search-bar" id="search-bar" placeholder='Buscar Games' onChange={(e) => setSearch(e.target.value)} />
         </form>
@@ -49,8 +47,12 @@ const Navbar = () => {
         {/* {posts.length === 0 ? (
           <p>Carregando...</p>
         ) : ( */}
-        
-        <div className='search-results' key={posts}>
+
+        {/* <div className=''>
+          <Modal isOpen={modal} setIsOpen={setModal}/>
+        </div> */}
+
+        <div className='search-results' key={posts} onClick={() => {setModal(true)}}>
             {posts
               .filter((item) => {
                 if (search === ""){

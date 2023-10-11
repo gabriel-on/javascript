@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,6 +10,7 @@ body {
   background: #141029;
   color: #fff;
   font-family: 'Blinker', sans-serif;
+  margin-top: 100px;
 }
 
 ul {

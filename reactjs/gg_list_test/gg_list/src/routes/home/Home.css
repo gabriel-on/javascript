@@ -2,12 +2,27 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: center;
 }
 
 img {
     width: 220px;
+    /* aspect-ratio: 6/8.5; */
 }
 
-.home p {
+
+.home div {
+    width: 240px;
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.home div a {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.home div p {
     max-width: 220px;
 }

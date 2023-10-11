@@ -21,31 +21,19 @@ const Navbar = () => {
 
   return (
     <div className='navbar'>
+
+      {/* LOGO */}
       <h2>
         <Link to={"/"}>GameList</Link>
       </h2>
-      <ul>
-        <li>
-          <Link to={"/"}>Home</Link>
-        </li>
-        <li>
-          <Link to={"/new"}>Adicionar Jogo</Link>
-        </li>
-        <li>
-          <Link to={"/admin"}>Gerenciar</Link>
-        </li>
-        <li>
-          <Link to={"/developers"}>Devs</Link>
-        </li>
-      </ul>
-      
 
+      {/* BARRA DE PESQUISA */}
       <div className='search-bar'>
         <form>
           <label htmlFor="search-bar"></label>
           <input type="search" name="search-bar" id="search-bar" placeholder='Buscar Games' onChange={(e) => setSearch(e.target.value)} />
         </form>
-        
+
         {posts.length === 0 ? (
           <p>Carregando...</p>
         ) : (
@@ -73,6 +61,24 @@ const Navbar = () => {
           </div>
         )}
       </div>
+
+      {/* NAVBAR */}
+      <ul>
+        <li>
+          <Link to={"/"}>Home</Link>
+        </li>
+        <li>
+          <Link to={"/new"}>Adicionar Jogo</Link>
+        </li>
+        <li>
+          <Link to={"/admin"}>Gerenciar</Link>
+        </li>
+        <li>
+          <Link to={"/developers"}>Devs</Link>
+        </li>
+      </ul>
+      
+
       
     </div>
   )

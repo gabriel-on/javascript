@@ -67,8 +67,14 @@
     display: flex;
     flex-direction: column;
     margin: 0 5px ;
+    /* transition: 1s; */
 }
 
 .search-results div > a div > p{
     font-size: 0.8em;
 }
+
+/* .search-results div > a div:hover{
+    background: #6f01ff;
+    overflow: hidden;
+} */

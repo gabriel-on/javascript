@@ -1,12 +1,21 @@
 import { useEffect, useState } from 'react'
 import '../nav/Navbar.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import api from '../../axios/config'
+import { useForm } from 'react-hook-form'
 
 const Navbar = () => {
 
+  const navigate = useNavigate()
+
   const [posts, setPosts] = useState([])
   const [search, setSearch] = useState("")
+  // const {reset} = useForm 
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setSearch("")
+  }
 
   useEffect(() => {
     api.get("/posts")
@@ -17,7 +26,7 @@ const Navbar = () => {
       .catch((err) => {
         console.log(err)
       })
-  }, [])
+    }, [])
 
   return (
     <div className='navbar'>
@@ -29,7 +38,7 @@ const Navbar = () => {
 
       {/* BARRA DE PESQUISA */}
       <div className='search-bar'>
-        <form>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="search-bar"></label>
           <input type="search" name="search-bar" id="search-bar" placeholder='Buscar Games' onChange={(e) => setSearch(e.target.value)} />
         </form>

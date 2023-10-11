@@ -30,17 +30,8 @@ export function Form({title, textButton, onActions, developers}) {
     reset(response.data)
   }
 
-  // async function getDataUpdate() {
-  //   const response = await api.get(`/developers/${id}`)
-  //   reset(response.data)
-  // }
-
   useEffect(() => {
     getDataUpdate()
-
-    // api.get(`/developers/${id}`)
-    // .then(response => setDeveloper(response.data))
-    // .catch(err => console.log(err))
 
     .catch((err) => {
       console.log(err)

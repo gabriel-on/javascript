@@ -12,3 +12,35 @@
     display: flex;
     gap: 20px;
 }
+
+.search-bar{
+    display: flex;
+    flex-direction: column;
+}
+
+.search-bar img{
+    width: 80px;
+}
+
+.search-bar input {
+    border-radius: 5px;
+    border: 2px solid #2600ff;
+    background: #e1e1e1;
+    font-weight: bold;
+    width: 250px;
+    padding: 10px 10px;
+    outline: none;
+}
+
+.search-results {
+    width: 250px;
+    color: white;
+    background: rgba(0, 0, 0, 0.733);
+    margin-top: 50px;
+    position: absolute;
+    z-index: 1;
+}
+
+.search-results::after {
+    overflow: hidden;
+}

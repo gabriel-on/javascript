@@ -11,6 +11,7 @@ import Admin from './routes/admin/Admin.jsx'
 import EditPost from './routes/edit/EditPost.jsx'
 import Post from './routes/post/Post.jsx'
 import Dev from './routes/dev/dev.jsx'
+import Searchbar from './components/searchbar/searchbar.jsx'
 
 const router = createBrowserRouter([
   {
@@ -39,11 +40,11 @@ const router = createBrowserRouter([
       {
         path: "/developers",
         element: <Dev/>
-      }//,
-      // {
-      //   path: "/searchbar",
-      //   element: <Search/>
-      // }
+      },
+      {
+        path: "/",
+        element: <Searchbar/>
+      }
     ]
   }
 ]) 

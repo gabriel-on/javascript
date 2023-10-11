@@ -10,7 +10,7 @@ const Post = () => {
   const [post, setPost] = useState({})
   const [developer, setDeveloper] = useState({})
 
-  api.get(`/developers/${id}`)
+  api.get(`/developers`)
     .then(response => setDeveloper(response.data))
     .catch(err => console.log(err))
 
@@ -26,7 +26,7 @@ const Post = () => {
       <h2>{post.title}</h2>
       <img src={post.img} alt="" />
       <p>
-      <Link to={`/developers/?_embed=posts`}>
+      <Link to={`/developers`}>
         Desenvolvedor
       </Link>
       </p>

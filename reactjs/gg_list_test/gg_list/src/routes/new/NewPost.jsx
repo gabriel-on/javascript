@@ -6,18 +6,6 @@ export function NewPost () {
 
   const navigate = useNavigate()
 
-  // fetch("http://localhost:8000/developers", {
-  //   method: "GET",
-  //   headers: {
-  //       headers: {"Content-Type" : "aplication/json"}
-  //   }
-  // })
-    
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     setDevelopers(data)
-  //   })
-
   function newPost(data) {
     api.post("/posts", data)
     

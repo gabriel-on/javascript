@@ -55,6 +55,14 @@
       "content": "fef",
       "id": 7,
       "developerId": 1
+    },
+    {
+      "title": "GTA 5",
+      "img": "https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/1280/V.jpg",
+      "description": "Descrição",
+      "content": "Teste",
+      "developer": "Rockstar",
+      "id": 8
     }
   ],
   "developers": [

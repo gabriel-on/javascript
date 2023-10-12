@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+.btn {
+    background: #e1e1e1;
+}
+
+.app{
+    background: rgb(71, 28, 141);
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.backdrop {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.75);
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.backdrop > .modal {
+    background: #e1e1e1;
+    color: #1e1e1e;
+    padding: 2em;
+    border-radius: 0.75em;
+    max-width: 75vw;
+    max-height: 90vh;
+    position: relative;
+}
+
+.backdrop .modal .modal-close {
+    width: 1.25em;
+    height: 1.25em;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: black;
+    position: absolute;
+    top: 0.75em;
+    right: 0.75em;
+    display: flex;
+}
+
+.backdrop .modal .modal-close::before,
+.backdrop .modal .modal-close::after {
+    content: '';
+    position: absolute;
+    width: 1.25em;
+    height: 0.125em;
+    background: currentColor;
+    border-radius: 0.125em;
+    left: 0;
+    top: calc(1.25em / 2);
+}
+
+.backdrop .modal .modal-close::before {
+    transform: rotate(45deg);
+}
+
+.backdrop .modal .modal-close::after {
+    transform: rotate(-45deg);
+}

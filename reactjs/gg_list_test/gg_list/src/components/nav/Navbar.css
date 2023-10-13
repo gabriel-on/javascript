@@ -67,8 +67,12 @@
     background: rgba(0, 0, 0, 0.733);
     margin-top: 50px;
     position: absolute;
-    z-index: 1;
+    z-index: -7;
 }
+
+/* .search-results div > a:hover {
+    overflow: hidden;
+} */
 
 .search-results div {
     margin: 10px 0;

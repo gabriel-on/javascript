@@ -11,12 +11,15 @@ body, html {
     align-items: center;
 }
 
-/* img {
-    width: 250px;
+img {
+    width: 200px;
     object-fit: cover;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-} */
+}
+
+.content img {
+    width: 400px;
+    object-fit: cover;
+}
 
 .page{
     width: 100vw;

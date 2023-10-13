@@ -1,22 +1,32 @@
-import api from '../../axios/config'
 import { useEffect, useState } from 'react'
-import {useForm} from 'react-hook-form'
-import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import api from '../axios/Config'
 
-const Searchbar = () => {
+const Search = ({pesq, setPesq}) => { if (!pesq) return
+
+  const [posts, setPosts] = useState([])
+  const [search, setSearch] = useState("")
+
+  useEffect(() => {
+    api.get("/posts")
+
+      .then((response) => {
+        setPosts(response.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }, [])
 
   return (
-    <div className='search-bar' >
+    <div className='navbar'>
 
-        <form >
+      {/* BARRA DE PESQUISA */}
+      <div className='search-bar' >
+        <form onClick={setPesq}>
           <label htmlFor="search-bar"></label>
-          <input type="search" name="search-bar" id="search-bar" placeholder='Buscar Games' onChange={(e) => setSearch(e.target.value)}/>
+          <input type="search" name="search-bar" id="search-bar" placeholder='Buscar Games' onChange={(e) => setSearch(e.target.value)} onClick={(e) => e.stopPropagation()}/>
         </form>
-
-        {/* {posts.length === 0 ? (
-          <p>Carregando...</p>
-        ) : ( */}
-
 
         <div className='search-results' key={posts}>
             {posts
@@ -41,7 +51,8 @@ const Searchbar = () => {
           </div>
         {/* )} */}
       </div>
+    </div>
   )
 }
 
-export default Searchbar
+export default Search

@@ -1,7 +1,12 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+import { api } from '../axios/Config';
+import Search from './Search';
 
 const Modal = ({ open, onClose }) => {
     if (!open) return null
+
+  // const [posts, setPosts] = useState([])
+  // const [search, setSearch] = useState(true)
 
   return (
     <div onClick={onClose} className='overlay'>
@@ -15,6 +20,10 @@ const Modal = ({ open, onClose }) => {
           <div className='content'>
             <p>Você quer</p>
             <h1>R$20 de CREDITOS?</h1>
+
+            {/* <Search pesq={search} setPesq={() => setSearch(false)}>
+              <input type="text" />
+            </Search> */}
           </div>
         </div>
       </div>

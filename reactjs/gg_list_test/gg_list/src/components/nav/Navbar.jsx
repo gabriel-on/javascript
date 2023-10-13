@@ -11,11 +11,6 @@ const Navbar = () => {
 
   const [posts, setPosts] = useState([])
   const [search, setSearch] = useState("")
-  const [modal, setModal] = useState(false)
-
-  const toggleModal = () => {
-    setModal(!modal)
-  }
 
   useEffect(() => {
     api.get("/posts")
@@ -37,22 +32,19 @@ const Navbar = () => {
       </h2>
 
       {/* BARRA DE PESQUISA */}
-      <div className='search-bar' >
+      {/* <div className='search-bar' >
 
-        <form>
+        <form >
           <label htmlFor="search-bar"></label>
-          <input type="search" name="search-bar" id="search-bar" placeholder='Buscar Games' onChange={(e) => setSearch(e.target.value)} />
+          <input type="search" name="search-bar" id="search-bar" placeholder='Buscar Games' onChange={(e) => setSearch(e.target.value)}/>
         </form>
 
-        {/* {posts.length === 0 ? (
+        {posts.length === 0 ? (
           <p>Carregando...</p>
-        ) : ( */}
+        ) : (
 
-        {/* <div className=''>
-          <Modal isOpen={modal} setIsOpen={setModal}/>
-        </div> */}
 
-        <div className='search-results' key={posts} onClick={() => {setModal(true)}}>
+        <div className='search-results' key={posts}>
             {posts
               .filter((item) => {
                 if (search === ""){
@@ -73,8 +65,8 @@ const Navbar = () => {
                 </div>
               })}
           </div>
-        {/* )} */}
-      </div>
+        )}
+      </div> */}
 
       {/* NAVBAR */}
       <ul>

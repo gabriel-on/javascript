@@ -1,0 +1,86 @@
+{
+    "posts": [
+      {
+        "id": 1,
+        "title": "Euro Truck Simulator 1",
+        "description": "Descrição 1",
+        "content": "Conteúdo",
+        "img": "https://cdn-products.eneba.com/resized-products/22sZmv5fDz2mF0k1zPZmIvGv5pA1boQ0FQFmKBJzigU_350x200_1x-0.jpeg",
+        "developerId": 2,
+        "developer": "SCS Software"
+      },
+      {
+        "id": 2,
+        "title": "Euro Truck Simulator 2",
+        "description": "Descrição",
+        "content": "Conteúdo",
+        "img": "https://cdn-products.eneba.com/resized-products/V8fK6Td_350x200_3x-0.jpg",
+        "developerId": 2
+      },
+      {
+        "id": 3,
+        "title": "Cyberpunk 2077",
+        "description": "Descrição",
+        "content": "Conteúdo",
+        "img": "https://store-images.s-microsoft.com/image/apps.47379.63407868131364914.bcaa868c-407e-42c2-baeb-48a3c9f29b54.89bb995b-b066-4a53-9fe4-0260ce07e894",
+        "developerId": 1
+      },
+      {
+        "description": "Descrição",
+        "content": "Teste",
+        "img": "https://store-images.s-microsoft.com/image/apps.4128.71930896676716842.b6740fa4-0359-4ca8-9e17-5d4e45c2d497.ffa292b1-579d-4a08-99ef-308ab7791f79",
+        "title": "Ori and the Blind Forest Definitive Edition",
+        "id": 4,
+        "developer": "Moon Studios"
+      },
+      {
+        "title": "Mad Max",
+        "img": "https://upload.wikimedia.org/wikipedia/pt/thumb/1/11/Mad_max_capa.jpg/250px-Mad_max_capa.jpg",
+        "description": "Teste",
+        "content": "blabla",
+        "id": 5,
+        "developerId": 3
+      },
+      {
+        "title": "The Witcher 3",
+        "img": "https://image.api.playstation.com/vulcan/ap/rnd/202211/0714/ojKZ7l0T2M5egR9YHIjVhI0R.png",
+        "description": "Descrição",
+        "content": "Teste",
+        "id": 6,
+        "developerId": 1
+      },
+      {
+        "title": "The Witcher 2",
+        "img": "https://cdn-products.eneba.com/resized-products/ugtpscu5ezak7i9t5r0x_350x200_3x-0.jpg",
+        "description": "Descrição",
+        "content": "fef",
+        "id": 7,
+        "developerId": 1
+      },
+      {
+        "title": "Grand Theft Auto V",
+        "img": "https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/1280/V.jpg",
+        "description": "Grand Theft Auto V é um jogo eletrônico de ação-aventura desenvolvido pela Rockstar North e publicado pela Rockstar Games.",
+        "content": "Teste",
+        "developer": "Rockstar",
+        "id": 8
+      }
+    ],
+    "developers": [
+      {
+        "id": 1,
+        "name": "CD Projekt RED",
+        "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNXzB8OgRy4hizDgLXNy8SxNf5fm3xcMrs2AY0_Uu6Xfv4TkL3LIT1qW8pmRWmXNq0PZA&usqp=CAU"
+      },
+      {
+        "id": 2,
+        "name": "SCS Software",
+        "img": "https://pbs.twimg.com/profile_images/1057918910954127360/EdYj4mp2_400x400.jpg"
+      },
+      {
+        "id": 3,
+        "name": "Avalanche Studios Group",
+        "img": "https://logowik.com/content/uploads/images/avalanche-studios-group3545.logowik.com.webp"
+      }
+    ]
+  }

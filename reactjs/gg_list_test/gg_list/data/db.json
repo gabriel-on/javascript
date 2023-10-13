@@ -64,6 +64,14 @@
       "content": "Teste",
       "developer": "Rockstar",
       "id": 8
+    },
+    {
+      "title": "Grand Theft Auto: San Andreas",
+      "img": "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d3/Grand_Theft_Auto_San_Andreas_capa.png/270px-Grand_Theft_Auto_San_Andreas_capa.png",
+      "description": "Grand Theft Auto: San Andreas é um jogo eletrônico de ação-aventura desenvolvido pela Rockstar North e publicado pela Rockstar Games. É o quinto título principal da série Grand Theft Auto e foi lançado em outubro de 2004 para PlayStation 2 e em junho de 2005 para Xbox e Microsoft Windows",
+      "content": "Texto",
+      "developer": "Rockstar",
+      "id": 9
     }
   ],
   "developers": [

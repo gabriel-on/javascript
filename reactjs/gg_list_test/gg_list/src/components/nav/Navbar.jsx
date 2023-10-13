@@ -4,24 +4,26 @@ import { Link, useNavigate } from 'react-router-dom'
 import api from '../../axios/config'
 import { useForm } from 'react-hook-form'
 import Modal from '../modal/Modal'
+import Searchbar from '../searchbar/Searchbar'
+import SearchForm from '../searchForm/SearchForm'
 
 const Navbar = () => {
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
-  const [posts, setPosts] = useState([])
-  const [search, setSearch] = useState("")
+  // const [posts, setPosts] = useState([])
+  // const [search, setSearch] = useState("")
 
-  useEffect(() => {
-    api.get("/posts")
+  // useEffect(() => {
+  //   api.get("/posts")
 
-      .then((response) => {
-        setPosts(response.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    }, [])
+  //     .then((response) => {
+  //       setPosts(response.data)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  //   }, [])
 
   return (
     <div className='navbar'>
@@ -32,6 +34,9 @@ const Navbar = () => {
       </h2>
 
       {/* BARRA DE PESQUISA */}
+
+      <SearchForm/>
+
       {/* <div className='search-bar' >
 
         <form >
@@ -42,7 +47,6 @@ const Navbar = () => {
         {posts.length === 0 ? (
           <p>Carregando...</p>
         ) : (
-
 
         <div className='search-results' key={posts}>
             {posts

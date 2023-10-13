@@ -12,7 +12,7 @@ const Home = () => {
   const [search, setSearch] = useState("")
 
   useEffect(() => {
-    api.get("/posts")
+    api.get("/posts?_sort=title&_order=asc")
 
     .then((response) => {
       setPosts(response.data)

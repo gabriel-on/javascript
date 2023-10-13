@@ -1,0 +1,35 @@
+.form-model {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 400px;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    gap: 20px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    color: #ff0000;
+}
+
+.form-model input {
+    border-radius: 5px;
+    border: 2px solid #000000;
+    outline: none;
+    width: 400px;
+    display: flex;
+    padding: 10px;
+}
+
+.form-model textarea {
+    border-radius: 5px;
+    border: 2px solid #000000;
+    outline: none;
+    padding: 10px;
+    min-width: 400px;
+    max-width: 400px;
+    min-height: 15vh;
+}

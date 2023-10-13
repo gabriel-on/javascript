@@ -14,7 +14,7 @@ export function NewPost () {
 
   return (
     <div>
-      <Form title={"Criar"} textButton={"Adicionar"} onActions={newPost}/>
+      <Form title={"Adicionar Game"} textButton={"Adicionar"} onActions={newPost}/>
     </div>
   )
 }

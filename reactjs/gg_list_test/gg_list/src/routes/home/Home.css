@@ -35,5 +35,19 @@ img {
 }
 
 .home div p {
+    font-size: 0.8em;
     max-width: 220px;
+    max-height: 14vh;
+    overflow: hidden;
+    overflow-y: scroll
 }
+
+.home div p::-webkit-scrollbar{
+    background: none;
+    width: 6px;
+  }
+  
+.home div p::-webkit-scrollbar-thumb{
+    background: #6f01ff;
+    border-radius: 10px;
+  }

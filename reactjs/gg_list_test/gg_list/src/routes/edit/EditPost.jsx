@@ -15,7 +15,7 @@ export function UpdatePost() {
 
     return (
         <div>
-            <Form title={"Editar publicação"} textButton={"Editar"} onActions={handleUpdate}/>
+            <Form title={"Editar Game"} textButton={"Editar"} onActions={handleUpdate}/>
         </div>
     )
 }

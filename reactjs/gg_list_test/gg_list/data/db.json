@@ -3,7 +3,7 @@
     {
       "id": 1,
       "title": "Euro Truck Simulator 1",
-      "description": "Descrição 1",
+      "description": "Descrição",
       "content": "Conteúdo",
       "img": "https://cdn-products.eneba.com/resized-products/22sZmv5fDz2mF0k1zPZmIvGv5pA1boQ0FQFmKBJzigU_350x200_1x-0.jpeg",
       "developerId": 2,
@@ -36,10 +36,11 @@
     {
       "title": "Mad Max",
       "img": "https://upload.wikimedia.org/wikipedia/pt/thumb/1/11/Mad_max_capa.jpg/250px-Mad_max_capa.jpg",
-      "description": "Teste",
+      "description": "Descrição",
       "content": "blabla",
       "id": 5,
-      "developerId": 3
+      "developerId": 3,
+      "developer": "Avalanche Studios Group"
     },
     {
       "title": "The Witcher 3",
@@ -70,7 +71,7 @@
       "img": "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d3/Grand_Theft_Auto_San_Andreas_capa.png/270px-Grand_Theft_Auto_San_Andreas_capa.png",
       "description": "Grand Theft Auto: San Andreas é um jogo eletrônico de ação-aventura desenvolvido pela Rockstar North e publicado pela Rockstar Games. É o quinto título principal da série Grand Theft Auto e foi lançado em outubro de 2004 para PlayStation 2 e em junho de 2005 para Xbox e Microsoft Windows",
       "content": "Texto",
-      "developer": "Rockstar",
+      "developer": "Rockstar Games",
       "id": 9
     }
   ],
@@ -88,6 +89,11 @@
     {
       "id": 3,
       "name": "Avalanche Studios Group",
+      "img": "https://logowik.com/content/uploads/images/avalanche-studios-group3545.logowik.com.webp"
+    },
+    {
+      "id": 4,
+      "name": "Rockstar Games",
       "img": "https://logowik.com/content/uploads/images/avalanche-studios-group3545.logowik.com.webp"
     }
   ]

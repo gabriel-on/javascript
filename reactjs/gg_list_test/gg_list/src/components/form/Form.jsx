@@ -4,6 +4,8 @@ import { api } from '../../axios/config'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useEffect, useState } from 'react'
+import '../form/Form.css'
+import OptionDev from '../OptionDeveloper/OptionDev'
 
 const postScrema = yup.object({
   title: yup.string().required("O campo é obrigatorio"),
@@ -39,7 +41,7 @@ export function Form({title, textButton, onActions, developers}) {
   }, [])
 
   return (
-    <form onSubmit={handleSubmit(onActions)}>
+    <form onSubmit={handleSubmit(onActions)} className='form-model'>
       <h2>{title}</h2>
       <div className="field">
         <input placeholder="Título" {...register("title")}/>
@@ -62,16 +64,11 @@ export function Form({title, textButton, onActions, developers}) {
       </div>
 
       <div className="field">
-        <input placeholder="Desenvolvedor" {...register("developer")}/>
-      {errors.developer?.message}
-      {/* {errors.developer?.message}
+        {/* <input placeholder="Desenvolvedor" {...register("developer")}/>
+        {errors.developer?.message} */}
 
-      <select name="" id="" {...register("developer")} options={developer}>
-        <option value="">--SELECIONAR--</option>
-        {developers.map((developer) => (
-          <option value={developer.id} key={developer.id}>{developer.id}</option>
-        ))}
-      </select> */}
+        <OptionDev />
+
       </div> 
 
       <button type='submit'>{textButton}</button>

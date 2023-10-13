@@ -2,17 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import api from '../../axios/config'
 import { Link } from 'react-router-dom'
+import '../post/Post.css'
 
 const Post = () => {
 
   const {id} = useParams()
 
   const [post, setPost] = useState({})
-  const [developer, setDeveloper] = useState({})
-
-  api.get(`/developers`)
-    .then(response => setDeveloper(response.data))
-    .catch(err => console.log(err))
 
   useEffect(() => {
     api.get(`/posts/${id}`)

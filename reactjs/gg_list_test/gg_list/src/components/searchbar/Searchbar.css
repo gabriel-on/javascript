@@ -1,109 +1,78 @@
-
-.form {
-    background: red;
-    /* position: absolute; */
-    padding: 10px;
-}
-
-.search-bar-md{
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-}
-
-.search-bar-md img{
-    width: 80px;
-    height: 100%;
-}
-
-.search-bar-md input {
+/* BARRA DE PESQUISA */
+.form-search {
     border-radius: 5px;
-    border: 2px solid #2600ff;
-    background: #e1e1e1;
     font-weight: bold;
-    width: 280px;
-    padding: 10px 10px;
+    border: 1px solid #6F01FF;
+    border-radius: 5px;
+}
+
+.form-search input{
+    font-weight: bold;
+    max-width: 280px;
+    padding: 10px;
     outline: none;
+    border: none;
+    box-shadow: 3px 3px 2px 0 #00000033;
 }
 
-.search-results-md {
-    width: 280px;
-    color: white;
+#search-bar {
+    border-radius: 5px 0px 0px 5px;
+    background: #e1e1e1;
+}
+
+.btn-search {
+    border-radius: 0px 5px 5px 0px;
+    background: #3e008f;
+    color: #ffffff;
+    cursor: pointer;
+    width: 80px;
+    opacity: 1;
+}
+
+.btn-search:hover{
+    opacity: 0.7;
+}
+
+/* RESULTADOS DA PESQUISA */
+.search-results-md{
+    display: flex;
+    flex-wrap: wrap;
     background: rgba(0, 0, 0, 0.733);
+    justify-content: center;
+    padding: 10px;
+    max-width: 100%;
+    color: white;
     margin-top: 50px;
-    position: absolute;
-    z-index: -7;
 }
 
-/* .search-results div > a:hover {
-    overflow: hidden;
-} */
+.search-results-md img{
+    width: 220px;
+}
 
 .search-results-md div {
     margin: 10px 0;
 }
 
-.search-results-md div > a{
+.search-results-md div > a {
     display: flex;
+    flex-direction: column;
+    width: 240px;
+    align-items: center;
+    margin: 0 5px ;
 }
 
 .search-results-md div > a div {
     display: flex;
     flex-direction: column;
+    width: 240px;
+    align-items: center;
     margin: 0 5px ;
-    /* transition: 1s; */
 }
 
-.search-results-md div > a div > p{
+.search-results-md div > a h4{
+    font-size: 1em;
+}
+
+.search-results-md div > a p{
     font-size: 0.8em;
-}
-
-/* .search-results div > a div:hover{
-    background: #6f01ff;
-    overflow: hidden;
-} */
-
-body.active-modal {
-    overflow-y: hidden;
-}
-
-.btn-modal {
-    padding: 10px 20px;
-    display: block;
-    margin: 100px auto 0;
-    font-size: 18px;
-}
-
-/* .modal, .overlay {
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: fixed;
-} */
-
-.overlay {
-    background: rgba(49,49,49,0.8);
-}
-
-.modal-content {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    line-height: 1.4;
-    background: #f1f1f1;
-    padding: 14px 28px;
-    border-radius: 3px;
-    max-width: 600px;
-    min-width: 300px;
-}
-
-.close-modal {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 5px 7px;
 }

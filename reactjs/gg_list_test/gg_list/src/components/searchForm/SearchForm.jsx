@@ -13,9 +13,9 @@ const SearchForm = () => {
     }
 
   return (
-      <form onSubmit={handleSubmit} className="form">
-          <input type="search" id="search-bar-md" placeholder='Buscar Games' onChange={(e) => setQuery(e.target.value)} />
-          <input type="submit" value="Buscar" />
+      <form onSubmit={handleSubmit} className="form-search">
+          <input type="search" id="search-bar" placeholder='ex: euro' onChange={(e) => setQuery(e.target.value)} />
+          <input type="submit" value="Buscar" className="btn-search"/>
       </form>
   )
 }

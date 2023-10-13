@@ -11,24 +11,24 @@ const Searchbar = () => {
 
   const [searchParams] = useSearchParams()
   const [posts, setPosts] = useState([])
-
+  
   useEffect(() => {
     api.get("/posts?" + searchParams)
-
-      .then((response) => {
-        setPosts(response.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    }, [])
-
+    
+    .then((response) => {
+      setPosts(response.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }, [])
+  
   return (
     <div>
       {posts.length === 0 ? (
         <p>Carregando...</p>
       ) : (
-        <div className='search-results'>
+        <div className='search-results-md'>
           {posts
             .map((item) => {
               return <div key={item.id}>

@@ -95,6 +95,11 @@
       "id": 4,
       "name": "Rockstar Games",
       "img": "https://logowik.com/content/uploads/images/avalanche-studios-group3545.logowik.com.webp"
+    },
+    {
+      "id": 5,
+      "name": "Moon Studios",
+      "img": ""
     }
   ]
 }

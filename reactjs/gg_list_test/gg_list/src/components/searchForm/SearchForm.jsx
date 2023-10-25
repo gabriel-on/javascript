@@ -9,13 +9,13 @@ const SearchForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        navigate("/search?q=" + query)
+        navigate(`/search?q=${query}`)
     }
 
   return (
       <form onSubmit={handleSubmit} className="form-search">
           <input type="search" id="search-bar" placeholder='ex: euro' onChange={(e) => setQuery(e.target.value)} />
-          <input type="submit" value="Buscar" className="btn-search"/>
+          <button className="btn-search">Buscar</button>
       </form>
   )
 }

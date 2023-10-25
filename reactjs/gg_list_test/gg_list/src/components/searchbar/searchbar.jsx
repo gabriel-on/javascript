@@ -2,18 +2,18 @@ import api from '../../axios/config'
 import { useEffect, useState } from 'react'
 import React from 'react'
 import { Link , useSearchParams } from 'react-router-dom'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Searchbar = () => {
   
-  // const navigate = useNavigate("")
+  const navigate = useNavigate()
   // navigate("")
 
   const [searchParams] = useSearchParams()
   const [posts, setPosts] = useState([])
   
   useEffect(() => {
-    api.get("/posts?" + searchParams)
+    api.get(`/posts?${searchParams}`)
     
     .then((response) => {
       setPosts(response.data)
@@ -23,10 +23,11 @@ const Searchbar = () => {
     })
   }, [])
   
+
   return (
     <div>
       {posts.length === 0 ? (
-        <p>Carregando...</p>
+        <p>Carregando...</p> && navigate("/")
       ) : (
         <div className='search-results-md'>
           {posts

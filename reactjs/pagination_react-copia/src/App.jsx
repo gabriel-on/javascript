@@ -6,7 +6,7 @@ import './App.css'
 
 const api = 'https://kitsu.io/api/edge/';
 
-const LIMIT = 10;
+const LIMIT = 20;
 
 export default function App() {
   const [info, setInfo] = useState({});
@@ -66,5 +66,5 @@ export default function App() {
         />
       )}
     </div>
-  );
+  )
 }

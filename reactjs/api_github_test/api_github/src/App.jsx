@@ -12,18 +12,23 @@ function App() {
   }, [])
 
   return (
-    <div>
-      <ul>
+    <div className='container'>
+      <ul className='main'>
         {repo.map(repo => {
         return (
           <li key={repo.id}>
-            <h2>{repo.name}</h2>
-            <p>{repo.language}</p>
-            <p> 
-              <span>{Intl.DateTimeFormat('pt-BR').format(new Date(repo.created_at))}</span>
-            </p>
-            <p>{}</p>
-            <a href={repo.html_url} target='_blank'>Ver nais</a>
+            <div className='line-tp'>
+              <h2>{repo.name}</h2>
+              {/* <p>{repo.description}</p> */}
+              {/* <img src={"https://avatars.githubusercontent.com/u/124823000?v=4"} alt="foto" /> */}
+            </div>
+            <div className='info'>
+              <p>
+                <span>{Intl.DateTimeFormat('pt-BR').format(new Date(repo.created_at))}</span>
+              </p>
+              <p className='language'>{repo.language}</p>
+              <a href={repo.html_url} target='_blank'>Ver mais</a>
+            </div>
           </li>
         )
         })}

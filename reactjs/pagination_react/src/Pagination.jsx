@@ -51,7 +51,7 @@ const Pagination = ({ currentPage, total, limit, onPageChange }) => {
                 isDisabled={isFirstPage}
             /> */}
             <PaginationItem
-                page="Prev"
+                page="Anterior"
                 currentPage={currentPage}
                 onPageChange={() => onPageChange(currentPage - 1)}
                 isDisabled={isFirstPage}
@@ -65,7 +65,7 @@ const Pagination = ({ currentPage, total, limit, onPageChange }) => {
                 />
             ))}
             <PaginationItem
-                page="Next"
+                page="Proximo"
                 currentPage={currentPage}
                 onPageChange={() => onPageChange(currentPage + 1)}
                 isDisabled={isLastPage}

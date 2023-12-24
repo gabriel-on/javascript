@@ -1,5 +1,13 @@
 {
   "dependencies": {
     "material-ui": "^0.20.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "server": "json-server --watch db.json --port 3001",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   }
+  
 }

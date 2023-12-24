@@ -1,76 +1,34 @@
-import { useEffect, useState } from 'react'
-import '../nav/Navbar.css'
-import { Link, useNavigate } from 'react-router-dom'
-import api from '../../axios/config'
-import { useForm } from 'react-hook-form'
-import Modal from '../modal/Modal'
-import Searchbar from '../searchbar/Searchbar'
-import SearchForm from '../searchForm/SearchForm'
+// Navbar.js
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import SearchForm from '../searchForm/SearchForm';
+import SearchResults from '../SearchResults/SearchResults';
+import api from '../../axios/config';
 
 const Navbar = () => {
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  // const [posts, setPosts] = useState([])
-  // const [search, setSearch] = useState("")
+  const handleSearch = async (results, term) => {
+    setSearchResults(results);
+    setSearchTerm(term);
+  };
 
-  // useEffect(() => {
-  //   api.get("/posts")
-
-  //     .then((response) => {
-  //       setPosts(response.data)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  //   }, [])
+  const handleResultClick = (id) => {
+    navigate(`/posts/${id}`);
+  };
 
   return (
     <div className='navbar'>
-
       {/* LOGO */}
       <h2>
         <Link to={"/"}>GameList</Link>
       </h2>
 
       {/* BARRA DE PESQUISA */}
-
-      <SearchForm/>
-
-      {/* <div className='search-bar' >
-
-        <form >
-          <label htmlFor="search-bar"></label>
-          <input type="search" name="search-bar" id="search-bar" placeholder='Buscar Games' onChange={(e) => setSearch(e.target.value)}/>
-        </form>
-
-        {posts.length === 0 ? (
-          <p>Carregando...</p>
-        ) : (
-
-        <div className='search-results' key={posts}>
-            {posts
-              .filter((item) => {
-                if (search === ""){
-                  return
-                } else if (item.title.toLowerCase().includes(search.toLowerCase())){
-                  return item
-                }
-              })
-              .map((item) => {
-                return <div key={item.id}>
-                  <Link to={`/posts/${item.id}`}>
-                    <img src={item.img} alt="FOTO" />
-                    <div>
-                      <h4>{item.title}</h4>
-                      <p>{item.description}</p>
-                    </div>
-                  </Link>
-                </div>
-              })}
-          </div>
-        )}
-      </div> */}
+      <SearchForm onSearch={(results, term) => handleSearch(results, term)} />
 
       {/* NAVBAR */}
       <ul>
@@ -87,11 +45,13 @@ const Navbar = () => {
           <Link to={"/admin"}>Gerenciar</Link>
         </li>
       </ul>
-      
 
-      
+      {/* RESULTADOS DA PESQUISA - Renderizado abaixo da navbar */}
+      {/* {searchResults.length > 0 && (
+        <SearchResults results={searchResults} onResultClick={handleResultClick} />
+      )} */}
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

@@ -1,23 +1,33 @@
-import { useState } from "react"
-import { useNavigate } from 'react-router-dom'
-import '../searchbar/Searchbar.css'
+// SearchForm.js
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import api from '../../axios/config';
 
-const SearchForm = () => {
+const SearchForm = ({ onSearch }) => {
+    const { register, handleSubmit } = useForm();
 
-    const navigate = useNavigate()
-    const [query, setQuery] = useState()
+    const onSubmit = async (data) => {
+        try {
+            const response = await api.get(`/posts/?q=${data.searchTerm}`);
+            onSearch(response.data, data.searchTerm);
+        } catch (error) {
+            console.error('Erro na pesquisa:', error);
+        }
+    };
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        navigate(`/search?q=${query}`)
-    }
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <label htmlFor="search-bar"></label>
+            <input
+                type="search"
+                name="search-bar"
+                id="search-bar"
+                placeholder="Buscar Games"
+                {...register('searchTerm')}
+            />
+            <button type="submit">Pesquisar</button>
+        </form>
+    );
+};
 
-  return (
-      <form onSubmit={handleSubmit} className="form-search">
-          <input type="search" id="search-bar" placeholder='ex: euro' onChange={(e) => setQuery(e.target.value)} />
-          <button className="btn-search">Buscar</button>
-      </form>
-  )
-}
-
-export default SearchForm
+export default SearchForm;

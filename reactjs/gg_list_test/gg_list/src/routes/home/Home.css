@@ -1,7 +1,13 @@
 .home {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.games-lists {
     gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
 }
 
@@ -11,20 +17,19 @@ img {
     /* aspect-ratio: 6/8; */
 }
 
-
-.home div {
+.games-lists div {
     width: 240px;
-    border: 1px solid rgb(255, 255, 255);
+    border: 1px solid #ffffff;
 }
 
-.home div a {
+.games-lists div a {
     align-items: center;
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
-.home div h2 {
+.games-lists div h2 {
     background: #6f01ff;
     /* border: 1px solid rgb(255, 255, 255); */
     font-size: 1.2em;
@@ -34,7 +39,7 @@ img {
     margin-bottom: 10px;
 }
 
-.home div p {
+.games-lists div p {
     font-size: 0.8em;
     max-width: 220px;
     max-height: 14vh;
@@ -42,12 +47,55 @@ img {
     overflow-y: scroll
 }
 
-.home div p::-webkit-scrollbar{
+.games-lists div p::-webkit-scrollbar {
     background: none;
     width: 6px;
-  }
-  
-.home div p::-webkit-scrollbar-thumb{
+}
+
+.games-lists div p::-webkit-scrollbar-thumb {
     background: #6f01ff;
     border-radius: 10px;
-  }
+}
+
+/* PAGINAÇÂO */
+
+.home .pagination {
+    display: flex;
+    gap: 20px;
+    border: none;
+    justify-content: center;
+    font-size: 1em;
+    margin: 20px 0 0;
+}
+
+.active {
+    background: #6f01ff;
+    opacity: 0.7;
+}
+
+.btn-prev-next {
+    background: #6f01ff;
+    color: white;
+    opacity: 1;
+}
+
+.btn-prev-next:disabled {
+    opacity: 0.7;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    background: #6f01ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+}
+
+.total-pages{
+    display: flex;
+    align-items: center;
+}

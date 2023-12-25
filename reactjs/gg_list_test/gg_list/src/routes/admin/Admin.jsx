@@ -61,7 +61,7 @@ const Admin = () => {
                     <img src={item.img} alt="" />
                     <div className='btn'>
                       <Link className='md-btn' to={`/posts/edit/${item.id}`}>Editar</Link>
-                      <button onClick={() => deletePost(item.id)} >Excluir</button>
+                      <button className='delete' onClick={() => deletePost(item.id)} >Excluir</button>
                     </div>
                   </div>
                 </div>
@@ -69,17 +69,6 @@ const Admin = () => {
           </div>
         )}
       </div>
-
-      {/* {posts.map((post) => (
-        <div key={post.id}>
-          <div to={`/posts/${post.id}`}>
-            <h2>{post.title}</h2>
-            <img src={post.img} alt="" />
-            <Link to={`/posts/edit/${post.id}`}>Editar</Link>
-            <button className='' onClick={() => deletePost(post.id)} >Excluir</button>
-          </div>
-        </div>
-      ))} */}
     </div>
   )
 }

@@ -81,6 +81,162 @@
       "content": "American Truck Simulator é um simulador de caminhões americanos desenvolvido e publicado pela SCS Software. Esse jogo é uma sequência paralela de Euro Truck Simulator 2 e, uma sucessão natural da série 18 Wheels of Steel. O jogo foi anunciado na E3 de 2015 e lançado em 2 de fevereiro de 2016.",
       "developer": "g",
       "id": 10
+    },
+    {
+      "title": "Just Cause 2",
+      "img": "https://upload.wikimedia.org/wikipedia/pt/3/3b/Just_Cause_2.jpg",
+      "description": "Just Cause 2 é um jogo de mundo aberto de ação e aventura desenvolvido pela Avalanche Studios, publicado pela Eidos Interactive e distribuído pela Square Enix Europe",
+      "content": "Just Cause 2 é um jogo de mundo aberto de ação e aventura desenvolvido pela Avalanche Studios, publicado pela Eidos Interactive e distribuído pela Square Enix Europe. É uma sequência do jogo de 2006, Just Cause. O jogo possui mais de 8000 quilômetros quadrados de ilha para se explorar.",
+      "id": 11
+    },
+    {
+      "title": "Just Cause 3",
+      "img": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Just_Cause_3_cover_art.jpg/220px-Just_Cause_3_cover_art.jpg",
+      "description": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix.",
+      "content": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix. Revelado em novembro de 2014 pela revista Game Informer, é o terceiro jogo da série Just Cause e a sequência de Just Cause 2.",
+      "id": 12
+    },
+    {
+      "title": "fa",
+      "img": "https://upload.wikimedia.org/wikipedia/pt/3/3b/Just_Cause_2.jpg",
+      "description": "Just Cause 2 é um jogo de mundo aberto de ação e aventura desenvolvido pela Avalanche Studios, publicado pela Eidos Interactive e distribuído pela Square Enix Europe",
+      "content": "fafs",
+      "gender": "adventure",
+      "id": 13
+    },
+    {
+      "title": "dwdw",
+      "img": "https://cdn-products.eneba.com/resized-products/390c72c3457f3045b06b7c3227025372_350x200_3x-0.jpg",
+      "description": "dwd",
+      "content": "dwd",
+      "gender": "action",
+      "tags": [
+        "cyber",
+        "hhgjjyj"
+      ],
+      "id": 14
+    },
+    {
+      "title": "teste",
+      "img": "https://cdn-products.eneba.com/resized-products/390c72c3457f3045b06b7c3227025372_350x200_3x-0.jpg",
+      "description": "Just Cause 2 é um jogo de mundo aberto de ação e aventura desenvolvido pela Avalanche Studios, publicado pela Eidos Interactive e distribuído pela Square Enix Europe",
+      "content": "efwff",
+      "gender": "adventure",
+      "tags": [
+        "cyber",
+        "ggegfefef",
+        "dsd",
+        ""
+      ],
+      "id": 15
+    },
+    {
+      "title": "teste",
+      "img": "https://cdn-products.eneba.com/resized-products/390c72c3457f3045b06b7c3227025372_350x200_3x-0.jpg",
+      "description": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix.",
+      "content": "dede",
+      "gender": "action",
+      "tags": [
+        "cyber",
+        "jsddd",
+        "sddsd",
+        "dsd]"
+      ],
+      "id": 16
+    },
+    {
+      "title": "fwefwe 2",
+      "img": "https://cdn-products.eneba.com/resized-products/390c72c3457f3045b06b7c3227025372_350x200_3x-0.jpg",
+      "description": "fef",
+      "content": "fewfewf",
+      "gender": "adventure",
+      "tags": [
+        "cyber",
+        "jsddd",
+        "sddsd",
+        "dsd."
+      ],
+      "id": 17
+    },
+    {
+      "title": "fewf 3",
+      "img": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Just_Cause_3_cover_art.jpg/220px-Just_Cause_3_cover_art.jpg",
+      "description": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix.",
+      "content": "fweewf",
+      "gender": "action",
+      "tags": [
+        "erer",
+        "ffdfd"
+      ],
+      "id": 18
+    },
+    {
+      "title": "fewf",
+      "img": "https://upload.wikimedia.org/wikipedia/pt/3/3b/Just_Cause_2.jpg",
+      "description": "fewf",
+      "content": "fewfw",
+      "gender": "adventure",
+      "tags": [
+        "cyber",
+        "jsddd",
+        "sddsd",
+        "dsd"
+      ],
+      "id": 19
+    },
+    {
+      "title": "efe",
+      "img": "https://upload.wikimedia.org/wikipedia/pt/3/3b/Just_Cause_2.jpg",
+      "description": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix.",
+      "content": "fewf",
+      "gender": "adventure",
+      "tags": "tttt, rrfrf",
+      "id": 20
+    },
+    {
+      "title": "teste 33",
+      "img": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Just_Cause_3_cover_art.jpg/220px-Just_Cause_3_cover_art.jpg",
+      "description": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix.",
+      "content": "fefef",
+      "gender": "adventure",
+      "tags": "cyber",
+      "id": 21
+    },
+    {
+      "title": "rrfe",
+      "img": "https://upload.wikimedia.org/wikipedia/pt/3/3b/Just_Cause_2.jpg",
+      "description": "fefewf",
+      "content": "fewfwe",
+      "gender": "other",
+      "tags": "cyber,jsddd,sddsd,dsd",
+      "id": 22
+    },
+    {
+      "title": "ewfewf",
+      "img": "https://upload.wikimedia.org/wikipedia/pt/3/3b/Just_Cause_2.jpg",
+      "description": "fwef",
+      "content": "fewfwe",
+      "gender": "action",
+      "tags": "cyber, jsddd, sddsd, dsd",
+      "id": 23
+    },
+    {
+      "title": "fwef",
+      "img": "https://upload.wikimedia.org/wikipedia/pt/3/3b/Just_Cause_2.jpg",
+      "description": "fwef",
+      "content": "fwefewf",
+      "gender": "adventure",
+      "tags": "feff, few",
+      "id": 24
+    },
+    {
+      "title": "gwegre",
+      "img": "https://upload.wikimedia.org/wikipedia/pt/3/3b/Just_Cause_2.jpg",
+      "description": "fwef",
+      "content": "fewf",
+      "gender": "action",
+      "tags": "fewf. gregerg; fwffref",
+      "id": 25
     }
   ],
   "developers": [

@@ -28,22 +28,31 @@
   ],
   "posts": [
     {
-      "id": 2,
       "title": "Euro Truck Simulator 2",
-      "description": "Descrição",
-      "content": "Conteúdo",
       "img": "https://cdn-products.eneba.com/resized-products/V8fK6Td_350x200_3x-0.jpg",
-      "developerId": 2,
+      "content": "Conteúdo",
+      "description": "Descrição",
+      "genres": [
+        "Corrida",
+        "Simulação",
+        "Sandbox"
+      ],
+      "id": 2,
       "rating": "9"
     },
     {
-      "id": 1,
       "title": "Cyberpunk 2077",
-      "description": "Descrição",
-      "content": "Conteúdo",
       "img": "https://store-images.s-microsoft.com/image/apps.47379.63407868131364914.bcaa868c-407e-42c2-baeb-48a3c9f29b54.89bb995b-b066-4a53-9fe4-0260ce07e894",
-      "developerId": 1,
-      "rating": 5
+      "content": "Conteúdo",
+      "description": "Descrição",
+      "genres": [
+        "Ação",
+        "Aventura",
+        "RPG",
+        "FPS",
+        "Sandbox"
+      ],
+      "id": 1
     },
     {
       "id": 4,
@@ -73,13 +82,17 @@
       "rating": 8
     },
     {
-      "id": 7,
       "title": "The Witcher 2",
-      "description": "Descrição",
-      "content": "fef",
       "img": "https://cdn-products.eneba.com/resized-products/ugtpscu5ezak7i9t5r0x_350x200_3x-0.jpg",
-      "developerId": 1,
-      "rating": 7
+      "content": "fef",
+      "description": "Descrição",
+      "genres": [
+        "Ação",
+        "Aventura",
+        "RPG",
+        "Sandbox"
+      ],
+      "id": 7
     },
     {
       "id": 8,
@@ -106,7 +119,7 @@
       "content": "American Truck Simulator é um simulador de caminhões americanos desenvolvido e publicado pela SCS Software. Esse jogo é uma sequência paralela de Euro Truck Simulator 2 e, uma sucessão natural da série 18 Wheels of Steel. O jogo foi anunciado na E3 de 2015 e lançado em 2 de fevereiro de 2016.",
       "developerId": 2,
       "img": "https://cdn-products.eneba.com/resized-products/390c72c3457f3045b06b7c3227025372_350x200_3x-0.jpg",
-      "rating": 7
+      "rating": "7"
     },
     {
       "id": 11,
@@ -133,7 +146,7 @@
       "content": "Conteúdo",
       "img": "https://cdn-products.eneba.com/resized-products/22sZmv5fDz2mF0k1zPZmIvGv5pA1boQ0FQFmKBJzigU_350x200_3x-0.jpeg",
       "developerId": 2,
-      "rating": 5
+      "rating": ""
     }
   ]
 }

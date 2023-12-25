@@ -12,16 +12,21 @@ const GamePage = () => {
   const [newRating, setNewRating] = useState('');
 
   useEffect(() => {
-    // Obter detalhes do jogo
-    api.get(`/posts/${id}`)
-      .then(response => setGame(response.data))
-      .catch(err => console.log(err));
+    // Função assíncrona para buscar detalhes do jogo e do desenvolvedor
+    const fetchData = async () => {
+      try {
+        const gameResponse = await api.get(`/posts/${id}`);
+        setGame(gameResponse.data);
 
-    // Obter detalhes do desenvolvedor
-    api.get(`/developers/${game.developerId}`)
-      .then(response => setDeveloper(response.data))
-      .catch(err => console.log(err));
-  }, [id, game.developerId]);
+        const developerResponse = await api.get(`/developers/${gameResponse.data.developerId}`);
+        setDeveloper(developerResponse.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData(); // Chamar a função assíncrona
+  }, [id]); // Remover game.developerId da lista de dependências
 
   const handleEditRating = () => {
     // Enviar a nova avaliação para a API (você pode ajustar conforme necessário)
@@ -32,6 +37,8 @@ const GamePage = () => {
       })
       .catch(err => console.log(err));
   };
+
+  const ratingOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
     <div className='game-page'>
@@ -44,14 +51,19 @@ const GamePage = () => {
         <p>Desenvolvedor: <Link to={`/developers/${developer.id}`}>{developer.name}</Link></p>
 
         {editing ? (
-          // Formulário de edição de avaliação
+          // Formulário de edição de avaliação com um select
           <div>
             <label>Nova Avaliação:</label>
-            <input
-              type="number"
+            <select
               value={newRating}
               onChange={(e) => setNewRating(e.target.value)}
-            />
+            >
+              {ratingOptions.map(option => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
             <button onClick={handleEditRating}>Salvar Avaliação</button>
           </div>
         ) : (
@@ -63,6 +75,14 @@ const GamePage = () => {
         )}
 
         <div className="game-details">
+          <p>Gêneros:</p>
+          {game.genres && Array.isArray(game.genres) && (
+            <ul>
+              {game.genres.map((genre, index) => (
+                <li key={index}>{genre}</li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>

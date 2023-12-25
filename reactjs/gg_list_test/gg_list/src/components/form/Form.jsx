@@ -12,16 +12,12 @@ const postScrema = yup.object({
   img: yup.string().required("O campo é obrigatorio"),
   content: yup.string().required("O campo é obrigatorio"),
   description: yup.string().required("O campo é obrigatorio"),
-  developer: yup.string().required("O campo é obrigatorio")
+  // developer: yup.string().required("O campo é obrigatorio")
 })
 
-export function Form({title, textButton, onActions, developers}) {
+export function Form({title, textButton, onActions}) {
 
   const {id} = useParams()
-
-  const navigate = useNavigate()
-
-  const [developer, setDeveloper] = useState([])
 
   const {register, handleSubmit, formState: {errors}, reset } = useForm({
     resolver: yupResolver(postScrema)
@@ -63,13 +59,10 @@ export function Form({title, textButton, onActions, developers}) {
         {errors.content?.message}
       </div>
 
-      <div className="field">
-        {/* <input placeholder="Desenvolvedor" {...register("developer")}/>
-        {errors.developer?.message} */}
-
-        <OptionDev />
-
-      </div> 
+      {/* <div className="field">
+        <input placeholder="Desenvolvedor" {...register("developer")}/>
+        {errors.developer?.message}
+      </div> */}
 
       <button type='submit'>{textButton}</button>
     </form>

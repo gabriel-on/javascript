@@ -30,12 +30,11 @@ const Navbar = () => {
           <Link to={"/admin"}>Gerenciar</Link>
         </li>
         <li>
-          <Link to={"/search"}>Buscar</Link>
+          <Link to={"/search"} className='link-search'>
+            <i className="bi bi-search"></i>
+          </Link>
         </li>
       </ul>
-
-
-
     </div>
   )
 }

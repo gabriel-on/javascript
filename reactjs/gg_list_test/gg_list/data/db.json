@@ -1,15 +1,6 @@
 {
   "posts": [
     {
-      "id": 1,
-      "title": "Euro Truck Simulator 1",
-      "description": "Descrição",
-      "content": "Conteúdo",
-      "img": "https://cdn-products.eneba.com/resized-products/22sZmv5fDz2mF0k1zPZmIvGv5pA1boQ0FQFmKBJzigU_350x200_1x-0.jpeg",
-      "developerId": 2,
-      "developer": "SCS Software"
-    },
-    {
       "id": 2,
       "title": "Euro Truck Simulator 2",
       "description": "Descrição",
@@ -95,6 +86,13 @@
       "description": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix.",
       "content": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix. Revelado em novembro de 2014 pela revista Game Informer, é o terceiro jogo da série Just Cause e a sequência de Just Cause 2.",
       "id": 12
+    },
+    {
+      "title": "Euro Truck Simulator 1",
+      "img": "https://cdn-products.eneba.com/resized-products/22sZmv5fDz2mF0k1zPZmIvGv5pA1boQ0FQFmKBJzigU_350x200_1x-0.jpeg",
+      "description": "Descrição",
+      "content": "Conteúdo",
+      "id": 13
     }
   ],
   "developers": [

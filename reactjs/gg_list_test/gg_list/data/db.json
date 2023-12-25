@@ -1,100 +1,4 @@
 {
-  "posts": [
-    {
-      "id": 2,
-      "title": "Euro Truck Simulator 2",
-      "description": "Descrição",
-      "content": "Conteúdo",
-      "img": "https://cdn-products.eneba.com/resized-products/V8fK6Td_350x200_3x-0.jpg",
-      "developerId": 2
-    },
-    {
-      "id": 3,
-      "title": "Cyberpunk 2077",
-      "description": "Descrição",
-      "content": "Conteúdo",
-      "img": "https://store-images.s-microsoft.com/image/apps.47379.63407868131364914.bcaa868c-407e-42c2-baeb-48a3c9f29b54.89bb995b-b066-4a53-9fe4-0260ce07e894",
-      "developerId": 1
-    },
-    {
-      "description": "Descrição",
-      "content": "Teste",
-      "img": "https://store-images.s-microsoft.com/image/apps.4128.71930896676716842.b6740fa4-0359-4ca8-9e17-5d4e45c2d497.ffa292b1-579d-4a08-99ef-308ab7791f79",
-      "title": "Ori and the Blind Forest Definitive Edition",
-      "id": 4,
-      "developer": "Moon Studios"
-    },
-    {
-      "title": "Mad Max",
-      "img": "https://upload.wikimedia.org/wikipedia/pt/thumb/1/11/Mad_max_capa.jpg/250px-Mad_max_capa.jpg",
-      "description": "Descrição",
-      "content": "blabla",
-      "id": 5,
-      "developerId": 3,
-      "developer": "Avalanche Studios Group"
-    },
-    {
-      "title": "The Witcher 3",
-      "img": "https://image.api.playstation.com/vulcan/ap/rnd/202211/0714/ojKZ7l0T2M5egR9YHIjVhI0R.png",
-      "description": "Descrição",
-      "content": "Teste",
-      "id": 6,
-      "developerId": 1
-    },
-    {
-      "title": "The Witcher 2",
-      "img": "https://cdn-products.eneba.com/resized-products/ugtpscu5ezak7i9t5r0x_350x200_3x-0.jpg",
-      "description": "Descrição",
-      "content": "fef",
-      "id": 7,
-      "developerId": 1
-    },
-    {
-      "title": "Grand Theft Auto V",
-      "img": "https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/1280/V.jpg",
-      "description": "Grand Theft Auto V é um jogo eletrônico de ação-aventura desenvolvido pela Rockstar North e publicado pela Rockstar Games.",
-      "content": "Teste",
-      "developer": "Rockstar",
-      "id": 8
-    },
-    {
-      "title": "Grand Theft Auto: San Andreas",
-      "img": "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d3/Grand_Theft_Auto_San_Andreas_capa.png/270px-Grand_Theft_Auto_San_Andreas_capa.png",
-      "description": "Grand Theft Auto: San Andreas é um jogo eletrônico de ação-aventura desenvolvido pela Rockstar North e publicado pela Rockstar Games. É o quinto título principal da série Grand Theft Auto e foi lançado em outubro de 2004 para PlayStation 2 e em junho de 2005 para Xbox e Microsoft Windows",
-      "content": "Texto",
-      "developer": "Rockstar Games",
-      "id": 9
-    },
-    {
-      "title": "American Truck Simulator",
-      "img": "https://cdn-products.eneba.com/resized-products/390c72c3457f3045b06b7c3227025372_350x200_3x-0.jpg",
-      "description": "American Truck Simulator é um simulador de caminhões americanos desenvolvido e publicado pela SCS Software.",
-      "content": "American Truck Simulator é um simulador de caminhões americanos desenvolvido e publicado pela SCS Software. Esse jogo é uma sequência paralela de Euro Truck Simulator 2 e, uma sucessão natural da série 18 Wheels of Steel. O jogo foi anunciado na E3 de 2015 e lançado em 2 de fevereiro de 2016.",
-      "developer": "g",
-      "id": 10
-    },
-    {
-      "title": "Just Cause 2",
-      "img": "https://upload.wikimedia.org/wikipedia/pt/3/3b/Just_Cause_2.jpg",
-      "description": "Just Cause 2 é um jogo de mundo aberto de ação e aventura desenvolvido pela Avalanche Studios, publicado pela Eidos Interactive e distribuído pela Square Enix Europe",
-      "content": "Just Cause 2 é um jogo de mundo aberto de ação e aventura desenvolvido pela Avalanche Studios, publicado pela Eidos Interactive e distribuído pela Square Enix Europe. É uma sequência do jogo de 2006, Just Cause. O jogo possui mais de 8000 quilômetros quadrados de ilha para se explorar.",
-      "id": 11
-    },
-    {
-      "title": "Just Cause 3",
-      "img": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Just_Cause_3_cover_art.jpg/220px-Just_Cause_3_cover_art.jpg",
-      "description": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix.",
-      "content": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix. Revelado em novembro de 2014 pela revista Game Informer, é o terceiro jogo da série Just Cause e a sequência de Just Cause 2.",
-      "id": 12
-    },
-    {
-      "title": "Euro Truck Simulator 1",
-      "img": "https://cdn-products.eneba.com/resized-products/22sZmv5fDz2mF0k1zPZmIvGv5pA1boQ0FQFmKBJzigU_350x200_1x-0.jpeg",
-      "description": "Descrição",
-      "content": "Conteúdo",
-      "id": 13
-    }
-  ],
   "developers": [
     {
       "id": 1,
@@ -120,6 +24,104 @@
       "id": 5,
       "name": "Moon Studios",
       "img": ""
+    }
+  ],
+  "posts": [
+    {
+      "id": 2,
+      "title": "Euro Truck Simulator 2",
+      "description": "Descrição",
+      "content": "Conteúdo",
+      "img": "https://cdn-products.eneba.com/resized-products/V8fK6Td_350x200_3x-0.jpg",
+      "developerId": 2
+    },
+    {
+      "id": 1,
+      "title": "Cyberpunk 2077",
+      "description": "Descrição",
+      "content": "Conteúdo",
+      "img": "https://store-images.s-microsoft.com/image/apps.47379.63407868131364914.bcaa868c-407e-42c2-baeb-48a3c9f29b54.89bb995b-b066-4a53-9fe4-0260ce07e894",
+      "developerId": 1
+    },
+    {
+      "id": 4,
+      "title": "Ori and the Blind Forest Definitive Edition",
+      "description": "Descrição",
+      "content": "Teste",
+      "img": "https://store-images.s-microsoft.com/image/apps.4128.71930896676716842.b6740fa4-0359-4ca8-9e17-5d4e45c2d497.ffa292b1-579d-4a08-99ef-308ab7791f79",
+      "developerId": 5
+    },
+    {
+      "id": 5,
+      "title": "Mad Max",
+      "description": "Descrição",
+      "content": "blabla",
+      "img": "https://upload.wikimedia.org/wikipedia/pt/thumb/1/11/Mad_max_capa.jpg/250px-Mad_max_capa.jpg",
+      "developerId": 3
+    },
+    {
+      "id": 6,
+      "title": "The Witcher 3",
+      "description": "Descrição",
+      "content": "Teste",
+      "img": "https://image.api.playstation.com/vulcan/ap/rnd/202211/0714/ojKZ7l0T2M5egR9YHIjVhI0R.png",
+      "developerId": 1
+    },
+    {
+      "id": 7,
+      "title": "The Witcher 2",
+      "description": "Descrição",
+      "content": "fef",
+      "img": "https://cdn-products.eneba.com/resized-products/ugtpscu5ezak7i9t5r0x_350x200_3x-0.jpg",
+      "developerId": 1
+    },
+    {
+      "id": 8,
+      "title": "Grand Theft Auto V",
+      "description": "Grand Theft Auto V é um jogo eletrônico de ação-aventura desenvolvido pela Rockstar North e publicado pela Rockstar Games.",
+      "content": "Teste",
+      "img": "https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/1280/V.jpg",
+      "developerId": 4
+    },
+    {
+      "id": 9,
+      "title": "Grand Theft Auto: San Andreas",
+      "description": "Grand Theft Auto: San Andreas é um jogo eletrônico de ação-aventura desenvolvido pela Rockstar North e publicado pela Rockstar Games. É o quinto título principal da série Grand Theft Auto e foi lançado em outubro de 2004 para PlayStation 2 e em junho de 2005 para Xbox e Microsoft Windows",
+      "content": "Texto",
+      "img": "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d3/Grand_Theft_Auto_San_Andreas_capa.png/270px-Grand_Theft_Auto_San_Andreas_capa.png",
+      "developerId": 4
+    },
+    {
+      "id": 10,
+      "title": "American Truck Simulator",
+      "description": "American Truck Simulator é um simulador de caminhões americanos desenvolvido e publicado pela SCS Software.",
+      "content": "American Truck Simulator é um simulador de caminhões americanos desenvolvido e publicado pela SCS Software. Esse jogo é uma sequência paralela de Euro Truck Simulator 2 e, uma sucessão natural da série 18 Wheels of Steel. O jogo foi anunciado na E3 de 2015 e lançado em 2 de fevereiro de 2016.",
+      "developerId": 2,
+      "img": "https://cdn-products.eneba.com/resized-products/390c72c3457f3045b06b7c3227025372_350x200_3x-0.jpg"
+    },
+    {
+      "id": 11,
+      "title": "Just Cause 2",
+      "description": "Just Cause 2 é um jogo de mundo aberto de ação e aventura desenvolvido pela Avalanche Studios, publicado pela Eidos Interactive e distribuído pela Square Enix Europe",
+      "content": "Just Cause 2 é um jogo de mundo aberto de ação e aventura desenvolvido pela Avalanche Studios, publicado pela Eidos Interactive e distribuído pela Square Enix Europe. É uma sequência do jogo de 2006, Just Cause. O jogo possui mais de 8000 quilômetros quadrados de ilha para se explorar.",
+      "developerId": 3,
+      "img": "https://upload.wikimedia.org/wikipedia/pt/3/3b/Just_Cause_2.jpg"
+    },
+    {
+      "id": 12,
+      "title": "Just Cause 3",
+      "description": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix.",
+      "content": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix. Revelado em novembro de 2014 pela revista Game Informer, é o terceiro jogo da série Just Cause e a sequência de Just Cause 2.",
+      "developerId": 3,
+      "img": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Just_Cause_3_cover_art.jpg/220px-Just_Cause_3_cover_art.jpg"
+    },
+    {
+      "id": 13,
+      "title": "Euro Truck Simulator 1",
+      "description": "Descrição",
+      "content": "Conteúdo",
+      "img": "https://cdn-products.eneba.com/resized-products/22sZmv5fDz2mF0k1zPZmIvGv5pA1boQ0FQFmKBJzigU_350x200_3x-0.jpeg",
+      "developerId": 2
     }
   ]
 }

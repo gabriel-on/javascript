@@ -1,28 +1,32 @@
-import React from 'react';
-import '../form/Form.css'
-
-const developersList = [
-  "Naughty Dog", "Rockstar Games", "Blizzard Entertainment", "Ubisoft", "Electronic Arts", "Bethesda Game Studios", "Square Enix", "Capcom", "BioWare", "CD Projekt", "Nintendo", "Valve Corporation", "Respawn Entertainment", "Gearbox Software", "2K Games", "Kojima Productions", "NetherRealm Studios", "Crystal Dynamics", "Obsidian Entertainment", "PlatinumGames",
-  "Avalanche Studios Group", "Moon Studios", "SCS Software", "Outras"
-  // Adicione mais desenvolvedoras conforme necessário
-];
+import React, { useState, useEffect } from 'react';
+import '../form/Form.css';
 
 const DevelopersList = ({ selectedDevelopers, onDeveloperToggle }) => {
+  const [developersList, setDevelopersList] = useState([]);
+
+  useEffect(() => {
+    // Fetch the developers from the json-server
+    fetch('http://localhost:8000/developers')
+      .then(response => response.json())
+      .then(data => setDevelopersList(data))
+      .catch(error => console.error('Error fetching developers:', error));
+  }, []);
+
   return (
     <div className=''>
       <h3>Desenvolvedoras:</h3>
       <ul className='developer-list'>
-        {developersList.map((developer, index) => (
-          <li key={index}>
+        {developersList.map((developer) => (
+          <li key={developer.id}>
             <div className='developer'>
               <input
                 type="checkbox"
-                id={`developer-${index}`}
-                value={developer}
-                checked={selectedDevelopers && selectedDevelopers.includes(developer)}
-                onChange={() => onDeveloperToggle(developer)}
+                id={`developer-${developer.id}`}
+                value={developer.name}
+                checked={selectedDevelopers && selectedDevelopers.includes(developer.name)}
+                onChange={() => onDeveloperToggle(developer.name)}
               />
-              <label htmlFor={`developer-${index}`}>{developer}</label>
+              <label htmlFor={`developer-${developer.id}`}>{developer.name}</label>
             </div>
           </li>
         ))}

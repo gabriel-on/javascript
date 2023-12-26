@@ -86,7 +86,7 @@ export function Form({ title, textButton, onActions }) {
         await api.post('/posts', postData);
       }
 
-      navigate("/");
+      navigate(`/admin`);
     } catch (err) {
       if (err.name === 'ValidationError') {
         // Trate os erros de validação Yup

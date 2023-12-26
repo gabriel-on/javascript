@@ -2,28 +2,99 @@
   "developers": [
     {
       "id": 1,
-      "name": "CD Projekt RED",
-      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNXzB8OgRy4hizDgLXNy8SxNf5fm3xcMrs2AY0_Uu6Xfv4TkL3LIT1qW8pmRWmXNq0PZA&usqp=CAU"
+      "name": "Naughty Dog"
     },
     {
       "id": 2,
-      "name": "SCS Software",
-      "img": "https://pbs.twimg.com/profile_images/1057918910954127360/EdYj4mp2_400x400.jpg"
+      "name": "Rockstar Games"
     },
     {
       "id": 3,
-      "name": "Avalanche Studios Group",
-      "img": "https://logowik.com/content/uploads/images/avalanche-studios-group3545.logowik.com.webp"
+      "name": "Blizzard Entertainment"
     },
     {
       "id": 4,
-      "name": "Rockstar Games",
-      "img": "https://logowik.com/content/uploads/images/avalanche-studios-group3545.logowik.com.webp"
+      "name": "Ubisoft"
     },
     {
       "id": 5,
-      "name": "Moon Studios",
-      "img": ""
+      "name": "Electronic Arts"
+    },
+    {
+      "id": 6,
+      "name": "Bethesda Game Studios"
+    },
+    {
+      "id": 7,
+      "name": "Square Enix"
+    },
+    {
+      "id": 8,
+      "name": "Capcom"
+    },
+    {
+      "id": 9,
+      "name": "BioWare"
+    },
+    {
+      "id": 10,
+      "name": "CD Projekt"
+    },
+    {
+      "id": 11,
+      "name": "Nintendo"
+    },
+    {
+      "id": 12,
+      "name": "Valve Corporation"
+    },
+    {
+      "id": 13,
+      "name": "Respawn Entertainment"
+    },
+    {
+      "id": 14,
+      "name": "Gearbox Software"
+    },
+    {
+      "id": 15,
+      "name": "2K Games"
+    },
+    {
+      "id": 16,
+      "name": "Kojima Productions"
+    },
+    {
+      "id": 17,
+      "name": "NetherRealm Studios"
+    },
+    {
+      "id": 18,
+      "name": "Crystal Dynamics"
+    },
+    {
+      "id": 19,
+      "name": "Obsidian Entertainment"
+    },
+    {
+      "id": 20,
+      "name": "PlatinumGames"
+    },
+    {
+      "id": 21,
+      "name": "Avalanche Studios Group"
+    },
+    {
+      "id": 22,
+      "name": "Moon Studios"
+    },
+    {
+      "id": 23,
+      "name": "SCS Software"
+    },
+    {
+      "id": 24,
+      "name": "Outras"
     }
   ],
   "posts": [
@@ -58,7 +129,8 @@
       "developers": [
         "SCS Software"
       ],
-      "id": 2
+      "id": 2,
+      "rating": "9"
     },
     {
       "id": 4,
@@ -141,43 +213,54 @@
         "Sandbox"
       ],
       "developers": [
-        "Desenvolvedora 1",
-        "Desenvolvedora 3"
+        "SCS Software"
       ],
       "id": 10
     },
     {
-      "id": 11,
       "title": "Just Cause 3",
       "img": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Just_Cause_3_cover_art.jpg/220px-Just_Cause_3_cover_art.jpg",
       "content": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix.",
       "description": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix. Revelado em novembro de 2014 pela revista Game Informer, é o terceiro jogo da série Just Cause e a sequência de Just Cause 2.",
-      "developerId": 3,
-      "rating": 5,
-      "favorited": false
+      "genres": [
+        "Ação",
+        "Aventura",
+        "FPS"
+      ],
+      "developers": [
+        "Avalanche Studios Group"
+      ],
+      "id": 11
     },
     {
-      "id": 12,
       "title": "Just Cause 2",
       "img": "https://upload.wikimedia.org/wikipedia/pt/3/3b/Just_Cause_2.jpg",
       "content": "Just Cause 2 é um jogo de mundo aberto de ação e aventura desenvolvido pela Avalanche Studios, publicado pela Eidos Interactive e distribuído pela Square Enix Europe",
       "description": "Just Cause 2 é um jogo de mundo aberto de ação e aventura desenvolvido pela Avalanche Studios, publicado pela Eidos Interactive e distribuído pela Square Enix Europe. É uma sequência do jogo de 2006, Just Cause. O jogo possui mais de 8000 quilômetros quadrados de ilha para se explorar.",
       "genres": [
         "Ação",
-        "Aventura"
+        "Aventura",
+        "FPS"
       ],
-      "developerId": 3,
-      "rating": 7,
-      "favorited": true
+      "developers": [
+        "Avalanche Studios Group"
+      ],
+      "id": 12
     },
     {
-      "id": 13,
       "title": "Euro Truck Simulator 1",
       "img": "https://cdn-products.eneba.com/resized-products/22sZmv5fDz2mF0k1zPZmIvGv5pA1boQ0FQFmKBJzigU_350x200_3x-0.jpeg",
       "content": "Conteúdo",
       "description": "Descrição",
-      "rating": "5",
-      "favorited": true
+      "genres": [
+        "Corrida",
+        "Simulação",
+        "Sandbox"
+      ],
+      "developers": [
+        "SCS Software"
+      ],
+      "id": 13
     }
   ],
   "developerSelections": [

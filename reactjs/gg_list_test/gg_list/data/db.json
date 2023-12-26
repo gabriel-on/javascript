@@ -42,7 +42,8 @@
       ],
       "developer": "1",
       "id": 1,
-      "rating": "5"
+      "rating": "5",
+      "favorited": false
     },
     {
       "id": 2,
@@ -55,7 +56,8 @@
         "Simulação",
         "Sandbox"
       ],
-      "rating": "9"
+      "rating": "9",
+      "favorited": false
     },
     {
       "id": 4,
@@ -86,7 +88,9 @@
         "RPG",
         "Sandbox"
       ],
-      "id": 6
+      "id": 6,
+      "rating": "5",
+      "favorited": false
     },
     {
       "id": 7,
@@ -99,7 +103,9 @@
         "Aventura",
         "RPG",
         "Sandbox"
-      ]
+      ],
+      "favorited": true,
+      "rating": "7"
     },
     {
       "id": 8,
@@ -108,7 +114,8 @@
       "content": "Teste",
       "description": "Grand Theft Auto V é um jogo eletrônico de ação-aventura desenvolvido pela Rockstar North e publicado pela Rockstar Games.",
       "developerId": 4,
-      "rating": 8
+      "rating": 8,
+      "favorited": true
     },
     {
       "id": 9,
@@ -117,7 +124,8 @@
       "content": "Texto",
       "description": "Grand Theft Auto: San Andreas é um jogo eletrônico de ação-aventura desenvolvido pela Rockstar North e publicado pela Rockstar Games. É o quinto título principal da série Grand Theft Auto e foi lançado em outubro de 2004 para PlayStation 2 e em junho de 2005 para Xbox e Microsoft Windows",
       "developerId": 4,
-      "rating": 9
+      "rating": 9,
+      "favorited": true
     },
     {
       "title": "American Truck Simulator",
@@ -130,7 +138,7 @@
         "Sandbox"
       ],
       "id": 10,
-      "rating": "5"
+      "rating": "7"
     },
     {
       "id": 11,
@@ -139,7 +147,8 @@
       "content": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix.",
       "description": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix. Revelado em novembro de 2014 pela revista Game Informer, é o terceiro jogo da série Just Cause e a sequência de Just Cause 2.",
       "developerId": 3,
-      "rating": 5
+      "rating": 5,
+      "favorited": false
     },
     {
       "id": 12,
@@ -152,7 +161,8 @@
         "Aventura"
       ],
       "developerId": 3,
-      "rating": 7
+      "rating": 7,
+      "favorited": true
     },
     {
       "id": 13,
@@ -160,7 +170,8 @@
       "img": "https://cdn-products.eneba.com/resized-products/22sZmv5fDz2mF0k1zPZmIvGv5pA1boQ0FQFmKBJzigU_350x200_3x-0.jpeg",
       "content": "Conteúdo",
       "description": "Descrição",
-      "rating": ""
+      "rating": "5",
+      "favorited": true
     }
   ],
   "developerSelections": [

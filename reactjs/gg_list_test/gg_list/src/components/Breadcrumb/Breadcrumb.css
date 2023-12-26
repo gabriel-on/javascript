@@ -1,0 +1,22 @@
+/* Adicione estilos ao seu arquivo de estilos (por exemplo, styles.css) */
+.breadcrumb {
+    list-style: none;
+    padding: 6px;
+    background: #242424;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.breadcrumb-item {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.breadcrumb-item:last-child {
+    font-weight: bold;
+}
+
+.breadcrumb-separator {
+    margin: 0 5px;
+    color: #666;
+}

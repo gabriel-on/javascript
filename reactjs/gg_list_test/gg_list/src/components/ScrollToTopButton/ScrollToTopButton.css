@@ -12,6 +12,10 @@
     outline: none;
 }
 
+.scroll-to-top-button:hover {
+    opacity: 0.8;
+}
+
 .scroll-to-top-button.visible {
     display: block;
 }

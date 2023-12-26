@@ -12,6 +12,7 @@ import EditPost from './routes/edit/EditPost.jsx'
 import Post from './routes/post/Post.jsx'
 import Dev from './routes/dev/dev.jsx'
 import Searchbar from './components/searchbar/Searchbar.jsx'
+import ErrorPage from './components/ErrorPage/ErrorPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/search",
         element: <Searchbar/>
+      },
+      {
+        path: "*", 
+        element: <ErrorPage /> 
       }
     ]
   }

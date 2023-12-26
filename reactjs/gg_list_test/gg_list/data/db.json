@@ -143,13 +143,19 @@
       "rating": "8"
     },
     {
-      "id": 5,
       "title": "Mad Max",
       "img": "https://upload.wikimedia.org/wikipedia/pt/thumb/1/11/Mad_max_capa.jpg/250px-Mad_max_capa.jpg",
       "content": "blabla",
       "description": "Descrição",
-      "developerId": 3,
-      "rating": "7"
+      "genres": [
+        "Ação",
+        "Aventura",
+        "Sandbox"
+      ],
+      "developers": [
+        "Avalanche Studios Group"
+      ],
+      "id": 5
     },
     {
       "title": "The Witcher 3",

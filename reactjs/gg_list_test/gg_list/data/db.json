@@ -114,7 +114,8 @@
       "developers": [
         "CD Projekt"
       ],
-      "id": 1
+      "id": 1,
+      "favorited": false
     },
     {
       "title": "Euro Truck Simulator 2",
@@ -215,7 +216,8 @@
       "developers": [
         "SCS Software"
       ],
-      "id": 10
+      "id": 10,
+      "rating": "5"
     },
     {
       "title": "Just Cause 3",

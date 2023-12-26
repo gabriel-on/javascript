@@ -4,6 +4,7 @@ import Footer from './components/footer/Footer'
 
 import './App.css'
 import Breadcrumb from './components/Breadcrumb/Breadcrumb'
+import GameList from './components/GameList/GameList'
 
 function App() {
   return (

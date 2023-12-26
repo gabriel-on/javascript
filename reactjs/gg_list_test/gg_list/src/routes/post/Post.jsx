@@ -81,17 +81,15 @@ const GamePage = () => {
 
         <p>Desenvolvedores:</p>
         <div className='game-details-dev'>
-          <Link to={`/developers/${developer.id}`}>
-            <ul>
-              {game.developers && Array.isArray(game.developers) ? (
-                game.developers.map((developer, index) => (
-                  <li key={index}>{developer}</li>
-                ))
-              ) : (
-                <li>{game.developers}</li>
-              )}
-            </ul>
-          </Link>
+          <ul>
+            {game.developers && Array.isArray(game.developers) ? (
+              game.developers.map((developer, index) => (
+                <li key={index}>{developer}</li>
+              ))
+            ) : (
+              <li>{game.developers}</li>
+            )}
+          </ul>
         </div>
 
         {editing ? (

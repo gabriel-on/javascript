@@ -1,6 +1,6 @@
 import { Form } from '../../components/form/Form';
 import { api } from '../../axios/config'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 export function NewPost () {
 

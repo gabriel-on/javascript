@@ -40,13 +40,12 @@
         "Sandbox",
         "Outros"
       ],
-      "developer": "1",
-      "id": 1,
-      "rating": "5",
-      "favorited": false
+      "developers": [
+        "CD Projekt"
+      ],
+      "id": 1
     },
     {
-      "id": 2,
       "title": "Euro Truck Simulator 2",
       "img": "https://cdn-products.eneba.com/resized-products/V8fK6Td_350x200_3x-0.jpg",
       "content": "Conteúdo",
@@ -56,8 +55,10 @@
         "Simulação",
         "Sandbox"
       ],
-      "rating": "9",
-      "favorited": false
+      "developers": [
+        "SCS Software"
+      ],
+      "id": 2
     },
     {
       "id": 4,
@@ -66,7 +67,7 @@
       "content": "Teste",
       "description": "Descrição",
       "developerId": 5,
-      "rating": 8
+      "rating": "8"
     },
     {
       "id": 5,
@@ -75,7 +76,7 @@
       "content": "blabla",
       "description": "Descrição",
       "developerId": 3,
-      "rating": 7
+      "rating": "7"
     },
     {
       "title": "The Witcher 3",
@@ -88,12 +89,12 @@
         "RPG",
         "Sandbox"
       ],
-      "id": 6,
-      "rating": "5",
-      "favorited": false
+      "developers": [
+        "CD Projekt"
+      ],
+      "id": 6
     },
     {
-      "id": 7,
       "title": "The Witcher 2",
       "img": "https://cdn-products.eneba.com/resized-products/ugtpscu5ezak7i9t5r0x_350x200_3x-0.jpg",
       "content": "fef",
@@ -104,8 +105,10 @@
         "RPG",
         "Sandbox"
       ],
-      "favorited": true,
-      "rating": "7"
+      "developers": [
+        "CD Projekt"
+      ],
+      "id": 7
     },
     {
       "id": 8,
@@ -137,8 +140,11 @@
         "Simulação",
         "Sandbox"
       ],
-      "id": 10,
-      "rating": "7"
+      "developers": [
+        "Desenvolvedora 1",
+        "Desenvolvedora 3"
+      ],
+      "id": 10
     },
     {
       "id": 11,

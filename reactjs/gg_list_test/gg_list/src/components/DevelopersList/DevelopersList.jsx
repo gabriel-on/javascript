@@ -1,39 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { api } from '../../axios/config';
+import React from 'react';
+import '../form/Form.css'
 
-const DevelopersList = ({ onSelectDeveloper, selectedGameId }) => {
-  const [developers, setDevelopers] = useState([]);
-  const [selectedDeveloper, setSelectedDeveloper] = useState('');
+const developersList = [
+  "Naughty Dog", "Rockstar Games", "Blizzard Entertainment", "Ubisoft", "Electronic Arts", "Bethesda Game Studios", "Square Enix", "Capcom", "BioWare", "CD Projekt", "Nintendo", "Valve Corporation", "Respawn Entertainment", "Gearbox Software", "2K Games", "Kojima Productions", "NetherRealm Studios", "Crystal Dynamics", "Obsidian Entertainment", "PlatinumGames",
+  "Avalanche Studios Group", "Moon Studios", "SCS Software", "Outras"
+  // Adicione mais desenvolvedoras conforme necessário
+];
 
-  useEffect(() => {
-    const fetchDevelopers = async () => {
-      try {
-        const response = await api.get('/developers');
-        setDevelopers(response.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchDevelopers();
-  }, []);
-
-  const handleDeveloperChange = (developerName) => {
-    setSelectedDeveloper(developerName);
-    onSelectDeveloper(developerName, selectedGameId);
-  };
-
+const DevelopersList = ({ selectedDevelopers, onDeveloperToggle }) => {
   return (
-    <div>
-      <label>Desenvolvedora:</label>
-      <select onChange={(e) => handleDeveloperChange(e.target.value)} value={selectedDeveloper}>
-        <option value="" disabled>Selecione uma desenvolvedora</option>
-        {developers.map((developer) => (
-          <option key={developer.id} value={developer.name}>
-            {developer.name}
-          </option>
+    <div className=''>
+      <h3>Desenvolvedoras:</h3>
+      <ul className='developer-list'>
+        {developersList.map((developer, index) => (
+          <li key={index}>
+            <div className='developer'>
+              <input
+                type="checkbox"
+                id={`developer-${index}`}
+                value={developer}
+                checked={selectedDevelopers && selectedDevelopers.includes(developer)}
+                onChange={() => onDeveloperToggle(developer)}
+              />
+              <label htmlFor={`developer-${index}`}>{developer}</label>
+            </div>
+          </li>
         ))}
-      </select>
+      </ul>
     </div>
   );
 };

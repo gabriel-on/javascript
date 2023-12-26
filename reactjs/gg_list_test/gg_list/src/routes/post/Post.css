@@ -13,7 +13,7 @@
     align-items: center;
 }
 
-.game-details {
+.game-details, .game-details-dev {
     display: flex;
     gap: 10px;
 }
@@ -29,8 +29,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 100px;
+    max-width: 200px;
     background: red;
+    padding: 6px;
+    margin: 5px;
+}
+
+.game-details-dev ul {
+    font-size: 0.9em;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.game-details-dev ul li {
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 200px;
+    background: #850052;
     padding: 6px;
     margin: 5px;
 }

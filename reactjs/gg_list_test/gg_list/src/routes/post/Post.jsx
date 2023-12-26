@@ -79,9 +79,18 @@ const GamePage = () => {
         <img src={game.img} alt={game.title} className="game-image" />
         <p>{game.description}</p>
 
-        <p>
-          Desenvolvedor: <Link to={`/developers/${developer.id}`}>{developer.name}</Link>
-        </p>
+        <p>Desenvolvedores:</p>
+        <div className='game-details-dev'>
+          <ul>
+            {game.developers && Array.isArray(game.developers) ? (
+              game.developers.map((developer, index) => (
+                <li key={index}>{developer}</li>
+              ))
+            ) : (
+              <li>{game.developers}</li>
+            )}
+          </ul>
+        </div>
 
         {editing ? (
           <div>
@@ -117,7 +126,7 @@ const GamePage = () => {
             </button>
           </div>
         )}
-        
+
         <div className="game-details">
           <p>Gêneros:</p>
           {game.genres && Array.isArray(game.genres) && (

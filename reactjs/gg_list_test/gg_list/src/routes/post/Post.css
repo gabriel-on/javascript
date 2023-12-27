@@ -13,6 +13,10 @@
     align-items: center;
 }
 
+.game-image {
+    width: 240px;
+}
+
 .game-details, .game-details-dev {
     display: flex;
     gap: 10px;

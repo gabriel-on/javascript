@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react'
 import '../nav/Navbar.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import Searchbar from '../searchbar/Searchbar'
-import SearchForm from '../searchForm/SearchForm'
 
 const Navbar = () => {
 
@@ -28,6 +26,9 @@ const Navbar = () => {
         </li>
         <li>
           <Link to={"/admin"}>Gerenciar</Link>
+        </li>
+        <li>
+          <Link to={"/login"}>Login</Link>
         </li>
         <li>
           <Link to={"/search"} className='link-search'>

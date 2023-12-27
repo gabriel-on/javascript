@@ -13,6 +13,7 @@ import Post from './routes/post/Post.jsx'
 import Dev from './routes/dev/dev.jsx'
 import Searchbar from './components/searchbar/Searchbar.jsx'
 import ErrorPage from './components/ErrorPage/ErrorPage.jsx'
+import Login from './components/Login/Login.jsx'
 
 const router = createBrowserRouter([
   {
@@ -49,7 +50,11 @@ const router = createBrowserRouter([
       {
         path: "*", 
         element: <ErrorPage /> 
-      }
+      },
+      {
+        path: "/login", 
+        element: <Login /> 
+      },
     ]
   }
 ]) 

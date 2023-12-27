@@ -4,7 +4,6 @@ import Footer from './components/footer/Footer'
 
 import './App.css'
 import Breadcrumb from './components/Breadcrumb/Breadcrumb'
-import GameList from './components/GameList/GameList'
 import ScrollToTopButton from './components/ScrollToTopButton/ScrollToTopButton'
 
 function App() {

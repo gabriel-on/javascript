@@ -271,14 +271,28 @@
       "id": 13
     }
   ],
-  "developerSelections": [
+  "users": [
     {
-      "gameId": 2,
-      "developerId": 2
+      "id": 1,
+      "username": "usuario1",
+      "password": "senha1"
     },
     {
-      "gameId": 1,
-      "developerId": 1
+      "id": 2,
+      "username": "usuario2",
+      "password": "senha2"
+    }
+  ],
+  "admins": [
+    {
+      "id": 1,
+      "username": "admin1",
+      "password": "adminsenha1"
+    },
+    {
+      "id": 2,
+      "username": "admin2",
+      "password": "adminsenha2"
     }
   ]
 }

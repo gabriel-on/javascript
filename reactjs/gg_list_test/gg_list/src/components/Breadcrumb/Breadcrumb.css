@@ -1,10 +1,10 @@
-/* Adicione estilos ao seu arquivo de estilos (por exemplo, styles.css) */
 .breadcrumb {
     list-style: none;
     padding: 6px;
     background: #242424;
-    border: 1px solid #ddd;
+    border: 1px solid #dddddd;
     border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 .breadcrumb-item {

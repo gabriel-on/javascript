@@ -1,0 +1,19 @@
+.error {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    gap: 50px;
+}
+
+.error > h1 {
+    font-size: 4em;
+}
+
+.error a > h2 {
+    color: rgb(233, 100, 11);
+    font-size: 2.5em;
+}

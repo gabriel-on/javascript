@@ -95,6 +95,19 @@ const GamePage = () => {
           </ul>
         </div>
 
+        <p>Platafomas:</p>
+        <div className='game-details-dev'>
+          <ul>
+            {game.devices && Array.isArray(game.devices) ? (
+              game.devices.map((device, index) => (
+                <li key={index}>{device}</li>
+              ))
+            ) : (
+              <li>{game.devices}</li>
+            )}
+          </ul>
+        </div>
+
         {editing ? (
           <div>
             <label>Nova Avaliação:</label>

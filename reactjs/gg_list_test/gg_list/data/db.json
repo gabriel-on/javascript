@@ -1,7 +1,28 @@
 {
-  "auth": [
+  "devices": [
     {
-      "user": null
+      "id": 1,
+      "name": "PC"
+    },
+    {
+      "id": 2,
+      "name": "PlayStation"
+    },
+    {
+      "id": 3,
+      "name": "Xbox"
+    },
+    {
+      "id": 4,
+      "name": "Nintendo Switch"
+    },
+    {
+      "id": 5,
+      "name": "Mobile"
+    },
+    {
+      "id": 6,
+      "name": "VR"
     }
   ],
   "developers": [
@@ -120,6 +141,11 @@
       "developers": [
         "CD Projekt"
       ],
+      "devices": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
       "id": 1
     },
     {
@@ -236,9 +262,12 @@
         "Simulação",
         "Sandbox"
       ],
-      "releaseDate": "27-12-2023",
+      "releaseDate": "27-02-2016",
       "developers": [
         "SCS Software"
+      ],
+      "devices": [
+        "PC"
       ],
       "id": 10
     },
@@ -286,6 +315,38 @@
         "SCS Software"
       ],
       "id": 13
+    },
+    {
+      "title": "game 1",
+      "img": "https://upload.wikimedia.org/wikipedia/pt/3/3b/Just_Cause_2.jpg",
+      "content": "plp",
+      "description": "Descrição",
+      "genres": [
+        "Luta"
+      ],
+      "releaseDate": "27-12-2023",
+      "developers": [
+        "SCS Software"
+      ],
+      "devices": [],
+      "id": 14
+    },
+    {
+      "title": "gr",
+      "img": "https://cdn-products.eneba.com/resized-products/390c72c3457f3045b06b7c3227025372_350x200_3x-0.jpg",
+      "content": "vbbbb",
+      "description": "Just Cause 3 é um videojogo de ação-aventura produzido pelos Avalanche Studios e publicado pela Square Enix.",
+      "genres": [
+        "Horror"
+      ],
+      "releaseDate": "14-12-2023",
+      "developers": [
+        "SCS Software"
+      ],
+      "devices": [
+        "Xbox"
+      ],
+      "id": 15
     }
   ]
 }

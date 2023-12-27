@@ -9,6 +9,7 @@ import DevelopersList from '../DevelopersList/DevelopersList';
 
 import '../form/Form.css'
 import ReleaseDateInput from '../ReleaseDateInput/ReleaseDateInput';
+import DevicesList from '../DevicesList/DevicesList';
 
 const genresList = [
   "Ação", "Aventura", "RPG", "FPS", "MOBA", "Esportes", "Corrida", "RTS", "Simulação", "Quebra-Cabeças", "Horror", "Indie Games", "Luta", "Battle Royale", "Sandbox", "MMORPG", "Musical/Ritmo", "Simulação de Vida", "Realidade Virtual (VR)", "Outros"
@@ -30,12 +31,16 @@ export function Form({ title, textButton, onActions }) {
     defaultValues: {
       genres: [],
       developers: [],
+      device: [],
       releaseDate: '',
     },
   });
   const navigate = useNavigate();
 
   const [selectedDevelopers, setSelectedDevelopers] = useState([]);
+
+  const [selectedDevices, setSelectedDevices] = useState([]);
+
   const [formattedReleaseDate, setFormattedReleaseDate] = useState('');
 
   useEffect(() => {
@@ -45,6 +50,8 @@ export function Form({ title, textButton, onActions }) {
           const response = await api.get(`/posts/${id}`);
           reset(response.data);
           setSelectedDevelopers(response.data.developers || []);
+
+          setSelectedDevices(response.data.devices || []);
 
           // Mantenha a data no formato brasileiro ao carregar para edição
           const brazilianFormat = format(new Date(response.data.releaseDate), 'dd/MM/yyyy');
@@ -68,6 +75,16 @@ export function Form({ title, textButton, onActions }) {
     });
   };
 
+  const onDeviceToggle = (device) => {
+    setSelectedDevices((prevSelectedDevices) => {
+      if (prevSelectedDevices.includes(device)) {
+        return prevSelectedDevices.filter((dev) => dev !== device);
+      } else {
+        return [...prevSelectedDevices, device];
+      }
+    });
+  };
+
   const onSubmit = async (data) => {
     try {
       // Adicionando a validação Yup
@@ -77,6 +94,10 @@ export function Form({ title, textButton, onActions }) {
       if (selectedDevelopers.length === 0) {
         // Exiba uma mensagem de erro ou tome a ação apropriada
         alert("Selecione pelo menos uma desenvolvedora.");
+        return;
+      }
+      if (selectedDevices.length === 0) {
+        alert("Selecione pelo menos uma plataforma.");
         return;
       }
 
@@ -89,8 +110,9 @@ export function Form({ title, textButton, onActions }) {
         content: data.content,
         description: data.description,
         genres: data.genres,
-        releaseDate: formattedDate, // Adicione a data de lançamento formatada ao objeto postData
+        releaseDate: formattedDate,
         developers: selectedDevelopers,
+        devices: selectedDevices,
       };
 
       if (id) {
@@ -149,12 +171,19 @@ export function Form({ title, textButton, onActions }) {
         {errors.developers?.message}
       </div>
 
+      <div className="field">
+        <DevicesList
+          selectedDevices={selectedDevices}
+          onDeviceToggle={onDeviceToggle}
+        />
+        {errors.devices?.message}
+      </div>
+
       <ReleaseDateInput
         register={register}
         errors={errors}
         defaultValue={formattedReleaseDate}
         onChange={(e) => setFormattedReleaseDate(e.target.value)} // Atualiza o estado local ao mudar a data
-
       />
 
       <div className="field">

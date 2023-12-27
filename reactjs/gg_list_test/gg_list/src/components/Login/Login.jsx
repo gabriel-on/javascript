@@ -1,32 +1,43 @@
+// components/Login/Login.jsx
 import React, { useState } from 'react';
-import { useAuth } from '../AuthContext/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useAuth();
+  const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
 
-    // Simule uma requisição de login bem-sucedida
-    const fakeApiResponse = { id: 1, username: 'Usuario1', type: 'comum' };
-
-    // Verifique as credenciais e obtenha os dados do usuário do servidor
-    if (username === 'Usuario1' && password === 'senha1') {
-      login(fakeApiResponse);
-      // Redirecionar para a página após o login (por exemplo, dashboard)
-    } else {
-      console.error('Login falhou');
+      if (response.ok) {
+        const { token } = await response.json();
+        // Salve o token em algum lugar (pode ser no localStorage)
+        localStorage.setItem('token', token);
+        // Navegue para a página desejada após o login
+        navigate('/');
+      } else {
+        // Trate os erros de login aqui
+        console.error('Erro ao fazer login');
+      }
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
     }
   };
 
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+      <form>
         <label>
-          Nome de usuário:
+          Username:
           <input
             type="text"
             value={username}
@@ -35,7 +46,7 @@ const Login = () => {
         </label>
         <br />
         <label>
-          Senha:
+          Password:
           <input
             type="password"
             value={password}
@@ -43,7 +54,9 @@ const Login = () => {
           />
         </label>
         <br />
-        <button type="submit">Login</button>
+        <button type="button" onClick={handleLogin}>
+          Login
+        </button>
       </form>
     </div>
   );

@@ -1,4 +1,9 @@
 {
+  "auth": [
+    {
+      "user": null
+    }
+  ],
   "developers": [
     {
       "id": 1,
@@ -271,18 +276,22 @@
       "id": 13
     }
   ],
+  "routes": {
+    "/login": "/login"
+  },
   "users": [
     {
       "id": 1,
-      "username": "usuario1",
-      "password": "senha1"
+      "username": "user1",
+      "password": "password1"
     },
     {
       "id": 2,
-      "username": "usuario2",
-      "password": "senha2"
+      "username": "user2",
+      "password": "password2"
     }
   ],
+  "tokens": [],
   "admins": [
     {
       "id": 1,

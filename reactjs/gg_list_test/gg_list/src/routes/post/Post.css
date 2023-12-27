@@ -75,7 +75,7 @@
 
 /* Estilos para o botão de edição */
 .edit-button {
-    margin-right: 10px;
+    margin: 0 0 10px;
     background-color: blue;
     color: white;
 }
@@ -95,4 +95,12 @@
 .button-container {
     display: flex;
     align-items: center;
+}
+
+.button-container p {
+    margin: 10px 0;
+}
+
+.button-container p > span {
+    color: #377dff;
 }

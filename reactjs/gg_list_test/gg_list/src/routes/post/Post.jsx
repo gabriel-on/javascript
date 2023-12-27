@@ -69,6 +69,7 @@ const GamePage = () => {
         <p>{game.description}</p>
         <p>Data de lançamento:</p>
         <span>{game.releaseDate}</span>
+        <span>{game.classificacao}</span>
 
         <p>Desenvolvedores:</p>
         <div className='game-details-dev'>
@@ -113,7 +114,7 @@ const GamePage = () => {
           </div>
         ) : (
           <div className="button-container">
-            <p>Avaliação: {game.rating}/10</p>
+            <p>Avaliação: <span>{game.rating}/10</span></p>
             <button
               onClick={() => setEditing(true)}
               className="edit-button"

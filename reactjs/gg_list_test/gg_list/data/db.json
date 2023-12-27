@@ -139,7 +139,8 @@
       ],
       "releaseDate": "20-12-2020",
       "developers": [
-        "CD Projekt"
+        "CD Projekt",
+        "Rockstar Games"
       ],
       "devices": [
         "PC",
@@ -158,9 +159,12 @@
         "Simulação",
         "Sandbox"
       ],
-      "releaseDate": "14-12-2023",
+      "releaseDate": "15-12-2023",
       "developers": [
         "SCS Software"
+      ],
+      "devices": [
+        "PC"
       ],
       "id": 2
     },
@@ -262,14 +266,15 @@
         "Simulação",
         "Sandbox"
       ],
-      "releaseDate": "27-02-2016",
+      "releaseDate": "27-12-2023",
       "developers": [
         "SCS Software"
       ],
       "devices": [
         "PC"
       ],
-      "id": 10
+      "id": 10,
+      "favorited": true
     },
     {
       "title": "Just Cause 3",
@@ -347,6 +352,27 @@
         "Xbox"
       ],
       "id": 15
+    },
+    {
+      "title": "12",
+      "img": "https://upload.wikimedia.org/wikipedia/pt/3/3b/Just_Cause_2.jpg",
+      "content": "ddddd",
+      "description": "American Truck Simulator é um simulador de caminhões americanos desenvolvido e publicado pela SCS Software.",
+      "genres": [
+        "Ação",
+        "Aventura",
+        "FPS"
+      ],
+      "releaseDate": "20-12-2023",
+      "developers": [
+        "Ubisoft"
+      ],
+      "devices": [
+        "PC",
+        "Mobile"
+      ],
+      "id": 16,
+      "favorited": true
     }
   ]
 }

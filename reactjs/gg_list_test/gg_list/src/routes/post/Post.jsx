@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../axios/config';
-import { format } from 'date-fns';
-import { Link } from 'react-router-dom';
-import './Post.css'; // Importe o arquivo CSS
+import '../post/post.css'
 
 const GamePage = () => {
   const { id } = useParams();
   const [game, setGame] = useState({});
-  const [developer, setDeveloper] = useState({});
   const [editing, setEditing] = useState(false);
   const [newRating, setNewRating] = useState('');
   const [favorited, setFavorited] = useState(false);
@@ -22,17 +19,9 @@ const GamePage = () => {
         const gameResponse = await api.get(`/posts/${id}`);
         setGame(gameResponse.data);
 
-        const developerResponse = await api.get(`/developers/${gameResponse.data.developerId}`);
-        setDeveloper(developerResponse.data);
-
-        const editedGameRating = localStorage.getItem('editedGameRating');
+        const editedGameRating = localStorage.getItem(`editedGameRating-${id}`);
         if (editedGameRating) {
           setGame(prevGame => ({ ...prevGame, rating: editedGameRating }));
-        }
-
-        const favoritedStatus = localStorage.getItem('favoritedStatus');
-        if (favoritedStatus) {
-          setFavorited(JSON.parse(favoritedStatus));
         }
       } catch (error) {
         console.log(error);
@@ -45,7 +34,7 @@ const GamePage = () => {
   const handleEditRating = async () => {
     try {
       await api.patch(`/posts/${id}`, { rating: newRating });
-      localStorage.setItem('editedGameRating', newRating);
+      localStorage.setItem(`editedGameRating-${id}`, newRating);
 
       setGame(prevGame => ({ ...prevGame, rating: newRating }));
       setEditing(false);
@@ -61,10 +50,9 @@ const GamePage = () => {
       const newButtonColor = !favorited ? 'green' : 'red';
       localStorage.setItem(`buttonColor-${id}`, newButtonColor);
 
-      // Utilize uma função de callback para garantir a sincronização do estado
       setButtonColor((prevColor) => newButtonColor);
 
-      localStorage.setItem('favoritedStatus', JSON.stringify(!favorited));
+      localStorage.setItem(`favoritedStatus-${id}`, JSON.stringify(!favorited));
       setFavorited(!favorited);
     } catch (err) {
       console.error(err);
@@ -95,7 +83,7 @@ const GamePage = () => {
           </ul>
         </div>
 
-        <p>Platafomas:</p>
+        <p>Plataformas:</p>
         <div className='game-details-dev'>
           <ul>
             {game.devices && Array.isArray(game.devices) ? (

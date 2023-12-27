@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../axios/config';
+import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import './Post.css'; // Importe o arquivo CSS
 
@@ -78,6 +79,8 @@ const GamePage = () => {
         <h2>{game.title}</h2>
         <img src={game.img} alt={game.title} className="game-image" />
         <p>{game.description}</p>
+        <p>Data de lançamento:</p>
+        <span>{game.releaseDate}</span>
 
         <p>Desenvolvedores:</p>
         <div className='game-details-dev'>

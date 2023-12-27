@@ -4,9 +4,11 @@ import { useForm } from 'react-hook-form';
 import { api } from '../../axios/config';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { format } from 'date-fns'
 import DevelopersList from '../DevelopersList/DevelopersList';
 
 import '../form/Form.css'
+import ReleaseDateInput from '../ReleaseDateInput/ReleaseDateInput';
 
 const genresList = [
   "Ação", "Aventura", "RPG", "FPS", "MOBA", "Esportes", "Corrida", "RTS", "Simulação", "Quebra-Cabeças", "Horror", "Indie Games", "Luta", "Battle Royale", "Sandbox", "MMORPG", "Musical/Ritmo", "Simulação de Vida", "Realidade Virtual (VR)", "Outros"
@@ -18,6 +20,7 @@ const postSchema = yup.object({
   content: yup.string().required("O campo é obrigatório"),
   description: yup.string().required("O campo é obrigatório"),
   genres: yup.array().of(yup.string()).min(1, "Selecione pelo menos um gênero"),
+  releaseDate: yup.date().required('O campo é obrigatório'),
 });
 
 export function Form({ title, textButton, onActions }) {
@@ -26,12 +29,14 @@ export function Form({ title, textButton, onActions }) {
     resolver: yupResolver(postSchema),
     defaultValues: {
       genres: [],
-      developers: [], // Certifique-se de inicializar developers como um array vazio
+      developers: [],
+      releaseDate: '',
     },
   });
   const navigate = useNavigate();
 
   const [selectedDevelopers, setSelectedDevelopers] = useState([]);
+  const [formattedReleaseDate, setFormattedReleaseDate] = useState('');
 
   useEffect(() => {
     const getDataUpdate = async () => {
@@ -40,6 +45,10 @@ export function Form({ title, textButton, onActions }) {
           const response = await api.get(`/posts/${id}`);
           reset(response.data);
           setSelectedDevelopers(response.data.developers || []);
+
+          // Mantenha a data no formato brasileiro ao carregar para edição
+          const brazilianFormat = format(new Date(response.data.releaseDate), 'dd/MM/yyyy');
+          setFormattedReleaseDate(brazilianFormat);
         }
       } catch (err) {
         console.error(err);
@@ -71,12 +80,16 @@ export function Form({ title, textButton, onActions }) {
         return;
       }
 
+      // Converta a data para o formato "dd-MM-yyyy" antes de enviar para o servidor
+      const formattedDate = format(new Date(data.releaseDate), 'dd-MM-yyyy');
+
       const postData = {
         title: data.title,
         img: data.img,
         content: data.content,
         description: data.description,
         genres: data.genres,
+        releaseDate: formattedDate, // Adicione a data de lançamento formatada ao objeto postData
         developers: selectedDevelopers,
       };
 
@@ -135,6 +148,14 @@ export function Form({ title, textButton, onActions }) {
         />
         {errors.developers?.message}
       </div>
+
+      <ReleaseDateInput
+        register={register}
+        errors={errors}
+        defaultValue={formattedReleaseDate}
+        onChange={(e) => setFormattedReleaseDate(e.target.value)} // Atualiza o estado local ao mudar a data
+
+      />
 
       <div className="field">
         <input placeholder="Descrição" {...register("description")} />

@@ -116,11 +116,11 @@
         "Sandbox",
         "Outros"
       ],
+      "releaseDate": "20-12-2020",
       "developers": [
         "CD Projekt"
       ],
-      "id": 1,
-      "favorited": false
+      "id": 1
     },
     {
       "title": "Euro Truck Simulator 2",
@@ -132,11 +132,11 @@
         "Simulação",
         "Sandbox"
       ],
+      "releaseDate": "14-12-2023",
       "developers": [
         "SCS Software"
       ],
-      "id": 2,
-      "rating": "9"
+      "id": 2
     },
     {
       "id": 4,
@@ -189,30 +189,42 @@
         "RPG",
         "Sandbox"
       ],
+      "releaseDate": "2023-12-27",
       "developers": [
         "CD Projekt"
       ],
       "id": 7
     },
     {
-      "id": 8,
       "title": "Grand Theft Auto V",
       "img": "https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/1280/V.jpg",
       "content": "Teste",
       "description": "Grand Theft Auto V é um jogo eletrônico de ação-aventura desenvolvido pela Rockstar North e publicado pela Rockstar Games.",
-      "developerId": 4,
-      "rating": 8,
-      "favorited": true
+      "genres": [
+        "Ação",
+        "Aventura",
+        "FPS"
+      ],
+      "developers": [
+        "Rockstar Games"
+      ],
+      "id": 8
     },
     {
-      "id": 9,
       "title": "Grand Theft Auto: San Andreas",
       "img": "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d3/Grand_Theft_Auto_San_Andreas_capa.png/270px-Grand_Theft_Auto_San_Andreas_capa.png",
       "content": "Texto",
       "description": "Grand Theft Auto: San Andreas é um jogo eletrônico de ação-aventura desenvolvido pela Rockstar North e publicado pela Rockstar Games. É o quinto título principal da série Grand Theft Auto e foi lançado em outubro de 2004 para PlayStation 2 e em junho de 2005 para Xbox e Microsoft Windows",
-      "developerId": 4,
-      "rating": 9,
-      "favorited": true
+      "genres": [
+        "Ação",
+        "Aventura",
+        "FPS",
+        "Sandbox"
+      ],
+      "developers": [
+        "Rockstar Games"
+      ],
+      "id": 9
     },
     {
       "title": "American Truck Simulator",
@@ -224,11 +236,11 @@
         "Simulação",
         "Sandbox"
       ],
+      "releaseDate": "27-12-2023",
       "developers": [
         "SCS Software"
       ],
-      "id": 10,
-      "rating": "5"
+      "id": 10
     },
     {
       "title": "Just Cause 3",
@@ -274,34 +286,6 @@
         "SCS Software"
       ],
       "id": 13
-    }
-  ],
-  "routes": {
-    "/login": "/login"
-  },
-  "users": [
-    {
-      "id": 1,
-      "username": "user1",
-      "password": "password1"
-    },
-    {
-      "id": 2,
-      "username": "user2",
-      "password": "password2"
-    }
-  ],
-  "tokens": [],
-  "admins": [
-    {
-      "id": 1,
-      "username": "admin1",
-      "password": "adminsenha1"
-    },
-    {
-      "id": 2,
-      "username": "admin2",
-      "password": "adminsenha2"
     }
   ]
 }

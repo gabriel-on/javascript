@@ -415,6 +415,32 @@
       ],
       "classification": "14+",
       "id": 16
+    },
+    {
+      "title": "12 teste",
+      "img": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Just_Cause_3_cover_art.jpg/220px-Just_Cause_3_cover_art.jpg",
+      "content": "teste 22",
+      "description": "American Truck Simulator é um simulador de caminhões americanos desenvolvido e publicado pela SCS Software.",
+      "genres": [
+        "Ação",
+        "Aventura",
+        "RPG",
+        "FPS"
+      ],
+      "releaseDate": "27-12-2023",
+      "developers": [
+        "Rockstar Games",
+        "Ubisoft",
+        "Bethesda Game Studios"
+      ],
+      "devices": [
+        "PC",
+        "PlayStation",
+        "Xbox",
+        "Nintendo Switch"
+      ],
+      "classification": "12+",
+      "id": 17
     }
   ]
 }

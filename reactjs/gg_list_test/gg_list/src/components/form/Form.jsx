@@ -41,6 +41,7 @@ export function Form({ title, textButton, onActions }) {
   const [selectedDevices, setSelectedDevices] = useState([]);
   const [formattedReleaseDate, setFormattedReleaseDate] = useState('');
   const [selectedClassification, setSelectedClassification] = useState("L");
+  const [classificationsList, setClassificationsList] = useState([]);
 
 
   useEffect(() => {
@@ -58,6 +59,17 @@ export function Form({ title, textButton, onActions }) {
             setFormattedReleaseDate(brazilianFormat);
           }
 
+          // Carregar a lista completa de classificações
+          const classificationsResponse = await api.get('/classifications');
+          setClassificationsList(classificationsResponse.data);
+
+          // Configurar o estado inicial da classificação com base no nome do jogo
+          const selectedClassification = classificationsResponse.data.find(
+            (classification) => classification.name === response.data.classification
+          );
+          if (selectedClassification) {
+            setSelectedClassification(selectedClassification.name);
+          }
         }
       } catch (err) {
         console.error(err);
@@ -198,7 +210,9 @@ export function Form({ title, textButton, onActions }) {
 
       <div className='field'>
         <ClassificationsList
-          classificationInicial={selectedClassification} onClassificationChange={setSelectedClassification}
+          classificationsList={classificationsList}
+          classificationInicial={selectedClassification}
+          onClassificationChange={setSelectedClassification}
         />
       </div>
 

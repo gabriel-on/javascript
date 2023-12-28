@@ -78,11 +78,6 @@ const Admin = () => {
             onChange={(e) => setSearch(e.target.value)}
           />
         </form>
-        <>
-          {selectedItems.length > 0 && (
-            <button onClick={deleteSelectedItems}>Excluir Itens Selecionados</button>
-          )}
-        </>
 
         {posts.length === 0 ? (
           <p className="loading-admin">Carregando...</p>
@@ -118,6 +113,11 @@ const Admin = () => {
                 </div>
               ))}
           </div>
+        )}
+      </div>
+      <div className='delete-all'>
+        {selectedItems.length > 0 && (
+          <button onClick={deleteSelectedItems}>Excluir Itens Selecionados</button>
         )}
       </div>
     </div>

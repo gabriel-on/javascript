@@ -128,3 +128,12 @@ img {
     margin: 5px 5px 0;
     display: flex;
 }
+
+.delete-all {
+    margin: auto;
+}
+
+.delete-all button {
+    background: #ff0000;
+    font-weight: bold;
+}

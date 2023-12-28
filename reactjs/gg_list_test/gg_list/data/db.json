@@ -11,23 +11,23 @@
     },
     {
       "id": 2,
-      "name": "10+"
+      "name": "+10"
     },
     {
       "id": 3,
-      "name": "12+"
+      "name": "+12"
     },
     {
       "id": 4,
-      "name": "14+"
+      "name": "+14"
     },
     {
       "id": 5,
-      "name": "16+"
+      "name": "+16"
     },
     {
       "id": 6,
-      "name": "18+"
+      "name": "+18"
     }
   ],
   "devices": [
@@ -177,9 +177,8 @@
         "PlayStation",
         "Xbox"
       ],
-      "id": 1,
-      "rating": "6",
-      "favorited": false
+      "classification": "+18",
+      "id": 1
     },
     {
       "title": "Euro Truck Simulator 2",
@@ -352,95 +351,6 @@
         "SCS Software"
       ],
       "id": 13
-    },
-    {
-      "title": "fefef 2",
-      "img": "https://cdn-products.eneba.com/resized-products/22sZmv5fDz2mF0k1zPZmIvGv5pA1boQ0FQFmKBJzigU_350x200_3x-0.jpeg",
-      "content": "feff",
-      "description": "Just Cause 2 é um jogo de efmundo aberto de ação e aventura desenvolvido pela Avalanche Studios, publicado pela Eidos Interactive e distribuído pela Square Enix Europe",
-      "genres": [
-        "Ação",
-        "RPG",
-        "MOBA"
-      ],
-      "releaseDate": "25-12-2023",
-      "developers": [
-        "Naughty Dog",
-        "Rockstar Games",
-        "Ubisoft"
-      ],
-      "devices": [
-        "PlayStation",
-        "PC",
-        "Xbox"
-      ],
-      "id": 14
-    },
-    {
-      "title": "18",
-      "img": "https://cdn-products.eneba.com/resized-products/390c72c3457f3045b06b7c3227025372_350x200_3x-0.jpg",
-      "content": "thtrh",
-      "description": "American Truck Simulator é um simulador de caminhões americanos desenvolvido e publicado pela SCS Software.",
-      "genres": [
-        "Ação",
-        "Aventura",
-        "RPG",
-        "FPS"
-      ],
-      "releaseDate": "10-12-2023",
-      "developers": [
-        "Naughty Dog"
-      ],
-      "devices": [
-        "PC"
-      ],
-      "rating": "",
-      "id": 15
-    },
-    {
-      "title": "game",
-      "img": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Just_Cause_3_cover_art.jpg/220px-Just_Cause_3_cover_art.jpg",
-      "content": "bettr",
-      "description": "American Truck Simulator é um simulador de caminhões americanos desenvolvido e publicado pela SCS Software.",
-      "genres": [
-        "Simulação de Vida",
-        "Outros"
-      ],
-      "releaseDate": "12-12-2023",
-      "developers": [
-        "Kojima Productions"
-      ],
-      "devices": [
-        "VR"
-      ],
-      "classification": "14+",
-      "id": 16
-    },
-    {
-      "title": "12 teste",
-      "img": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Just_Cause_3_cover_art.jpg/220px-Just_Cause_3_cover_art.jpg",
-      "content": "teste 22",
-      "description": "American Truck Simulator é um simulador de caminhões americanos desenvolvido e publicado pela SCS Software.",
-      "genres": [
-        "Ação",
-        "Aventura",
-        "RPG",
-        "FPS"
-      ],
-      "releaseDate": "27-12-2023",
-      "developers": [
-        "Rockstar Games",
-        "Ubisoft",
-        "Bethesda Game Studios"
-      ],
-      "devices": [
-        "PC",
-        "PlayStation",
-        "Xbox",
-        "Nintendo Switch"
-      ],
-      "classification": "12+",
-      "id": 17
     }
   ]
 }

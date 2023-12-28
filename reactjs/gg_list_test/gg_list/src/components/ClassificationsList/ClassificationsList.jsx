@@ -18,7 +18,7 @@ const ClassificationsList = ({ classificationInicial, onClassificationChange }) 
 
   return (
     <div>
-      <h2>Classifications List</h2>
+      <h2>Classificação Indicativa:</h2>
       <div className='device-list'>
         {classificationsList.map(classification => (
           <div key={classification.id} className='device'>

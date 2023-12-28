@@ -69,7 +69,7 @@ const GamePage = () => {
         <p>{game.description}</p>
         <p>Data de lançamento:</p>
         <span>{game.releaseDate}</span>
-        <span>{game.classificacao}</span>
+        <span>{game.classification}</span>
 
         <p>Desenvolvedores:</p>
         <div className='game-details-dev'>

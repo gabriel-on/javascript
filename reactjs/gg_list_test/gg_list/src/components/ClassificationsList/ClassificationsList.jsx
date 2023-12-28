@@ -12,8 +12,8 @@ const ClassificationsList = ({ classificationInicial, onClassificationChange }) 
       .catch(error => console.error('Error fetching classifications:', error));
   }, []);
 
-  const handleRadioChange = (id) => {
-    onClassificationChange(id);
+  const handleRadioChange = (name) => {
+    onClassificationChange(name);
   };
 
   return (
@@ -26,8 +26,8 @@ const ClassificationsList = ({ classificationInicial, onClassificationChange }) 
               type="radio"
               id={`classification-${classification.id}`}
               name="classification"
-              checked={classificationInicial === classification.id}
-              onChange={() => handleRadioChange(classification.id)}
+              checked={classificationInicial === classification.name}
+              onChange={() => handleRadioChange(classification.name)}
             />
             <label htmlFor={`classification-${classification.id}`}>{classification.name}</label>
           </div>

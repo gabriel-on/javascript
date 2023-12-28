@@ -398,7 +398,7 @@
       "id": 15
     },
     {
-      "title": "19",
+      "title": "game",
       "img": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Just_Cause_3_cover_art.jpg/220px-Just_Cause_3_cover_art.jpg",
       "content": "bettr",
       "description": "American Truck Simulator é um simulador de caminhões americanos desenvolvido e publicado pela SCS Software.",
@@ -413,6 +413,7 @@
       "devices": [
         "VR"
       ],
+      "classification": "14+",
       "id": 16
     }
   ]

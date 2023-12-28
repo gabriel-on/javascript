@@ -40,7 +40,7 @@ export function Form({ title, textButton, onActions }) {
   const [selectedDevelopers, setSelectedDevelopers] = useState([]);
   const [selectedDevices, setSelectedDevices] = useState([]);
   const [formattedReleaseDate, setFormattedReleaseDate] = useState('');
-  const [selectedClassification, setSelectedClassification] = useState(1);
+  const [selectedClassification, setSelectedClassification] = useState("L");
 
 
   useEffect(() => {

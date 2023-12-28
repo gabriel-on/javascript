@@ -4,6 +4,9 @@ import api from '../../axios/config';
 const ReviewForm = ({ id, onSave, setGame }) => {
     const [newReview, setNewReview] = useState('');
 
+    // Recupera as análises salvas do armazenamento local ao montar o componente
+    const savedReviews = JSON.parse(localStorage.getItem(`gameReviews-${id}`)) || [];
+
     const handleSaveReview = async () => {
         try {
             // Verifica se o campo da análise está vazio
@@ -28,6 +31,9 @@ const ReviewForm = ({ id, onSave, setGame }) => {
                     reviews: reviews,
                 };
             });
+
+            // Adiciona a nova análise às análises salvas no armazenamento local
+            localStorage.setItem(`gameReviews-${id}`, JSON.stringify([...savedReviews, normalizedReview]));
 
             // Chama a função onSave se existir
             onSave && onSave(normalizedReview);

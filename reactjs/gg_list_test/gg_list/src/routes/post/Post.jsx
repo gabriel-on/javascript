@@ -31,6 +31,9 @@ const GamePage = () => {
     }
   };
 
+  // Estado local para as análises
+  const [localReviews, setLocalReviews] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,6 +44,9 @@ const GamePage = () => {
         if (editedGameRating) {
           setGame((prevState) => ({ ...prevState, rating: editedGameRating }));
         }
+        // Recupera as análises salvas do armazenamento local
+        const savedReviews = JSON.parse(localStorage.getItem(`gameReviews-${id}`)) || [];
+        setLocalReviews(savedReviews);
       } catch (error) {
         console.log(error);
       }
@@ -164,10 +170,10 @@ const GamePage = () => {
         <ReviewForm id={id} onSaveReview={handleSaveReview} setGame={setGame} />
 
         <div>
-          {Array.isArray(game.reviews) && game.reviews.length > 0 ? (
+          {Array.isArray(localReviews) && localReviews.length > 0 ? (
             <div>
               <h3>Análises</h3>
-              {game.reviews.map((review, index) => (
+              {localReviews.map((review, index) => (
                 <div key={index}>
                   {/* Se o objeto da análise contém uma propriedade 'review', use-a para exibir o comentário */}
                   <p><strong>Comentário:</strong></p>

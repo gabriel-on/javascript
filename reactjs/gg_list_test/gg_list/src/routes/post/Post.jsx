@@ -1,17 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../axios/config';
-import '../post/post.css'
+import '../post/post.css';
+import ReviewForm from '../../components/ReviewForm/ReviewForm';
 
 const GamePage = () => {
   const { id } = useParams();
-  const [game, setGame] = useState({});
+  const [game, setGame] = useState({
+    reviews: [],
+    // ... outras propriedades do jogo
+    rating: 0, // Adicione as propriedades necessárias e defina valores padrão, se aplicável
+    // Adicione outras propriedades conforme necessário
+  });
   const [editing, setEditing] = useState(false);
   const [newRating, setNewRating] = useState('');
   const [favorited, setFavorited] = useState(false);
   const [buttonColor, setButtonColor] = useState(() => {
     return localStorage.getItem(`buttonColor-${id}`) || 'green';
   });
+
+  const handleSaveReview = async (review) => {
+    try {
+      const response = await api.post(`/posts/${id}/reviews`, { review });
+      setGame((prevState) => ({
+        ...prevState,
+        reviews: [...prevState.reviews, response.data],
+      }));
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +39,7 @@ const GamePage = () => {
 
         const editedGameRating = localStorage.getItem(`editedGameRating-${id}`);
         if (editedGameRating) {
-          setGame(prevGame => ({ ...prevGame, rating: editedGameRating }));
+          setGame((prevState) => ({ ...prevState, rating: editedGameRating }));
         }
       } catch (error) {
         console.log(error);
@@ -36,7 +54,7 @@ const GamePage = () => {
       await api.patch(`/posts/${id}`, { rating: newRating });
       localStorage.setItem(`editedGameRating-${id}`, newRating);
 
-      setGame(prevGame => ({ ...prevGame, rating: newRating }));
+      setGame((prevState) => ({ ...prevState, rating: newRating }));
       setEditing(false);
     } catch (err) {
       console.error(err);
@@ -142,6 +160,27 @@ const GamePage = () => {
             </ul>
           )}
         </div>
+
+        <ReviewForm id={id} onSaveReview={handleSaveReview} setGame={setGame} />
+
+        <div>
+          {Array.isArray(game.reviews) && game.reviews.length > 0 ? (
+            <div>
+              <h3>Análises</h3>
+              {game.reviews.map((review, index) => (
+                <div key={index}>
+                  {/* Se o objeto da análise contém uma propriedade 'review', use-a para exibir o comentário */}
+                  <p><strong>Comentário:</strong></p>
+                  <span>{review}</span>
+                  {/* Adicione mais informações da análise, se necessário */}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>Nenhuma análise disponível.</p>
+          )}
+        </div>
+
       </div>
     </div>
   );

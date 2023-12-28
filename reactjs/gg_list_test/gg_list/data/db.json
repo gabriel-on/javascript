@@ -4,6 +4,33 @@
       "users": null
     }
   ],
+  "reviews": [
+    {
+      "review": "teste",
+      "postId": "10",
+      "id": 1
+    },
+    {
+      "review": "teste 2",
+      "postId": "13",
+      "id": 2
+    },
+    {
+      "review": "teste 2",
+      "postId": "13",
+      "id": 3
+    },
+    {
+      "review": "teste",
+      "postId": "1",
+      "id": 4
+    },
+    {
+      "review": "teste2",
+      "postId": "1",
+      "id": 5
+    }
+  ],
   "classifications": [
     {
       "id": 1,
@@ -168,7 +195,7 @@
         "Sandbox",
         "Outros"
       ],
-      "releaseDate": "20-12-2020",
+      "releaseDate": "28-12-2023",
       "developers": [
         "CD Projekt"
       ],
@@ -177,8 +204,9 @@
         "PlayStation",
         "Xbox"
       ],
-      "classification": "+18",
-      "id": 1
+      "classification": "+16",
+      "id": 1,
+      "favorited": false
     },
     {
       "title": "Euro Truck Simulator 2",

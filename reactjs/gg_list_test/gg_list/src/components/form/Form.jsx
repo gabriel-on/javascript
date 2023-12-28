@@ -1,15 +1,15 @@
+// Form.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { api } from '../../axios/config';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { format } from 'date-fns'
+import { format } from 'date-fns';
 import DevelopersList from '../DevelopersList/DevelopersList';
-
-import '../form/Form.css'
 import ReleaseDateInput from '../ReleaseDateInput/ReleaseDateInput';
 import DevicesList from '../DevicesList/DevicesList';
+import ClassificationsList from '../ClassificationsList/ClassificationsList';
 
 const genresList = [
   "Ação", "Aventura", "RPG", "FPS", "MOBA", "Esportes", "Corrida", "RTS", "Simulação", "Quebra-Cabeças", "Horror", "Indie Games", "Luta", "Battle Royale", "Sandbox", "MMORPG", "Musical/Ritmo", "Simulação de Vida", "Realidade Virtual (VR)", "Outros"
@@ -31,17 +31,17 @@ export function Form({ title, textButton, onActions }) {
     defaultValues: {
       genres: [],
       developers: [],
-      device: [],
+      devices: [],
       releaseDate: '',
     },
   });
   const navigate = useNavigate();
 
   const [selectedDevelopers, setSelectedDevelopers] = useState([]);
-
   const [selectedDevices, setSelectedDevices] = useState([]);
-
   const [formattedReleaseDate, setFormattedReleaseDate] = useState('');
+  const [selectedClassification, setSelectedClassification] = useState(1);
+
 
   useEffect(() => {
     const getDataUpdate = async () => {
@@ -50,12 +50,14 @@ export function Form({ title, textButton, onActions }) {
           const response = await api.get(`/posts/${id}`);
           reset(response.data);
           setSelectedDevelopers(response.data.developers || []);
-
           setSelectedDevices(response.data.devices || []);
 
-          // Mantenha a data no formato brasileiro ao carregar para edição
-          const brazilianFormat = format(new Date(response.data.releaseDate), 'dd/MM/yyyy');
-          setFormattedReleaseDate(brazilianFormat);
+          const releaseDate = new Date(response.data.releaseDate);
+          if (!isNaN(releaseDate.getTime())) {
+            const brazilianFormat = format(releaseDate, 'dd-MM-yyyy');
+            setFormattedReleaseDate(brazilianFormat);
+          }
+
         }
       } catch (err) {
         console.error(err);
@@ -87,12 +89,9 @@ export function Form({ title, textButton, onActions }) {
 
   const onSubmit = async (data) => {
     try {
-      // Adicionando a validação Yup
       await postSchema.validate(data, { abortEarly: false });
 
-      // Verifique se pelo menos uma desenvolvedora foi selecionada
       if (selectedDevelopers.length === 0) {
-        // Exiba uma mensagem de erro ou tome a ação apropriada
         alert("Selecione pelo menos uma desenvolvedora.");
         return;
       }
@@ -101,7 +100,6 @@ export function Form({ title, textButton, onActions }) {
         return;
       }
 
-      // Converta a data para o formato "dd-MM-yyyy" antes de enviar para o servidor
       const formattedDate = format(new Date(data.releaseDate), 'dd-MM-yyyy');
 
       const postData = {
@@ -113,6 +111,7 @@ export function Form({ title, textButton, onActions }) {
         releaseDate: formattedDate,
         developers: selectedDevelopers,
         devices: selectedDevices,
+        classification: selectedClassification,
       };
 
       if (id) {
@@ -124,12 +123,16 @@ export function Form({ title, textButton, onActions }) {
       navigate(`/admin`);
     } catch (err) {
       if (err.name === 'ValidationError') {
-        // Trate os erros de validação Yup
         console.error(err.errors);
       } else {
         console.error(err);
       }
     }
+  };
+
+  const handleClassificationChange = (id) => {
+    console.log(`Selected classification ID: ${id}`);
+    // Você pode adicionar lógica adicional aqui conforme necessário
   };
 
   return (
@@ -179,16 +182,24 @@ export function Form({ title, textButton, onActions }) {
         {errors.devices?.message}
       </div>
 
-      <ReleaseDateInput
-        register={register}
-        errors={errors}
-        defaultValue={formattedReleaseDate}
-        onChange={(e) => setFormattedReleaseDate(e.target.value)} // Atualiza o estado local ao mudar a data
-      />
+      <div className='field'>
+        <ReleaseDateInput
+          register={register}
+          errors={errors}
+          defaultValue={formattedReleaseDate ? format(new Date(formattedReleaseDate), 'yyyy-MM-dd') : ''}
+          onChange={(e) => setFormattedReleaseDate(e.target.value)}
+        />
+      </div>
 
       <div className="field">
         <input placeholder="Descrição" {...register("description")} />
         {errors.description?.message}
+      </div>
+
+      <div className='field'>
+        <ClassificationsList
+          classificationInicial={selectedClassification} onClassificationChange={setSelectedClassification}
+        />
       </div>
 
       <div className="field">

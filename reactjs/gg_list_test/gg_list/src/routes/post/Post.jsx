@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import api from '../../axios/config';
 import '../post/post.css';
 import ReviewForm from '../../components/ReviewForm/ReviewForm';
@@ -185,8 +185,13 @@ const GamePage = () => {
           ) : (
             <p>Nenhuma análise disponível.</p>
           )}
-        </div>
 
+          {game.link && (
+            <Link to={game.link} target='_blank'>
+              <h3>Site oficial</h3>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

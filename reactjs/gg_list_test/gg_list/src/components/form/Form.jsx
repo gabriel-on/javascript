@@ -22,6 +22,7 @@ const postSchema = yup.object({
   description: yup.string().required("O campo é obrigatório"),
   genres: yup.array().of(yup.string()).min(1, "Selecione pelo menos um gênero"),
   releaseDate: yup.date().required('O campo é obrigatório'),
+  link: yup.string().url("Insira uma URL válida"),
 });
 
 export function Form({ title, textButton, onActions }) {
@@ -124,6 +125,7 @@ export function Form({ title, textButton, onActions }) {
         developers: selectedDevelopers,
         devices: selectedDevices,
         classification: selectedClassification,
+        link: data.link || null,
       };
 
       if (id) {
@@ -219,6 +221,12 @@ export function Form({ title, textButton, onActions }) {
       <div className="field">
         <textarea placeholder="Conteúdo" {...register("content")} />
         {errors.content?.message}
+      </div>
+
+      <div className="field">
+        <h2>Site Oficial - (Opcional)</h2>
+        <input type="url" placeholder="Link do Jogo" {...register("link")} />
+        {errors.link?.message}
       </div>
 
       <button type='submit'>{textButton}</button>

@@ -179,6 +179,7 @@
         "Xbox"
       ],
       "classification": "+18",
+      "link": "https://www.cyberpunk.net/br/pt-br/",
       "id": 1
     },
     {
@@ -353,6 +354,26 @@
         "SCS Software"
       ],
       "id": 13
+    },
+    {
+      "title": "teste",
+      "img": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Just_Cause_3_cover_art.jpg/220px-Just_Cause_3_cover_art.jpg",
+      "content": "oij",
+      "description": "American Truck Simulator é um simulador de caminhões americanos desenvolvido e publicado pela SCS Software.",
+      "genres": [
+        "Ação",
+        "Aventura"
+      ],
+      "releaseDate": "27-12-2023",
+      "developers": [
+        "Naughty Dog"
+      ],
+      "devices": [
+        "PC"
+      ],
+      "classification": "L",
+      "link": "https://www.teste.com",
+      "id": 14
     }
   ]
 }

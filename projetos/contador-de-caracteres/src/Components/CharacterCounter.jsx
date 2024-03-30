@@ -36,9 +36,9 @@ function CharacterCounter() {
     };
 
     const countWords = () => {
-        const words = text.trim().split(/\s+/);
-        return words.length;
-    };
+        const words = text.trim().split(/\s+|[-—]/);
+        return words.filter(word => word !== '').length;
+    };    
 
     const countLettersOnly = () => {
         return text.replace(/[^a-zA-Z]/g, '').length;

@@ -1,51 +1,51 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { saveAs } from 'file-saver';
-import { saveAs as saveAsDocx } from 'file-saver';
 
 function CharacterCounter() {
     const [text, setText] = useState('');
     const [countLetters, setCountLetters] = useState(true);
     const [countSpecialChars, setCountSpecialChars] = useState(true);
+    const [totalCharacters, setTotalCharacters] = useState(0);
+    const [totalWords, setTotalWords] = useState(0);
     const resultRef = useRef(null);
+
+    // Recalculate totals when text, countLetters, or countSpecialChars change
+    useEffect(() => {
+        updateCounters(text);
+    }, [text, countLetters, countSpecialChars]);
 
     const handleChange = (event) => {
         setText(event.target.value);
     };
 
     const handleCountLettersChange = () => {
-        setCountLetters(!countLetters);
+        setCountLetters(prevState => !prevState);
     };
 
     const handleCountSpecialCharsChange = () => {
-        setCountSpecialChars(!countSpecialChars);
+        setCountSpecialChars(prevState => !prevState);
     };
 
-    const countCharacters = () => {
-        let count = 0;
-        if (countLetters) {
-            // Contar letras do alfabeto inglês e português
-            count += text.replace(/[^a-zA-ZÀ-ú]/g, '').length;
-        }
-        if (countSpecialChars) {
-            // Contar caracteres especiais
-            count += text.replace(/[a-zA-Z0-9À-ú]/g, '').length;
-        }
-        return count;
+    const updateCounters = (value) => {
+        let totalLetters = countLetters ? countLettersOnly(value) : 0;
+        let totalSpecialChars = countSpecialChars ? countSpecialCharsOnly(value) : 0;
+        setTotalCharacters(totalLetters + totalSpecialChars);
+        setTotalWords(countWords(value));
     };
 
-    const countWords = () => {
-        const words = text.trim().split(/\s+|[-—]/);
+    const countLettersOnly = (value) => {
+        return value.replace(/[^a-zA-Z]/g, '').length;
+    };
+
+    const countSpecialCharsOnly = (value) => {
+        return value.replace(/[a-zA-Z0-9\s]/g, '').length;
+    };
+
+    const countWords = (value) => {
+        const words = value.trim().split(/\s+|[-—]/);
         return words.filter(word => word !== '').length;
-    };    
-
-    const countLettersOnly = () => {
-        return text.replace(/[^a-zA-Z]/g, '').length;
-    };
-
-    const countSpecialCharsOnly = () => {
-        return text.replace(/[a-zA-Z0-9]/g, '').length;
     };
 
     const saveAsPDF = () => {
@@ -56,14 +56,14 @@ function CharacterCounter() {
             return;
         }
 
+        let totalLetters = countLetters ? countLettersOnly(text) : 0;
+        let totalSpecialChars = countSpecialChars ? countSpecialCharsOnly(text) : 0;
+
         const lines = text.split('\n');
         const lineHeight = 20; // ajuste conforme necessário
         const pageHeight = 600; // altura da página
         const doc = new jsPDF('p', 'pt', 'a4');
         let cursorY = 20;
-        let totalLetters = countLettersOnly();
-        let totalSpecialChars = countSpecialCharsOnly();
-        let totalAll = totalLetters + totalSpecialChars;
 
         const addPageIfNeeded = () => {
             if (cursorY > pageHeight) {
@@ -103,8 +103,8 @@ function CharacterCounter() {
 
         doc.text(`Total de letras: ${totalLetters}`, 20, cursorY + 20);
         doc.text(`Total de caracteres especiais: ${totalSpecialChars}`, 20, cursorY + 40);
-        doc.text(`Total de letras e caracteres especiais: ${totalAll}`, 20, cursorY + 60);
-        doc.text(`Total de palavras: ${countWords()}`, 20, cursorY + 80);
+        doc.text(`Total de letras e caracteres especiais: ${totalLetters + totalSpecialChars}`, 20, cursorY + 60);
+        doc.text(`Total de palavras: ${countWords(text)}`, 20, cursorY + 80);
 
         doc.save('texto_editavel.pdf');
     };
@@ -115,15 +115,14 @@ function CharacterCounter() {
             return;
         }
 
-        let totalLetters = countLettersOnly();
-        let totalSpecialChars = countSpecialCharsOnly();
-        let totalAll = totalLetters + totalSpecialChars;
+        let totalLetters = countLetters ? countLettersOnly(text) : 0;
+        let totalSpecialChars = countSpecialChars ? countSpecialCharsOnly(text) : 0;
 
         let txtContent = text + '\n\n';
         txtContent += `Total de letras: ${totalLetters}\n`;
         txtContent += `Total de caracteres especiais: ${totalSpecialChars}\n`;
-        txtContent += `Total de letras e caracteres especiais: ${totalAll}\n`;
-        txtContent += `Total de palavras: ${countWords()}`;
+        txtContent += `Total de letras e caracteres especiais: ${totalLetters + totalSpecialChars}\n`;
+        txtContent += `Total de palavras: ${countWords(text)}`;
 
         const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8' });
         saveAs(blob, 'texto_editavel.txt');
@@ -135,15 +134,14 @@ function CharacterCounter() {
             return;
         }
 
-        let totalLetters = countLettersOnly();
-        let totalSpecialChars = countSpecialCharsOnly();
-        let totalAll = totalLetters + totalSpecialChars;
+        let totalLetters = countLetters ? countLettersOnly(text) : 0;
+        let totalSpecialChars = countSpecialChars ? countSpecialCharsOnly(text) : 0;
 
         let docxContent = text + '\n\n';
         docxContent += `Total de letras: ${totalLetters}\n`;
         docxContent += `Total de caracteres especiais: ${totalSpecialChars}\n`;
-        docxContent += `Total de letras e caracteres especiais: ${totalAll}\n`;
-        docxContent += `Total de palavras: ${countWords()}`;
+        docxContent += `Total de letras e caracteres especiais: ${totalLetters + totalSpecialChars}\n`;
+        docxContent += `Total de palavras: ${countWords(text)}`;
 
         const element = document.createElement('a');
         const file = new Blob([docxContent], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
@@ -180,8 +178,8 @@ function CharacterCounter() {
                     Contar caracteres especiais
                 </label>
             </div>
-            <p>Total de caracteres: {countCharacters()}</p>
-            <p>Total de palavras: {countWords()}</p>
+            <p>Total de caracteres: {totalCharacters}</p>
+            <p>Total de palavras: {totalWords}</p>
             <button onClick={saveAsPDF}>Salvar como PDF</button>
             <button onClick={saveAsTXT}>Salvar como TXT</button>
             <button onClick={saveAsDOCX}>Salvar como DOCX</button>

@@ -106,7 +106,7 @@ function CharacterCounter() {
         doc.text(`Total de letras e caracteres especiais: ${totalLetters + totalSpecialChars}`, 20, cursorY + 60);
         doc.text(`Total de palavras: ${countWords(text)}`, 20, cursorY + 80);
 
-        doc.save('texto_editavel.pdf');
+        doc.save('seu_texto.pdf');
     };
 
     const saveAsTXT = () => {
@@ -125,7 +125,7 @@ function CharacterCounter() {
         txtContent += `Total de palavras: ${countWords(text)}`;
 
         const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8' });
-        saveAs(blob, 'texto_editavel.txt');
+        saveAs(blob, 'seu_texto.txt');
     };
 
     const saveAsDOCX = () => {
@@ -146,7 +146,7 @@ function CharacterCounter() {
         const element = document.createElement('a');
         const file = new Blob([docxContent], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
         element.href = URL.createObjectURL(file);
-        element.download = "texto_editavel.docx";
+        element.download = "seu_texto.docx";
         document.body.appendChild(element); // Required for this to work in FireFox
         element.click();
     };

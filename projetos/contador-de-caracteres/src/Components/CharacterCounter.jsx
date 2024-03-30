@@ -40,8 +40,8 @@ function CharacterCounter() {
     };
 
     const countSpecialCharsOnly = (value) => {
-        return value.replace(/[a-zA-Z0-9\s]/g, '').length;
-    };
+        return value.replace(/[a-zA-Z0-9]/g, '').length;
+    };        
 
     const countWords = (value) => {
         const words = value.trim().split(/\s+|[-—]/);

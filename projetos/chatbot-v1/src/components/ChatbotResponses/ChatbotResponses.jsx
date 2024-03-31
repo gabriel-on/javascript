@@ -5,12 +5,17 @@ import { database } from "../../firebase/config";
 const ChatbotResponses = ({ onSendMessage }) => {
     const [input, setInput] = useState("");
     const [response, setResponse] = useState("");
+    const [isInputEmpty, setIsInputEmpty] = useState(true);
+
+    useEffect(() => {
+        setIsInputEmpty(input.trim() === "");
+    }, [input]);
 
     useEffect(() => {
         if (input && input.trim() !== "") {
             searchResponseInDatabase(input.trim().toLowerCase());
         }
-    }, [input]);    
+    }, [input]);
 
     const searchResponseInDatabase = (userInput) => {
         const responsesRef = ref(database, 'responses');
@@ -65,7 +70,7 @@ const ChatbotResponses = ({ onSendMessage }) => {
 
     return (
         <div>
-            <div>{response}</div>
+            {/* {response && <div>{response}</div>} */}
             <input
                 type="text"
                 value={input}
@@ -73,7 +78,9 @@ const ChatbotResponses = ({ onSendMessage }) => {
                 placeholder="Digite sua mensagem..."
                 style={{ marginRight: "10px" }}
             />
-            <button onClick={handleSendButton}>Enviar</button>
+            <button
+                onClick={handleSendButton}
+                disabled={isInputEmpty}>Enviar</button>
         </div>
     );
 };

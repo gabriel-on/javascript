@@ -30,6 +30,8 @@ const Chatbot = () => {
             text: message.trim(),
             timestamp: Date.now()
         });
+
+        console.log("Mensagem do usuário enviada:", message); // Log da mensagem do usuário
     };
 
     return (

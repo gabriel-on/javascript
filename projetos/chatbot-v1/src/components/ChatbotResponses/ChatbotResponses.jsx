@@ -6,6 +6,7 @@ const ChatbotResponses = ({ onSendMessage }) => {
     const [input, setInput] = useState("");
     const [response, setResponse] = useState("");
     const [isInputEmpty, setIsInputEmpty] = useState(true);
+    const [isTyping, setIsTyping] = useState(false);
 
     useEffect(() => {
         setIsInputEmpty(input.trim() === "");
@@ -13,7 +14,10 @@ const ChatbotResponses = ({ onSendMessage }) => {
 
     useEffect(() => {
         if (input && input.trim() !== "") {
-            searchResponseInDatabase(input.trim().toLowerCase());
+            setIsTyping(true); // Marca que o bot está digitando
+            setTimeout(() => {
+                searchResponseInDatabase(input.trim().toLowerCase());
+            }, 2000); // Delay de 1 segundo antes de buscar a resposta
         }
     }, [input]);
 
@@ -37,6 +41,7 @@ const ChatbotResponses = ({ onSendMessage }) => {
                 // Se não houver dados no banco de dados, criar uma nova resposta
                 createNewResponse(userInput);
             }
+            setIsTyping(false); // Marca que o bot parou de digitar
         });
     };
 
@@ -47,6 +52,7 @@ const ChatbotResponses = ({ onSendMessage }) => {
             text: "Desculpe, não sei responder a essa pergunta. Vou aprender e responder melhor na próxima vez!" // Texto da nova resposta padrão
         });
         setResponse("Desculpe, não sei responder a essa pergunta. Vou aprender e responder melhor na próxima vez!");
+        setIsTyping(false); // Marca que o bot parou de digitar
     };
 
     const sendMessageToDatabase = (message) => {
@@ -70,7 +76,7 @@ const ChatbotResponses = ({ onSendMessage }) => {
 
     return (
         <div>
-            {/* {response && <div>{response}</div>} */}
+            {isTyping && <div>Digitando...</div>}
             <input
                 type="text"
                 value={input}

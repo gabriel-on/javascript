@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ref, onValue, push, set } from 'firebase/database';
 import { database } from "../../firebase/config";
 import ChatbotResponses from "../ChatbotResponses/ChatbotResponses";
+import '../Chatbot/Chatbot.css'
 
 const Chatbot = () => {
     const [messages, setMessages] = useState([]);
@@ -28,7 +29,8 @@ const Chatbot = () => {
         const newMessageRef = push(messagesRef);
         set(newMessageRef, {
             text: message.trim(),
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            type: "user" // Indicador de mensagem do usuário
         });
 
         console.log("Mensagem do usuário enviada:", message); // Log da mensagem do usuário
@@ -36,9 +38,9 @@ const Chatbot = () => {
 
     return (
         <div>
-            <div style={{ height: "400px", overflowY: "scroll" }}>
+            <div className="chat-message" style={{ height: "400px", overflowY: "scroll" }}>
                 {messages.map((message, index) => (
-                    <div key={index}>
+                    <div key={index} className={message.type === "user" ? "user-message" : "bot-message"}>
                         {message.text}
                     </div>
                 ))}

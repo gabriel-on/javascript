@@ -1,0 +1,15 @@
+.chat-message{
+    background: black;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-message {
+    color: white;
+    background: rgb(110, 0, 0);
+}
+.bot-message {
+    color: white;
+    background: rgb(0, 0, 99);
+}

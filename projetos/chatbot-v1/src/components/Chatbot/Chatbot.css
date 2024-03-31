@@ -1,4 +1,4 @@
-.chat-message{
+.chat-message {
     background: black;
     display: flex;
     flex-direction: column;
@@ -9,7 +9,17 @@
     color: white;
     background: rgb(110, 0, 0);
 }
+
 .bot-message {
     color: white;
     background: rgb(0, 0, 99);
+}
+
+.bot-message {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.bot-message.loaded {
+    opacity: 1;
 }

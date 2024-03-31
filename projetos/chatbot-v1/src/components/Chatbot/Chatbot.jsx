@@ -18,6 +18,16 @@ const Chatbot = () => {
         });
     }, []);
 
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            const botMessages = document.querySelectorAll('.bot-message');
+            botMessages.forEach((msg) => {
+                msg.classList.add('loaded');
+            });
+        }, 1000); // Atraso de 1 segundo
+        return () => clearTimeout(timeout);
+    }, [messages]);    
+
     const handleUserMessageChange = (message) => {
         sendMessage(message); // Envia a mensagem do usuário para o banco de dados
     };

@@ -18,7 +18,7 @@ const useChatbotLogic = (userInput, database) => {
             "saúde": ["bem-estar", "condição física", "saúde mental"],
             // Adicione mais sinônimos conforme necessário
         };
-        
+
         const addVariation = (responseText) => {
             const words = responseText.split(" ");
             const variedWords = words.map(word => {
@@ -29,37 +29,71 @@ const useChatbotLogic = (userInput, database) => {
             });
             return variedWords.join(" ");
         };
-        
+
         const reorderSentence = (responseText) => {
             const sentences = responseText.split("."); // Supondo que cada frase termina com um ponto
             // Lógica para reordenar as frases, se necessário
             return sentences.join(". ");
-        };        
+        };
+
+        const keywordWeights = {
+            "saúde": 3,
+            "bem-estar": 2,
+            "nutrição": 2,
+            "exercício": 2,
+            "dieta": 2,
+            "dormir": 1,
+            // Adicione mais palavras-chave e pesos conforme necessário
+        };
+
+        const calculateFrequencyScore = (responseText, userInput) => {
+            const responseWords = responseText.split(" ");
+            const userInputWords = userInput.split(" ");
+
+            let frequencyScore = 0;
+
+            userInputWords.forEach(userWord => {
+                const frequency = responseWords.filter(word => word === userWord).length;
+                frequencyScore += frequency;
+            });
+
+            return frequencyScore;
+        };
 
         const prioritizeResponses = (responses, userInput) => {
             let prioritizedResponse = null;
-            let maxKeywordCount = 0;
-        
-            // Contagem de ocorrências das palavras-chave
+            let maxScore = 0;
+
+            // Contagem de ocorrências das palavras-chave e cálculo do escore de relevância
             responses.forEach(response => {
-                const keywordCount = response.keywords.filter(keyword => userInput.includes(keyword)).length;
-                if (keywordCount > maxKeywordCount) {
-                    maxKeywordCount = keywordCount;
+                let score = 0;
+                response.keywords.forEach(keyword => {
+                    if (userInput.includes(keyword)) {
+                        score += keywordWeights[keyword] || 1; // Adiciona o peso da palavra-chave (ou 1 se não houver peso definido)
+                    }
+                });
+
+                // Considerar outros fatores para o escore de relevância, como a frequência das palavras-chave
+                const frequencyScore = calculateFrequencyScore(response.text, userInput);
+                score += frequencyScore;
+
+                if (score > maxScore) {
+                    maxScore = score;
                     prioritizedResponse = response;
                 }
             });
-        
+
             return prioritizedResponse;
         };
-        
+
         const combineResponses = (responses) => {
-            // Combine as respostas de alguma forma para criar uma resposta abrangente
-            // Por exemplo, você pode concatenar as respostas ou criar uma resposta personalizada com base nas respostas encontradas
             if (responses.length === 0) {
                 return null; // Retorna null se não houver respostas combinadas
             }
-        
-            const combinedText = responses.map(response => response.text).join(' '); // Concatena as respostas em uma única string
+
+            let combinedText = responses.map(response => response.text).join(' '); // Concatena as respostas em uma única string
+            combinedText = addVariation(combinedText); // Introduz variação nas palavras-chave
+            combinedText = reorderSentence(combinedText); // Reordena as frases, se necessário
             return combinedText;
         };
 

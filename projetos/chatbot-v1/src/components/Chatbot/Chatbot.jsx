@@ -8,6 +8,7 @@ const Chatbot = () => {
     const [messages, setMessages] = useState([]);
     const [result, setResult] = useState(null);
     const [characters, setCharacters] = useState([]);
+    // Adicione um novo estado para armazenar o nome do personagem
 
     useEffect(() => {
         const charactersRef = ref(database, 'characters');
@@ -47,11 +48,11 @@ const Chatbot = () => {
         });
     };
 
-    const handleSaveResult = (selectedClass, attributes) => {
+    const handleSaveResult = (selectedClass, attributes, characterName) => {
         const resultRef = ref(database, 'result');
-        push(resultRef, { selectedClass, attributes });
-        console.log("Resultado salvo no banco de dados:", { selectedClass, attributes });
-
+        push(resultRef, { selectedClass, attributes, characterName }); // Inclua o nome do personagem aqui
+        console.log("Resultado salvo no banco de dados:", { selectedClass, attributes, characterName });
+    
         fetchResult();
     };
 
@@ -78,7 +79,8 @@ const Chatbot = () => {
             </div>
             {result && (
                 <div>
-                    <h2>Atributos do Personagem:</h2>
+                    <h1>Atributos do Personagem:</h1>
+                    <h2>Nome: {result.characterName}</h2>
                     <h3>Classe: {result.selectedClass}</h3>
                     <p>Força: {result.attributes.Força}</p>
                     <p>Defesa: {result.attributes.Defesa}</p>

@@ -1,14 +1,13 @@
-// KeywordLogic.js
-import { set } from 'firebase/database';
-import { getGreetingResponse, getFarewellResponse, getThankYouResponse, getQuestionResponse, handleMathQuestion, getDefaultResponse } from './Responses'; // Importe as funções de resposta do arquivo Responses.js
+import { ref, onValue } from 'firebase/database';
 
-export const searchResponseInDatabase = (userInput, databaseRef, setIsTyping, setResponse, greetingsKeywords, farewellKeywords, thankYouKeywords, questionKeywords, mathKeywords) => {
+export const KeywordLogic = (userInput, databaseRef, setIsTyping, setResponse) => {
     const responsesRef = ref(databaseRef, 'responses');
 
     const greetingsKeywords = ["oi", "olá", "bom dia", "boa tarde", "boa noite"];
     const farewellKeywords = ["tchau", "até mais", "adeus", "fui"];
     const thankYouKeywords = ["obrigado", "valeu", "agradeço"];
     const questionKeywords = ["como", "o que", "quem", "onde", "quando", "por que"];
+    const mathKeywords = ["+", "-", "*", "/", "^", "(", ")"];
 
     onValue(responsesRef, (snapshot) => {
         const data = snapshot.val();
@@ -56,36 +55,66 @@ export const searchResponseInDatabase = (userInput, databaseRef, setIsTyping, se
             setIsTyping(false);
         }
     });
-    const combineResponses = (responses) => {
-        // Combine as respostas de alguma forma para criar uma resposta abrangente
-        // Por exemplo, você pode concatenar as respostas ou criar uma resposta personalizada com base nas respostas encontradas
-        if (responses.length === 0) {
-            return null; // Retorna null se não houver respostas combinadas
-        }
-
-        const combinedText = responses.map(response => response.text).join(' '); // Concatena as respostas em uma única string
-        return combinedText;
-    };
-
-    const containsKeywords = (input, keywords) => {
-        return keywords.some(keyword => input.includes(keyword));
-    };
-
-    const getGreetingResponse = () => {
-        return "Olá! Como posso te ajudar?";
-    };
-
-    const getFarewellResponse = () => {
-        return "Até mais! Espero ter ajudado.";
-    };
-
-    const getThankYouResponse = () => {
-        return "De nada! Estou aqui para ajudar.";
-    };
-
-    const getQuestionResponse = () => {
-        return "Essa é uma ótima pergunta! Vou verificar e te retornar em breve.";
-    };
 };
 
-// Funções de palavras-chave, combinadas e contém permanecerão aqui...
+const prioritizeResponses = (responses, userInput) => {
+    let prioritizedResponse = null;
+    let maxKeywordCount = 0;
+
+    // Contagem de ocorrências das palavras-chave
+    responses.forEach(response => {
+        const keywordCount = response.keywords.filter(keyword => userInput.includes(keyword)).length;
+        if (keywordCount > maxKeywordCount) {
+            maxKeywordCount = keywordCount;
+            prioritizedResponse = response;
+        }
+    });
+
+    return prioritizedResponse;
+};
+
+const combineResponses = (responses) => {
+    // Combine as respostas de alguma forma para criar uma resposta abrangente
+    // Por exemplo, você pode concatenar as respostas ou criar uma resposta personalizada com base nas respostas encontradas
+    if (responses.length === 0) {
+        return null; // Retorna null se não houver respostas combinadas
+    }
+
+    const combinedText = responses.map(response => response.text).join(' '); // Concatena as respostas em uma única string
+    return combinedText;
+};
+
+const containsKeywords = (input, keywords) => {
+    return keywords.some(keyword => input.includes(keyword));
+};
+
+const getGreetingResponse = () => {
+    return "Olá! Como posso te ajudar?";
+};
+
+const getFarewellResponse = () => {
+    return "Até mais! Espero ter ajudado.";
+};
+
+const getThankYouResponse = () => {
+    return "De nada! Estou aqui para ajudar.";
+};
+
+const getQuestionResponse = () => {
+    return "Essa é uma ótima pergunta! Vou verificar e te retornar em breve.";
+};
+
+const handleMathQuestion = (userInput) => {
+    try {
+        const result = resolveExpressao(userInput); // Avalia a expressão matemática
+        return `O resultado é ${result}`;
+    } catch (error) {
+        return "Desculpe, não consegui calcular. Por favor, verifique a expressão matemática.";
+    }
+};
+
+const getDefaultResponse = () => {
+    return "Desculpe, não entendi. Poderia reformular sua pergunta?";
+};
+
+export { prioritizeResponses, combineResponses, containsKeywords, getGreetingResponse, getFarewellResponse, getThankYouResponse, getQuestionResponse, handleMathQuestion, getDefaultResponse };

@@ -21,6 +21,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
         Destreza: 0
     });
     const [races, setRaces] = useState([]);
+    const [successMessage, setSuccessMessage] = useState(false); // Estado para controlar a exibição da mensagem de sucesso
 
     useEffect(() => {
         const classesRef = ref(database, 'classes');
@@ -62,6 +63,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
     const handleSendButton = () => {
         if (step === 6) {
             onSaveResult(selectedClass, attributes, characterName, selectedRace, age);
+            setSuccessMessage(true); // Definir o estado da mensagem de sucesso como verdadeiro
         } else {
             handleNextStep();
         }
@@ -109,6 +111,14 @@ const ChatbotResponses = ({ onSaveResult }) => {
     };
 
     const renderStepContent = () => {
+        if (successMessage) {
+            return (
+                <div>
+                    <p>Personagem criado com sucesso!</p>
+                </div>
+            );
+        }
+
         switch (step) {
             case 1:
                 return (

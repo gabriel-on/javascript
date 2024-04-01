@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { ref, onValue, push, set } from 'firebase/database';
 import { database } from "../../firebase/config";
 
+import { WordTokenizer, SentimentAnalyzer } from 'natural';
+
 const ChatbotResponses = ({ onSendMessage }) => {
     const [input, setInput] = useState("");
     const [response, setResponse] = useState("");

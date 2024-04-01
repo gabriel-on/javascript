@@ -67,6 +67,18 @@ const Chatbot = () => {
         });
     };
 
+    const exportResult = () => {
+        if (result) {
+            // Transforme o objeto result em JSON
+            const jsonResult = JSON.stringify(result);
+            // Crie um elemento <a> para download
+            const element = document.createElement('a');
+            element.href = 'data:text/json;charset=utf-8,' + encodeURIComponent(jsonResult);
+            element.download = 'resultado.json';
+            element.click();
+        }
+    };
+
     return (
         <div>
             <div className="chat-message" style={{ height: "400px", width: "600px", overflowY: "scroll" }}>
@@ -111,6 +123,9 @@ const Chatbot = () => {
                             <p>Destreza: {result.attributes.Destreza}</p>
                         </li>
                     </ul>
+
+                    {/* Botão para exportar o resultado */}
+                    <button onClick={exportResult}>Exportar Resultado em JSON</button>
                 </div>
             )}
         </div>

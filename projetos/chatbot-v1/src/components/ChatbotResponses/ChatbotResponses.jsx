@@ -55,6 +55,10 @@ const ChatbotResponses = ({ onSaveResult }) => {
         setStep(step + 1);
     };
 
+    const handlePreviousStep = () => {
+        setStep(step - 1);
+    };
+
     const handleSendButton = () => {
         if (step === 6) {
             onSaveResult(selectedClass, attributes, characterName, selectedRace, age);
@@ -64,11 +68,13 @@ const ChatbotResponses = ({ onSaveResult }) => {
     };
 
     const handleAttributeChange = (attribute, value) => {
+        // Garantir que o valor não seja menor que 0
+        const updatedValue = Math.max(0, value);
         setAttributes(prevAttributes => ({
             ...prevAttributes,
-            [attribute]: value
+            [attribute]: updatedValue
         }));
-    };
+    };    
 
     const handleNameChange = (event) => {
         setCharacterName(event.target.value);
@@ -117,6 +123,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                     <div>
                         <h2>Etapa 2: Insira a idade do personagem</h2>
                         <input type="text" value={age} onChange={handleAgeChange} />
+                        <button onClick={handlePreviousStep}>Voltar</button>
                         <button onClick={handleNextStep}>Próxima Etapa</button>
                     </div>
                 );
@@ -125,6 +132,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                     <div>
                         <h2>Etapa 3: Escolha a raça do personagem</h2>
                         {renderRaces()}
+                        <button onClick={handlePreviousStep}>Voltar</button>
                         <button onClick={handleNextStep}>Próxima Etapa</button>
                     </div>
                 );
@@ -133,6 +141,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                     <div>
                         <h2>Etapa 4: Distribua os pontos de atributo</h2>
                         {renderAttributes()}
+                        <button onClick={handlePreviousStep}>Voltar</button>
                         <button onClick={handleNextStep}>Próxima Etapa</button>
                     </div>
                 );
@@ -141,6 +150,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                     <div>
                         <h2>Etapa 5: Escolha sua classe</h2>
                         {renderClasses()}
+                        <button onClick={handlePreviousStep}>Voltar</button>
                         <button onClick={handleNextStep}>Próxima Etapa</button>
                     </div>
                 );
@@ -152,6 +162,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                         <p>Idade: {age}</p>
                         <p>Raça: {selectedRace}</p>
                         <p>Classe: {selectedClass}</p>
+                        <button onClick={handlePreviousStep}>Voltar</button>
                         <button onClick={handleSendButton}>Concluir</button>
                     </div>
                 );

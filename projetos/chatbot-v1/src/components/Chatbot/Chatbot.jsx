@@ -69,14 +69,9 @@ const Chatbot = () => {
         });
     };
 
-    const handleAgeChange = (event) => {
-        const value = event.target.value.replace(/\D/, ''); // Somente números
-        setAge(value);
-    };
-
     return (
         <div>
-            <div className="chat-message" style={{ height: "400px", overflowY: "scroll" }}>
+            <div className="chat-message" style={{ height: "400px", width: "600px", overflowY: "scroll" }}>
                 <ChatbotResponses
                     onSendMessage={handleUserMessageChange}
                     onSaveResult={handleSaveResult}

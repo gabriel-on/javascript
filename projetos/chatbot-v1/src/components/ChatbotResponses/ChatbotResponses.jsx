@@ -14,45 +14,114 @@ const ChatbotResponses = ({ onSendMessage }) => {
 
     useEffect(() => {
         if (input && input.trim() !== "") {
-            setIsTyping(true); // Marca que o bot está digitando
+            setIsTyping(true);
             setTimeout(() => {
                 searchResponseInDatabase(input.trim().toLowerCase());
-            }, 2000); // Delay de 1 segundo antes de buscar a resposta
+            }, 2000);
         }
     }, [input]);
 
-    const searchResponseInDatabase = (userInput) => {
-        const responsesRef = ref(database, 'responses');
+    const greetingsKeywords = ["oi", "olá", "bom dia", "boa tarde", "boa noite"];
+    const farewellKeywords = ["tchau", "até mais", "adeus", "fui"];
+    const thankYouKeywords = ["obrigado", "valeu", "agradeço"];
+    const questionKeywords = ["como", "o que", "quem", "onde", "quando", "por que"];
+    const mathKeywords = ["+", "-", "*", "/", "^", "(", ")"];
 
-        // Consulta para buscar a resposta com a palavra-chave correspondente
-        onValue(responsesRef, (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                // Procurar por uma resposta correspondente nas palavras-chave
-                const matchingResponse = Object.values(data).find(response => response.keywords.includes(userInput));
-                if (matchingResponse) {
-                    // Se uma resposta correspondente for encontrada, definir a resposta
-                    setResponse(matchingResponse.text);
-                } else {
-                    // Se não houver uma resposta correspondente, criar uma nova resposta
-                    createNewResponse(userInput);
-                }
-            } else {
-                // Se não houver dados no banco de dados, criar uma nova resposta
-                createNewResponse(userInput);
-            }
-            setIsTyping(false); // Marca que o bot parou de digitar
-        });
+    const searchResponseInDatabase = (userInput) => {
+        let foundResponse = "";
+
+        if (containsKeywords(userInput, greetingsKeywords)) {
+            foundResponse = getGreetingResponse();
+        } else if (containsKeywords(userInput, farewellKeywords)) {
+            foundResponse = getFarewellResponse();
+        } else if (containsKeywords(userInput, thankYouKeywords)) {
+            foundResponse = getThankYouResponse();
+        } else if (containsKeywords(userInput, questionKeywords)) {
+            foundResponse = getQuestionResponse();
+        } else if (containsKeywords(userInput, mathKeywords)) {
+            foundResponse = handleMathQuestion(userInput);
+        } else {
+            foundResponse = getDefaultResponse();
+        }
+
+        setResponse(foundResponse);
+        setIsTyping(false);
     };
 
-    const createNewResponse = (userInput) => {
-        const newResponseRef = push(ref(database, 'responses'));
-        set(newResponseRef, {
-            keywords: [userInput], // Palavras-chave para a nova resposta
-            text: "Desculpe, não sei responder a essa pergunta. Vou aprender e responder melhor na próxima vez!" // Texto da nova resposta padrão
-        });
-        setResponse("Desculpe, não sei responder a essa pergunta. Vou aprender e responder melhor na próxima vez!");
-        setIsTyping(false); // Marca que o bot parou de digitar
+    const containsKeywords = (input, keywords) => {
+        return keywords.some(keyword => input.includes(keyword));
+    };
+
+    const getGreetingResponse = () => {
+        return "Olá! Como posso te ajudar?";
+    };
+
+    const getFarewellResponse = () => {
+        return "Até mais! Espero ter ajudado.";
+    };
+
+    const getThankYouResponse = () => {
+        return "De nada! Estou aqui para ajudar.";
+    };
+
+    const getQuestionResponse = () => {
+        return "Essa é uma ótima pergunta! Vou verificar e te retornar em breve.";
+    };
+
+    const resolveExpressao = (expressao) => {
+        try {
+            // Realiza uma análise léxica básica para separar os operadores e operandos
+            const tokens = expressao.match(/([-+*/()]|\d+(?:\.\d+)?)/g);
+    
+            // Verifica se a expressão é válida
+            if (!tokens) {
+                throw new Error("Expressão inválida");
+            }
+    
+            // Cria uma pilha para realizar a avaliação da expressão
+            const pilha = [];
+            let operadorAnterior = null;
+    
+            for (let token of tokens) {
+                if (['+', '-', '*', '/'].includes(token)) {
+                    operadorAnterior = token;
+                } else {
+                    const numero = parseFloat(token);
+                    if (operadorAnterior === null || operadorAnterior === '+' || operadorAnterior === '-') {
+                        pilha.push(numero);
+                    } else if (operadorAnterior === '*') {
+                        const operandoAnterior = pilha.pop();
+                        pilha.push(operandoAnterior * numero);
+                    } else if (operadorAnterior === '/') {
+                        const operandoAnterior = pilha.pop();
+                        pilha.push(operandoAnterior / numero);
+                    }
+                }
+            }
+    
+            // Calcula o resultado final
+            let resultado = 0;
+            for (let valor of pilha) {
+                resultado += valor;
+            }
+    
+            return resultado;
+        } catch (error) {
+            return "Erro ao resolver a expressão: " + error.message; // Retorna uma mensagem de erro
+        }
+    };           
+
+    const handleMathQuestion = (userInput) => {
+        try {
+            const result = resolveExpressao(userInput); // Avalia a expressão matemática
+            return `O resultado é ${result}`;
+        } catch (error) {
+            return "Desculpe, não consegui calcular. Por favor, verifique a expressão matemática.";
+        }
+    };
+
+    const getDefaultResponse = () => {
+        return "Desculpe, não entendi. Poderia reformular sua pergunta?";
     };
 
     const sendMessageToDatabase = (message) => {
@@ -68,10 +137,10 @@ const ChatbotResponses = ({ onSendMessage }) => {
     };
 
     const handleSendButton = () => {
-        onSendMessage(input); // Envia a mensagem de usuário para o componente pai (Chatbot)
-        sendMessageToDatabase(response); // Envia a resposta para o banco de dados
-        setInput(""); // Limpa o campo de entrada
-        setResponse(""); // Limpa a resposta
+        onSendMessage(input);
+        sendMessageToDatabase(response);
+        setInput("");
+        setResponse("");
     };
 
     return (

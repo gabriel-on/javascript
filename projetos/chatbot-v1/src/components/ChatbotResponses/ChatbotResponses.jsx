@@ -25,7 +25,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
     useEffect(() => {
         const classesRef = ref(database, 'classes');
         const racesRef = ref(database, 'races');
-        
+
         onValue(classesRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
@@ -74,7 +74,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
             ...prevAttributes,
             [attribute]: updatedValue
         }));
-    };    
+    };
 
     const handleNameChange = (event) => {
         setCharacterName(event.target.value);

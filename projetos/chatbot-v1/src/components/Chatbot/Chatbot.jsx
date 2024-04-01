@@ -86,17 +86,37 @@ const Chatbot = () => {
                 <div>
                     <h1>Atributos do Personagem:</h1>
                     <h2>Nome: {result.characterName}</h2>
-                    <h3>Classe: {result.selectedClass}</h3>
-                    <h3>Raça: {result.selectedRace}</h3>
-                    <h3>Idade: {result.age}</h3>
-                    <p>Força: {result.attributes.Força}</p>
-                    <p>Defesa: {result.attributes.Defesa}</p>
-                    <p>Agilidade: {result.attributes.Agilidade}</p>
-                    <p>Vigor: {result.attributes.Vigor}</p>
-                    <p>Velocidade: {result.attributes.Velocidade}</p>
-                    <p>Inteligência: {result.attributes.Inteligencia}</p>
-                    <p>Poder: {result.attributes.Poder}</p>
-                    <p>Destreza: {result.attributes.Destreza}</p>
+                    <h2>Classe: {result.selectedClass}</h2>
+                    <h2>Raça: {result.selectedRace}</h2>
+                    <h2>Idade: {result.age}</h2>
+                    <h3>Status:</h3>
+
+                    <ul>
+                        <li>
+                            <p>Força: {result.attributes.Força}</p>
+                        </li>
+                        <li>
+                            <p>Defesa: {result.attributes.Defesa}</p>
+                        </li>
+                        <li>
+                            <p>Agilidade: {result.attributes.Agilidade}</p>
+                        </li>
+                        <li>
+                            <p>Vigor: {result.attributes.Vigor}</p>
+                        </li>
+                        <li>
+                            <p>Velocidade: {result.attributes.Velocidade}</p>
+                        </li>
+                        <li>
+                            <p>Inteligência: {result.attributes.Inteligencia}</p>
+                        </li>
+                        <li>
+                            <p>Poder: {result.attributes.Poder}</p>
+                        </li>
+                        <li>
+                            <p>Destreza: {result.attributes.Destreza}</p>
+                        </li>
+                    </ul>
                 </div>
             )}
         </div>

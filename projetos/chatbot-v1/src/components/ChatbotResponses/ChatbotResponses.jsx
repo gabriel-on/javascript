@@ -147,7 +147,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
             case 6:
                 return (
                     <div>
-                        <h2>Etapa 6: Confirme os dados e conclua</h2>
+                        <h2>Etapa Final: Confirme os dados e conclua</h2>
                         <p>Nome: {characterName}</p>
                         <p>Idade: {age}</p>
                         <p>Raça: {selectedRace}</p>

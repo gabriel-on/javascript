@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ref, onValue } from 'firebase/database';
+import { ref, onValue, push } from 'firebase/database';
 import { database } from "../../firebase/config";
 import '../Chatbot/Chatbot.css';
 
@@ -8,6 +8,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
     const [classes, setClasses] = useState([]);
     const [selectedClass, setSelectedClass] = useState("");
     const [characterName, setCharacterName] = useState("");
+    const [selectedRace, setSelectedRace] = useState("");
     const [attributes, setAttributes] = useState({
         Força: 0,
         Defesa: 0,
@@ -18,14 +19,25 @@ const ChatbotResponses = ({ onSaveResult }) => {
         Inteligencia: 0,
         Destreza: 0
     });
+    const [races, setRaces] = useState([]);
 
     useEffect(() => {
         const classesRef = ref(database, 'classes');
+        const racesRef = ref(database, 'races');
+        
         onValue(classesRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
                 const classList = Object.values(data);
                 setClasses(classList);
+            }
+        });
+
+        onValue(racesRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const raceList = Object.values(data);
+                setRaces(raceList);
             }
         });
     }, []);
@@ -34,13 +46,17 @@ const ChatbotResponses = ({ onSaveResult }) => {
         setSelectedClass(className);
     };
 
+    const handleSelectRace = (raceName) => {
+        setSelectedRace(raceName);
+    };
+
     const handleNextStep = () => {
         setStep(step + 1);
     };
 
     const handleSendButton = () => {
         if (step === 4) {
-            onSaveResult(selectedClass, attributes, characterName);
+            onSaveResult(selectedClass, attributes, characterName, selectedRace);
         } else {
             handleNextStep();
         }
@@ -60,6 +76,12 @@ const ChatbotResponses = ({ onSaveResult }) => {
     const renderClasses = () => {
         return classes.map((className, index) => (
             <button key={index} onClick={() => handleSelectClass(className)}>{className}</button>
+        ));
+    };
+
+    const renderRaces = () => {
+        return races.map((raceName, index) => (
+            <button key={index} onClick={() => handleSelectRace(raceName)}>{raceName}</button>
         ));
     };
 
@@ -87,24 +109,24 @@ const ChatbotResponses = ({ onSaveResult }) => {
             case 2:
                 return (
                     <div>
-                        <h2>Etapa 2: Distribua os pontos de atributo</h2>
-                        {renderAttributes()}
+                        <h2>Etapa 2: Escolha a raça do personagem</h2>
+                        {renderRaces()}
                         <button onClick={handleNextStep}>Próxima Etapa</button>
                     </div>
                 );
             case 3:
                 return (
                     <div>
-                        <h2>Etapa 3: Escolha sua classe</h2>
-                        {renderClasses()}
+                        <h2>Etapa 3: Distribua os pontos de atributo</h2>
+                        {renderAttributes()}
                         <button onClick={handleNextStep}>Próxima Etapa</button>
                     </div>
                 );
             case 4:
                 return (
                     <div>
-                        <h2>Etapa 4: Escolha suas habilidades</h2>
-                        {/* Opções para escolher as habilidades */}
+                        <h2>Etapa 4: Escolha sua classe</h2>
+                        {renderClasses()}
                         <button onClick={handleSendButton}>Concluir</button>
                     </div>
                 );

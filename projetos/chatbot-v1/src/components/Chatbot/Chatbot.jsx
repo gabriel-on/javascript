@@ -8,7 +8,7 @@ const Chatbot = () => {
     const [messages, setMessages] = useState([]);
     const [result, setResult] = useState(null);
     const [characters, setCharacters] = useState([]);
-    // Adicione um novo estado para armazenar o nome do personagem
+    const [selectedRace, setSelectedRace] = useState([]);
 
     useEffect(() => {
         const charactersRef = ref(database, 'characters');
@@ -48,13 +48,13 @@ const Chatbot = () => {
         });
     };
 
-    const handleSaveResult = (selectedClass, attributes, characterName) => {
+    const handleSaveResult = (selectedClass, attributes, characterName, selectedRace) => {
         const resultRef = ref(database, 'result');
-        push(resultRef, { selectedClass, attributes, characterName }); // Inclua o nome do personagem aqui
-        console.log("Resultado salvo no banco de dados:", { selectedClass, attributes, characterName });
-    
+        push(resultRef, { selectedClass, attributes, characterName, selectedRace });
+        console.log("Resultado salvo no banco de dados:", { selectedClass, attributes, characterName, selectedRace });
+        
         fetchResult();
-    };
+    };    
 
     const fetchResult = () => {
         const resultRef = ref(database, 'result');
@@ -82,6 +82,7 @@ const Chatbot = () => {
                     <h1>Atributos do Personagem:</h1>
                     <h2>Nome: {result.characterName}</h2>
                     <h3>Classe: {result.selectedClass}</h3>
+                    <h3>Raça: {result.selectedRace}</h3>
                     <p>Força: {result.attributes.Força}</p>
                     <p>Defesa: {result.attributes.Defesa}</p>
                     <p>Agilidade: {result.attributes.Agilidade}</p>

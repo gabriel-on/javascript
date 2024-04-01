@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ref, onValue, push, query, orderByKey, limitToLast, set } from 'firebase/database';
+import { ref, onValue, push, query, orderByKey, limitToLast } from 'firebase/database'; // Importação da função query adicionada
 import { database } from "../../firebase/config";
 import ChatbotResponses from "../ChatbotResponses/ChatbotResponses";
 import '../Chatbot/Chatbot.css';
@@ -8,7 +8,7 @@ const Chatbot = () => {
     const [messages, setMessages] = useState([]);
     const [result, setResult] = useState(null);
     const [characters, setCharacters] = useState([]);
-    const [selectedRace, setSelectedRace] = useState([]);
+    const [age, setAge] = useState("");
 
     useEffect(() => {
         const charactersRef = ref(database, 'characters');
@@ -48,10 +48,10 @@ const Chatbot = () => {
         });
     };
 
-    const handleSaveResult = (selectedClass, attributes, characterName, selectedRace) => {
+    const handleSaveResult = (selectedClass, attributes, characterName, selectedRace, age) => {
         const resultRef = ref(database, 'result');
-        push(resultRef, { selectedClass, attributes, characterName, selectedRace });
-        console.log("Resultado salvo no banco de dados:", { selectedClass, attributes, characterName, selectedRace });
+        push(resultRef, { selectedClass, attributes, characterName, selectedRace, age });
+        console.log("Resultado salvo no banco de dados:", { selectedClass, attributes, characterName, selectedRace, age });
         
         fetchResult();
     };    
@@ -69,6 +69,11 @@ const Chatbot = () => {
         });
     };
 
+    const handleAgeChange = (event) => {
+        const value = event.target.value.replace(/\D/, ''); // Somente números
+        setAge(value);
+    };
+
     return (
         <div>
             <div className="chat-message" style={{ height: "400px", overflowY: "scroll" }}>
@@ -83,6 +88,7 @@ const Chatbot = () => {
                     <h2>Nome: {result.characterName}</h2>
                     <h3>Classe: {result.selectedClass}</h3>
                     <h3>Raça: {result.selectedRace}</h3>
+                    <h3>Idade: {result.age}</h3>
                     <p>Força: {result.attributes.Força}</p>
                     <p>Defesa: {result.attributes.Defesa}</p>
                     <p>Agilidade: {result.attributes.Agilidade}</p>

@@ -8,6 +8,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
     const [classes, setClasses] = useState([]);
     const [selectedClass, setSelectedClass] = useState("");
     const [characterName, setCharacterName] = useState("");
+    const [age, setAge] = useState("");
     const [selectedRace, setSelectedRace] = useState("");
     const [attributes, setAttributes] = useState({
         Força: 0,
@@ -55,8 +56,8 @@ const ChatbotResponses = ({ onSaveResult }) => {
     };
 
     const handleSendButton = () => {
-        if (step === 4) {
-            onSaveResult(selectedClass, attributes, characterName, selectedRace);
+        if (step === 6) {
+            onSaveResult(selectedClass, attributes, characterName, selectedRace, age);
         } else {
             handleNextStep();
         }
@@ -71,6 +72,11 @@ const ChatbotResponses = ({ onSaveResult }) => {
 
     const handleNameChange = (event) => {
         setCharacterName(event.target.value);
+    };
+
+    const handleAgeChange = (event) => {
+        const value = event.target.value.replace(/\D/, ''); // Somente números
+        setAge(value);
     };
 
     const renderClasses = () => {
@@ -109,24 +115,43 @@ const ChatbotResponses = ({ onSaveResult }) => {
             case 2:
                 return (
                     <div>
-                        <h2>Etapa 2: Escolha a raça do personagem</h2>
-                        {renderRaces()}
+                        <h2>Etapa 2: Insira a idade do personagem</h2>
+                        <input type="text" value={age} onChange={handleAgeChange} />
                         <button onClick={handleNextStep}>Próxima Etapa</button>
                     </div>
                 );
             case 3:
                 return (
                     <div>
-                        <h2>Etapa 3: Distribua os pontos de atributo</h2>
-                        {renderAttributes()}
+                        <h2>Etapa 3: Escolha a raça do personagem</h2>
+                        {renderRaces()}
                         <button onClick={handleNextStep}>Próxima Etapa</button>
                     </div>
                 );
             case 4:
                 return (
                     <div>
-                        <h2>Etapa 4: Escolha sua classe</h2>
+                        <h2>Etapa 4: Distribua os pontos de atributo</h2>
+                        {renderAttributes()}
+                        <button onClick={handleNextStep}>Próxima Etapa</button>
+                    </div>
+                );
+            case 5:
+                return (
+                    <div>
+                        <h2>Etapa 5: Escolha sua classe</h2>
                         {renderClasses()}
+                        <button onClick={handleNextStep}>Próxima Etapa</button>
+                    </div>
+                );
+            case 6:
+                return (
+                    <div>
+                        <h2>Etapa 6: Confirme os dados e conclua</h2>
+                        <p>Nome: {characterName}</p>
+                        <p>Idade: {age}</p>
+                        <p>Raça: {selectedRace}</p>
+                        <p>Classe: {selectedClass}</p>
                         <button onClick={handleSendButton}>Concluir</button>
                     </div>
                 );

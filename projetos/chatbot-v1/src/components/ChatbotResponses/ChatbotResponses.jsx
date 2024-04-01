@@ -28,7 +28,6 @@ const ChatbotResponses = ({ onSendMessage }) => {
     const mathKeywords = ["+", "-", "*", "/", "^", "(", ")"];
 
     const searchResponseInDatabase = (userInput) => {
-        // Primeiro, tenta encontrar uma resposta com base nas palavras-chave no banco de dados
         const responsesRef = ref(database, 'responses');
     
         onValue(responsesRef, (snapshot) => {
@@ -38,6 +37,14 @@ const ChatbotResponses = ({ onSendMessage }) => {
     
                 let foundResponse = "";
                 if (matchingResponses.length > 0) {
+                    // Priorizar as respostas com base nas palavras-chave encontradas
+                    const prioritizedResponse = prioritizeResponses(matchingResponses, userInput);
+                    if (prioritizedResponse) {
+                        setResponse(prioritizedResponse.text);
+                        setIsTyping(false);
+                        return; // Sai da função após definir a resposta priorizada
+                    }
+    
                     // Combine as respostas se houver mais de uma resposta encontrada
                     const combinedResponse = combineResponses(matchingResponses);
                     if (combinedResponse) {
@@ -71,13 +78,29 @@ const ChatbotResponses = ({ onSendMessage }) => {
         });
     };    
 
+    const prioritizeResponses = (responses, userInput) => {
+        let prioritizedResponse = null;
+        let maxKeywordCount = 0;
+
+        // Contagem de ocorrências das palavras-chave
+        responses.forEach(response => {
+            const keywordCount = response.keywords.filter(keyword => userInput.includes(keyword)).length;
+            if (keywordCount > maxKeywordCount) {
+                maxKeywordCount = keywordCount;
+                prioritizedResponse = response;
+            }
+        });
+
+        return prioritizedResponse;
+    };
+
     const combineResponses = (responses) => {
         // Combine as respostas de alguma forma para criar uma resposta abrangente
         // Por exemplo, você pode concatenar as respostas ou criar uma resposta personalizada com base nas respostas encontradas
         if (responses.length === 0) {
             return null; // Retorna null se não houver respostas combinadas
         }
-    
+
         const combinedText = responses.map(response => response.text).join(' '); // Concatena as respostas em uma única string
         return combinedText;
     };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ref, onValue, push, query, orderByKey, limitToLast } from 'firebase/database'; // Importação da função query adicionada
+import { ref, onValue, push, query, orderByKey, limitToLast } from 'firebase/database';
 import { database } from "../../firebase/config";
 import ChatbotResponses from "../ChatbotResponses/ChatbotResponses";
 import '../Chatbot/Chatbot.css';
@@ -39,8 +39,7 @@ const Chatbot = () => {
         if (!message || message.trim() === "") return;
 
         const messagesRef = ref(database, 'messages');
-        const newMessageRef = push(messagesRef);
-        set(newMessageRef, {
+        push(messagesRef, {
             text: message.trim(),
             timestamp: Date.now(),
             type: "user"

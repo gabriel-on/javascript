@@ -21,7 +21,8 @@ const ChatbotResponses = ({ onSaveResult }) => {
         Destreza: 0
     });
     const [races, setRaces] = useState([]);
-    const [successMessage, setSuccessMessage] = useState(false); // Estado para controlar a exibição da mensagem de sucesso
+    const [origin, setOrigin] = useState(""); // Estado para armazenar a origem do personagem
+    const [successMessage, setSuccessMessage] = useState(false);
 
     useEffect(() => {
         const classesRef = ref(database, 'classes');
@@ -61,9 +62,9 @@ const ChatbotResponses = ({ onSaveResult }) => {
     };
 
     const handleSendButton = () => {
-        if (step === 6) {
-            onSaveResult(selectedClass, attributes, characterName, selectedRace, age);
-            setSuccessMessage(true); // Definir o estado da mensagem de sucesso como verdadeiro
+        if (step === 7) { // Verifica se é a última etapa
+            onSaveResult(selectedClass, attributes, characterName, selectedRace, age, origin); // Adiciona origin aos dados salvos
+            setSuccessMessage(true);
         } else {
             handleNextStep();
         }
@@ -85,6 +86,10 @@ const ChatbotResponses = ({ onSaveResult }) => {
     const handleAgeChange = (event) => {
         const value = event.target.value.replace(/\D/, ''); // Somente números
         setAge(value);
+    };
+
+    const handleOriginChange = (event) => {
+        setOrigin(event.target.value);
     };
 
     const renderClasses = () => {
@@ -167,11 +172,21 @@ const ChatbotResponses = ({ onSaveResult }) => {
             case 6:
                 return (
                     <div>
+                        <h2>Etapa 6: Escreva a origem do seu personagem</h2>
+                        <textarea value={origin} onChange={handleOriginChange} />
+                        <button onClick={handlePreviousStep}>Voltar</button>
+                        <button onClick={handleNextStep}>Próxima Etapa</button>
+                    </div>
+                );
+            case 7:
+                return (
+                    <div>
                         <h2>Etapa Final: Confirme os dados e conclua</h2>
                         <p>Nome: {characterName}</p>
                         <p>Idade: {age}</p>
                         <p>Raça: {selectedRace}</p>
                         <p>Classe: {selectedClass}</p>
+                        <p>Origem: {origin}</p>
                         <button onClick={handlePreviousStep}>Voltar</button>
                         <button onClick={handleSendButton}>Concluir</button>
                     </div>

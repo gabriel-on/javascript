@@ -8,7 +8,6 @@ const Chatbot = () => {
     const [messages, setMessages] = useState([]);
     const [result, setResult] = useState(null);
     const [characters, setCharacters] = useState([]);
-    const [age, setAge] = useState("");
 
     useEffect(() => {
         const charactersRef = ref(database, 'characters');
@@ -48,10 +47,10 @@ const Chatbot = () => {
         });
     };
 
-    const handleSaveResult = (selectedClass, attributes, characterName, selectedRace, age) => {
+    const handleSaveResult = (selectedClass, attributes, characterName, selectedRace, age, origin) => {
         const resultRef = ref(database, 'result');
-        push(resultRef, { selectedClass, attributes, characterName, selectedRace, age });
-        console.log("Resultado salvo no banco de dados:", { selectedClass, attributes, characterName, selectedRace, age });
+        push(resultRef, { selectedClass, attributes, characterName, selectedRace, age, origin });
+        console.log("Resultado salvo no banco de dados:", { selectedClass, attributes, characterName, selectedRace, age, origin });
         
         fetchResult();
     };    
@@ -84,6 +83,7 @@ const Chatbot = () => {
                     <h2>Classe: {result.selectedClass}</h2>
                     <h2>Raça: {result.selectedRace}</h2>
                     <h2>Idade: {result.age}</h2>
+                    <h2>Origem: {result.origin}</h2>
                     <h3>Status:</h3>
 
                     <ul>

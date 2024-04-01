@@ -28,25 +28,41 @@ const ChatbotResponses = ({ onSendMessage }) => {
     const mathKeywords = ["+", "-", "*", "/", "^", "(", ")"];
 
     const searchResponseInDatabase = (userInput) => {
-        let foundResponse = "";
+        // Primeiro, tenta encontrar uma resposta com base nas palavras-chave no banco de dados
+        const responsesRef = ref(database, 'responses');
 
-        if (containsKeywords(userInput, greetingsKeywords)) {
-            foundResponse = getGreetingResponse();
-        } else if (containsKeywords(userInput, farewellKeywords)) {
-            foundResponse = getFarewellResponse();
-        } else if (containsKeywords(userInput, thankYouKeywords)) {
-            foundResponse = getThankYouResponse();
-        } else if (containsKeywords(userInput, questionKeywords)) {
-            foundResponse = getQuestionResponse();
-        } else if (containsKeywords(userInput, mathKeywords)) {
-            foundResponse = handleMathQuestion(userInput);
-        } else {
-            foundResponse = getDefaultResponse();
-        }
+        onValue(responsesRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const matchingResponse = Object.values(data).find(response => response.keywords.some(keyword => userInput.includes(keyword)));
+                if (matchingResponse) {
+                    setResponse(matchingResponse.text);
+                    setIsTyping(false);
+                    return; // Sai da função se encontrar uma resposta no banco de dados
+                }
+            }
 
-        setResponse(foundResponse);
-        setIsTyping(false);
+            // Se não encontrar uma resposta no banco de dados, usa a lógica padrão
+            let foundResponse = "";
+            if (containsKeywords(userInput, greetingsKeywords)) {
+                foundResponse = getGreetingResponse();
+            } else if (containsKeywords(userInput, farewellKeywords)) {
+                foundResponse = getFarewellResponse();
+            } else if (containsKeywords(userInput, thankYouKeywords)) {
+                foundResponse = getThankYouResponse();
+            } else if (containsKeywords(userInput, questionKeywords)) {
+                foundResponse = getQuestionResponse();
+            } else if (containsKeywords(userInput, mathKeywords)) {
+                foundResponse = handleMathQuestion(userInput);
+            } else {
+                foundResponse = getDefaultResponse();
+            }
+
+            setResponse(foundResponse);
+            setIsTyping(false);
+        });
     };
+
 
     const containsKeywords = (input, keywords) => {
         return keywords.some(keyword => input.includes(keyword));
@@ -72,16 +88,16 @@ const ChatbotResponses = ({ onSendMessage }) => {
         try {
             // Realiza uma análise léxica básica para separar os operadores e operandos
             const tokens = expressao.match(/([-+*/()]|\d+(?:\.\d+)?)/g);
-    
+
             // Verifica se a expressão é válida
             if (!tokens) {
                 throw new Error("Expressão inválida");
             }
-    
+
             // Cria uma pilha para realizar a avaliação da expressão
             const pilha = [];
             let operadorAnterior = null;
-    
+
             for (let token of tokens) {
                 if (['+', '-', '*', '/'].includes(token)) {
                     operadorAnterior = token;
@@ -98,18 +114,18 @@ const ChatbotResponses = ({ onSendMessage }) => {
                     }
                 }
             }
-    
+
             // Calcula o resultado final
             let resultado = 0;
             for (let valor of pilha) {
                 resultado += valor;
             }
-    
+
             return resultado;
         } catch (error) {
             return "Erro ao resolver a expressão: " + error.message; // Retorna uma mensagem de erro
         }
-    };           
+    };
 
     const handleMathQuestion = (userInput) => {
         try {

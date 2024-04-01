@@ -30,39 +30,57 @@ const ChatbotResponses = ({ onSendMessage }) => {
     const searchResponseInDatabase = (userInput) => {
         // Primeiro, tenta encontrar uma resposta com base nas palavras-chave no banco de dados
         const responsesRef = ref(database, 'responses');
-
+    
         onValue(responsesRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                const matchingResponse = Object.values(data).find(response => response.keywords.some(keyword => userInput.includes(keyword)));
-                if (matchingResponse) {
-                    setResponse(matchingResponse.text);
-                    setIsTyping(false);
-                    return; // Sai da função se encontrar uma resposta no banco de dados
+                const matchingResponses = Object.values(data).filter(response => response.keywords.some(keyword => userInput.includes(keyword)));
+    
+                let foundResponse = "";
+                if (matchingResponses.length > 0) {
+                    // Combine as respostas se houver mais de uma resposta encontrada
+                    const combinedResponse = combineResponses(matchingResponses);
+                    if (combinedResponse) {
+                        setResponse(combinedResponse);
+                        setIsTyping(false);
+                        return; // Sai da função após definir a resposta combinada
+                    } else {
+                        // Se não houver respostas combinadas, use a primeira resposta encontrada
+                        foundResponse = matchingResponses[0].text;
+                    }
+                } else {
+                    // Se não encontrar uma resposta no banco de dados, use a lógica padrão
+                    if (containsKeywords(userInput, greetingsKeywords)) {
+                        foundResponse = getGreetingResponse();
+                    } else if (containsKeywords(userInput, farewellKeywords)) {
+                        foundResponse = getFarewellResponse();
+                    } else if (containsKeywords(userInput, thankYouKeywords)) {
+                        foundResponse = getThankYouResponse();
+                    } else if (containsKeywords(userInput, questionKeywords)) {
+                        foundResponse = getQuestionResponse();
+                    } else if (containsKeywords(userInput, mathKeywords)) {
+                        foundResponse = handleMathQuestion(userInput);
+                    } else {
+                        foundResponse = getDefaultResponse();
+                    }
                 }
+    
+                setResponse(foundResponse);
+                setIsTyping(false);
             }
-
-            // Se não encontrar uma resposta no banco de dados, usa a lógica padrão
-            let foundResponse = "";
-            if (containsKeywords(userInput, greetingsKeywords)) {
-                foundResponse = getGreetingResponse();
-            } else if (containsKeywords(userInput, farewellKeywords)) {
-                foundResponse = getFarewellResponse();
-            } else if (containsKeywords(userInput, thankYouKeywords)) {
-                foundResponse = getThankYouResponse();
-            } else if (containsKeywords(userInput, questionKeywords)) {
-                foundResponse = getQuestionResponse();
-            } else if (containsKeywords(userInput, mathKeywords)) {
-                foundResponse = handleMathQuestion(userInput);
-            } else {
-                foundResponse = getDefaultResponse();
-            }
-
-            setResponse(foundResponse);
-            setIsTyping(false);
         });
-    };
+    };    
 
+    const combineResponses = (responses) => {
+        // Combine as respostas de alguma forma para criar uma resposta abrangente
+        // Por exemplo, você pode concatenar as respostas ou criar uma resposta personalizada com base nas respostas encontradas
+        if (responses.length === 0) {
+            return null; // Retorna null se não houver respostas combinadas
+        }
+    
+        const combinedText = responses.map(response => response.text).join(' '); // Concatena as respostas em uma única string
+        return combinedText;
+    };
 
     const containsKeywords = (input, keywords) => {
         return keywords.some(keyword => input.includes(keyword));

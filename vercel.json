@@ -9,10 +9,6 @@
             "destination": "/index.html"
         },
         {
-            "source": "/character-details/:characterId",
-            "destination": "/index.html"
-        },
-        {
             "source": "/(.*)",
             "destination": "/index.html"
         }

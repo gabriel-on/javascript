@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuthentication';
 
 function Navbar() {
-  const { currentUser, logout } = useAuth(); // Importe o currentUser e a função de logout do seu hook de autenticação
+  const { currentUser, logout } = useAuth();
 
   const handleLogout = async () => {
     try {
@@ -19,19 +19,27 @@ function Navbar() {
         <li>
           <NavLink to={"/"}>Home</NavLink>
         </li>
-        {/* Renderize o link de login somente se o usuário não estiver autenticado */}
+        {currentUser && (
+          <li>
+            <NavLink to={"/character-sheet"}>Criar</NavLink>
+          </li>
+        )}
         {!currentUser && (
           <li>
             <NavLink to={"/login"}>Login</NavLink>
           </li>
         )}
-        {/* Renderize o link de cadastro somente se o usuário não estiver autenticado */}
         {!currentUser && (
           <li>
             <NavLink to={"/register"}>Cadastrar</NavLink>
           </li>
         )}
-        {/* Renderize o botão de sair somente se o usuário estiver autenticado */}
+        {currentUser && (
+          <li>
+            {/* Exibe o displayName do usuário logado */}
+            <span>Olá, {currentUser.displayName}!</span>
+          </li>
+        )}
         {currentUser && (
           <li>
             <button onClick={handleLogout}>Sair</button>

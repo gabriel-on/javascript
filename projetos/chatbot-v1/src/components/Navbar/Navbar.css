@@ -24,6 +24,7 @@ li {
 }
 
 .brand > a > h1{
+    color: yellow;
     text-transform: uppercase;
     font-size: 2.5em;
 }
@@ -36,6 +37,11 @@ li {
 }
 
 .navbar > ul > li > a{
+    text-transform: uppercase;
+}
+
+.navbar > ul > .nav-page > a{
+    color: yellow;
     text-transform: uppercase;
 }
 

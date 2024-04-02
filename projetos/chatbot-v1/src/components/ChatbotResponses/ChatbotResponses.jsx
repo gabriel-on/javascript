@@ -4,6 +4,9 @@ import { database } from "../../firebase/config";
 import '../Chatbot/Chatbot.css';
 import { useAuth } from '../../hooks/useAuthentication';
 
+//CSS
+import '../ChatbotResponses/ChatbotResponses.css'
+
 const ChatbotResponses = ({ onSaveResult }) => {
     const { currentUser } = useAuth();
     const [step, setStep] = useState(1);
@@ -66,7 +69,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
     const handleSendButton = () => {
         if (step === 7) { // Verifica se é a última etapa
             const createdBy = currentUser.displayName;
-            const createdAt = serverTimestamp(); 
+            const createdAt = serverTimestamp();
             onSaveResult(selectedClass, attributes, characterName, selectedRace, age, origin, createdBy, createdAt); // Adiciona origin aos dados salvos
             setSuccessMessage(true);
         } else {
@@ -131,68 +134,82 @@ const ChatbotResponses = ({ onSaveResult }) => {
         switch (step) {
             case 1:
                 return (
-                    <div>
+                    <div className="step-step">
                         <h2>Etapa 1: Insira o nome do personagem</h2>
                         <input type="text" value={characterName} onChange={handleNameChange} />
-                        <button onClick={handleNextStep}>Próxima Etapa</button>
+                        <div>
+                            <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
+                        </div>
                     </div>
                 );
             case 2:
                 return (
-                    <div>
+                    <div className="step-step">
                         <h2>Etapa 2: Insira a idade do personagem</h2>
                         <input type="text" value={age} onChange={handleAgeChange} />
-                        <button onClick={handlePreviousStep}>Voltar</button>
-                        <button onClick={handleNextStep}>Próxima Etapa</button>
+                        <div>
+                            <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
+                            <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
+                        </div>
                     </div>
                 );
             case 3:
                 return (
-                    <div>
+                    <div className="step-step">
                         <h2>Etapa 3: Escolha a raça do personagem</h2>
                         {renderRaces()}
-                        <button onClick={handlePreviousStep}>Voltar</button>
-                        <button onClick={handleNextStep}>Próxima Etapa</button>
+                        <div>
+                            <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
+                            <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
+                        </div>
                     </div>
                 );
             case 4:
                 return (
-                    <div>
+                    <div className="step-step">
                         <h2>Etapa 4: Distribua os pontos de atributo</h2>
                         {renderAttributes()}
-                        <button onClick={handlePreviousStep}>Voltar</button>
-                        <button onClick={handleNextStep}>Próxima Etapa</button>
+                        <div>
+                            <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
+                            <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
+                        </div>
                     </div>
                 );
             case 5:
                 return (
-                    <div>
+                    <div className="step-step">
                         <h2>Etapa 5: Escolha sua classe</h2>
                         {renderClasses()}
-                        <button onClick={handlePreviousStep}>Voltar</button>
-                        <button onClick={handleNextStep}>Próxima Etapa</button>
+                        <div>
+                            <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
+                            <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
+                        </div>
                     </div>
                 );
             case 6:
                 return (
-                    <div>
+                    <div className="step-step">
                         <h2>Etapa 6: Escreva a origem do seu personagem</h2>
                         <textarea value={origin} onChange={handleOriginChange} />
-                        <button onClick={handlePreviousStep}>Voltar</button>
-                        <button onClick={handleNextStep}>Próxima Etapa</button>
+                        <div>
+                            <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
+                            <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
+                        </div>
                     </div>
                 );
             case 7:
                 return (
-                    <div>
+                    <div className="step-step final-step">
                         <h2>Etapa Final: Confirme os dados e conclua</h2>
                         <p>Nome: {characterName}</p>
                         <p>Idade: {age}</p>
                         <p>Raça: {selectedRace}</p>
                         <p>Classe: {selectedClass}</p>
                         <p>Origem: {origin}</p>
-                        <button onClick={handlePreviousStep}>Voltar</button>
-                        <button onClick={handleSendButton}>Concluir</button>
+                        <div>
+                            <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
+                            <button className="btn-step" onClick={handleSendButton}>Concluir</button>
+                        </div>
                     </div>
                 );
             default:

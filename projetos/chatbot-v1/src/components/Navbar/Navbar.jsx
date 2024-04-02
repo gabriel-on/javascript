@@ -25,11 +25,11 @@ function Navbar() {
           </li>
         </ul>
         <ul >
-          <li>
+          <li className='nav-page'>
             <NavLink to={"/"}>Home</NavLink>
           </li>
           {currentUser && (
-            <li>
+            <li className='nav-page'>
               <NavLink to={"/character-sheet"}>Criar</NavLink>
             </li>
           )}

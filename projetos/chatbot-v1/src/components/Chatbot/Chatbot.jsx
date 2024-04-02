@@ -80,8 +80,8 @@ const Chatbot = () => {
     };
 
     return (
-        <div>
-            <div className="chat-message" style={{ height: "400px", width: "600px", overflowY: "scroll" }}>
+        <div className="panel-container">
+            <div className="chat-message">
                 <ChatbotResponses
                     onSendMessage={handleUserMessageChange}
                     onSaveResult={handleSaveResult}

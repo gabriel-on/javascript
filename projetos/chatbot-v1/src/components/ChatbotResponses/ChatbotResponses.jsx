@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ref, onValue, push } from 'firebase/database';
+import { ref, onValue, push, serverTimestamp } from 'firebase/database';
 import { database } from "../../firebase/config";
 import '../Chatbot/Chatbot.css';
 import { useAuth } from '../../hooks/useAuthentication';
@@ -66,7 +66,8 @@ const ChatbotResponses = ({ onSaveResult }) => {
     const handleSendButton = () => {
         if (step === 7) { // Verifica se é a última etapa
             const createdBy = currentUser.displayName;
-            onSaveResult(selectedClass, attributes, characterName, selectedRace, age, origin, createdBy); // Adiciona origin aos dados salvos
+            const createdAt = serverTimestamp(); 
+            onSaveResult(selectedClass, attributes, characterName, selectedRace, age, origin, createdBy, createdAt); // Adiciona origin aos dados salvos
             setSuccessMessage(true);
         } else {
             handleNextStep();

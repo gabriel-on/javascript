@@ -46,10 +46,10 @@ const Chatbot = () => {
         });
     };
 
-    const handleSaveResult = (selectedClass, attributes, characterName, selectedRace, age, origin, createdBy) => {
+    const handleSaveResult = (selectedClass, attributes, characterName, selectedRace, age, origin, createdBy, createdAt) => {
         const resultRef = ref(database, 'result');
-        push(resultRef, { selectedClass, attributes, characterName, selectedRace, age, origin, createdBy });
-        console.log("Resultado salvo no banco de dados:", { selectedClass, attributes, characterName, selectedRace, age, origin, createdBy });
+        push(resultRef, { selectedClass, attributes, characterName, selectedRace, age, origin, createdBy, createdAt });
+        console.log("Resultado salvo no banco de dados:", { selectedClass, attributes, characterName, selectedRace, age, origin, createdBy, createdAt });
 
         fetchResult();
     };

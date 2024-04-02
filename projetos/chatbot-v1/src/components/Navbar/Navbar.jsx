@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuthentication';
+import '../Navbar/Navbar.css'
 
 function Navbar() {
   const { currentUser, logout } = useAuth();
@@ -14,37 +15,46 @@ function Navbar() {
   };
 
   return (
-    <div>
-      <ul>
-        <li>
-          <NavLink to={"/"}>Home</NavLink>
-        </li>
-        {currentUser && (
-          <li>
-            <NavLink to={"/character-sheet"}>Criar</NavLink>
+    <div className='navbar-container'>
+      <div className='navbar'>
+        <ul >
+          <li className='brand'>
+            <NavLink to={"/"}>
+              <h1>Logo</h1>
+            </NavLink>
           </li>
-        )}
-        {!currentUser && (
+        </ul>
+        <ul >
           <li>
-            <NavLink to={"/login"}>Login</NavLink>
+            <NavLink to={"/"}>Home</NavLink>
           </li>
-        )}
-        {!currentUser && (
-          <li>
-            <NavLink to={"/register"}>Cadastrar</NavLink>
-          </li>
-        )}
-        {currentUser && (
-          <li>
-            <span>Olá, {currentUser.displayName}!</span>
-          </li>
-        )}
-        {currentUser && (
-          <li>
-            <button onClick={handleLogout}>Sair</button>
-          </li>
-        )}
-      </ul>
+          {currentUser && (
+            <li>
+              <NavLink to={"/character-sheet"}>Criar</NavLink>
+            </li>
+          )}
+          {!currentUser && (
+            <li>
+              <NavLink to={"/login"}>Login</NavLink>
+            </li>
+          )}
+          {!currentUser && (
+            <li>
+              <NavLink to={"/register"}>Cadastrar</NavLink>
+            </li>
+          )}
+          {currentUser && (
+            <li className='display-name'>
+              <span>Olá, {currentUser.displayName}!</span>
+            </li>
+          )}
+          {currentUser && (
+            <li className='logout-btn'>
+              <button onClick={handleLogout}>Sair</button>
+            </li>
+          )}
+        </ul>
+      </div>
     </div>
   );
 }

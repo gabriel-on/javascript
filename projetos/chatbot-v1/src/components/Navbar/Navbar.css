@@ -1,0 +1,52 @@
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+.navbar-container {
+    display: flex;
+    flex-wrap: wrap;
+    background: black;
+}
+
+.navbar {
+    margin: auto;
+    max-width: 1200px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 0;
+}
+
+.brand > a > h1{
+    text-transform: uppercase;
+    font-size: 2.5em;
+}
+
+.navbar > ul {
+    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.navbar > ul > li > a{
+    text-transform: uppercase;
+}
+
+.display-name {
+}
+
+.logout-btn > button{
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    padding: 5px;
+    background: red;
+}

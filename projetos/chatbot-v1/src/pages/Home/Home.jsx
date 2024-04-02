@@ -16,6 +16,8 @@ function Home() {
             const characterData = childSnapshot.val();
             characterList.push(characterData);
           });
+          // Revertendo a ordem para colocar o mais recente em primeiro lugar
+          characterList.reverse();
           setCharacterDataList(characterList);
         } else {
           console.log('No data available');
@@ -24,9 +26,10 @@ function Home() {
         console.error('Error fetching data:', error);
       }
     };
-
+  
     fetchResult();
   }, [database]);
+  
 
   return (
     <div>
@@ -36,8 +39,8 @@ function Home() {
           <div key={index}>
             <h2>Personagem {index + 1}</h2>
             <ul>
-              <li>Idade: {character.age}</li>
               <li>Nome: {character.characterName}</li>
+              <li>Idade: {character.age}</li>
               <li>Classe: {character.selectedClass}</li>
               <li>Raça: {character.selectedRace}</li>
               <li>Criador: {character.createdBy}</li>

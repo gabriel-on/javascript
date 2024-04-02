@@ -40,7 +40,7 @@ function Home() {
               <li>Nome: {character.characterName}</li>
               <li>Classe: {character.selectedClass}</li>
               <li>Raça: {character.selectedRace}</li>
-              {/* Adicione outros atributos conforme necessário */}
+              <li>Criador: {character.createdBy}</li>
             </ul>
           </div>
         ))}

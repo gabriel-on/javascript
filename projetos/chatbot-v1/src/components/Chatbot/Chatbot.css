@@ -95,6 +95,7 @@ td {
     padding: 10px;
 }
 
+/* VERSÃO do MOBILE */
 @media screen and (max-width: 420px) {
     .panel-container {
         display: flex;
@@ -152,14 +153,14 @@ td {
     }
 
     table {
-        width: 100%; /* Alterado para ocupar a largura total */
+        width: 100%; 
     }
 
     th {
-        width: 100%; /* Alterado para ocupar a largura total */
+        width: 100%; 
     }
 
     td {
-        width: 100%; /* Alterado para ocupar a largura total */
+        width: 100%; 
     }
 }

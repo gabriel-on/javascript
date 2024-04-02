@@ -36,7 +36,6 @@ function Navbar() {
         )}
         {currentUser && (
           <li>
-            {/* Exibe o displayName do usuário logado */}
             <span>Olá, {currentUser.displayName}!</span>
           </li>
         )}

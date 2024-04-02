@@ -10,3 +10,9 @@
     margin: auto;
     /* min-height: 60vh; */
 }
+
+@media screen and (max-width: 420px) {
+    .container {
+        width: 400px;
+    }
+}

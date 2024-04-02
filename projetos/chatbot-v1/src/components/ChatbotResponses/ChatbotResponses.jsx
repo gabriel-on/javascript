@@ -183,7 +183,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 case 5:
                     return (
                         <div className="step-step">
-                            <h2>Etapa 8: Descreva os poderes do seu personagem</h2>
+                            <h2>Etapa 5: Descreva os poderes do seu personagem</h2>
                             <textarea value={powersDescription} onChange={handlePowersDescriptionChange} />
                             <div>
                                 <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
@@ -194,7 +194,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
             case 6:
                 return (
                     <div className="step-step">
-                        <h2>Etapa 5: Escolha sua classe</h2>
+                        <h2>Etapa 6: Escolha sua classe</h2>
                         {renderClasses()}
                         <div>
                             <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
@@ -205,7 +205,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
             case 7:
                 return (
                     <div className="step-step">
-                        <h2>Etapa 6: Escreva a origem do seu personagem</h2>
+                        <h2>Etapa 7: Escreva a origem do seu personagem</h2>
                         <textarea value={origin} onChange={handleOriginChange} />
                         <div>
                             <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
@@ -235,7 +235,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
     };
 
     return (
-        <div className="">
+        <div className="render-step">
             {renderStepContent()}
         </div>
     );

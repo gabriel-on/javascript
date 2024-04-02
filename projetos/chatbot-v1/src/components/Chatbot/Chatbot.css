@@ -1,11 +1,10 @@
-.panel-container{
+.panel-container {
     display: flex;
     flex-wrap: wrap;
-    width: 1200px; 
-    /* height: 600px;  */
+    width: 100%; 
     background: #353535;
     margin: auto;
-    align-items: center;    
+    align-items: center;
     flex-direction: column;
     gap: 20px;
     padding: 20px 0;
@@ -45,13 +44,13 @@
     gap: 20px;
 }
 
-.step-step > div {
+.step-step>div {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
 
-.step-step > div > .btn-step{
+.step-step>div>.btn-step {
     cursor: pointer;
     border: none;
     width: 150px;
@@ -62,9 +61,105 @@
     margin: auto;
 }
 
-.final-step {
-    
-}
+.final-step {}
 
 .final-result {
+    max-width: 100%;
+}
+
+/* RESULTADO FINAL */
+table {
+    width: 100%;
+}
+
+tbody {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+tr {
+    display: flex;
+    gap: 10px;
+}
+
+th {
+    border: 2px solid yellow;
+    width: 100%; /* Alterado para ocupar a largura total */
+    padding: 10px;
+}
+
+td {
+    width: 100%; /* Alterado para ocupar a largura total */
+    border: 2px solid black;
+    padding: 10px;
+}
+
+@media screen and (max-width: 420px) {
+    .panel-container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 400px; 
+        background: #353535;
+        margin: auto;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 0;
+    }
+
+    .step-step {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        width: 380px;
+    }
+
+    .step-step > h2{
+        font-size: 1.1em;
+    }
+    
+    .step-step > input {
+        display: flex;
+        margin: auto;        
+        width: 300px;
+    }
+
+    .step-step > button {
+        display: flex;
+        margin: auto;        
+        width: 300px;
+    }
+
+    .step-step>div {
+        max-width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+    
+    .step-step>div>.btn-step {
+        width: 120px;
+        padding: 5px;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0;
+    }
+
+    .render-step{
+        max-width: 400px;
+    }
+
+    table {
+        width: 100%; /* Alterado para ocupar a largura total */
+    }
+
+    th {
+        width: 100%; /* Alterado para ocupar a largura total */
+    }
+
+    td {
+        width: 100%; /* Alterado para ocupar a largura total */
+    }
 }

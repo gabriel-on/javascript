@@ -89,42 +89,56 @@ const Chatbot = () => {
             </div>
             {result && (
                 <div className="final-result">
-                    <h1>Atributos do Personagem:</h1>
-                    <h2>Nome: {result.characterName}</h2>
-                    <h2>Classe: {result.selectedClass}</h2>
-                    <h2>Raça: {result.selectedRace}</h2>
-                    <h2>Idade: {result.age}</h2>
-                    <h2>Origem: {result.origin}</h2>
-                    <h2>Poderes: {result.powersDescription}</h2>
-                    <h3>Status:</h3>
-
-                    <ul>
-                        <li>
-                            <p>Força: {result.attributes.Força}</p>
-                        </li>
-                        <li>
-                            <p>Defesa: {result.attributes.Defesa}</p>
-                        </li>
-                        <li>
-                            <p>Agilidade: {result.attributes.Agilidade}</p>
-                        </li>
-                        <li>
-                            <p>Vigor: {result.attributes.Vigor}</p>
-                        </li>
-                        <li>
-                            <p>Velocidade: {result.attributes.Velocidade}</p>
-                        </li>
-                        <li>
-                            <p>Inteligência: {result.attributes.Inteligencia}</p>
-                        </li>
-                        <li>
-                            <p>Poder: {result.attributes.Poder}</p>
-                        </li>
-                        <li>
-                            <p>Destreza: {result.attributes.Destreza}</p>
-                        </li>
-                    </ul>
-
+                    <div>
+                        <h2>Detalhes do Personagem:</h2>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>Nome:</td>
+                                    <td>{result.characterName}</td>
+                                </tr>
+                                <tr>
+                                    <td>Classe:</td>
+                                    <td>{result.selectedClass}</td>
+                                </tr>
+                                <tr>
+                                    <td>Raça:</td>
+                                    <td>{result.selectedRace}</td>
+                                </tr>
+                                <tr>
+                                    <td>Idade:</td>
+                                    <td>{result.age}</td>
+                                </tr>
+                                <tr>
+                                    <td>Origem:</td>
+                                    <td>{result.origin}</td>
+                                </tr>
+                                <tr>
+                                    <td>Poderes:</td>
+                                    <td>{result.powersDescription}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <h2>Atributos do Personagem:</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Atributo</th>
+                                    <th>Pontos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Object.entries(result.attributes).map(([attribute, value]) => (
+                                    <tr key={attribute}>
+                                        <td>{attribute}</td>
+                                        <td>{value}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                     {/* Botão para exportar o resultado */}
                     <button onClick={exportResult}>Exportar Resultado em JSON</button>
                 </div>

@@ -26,7 +26,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
         Destreza: 0
     });
     const [races, setRaces] = useState([]);
-    const [origin, setOrigin] = useState(""); 
+    const [origin, setOrigin] = useState("");
     const [successMessage, setSuccessMessage] = useState(false);
     const [powersDescription, setPowersDescription] = useState("");
 
@@ -79,12 +79,21 @@ const ChatbotResponses = ({ onSaveResult }) => {
     };
 
     const handleAttributeChange = (attribute, value) => {
-        // Garantir que o valor não seja menor que 0
-        const updatedValue = Math.max(0, value);
-        setAttributes(prevAttributes => ({
-            ...prevAttributes,
-            [attribute]: updatedValue
-        }));
+        // Calcula a soma atual dos valores dos atributos
+        const currentTotal = Object.values(attributes).reduce((total, val) => total + val, 0);
+
+        // Verifica se o novo valor excede o limite total de 36 pontos
+        if (currentTotal + (value - attributes[attribute]) <= 36) {
+            // Garante que o valor não seja menor que 0
+            const updatedValue = Math.max(0, value);
+            setAttributes(prevAttributes => ({
+                ...prevAttributes,
+                [attribute]: updatedValue
+            }));
+        } else {
+            // Exibe uma mensagem ou toma outra ação, indicando que o limite foi excedido
+            alert("O limite total de pontos (36) foi excedido!");
+        }
     };
 
     const handlePowersDescriptionChange = (event) => {
@@ -180,17 +189,17 @@ const ChatbotResponses = ({ onSaveResult }) => {
                         </div>
                     </div>
                 );
-                case 5:
-                    return (
-                        <div className="step-step">
-                            <h2>Etapa 5: Descreva os poderes do seu personagem</h2>
-                            <textarea value={powersDescription} onChange={handlePowersDescriptionChange} />
-                            <div>
-                                <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
-                                <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
-                            </div>
+            case 5:
+                return (
+                    <div className="step-step">
+                        <h2>Etapa 5: Descreva os poderes do seu personagem</h2>
+                        <textarea value={powersDescription} onChange={handlePowersDescriptionChange} />
+                        <div>
+                            <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
+                            <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
                         </div>
-                    );
+                    </div>
+                );
             case 6:
                 return (
                     <div className="step-step">

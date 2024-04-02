@@ -26,8 +26,9 @@ const ChatbotResponses = ({ onSaveResult }) => {
         Destreza: 0
     });
     const [races, setRaces] = useState([]);
-    const [origin, setOrigin] = useState(""); // Estado para armazenar a origem do personagem
+    const [origin, setOrigin] = useState(""); 
     const [successMessage, setSuccessMessage] = useState(false);
+    const [powersDescription, setPowersDescription] = useState("");
 
     useEffect(() => {
         const classesRef = ref(database, 'classes');
@@ -67,10 +68,10 @@ const ChatbotResponses = ({ onSaveResult }) => {
     };
 
     const handleSendButton = () => {
-        if (step === 7) { // Verifica se é a última etapa
+        if (step === 8) { // Verifica se é a última etapa
             const createdBy = currentUser.displayName;
             const createdAt = serverTimestamp();
-            onSaveResult(selectedClass, attributes, characterName, selectedRace, age, origin, createdBy, createdAt); // Adiciona origin aos dados salvos
+            onSaveResult(selectedClass, attributes, characterName, selectedRace, age, origin, createdBy, createdAt, powersDescription);
             setSuccessMessage(true);
         } else {
             handleNextStep();
@@ -84,6 +85,10 @@ const ChatbotResponses = ({ onSaveResult }) => {
             ...prevAttributes,
             [attribute]: updatedValue
         }));
+    };
+
+    const handlePowersDescriptionChange = (event) => {
+        setPowersDescription(event.target.value);
     };
 
     const handleNameChange = (event) => {
@@ -175,7 +180,18 @@ const ChatbotResponses = ({ onSaveResult }) => {
                         </div>
                     </div>
                 );
-            case 5:
+                case 5:
+                    return (
+                        <div className="step-step">
+                            <h2>Etapa 8: Descreva os poderes do seu personagem</h2>
+                            <textarea value={powersDescription} onChange={handlePowersDescriptionChange} />
+                            <div>
+                                <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
+                                <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
+                            </div>
+                        </div>
+                    );
+            case 6:
                 return (
                     <div className="step-step">
                         <h2>Etapa 5: Escolha sua classe</h2>
@@ -186,7 +202,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                         </div>
                     </div>
                 );
-            case 6:
+            case 7:
                 return (
                     <div className="step-step">
                         <h2>Etapa 6: Escreva a origem do seu personagem</h2>
@@ -197,7 +213,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                         </div>
                     </div>
                 );
-            case 7:
+            case 8:
                 return (
                     <div className="step-step final-step">
                         <h2>Etapa Final: Confirme os dados e conclua</h2>
@@ -206,6 +222,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                         <p>Raça: {selectedRace}</p>
                         <p>Classe: {selectedClass}</p>
                         <p>Origem: {origin}</p>
+                        <p>Poderes: {powersDescription}</p>
                         <div>
                             <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
                             <button className="btn-step" onClick={handleSendButton}>Concluir</button>

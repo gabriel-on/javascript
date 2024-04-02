@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, get } from 'firebase/database';
-import'../Home/Home.css'
+import '../Home/Home.css';
+import { Link } from 'react-router-dom';
 
 function Home() {
   const [characterDataList, setCharacterDataList] = useState([]);
@@ -15,7 +16,10 @@ function Home() {
           const characterList = [];
           snapshot.forEach((childSnapshot) => {
             const characterData = childSnapshot.val();
-            characterList.push(characterData);
+            characterList.push({
+              id: childSnapshot.key, // Adicionando o ID do personagem
+              ...characterData
+            });
           });
           // Revertendo a ordem para colocar o mais recente em primeiro lugar
           characterList.reverse();
@@ -30,7 +34,6 @@ function Home() {
   
     fetchResult();
   }, [database]);
-  
 
   return (
     <div className='character-list-container'>
@@ -46,6 +49,7 @@ function Home() {
               <li>Raça: {character.selectedRace}</li>
               <li>Criador: {character.createdBy}</li>
             </ul>
+            <Link to={`/character-details/${character.id}`}>Ver Detalhes</Link>
           </div>
         ))}
       </div>

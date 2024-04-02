@@ -18,6 +18,7 @@ import Footer from './components/Footer/Footer.jsx';
 import Register from './pages/Register/Register.jsx';
 import Login from './pages/Login/Login.jsx';
 import CharacterSheet from './pages/CharacterSheet/CharacterSheet.jsx';
+import CharacterDetails from './pages/CharacterDetails/CharacterDetails.jsx';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -63,6 +64,7 @@ function App() {
           <div className='container'>
             <Routes>
               <Route path='/' element={<Home />} />
+              <Route path='/character-details/:characterId' element={<CharacterDetails />} />
               {userId && (
                 <Route path='/character-sheet' element={<CharacterSheet />} />
               )}

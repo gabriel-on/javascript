@@ -88,7 +88,7 @@ const Chatbot = () => {
                 />
             </div>
             {result && (
-                <div>
+                <div className="final-result">
                     <h1>Atributos do Personagem:</h1>
                     <h2>Nome: {result.characterName}</h2>
                     <h2>Classe: {result.selectedClass}</h2>

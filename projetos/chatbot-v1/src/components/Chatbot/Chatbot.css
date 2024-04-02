@@ -5,7 +5,10 @@
     /* height: 600px;  */
     background: #353535;
     margin: auto;
-    justify-content: center;
+    align-items: center;    
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0;
 }
 
 .chat-message {
@@ -60,4 +63,8 @@
 }
 
 .final-step {
+    
+}
+
+.final-result {
 }

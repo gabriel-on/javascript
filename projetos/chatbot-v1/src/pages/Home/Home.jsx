@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, get } from 'firebase/database';
+import'../Home/Home.css'
 
 function Home() {
   const [characterDataList, setCharacterDataList] = useState([]);
@@ -32,7 +33,7 @@ function Home() {
   
 
   return (
-    <div>
+    <div className='character-list-container'>
       <h1>Lista de Personagens</h1>
       <div className='character-list'>
         {characterDataList.map((character, index) => (

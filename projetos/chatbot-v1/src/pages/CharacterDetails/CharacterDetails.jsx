@@ -33,6 +33,9 @@ function CharacterDetails() {
     return <div>Loading...</div>;
   }
 
+   // Formatação da data no formato brasileiro
+   const formattedDate = new Date(characterDetails.createdAt).toLocaleString('pt-BR');
+
   return (
     <div className="character-details">
       <h2>Detalhes do Personagem:</h2>
@@ -85,6 +88,7 @@ function CharacterDetails() {
         </tbody>
       </table>
       <p>Feito por: {characterDetails.createdBy}</p>
+      <p>Data de criação: <span>{formattedDate}</span></p>
     </div>
   );
 }

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getDatabase, ref, get } from 'firebase/database';
 
+//CSS
+import '../CharacterDetails/CharacterDetails.css'
+
 function CharacterDetails() {
   const { characterId } = useParams();
   const [characterDetails, setCharacterDetails] = useState(null);
@@ -60,7 +63,6 @@ function CharacterDetails() {
             <td>{characterDetails.powersDescription}</td>
           </tr>
           <tr>
-            <td>Atributos:</td>
             <td>
               <table>
                 <thead>

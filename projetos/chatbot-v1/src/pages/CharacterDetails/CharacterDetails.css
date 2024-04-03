@@ -1,0 +1,7 @@
+@media screen and (max-width: 420px) {
+    .character-details {
+        display: flex;
+        flex-direction: column;
+        width: 400px;
+    }
+}

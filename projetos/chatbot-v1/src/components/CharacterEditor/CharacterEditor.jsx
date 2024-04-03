@@ -1,94 +1,68 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { getDatabase, ref, get, update } from 'firebase/database';
 
-function CharacterEditor({ character }) {
-  const [editedCharacter, setEditedCharacter] = useState({}); // Estado para armazenar os dados do personagem editado
+function CharacterEditor() {
+  const { characterId } = useParams();
+  const [characterData, setCharacterData] = useState(null);
+  const [editedCharacterName, setEditedCharacterName] = useState('');
+  const database = getDatabase();
 
-  // Efeito para atualizar os dados do personagem editado sempre que os dados do personagem original mudarem
   useEffect(() => {
-    setEditedCharacter(character || {}); // Define os dados do personagem editado
-  }, [character]);
+    const fetchCharacterData = async () => {
+      try {
+        const characterRef = ref(database, `result/${characterId}`);
+        const snapshot = await get(characterRef);
+        if (snapshot.exists()) {
+          const characterData = snapshot.val();
+          setCharacterData(characterData);
+          setEditedCharacterName(characterData.characterName); // Preencher o estado inicial com o nome atual do personagem
+        } else {
+          console.log('No character data available');
+        }
+      } catch (error) {
+        console.error('Error fetching character data:', error);
+      }
+    };
 
-  // Manipula a alteração de um campo do personagem editado
+    fetchCharacterData();
+  }, [database, characterId]);
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedCharacter((prevCharacter) => ({
-      ...prevCharacter,
-      [name]: value,
-    }));
+    const { value } = e.target;
+    setEditedCharacterName(value); // Atualizar o estado com o valor do campo de entrada
   };
 
-  // Manipula o envio do formulário com os dados do personagem editado
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aqui você pode enviar os detalhes editados do personagem para onde for necessário
-    console.log('Detalhes do personagem editados:', editedCharacter);
-    // Implemente a lógica para salvar os detalhes do personagem no banco de dados aqui
-    saveCharacterDetails(editedCharacter);
+    try {
+      const characterRef = ref(database, `result/${characterId}`);
+      await update(characterRef, { characterName: editedCharacterName }); // Atualizar apenas o campo 'characterName' no banco de dados
+      console.log('Nome do personagem atualizado com sucesso:', editedCharacterName);
+    } catch (error) {
+      console.error('Error updating character name:', error);
+    }
   };
 
-  // Função para salvar os detalhes do personagem no banco de dados
-  const saveCharacterDetails = (editedCharacter) => {
-    // Implemente a lógica para salvar os detalhes do personagem no banco de dados aqui
-    console.log('Salvando os detalhes do personagem no banco de dados:', editedCharacter);
-  };
+  if (!characterData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="edit-character-container">
-        <h2>Editar Personagem</h2>
-
-        {/* Exemplo de como exibir e editar o nome do personagem */}
-        <div className="field">
+      <h2>Editar Personagem</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
           <label>
             Nome:
             <input
               type="text"
-              name="characterName"
-              value={editedCharacter.characterName || ''}
+              value={editedCharacterName}
               onChange={handleChange}
             />
           </label>
         </div>
-
-        <div className="field">
-          <label>
-            Idade:
-            <input
-              type="text"
-              name="age"
-              value={editedCharacter.age || ''}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-
-        <div className="field">
-          <label>
-            Classe:
-            <input
-              type="text"
-              name="selectedClass"
-              value={editedCharacter.selectedClass || ''}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-
-        <div className="field">
-          <label>
-            Raça:
-            <input
-              type="text"
-              name="selectedRace"
-              value={editedCharacter.selectedRace || ''}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-
-        {/* Adicione mais campos conforme necessário */}
-
-        <button type="submit">Salvar Edições</button>
+        <button type="submit">Salvar</button>
       </form>
     </div>
   );

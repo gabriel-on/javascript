@@ -67,7 +67,10 @@ function App() {
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/character-details/:characterId' element={<CharacterDetails />} />
-              <Route path='/character-editor/:characterId' element={<CharacterEditor character={characterData} />} />
+              <Route
+                path='/character-editor/:characterId'
+                element={<CharacterEditor />}
+              />
               {userId && (
                 <Route path='/character-sheet' element={<CharacterSheet />} />
               )}

@@ -9,6 +9,9 @@ function CharacterEditor() {
   const [editedCharacterAge, setEditedCharacterAge] = useState('');
   const [editedCharacterRace, setEditedCharacterRace] = useState('');
   const [editedCharacterClass, setEditedCharacterClass] = useState('');
+  const [editedCharacterAttributes, setEditedCharacterAttributes] = useState({});
+  const [editedCharacterPowersDescription, setEditedCharacterPowersDescription] = useState('');
+  const [editedCharacterOrigin, setEditedCharacterOrigin] = useState('');
   const [raceOptions, setRaceOptions] = useState([]);
   const [classOptions, setClassOptions] = useState([]);
   const database = getDatabase();
@@ -25,6 +28,9 @@ function CharacterEditor() {
           setEditedCharacterAge(characterData.age);
           setEditedCharacterRace(characterData.selectedRace);
           setEditedCharacterClass(characterData.selectedClass);
+          setEditedCharacterAttributes(characterData.attributes);
+          setEditedCharacterPowersDescription(characterData.powersDescription);
+          setEditedCharacterOrigin(characterData.origin);
         } else {
           console.log('No character data available');
         }
@@ -90,12 +96,52 @@ function CharacterEditor() {
     setEditedCharacterClass(value);
   };
 
+  const handleIncrement = (attribute) => {
+    setEditedCharacterAttributes((prevAttributes) => ({
+      ...prevAttributes,
+      [attribute]: (prevAttributes[attribute] || 0) + 1,
+    }));
+  };
+
+  const handleDecrement = (attribute) => {
+    setEditedCharacterAttributes((prevAttributes) => ({
+      ...prevAttributes,
+      [attribute]: Math.max((prevAttributes[attribute] || 0) - 1, 0),
+    }));
+  };
+
+  const handlePowersDescriptionChange = (e) => {
+    const { value } = e.target;
+    setEditedCharacterPowersDescription(value);
+  };
+
+  const handleOriginChange = (e) => {
+    const { value } = e.target;
+    setEditedCharacterOrigin(value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const characterRef = ref(database, `result/${characterId}`);
-      await update(characterRef, { characterName: editedCharacterName, age: editedCharacterAge, selectedRace: editedCharacterRace, selectedClass: editedCharacterClass });
-      console.log('Character details updated successfully:', { characterName: editedCharacterName, age: editedCharacterAge, selectedRace: editedCharacterRace, selectedClass: editedCharacterClass });
+      await update(characterRef, {
+        characterName: editedCharacterName,
+        age: editedCharacterAge,
+        selectedRace: editedCharacterRace,
+        selectedClass: editedCharacterClass,
+        attributes: editedCharacterAttributes,
+        powersDescription: editedCharacterPowersDescription,
+        origin: editedCharacterOrigin,
+      });
+      console.log('Character details updated successfully:', {
+        characterName: editedCharacterName,
+        age: editedCharacterAge,
+        selectedRace: editedCharacterRace,
+        selectedClass: editedCharacterClass,
+        attributes: editedCharacterAttributes,
+        powersDescription: editedCharacterPowersDescription,
+        origin: editedCharacterOrigin,
+      });
     } catch (error) {
       console.error('Error updating character details:', error);
     }
@@ -149,6 +195,39 @@ function CharacterEditor() {
                 <option key={index} value={className}>{className}</option>
               ))}
             </select>
+          </label>
+        </div>
+        <div>
+          <h3>Atributos</h3>
+          {Object.entries(editedCharacterAttributes).map(([attribute, value]) => (
+            <div key={attribute}>
+              <div>
+                <span>{attribute}:</span>
+                <button type="button" onClick={() => handleDecrement(attribute)}>-</button>
+                <span>{value}</span>
+                <button type="button" onClick={() => handleIncrement(attribute)}>+</button>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div>
+          <label>
+            Descrição de Poderes:
+            <textarea
+              name="powersDescription"
+              value={editedCharacterPowersDescription}
+              onChange={handlePowersDescriptionChange}
+            ></textarea>
+          </label>
+        </div>
+        <div>
+          <label>
+            Origem:
+            <textarea
+              name="origin"
+              value={editedCharacterOrigin}
+              onChange={handleOriginChange}
+            ></textarea>
           </label>
         </div>
         <button type="submit">Salvar</button>

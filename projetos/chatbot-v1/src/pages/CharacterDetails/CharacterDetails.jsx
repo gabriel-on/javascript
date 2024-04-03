@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getDatabase, ref, get } from 'firebase/database';
 
 //CSS
@@ -8,6 +8,7 @@ import '../CharacterDetails/CharacterDetails.css'
 function CharacterDetails() {
   const { characterId } = useParams();
   const [characterDetails, setCharacterDetails] = useState(null);
+  const navigate = useNavigate()
   const database = getDatabase();
 
   useEffect(() => {
@@ -28,6 +29,50 @@ function CharacterDetails() {
 
     fetchCharacterDetails();
   }, [database, characterId]);
+
+  const handleExport = () => {
+    if (characterDetails) {
+      // Preparar os detalhes do personagem em formato JSON
+      const characterDataJson = JSON.stringify(characterDetails);
+
+      // Criar um Blob com os dados JSON
+      const blob = new Blob([characterDataJson], { type: 'application/json' });
+
+      // Criar uma URL para o Blob
+      const url = URL.createObjectURL(blob);
+
+      // Criar um link para o download
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'character_details.json');
+
+      // Adicionar o link ao documento e clicá-lo para iniciar o download
+      document.body.appendChild(link);
+      link.click();
+
+      // Limpar a URL e remover o link
+      URL.revokeObjectURL(url);
+      document.body.removeChild(link);
+    }
+  };
+
+  //Deletar Personagem
+  const handleDelete = async () => {
+    if (window.confirm('Tem certeza que deseja excluir este personagem permanentemente?')) {
+      try {
+        const characterRef = ref(database, `result/${characterId}`);
+        const snapshot = await get(characterRef);
+        if (snapshot.exists()) {
+          await remove(characterRef);
+          navigate('/'); // Redireciona para a página inicial após a exclusão
+        } else {
+          console.log('Personagem não encontrado');
+        }
+      } catch (error) {
+        console.error('Error deleting character:', error);
+      }
+    }
+  };  
 
   if (!characterDetails) {
     return <div>Loading...</div>;
@@ -89,6 +134,8 @@ function CharacterDetails() {
       </table>
       <p>Feito por: {characterDetails.createdBy}</p>
       <p>Data de criação: <span>{formattedDate}</span></p>
+      <button onClick={handleExport}>Exportar Detalhes</button>
+      <button onClick={handleDelete}>Excluir Personagem</button>
     </div>
   );
 }

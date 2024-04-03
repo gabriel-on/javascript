@@ -84,6 +84,7 @@ function CharacterDetails() {
           </tr>
         </tbody>
       </table>
+      <p>Feito por: {characterDetails.createdBy}</p>
     </div>
   );
 }

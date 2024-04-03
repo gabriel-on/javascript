@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getDatabase, ref, get } from 'firebase/database';
 
 //CSS
@@ -53,24 +53,6 @@ function CharacterDetails() {
       // Limpar a URL e remover o link
       URL.revokeObjectURL(url);
       document.body.removeChild(link);
-    }
-  };
-
-  //Deletar Personagem
-  const handleDelete = async () => {
-    if (window.confirm('Tem certeza que deseja excluir este personagem permanentemente?')) {
-      try {
-        const characterRef = ref(database, `result/${characterId}`);
-        const snapshot = await get(characterRef);
-        if (snapshot.exists()) {
-          await remove(characterRef);
-          navigate('/'); // Redireciona para a página inicial após a exclusão
-        } else {
-          console.log('Personagem não encontrado');
-        }
-      } catch (error) {
-        console.error('Error deleting character:', error);
-      }
     }
   };  
 
@@ -135,7 +117,7 @@ function CharacterDetails() {
       <p>Feito por: {characterDetails.createdBy}</p>
       <p>Data de criação: <span>{formattedDate}</span></p>
       <button onClick={handleExport}>Exportar Detalhes</button>
-      <button onClick={handleDelete}>Excluir Personagem</button>
+      <Link to={`/character-editor/${characterId}`}>Editar Detalhes</Link>
     </div>
   );
 }

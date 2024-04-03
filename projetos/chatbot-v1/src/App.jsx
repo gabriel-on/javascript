@@ -19,6 +19,7 @@ import Register from './pages/Register/Register.jsx';
 import Login from './pages/Login/Login.jsx';
 import CharacterSheet from './pages/CharacterSheet/CharacterSheet.jsx';
 import CharacterDetails from './pages/CharacterDetails/CharacterDetails.jsx';
+import CharacterEditor from './components/CharacterEditor/CharacterEditor.jsx';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -42,6 +43,7 @@ function App() {
             const isAdmin = userData.isAdmin || false;
             setUser((prevUser) => ({ ...prevUser, isAdmin }));
             setCharacterData(userData.character); // Define os dados do personagem
+            console.log('Dados do personagem:', userData.character);
           }
         } catch (error) {
           console.error('Error fetching user data:', error);
@@ -65,6 +67,7 @@ function App() {
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/character-details/:characterId' element={<CharacterDetails />} />
+              <Route path='/character-editor/:characterId' element={<CharacterEditor character={characterData} />} />
               {userId && (
                 <Route path='/character-sheet' element={<CharacterSheet />} />
               )}

@@ -6,6 +6,7 @@ function CharacterEditor() {
   const { characterId } = useParams();
   const [characterData, setCharacterData] = useState(null);
   const [editedCharacterName, setEditedCharacterName] = useState('');
+  const [editedCharacterAge, setEditedCharacterAge] = useState('');
   const database = getDatabase();
 
   useEffect(() => {
@@ -17,6 +18,7 @@ function CharacterEditor() {
           const characterData = snapshot.val();
           setCharacterData(characterData);
           setEditedCharacterName(characterData.characterName); // Preencher o estado inicial com o nome atual do personagem
+          setEditedCharacterAge(characterData.age); // Preencher o estado inicial com a idade atual do personagem
         } else {
           console.log('No character data available');
         }
@@ -28,19 +30,24 @@ function CharacterEditor() {
     fetchCharacterData();
   }, [database, characterId]);
 
-  const handleChange = (e) => {
+  const handleNameChange = (e) => {
     const { value } = e.target;
-    setEditedCharacterName(value); // Atualizar o estado com o valor do campo de entrada
+    setEditedCharacterName(value); // Atualizar o estado com o valor do campo de entrada do nome
+  };
+
+  const handleAgeChange = (e) => {
+    const { value } = e.target;
+    setEditedCharacterAge(value); // Atualizar o estado com o valor do campo de entrada da idade
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const characterRef = ref(database, `result/${characterId}`);
-      await update(characterRef, { characterName: editedCharacterName }); // Atualizar apenas o campo 'characterName' no banco de dados
-      console.log('Nome do personagem atualizado com sucesso:', editedCharacterName);
+      await update(characterRef, { characterName: editedCharacterName, age: editedCharacterAge }); // Atualizar o nome e a idade no banco de dados
+      console.log('Detalhes do personagem atualizados com sucesso:', { characterName: editedCharacterName, age: editedCharacterAge });
     } catch (error) {
-      console.error('Error updating character name:', error);
+      console.error('Error updating character details:', error);
     }
   };
 
@@ -58,7 +65,17 @@ function CharacterEditor() {
             <input
               type="text"
               value={editedCharacterName}
-              onChange={handleChange}
+              onChange={handleNameChange}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Idade:
+            <input
+              type="text"
+              value={editedCharacterAge}
+              onChange={handleAgeChange}
             />
           </label>
         </div>

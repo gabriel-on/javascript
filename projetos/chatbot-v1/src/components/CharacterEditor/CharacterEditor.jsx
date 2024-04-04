@@ -170,47 +170,53 @@ function CharacterEditor() {
     <div className='edit-Character-container'>
       <h2>Editar Personagem</h2>
       <form onSubmit={handleSubmit}>
-        <div className="field">
-          <label className='details-character-name details-character'>
-            <p>Nome:</p>
-            <input
-              type="text"
-              value={editedCharacterName}
-              onChange={handleNameChange}
-            />
-          </label>
-        </div>
-        <div className="field">
-          <label className='details-character-age details-character'>
-            <p>Idade:</p>
-            <input
-              type="text"
-              value={editedCharacterAge}
-              onChange={handleAgeChange}
-            />
-          </label>
-        </div>
-        <div className="field">
-          <label className='details-character'>
-            <p>Raça:</p>
-            <select value={editedCharacterRace} onChange={handleRaceChange}>
-              <option value="">Selecione uma raça</option>
-              {raceOptions.map((race, index) => (
-                <option key={index} value={race}>{race}</option>
-              ))}
-            </select>
-          </label>
-        </div>
-        <div className="field">
-          <label className='details-character'>
-            <p>Classe:</p>
-            <select value={editedCharacterClass} onChange={handleClassChange}>
-              <option value="">Selecione uma classe</option>
-              {classOptions.map((className, index) => (
-                <option key={index} value={className}>{className}</option>
-              ))}
-            </select>
-          </label>
+        <div>
+          <div className='field-character'>
+            <div className="field">
+              <label className='details-character-name details-character'>
+                <p>Nome:</p>
+                <input
+                  type="text"
+                  value={editedCharacterName}
+                  onChange={handleNameChange}
+                />
+              </label>
+            </div>
+            <div className="field">
+              <label className='details-character-age details-character'>
+                <p>Idade:</p>
+                <input
+                  type="text"
+                  value={editedCharacterAge}
+                  onChange={handleAgeChange}
+                />
+              </label>
+            </div>
+          </div>
+          <div className='field-character'>
+            <div className="field">
+              <label className='details-character'>
+                <p>Raça:</p>
+                <select value={editedCharacterRace} onChange={handleRaceChange}>
+                  <option value="">Selecione uma raça</option>
+                  {raceOptions.map((race, index) => (
+                    <option key={index} value={race}>{race}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            <div className="field">
+              <label className='details-character'>
+                <p>Classe:</p>
+                <select value={editedCharacterClass} onChange={handleClassChange}>
+                  <option value="">Selecione uma classe</option>
+                  {classOptions.map((className, index) => (
+                    <option key={index} value={className}>{className}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          </div>
         </div>
         <div className='attribute-powers-origin'>
           <div className="field">

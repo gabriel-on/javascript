@@ -23,6 +23,14 @@
         justify-content: center;
     }
 
+    .edit-Character-container > form > div {
+        border: none;
+    }
+
+    .field-character {
+        flex-direction: column;
+    }
+
     .field {
         width: 100%;
         gap: 10px;
@@ -153,6 +161,29 @@ h3 {
     justify-content: center;
 }
 
+.field-character {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+form > div {
+    border: 1px solid black;
+}
+
+.field-character > .field{
+    width: 300px;
+    flex-direction: column;
+    display: flex;
+    align-content: center;
+}
+
+.field-character >.field>label {
+    width: 300px;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+
 .attribute-powers-origin {
     border: 1px solid black;
     display: flex;
@@ -242,7 +273,7 @@ select {
     width: 50px;
 }
 
-/*
+
 .attribute-table>table>tbody>tr>td>button {
     display: flex;
     border: none;
@@ -253,6 +284,7 @@ select {
     font-size: 1.2em;
 }
 
+/*
 .edit-Character-container>form {
     gap: 10px;
     display: flex;
@@ -266,13 +298,13 @@ select {
     display: flex;
     width: 100%;
 }
+ */
 
-.change-btn {
-    display: fle;
+ .edit-Character-container > form > .change-btn {
     cursor: pointer;
     width: 100px;
     border: none;
     padding: 10px;
     margin: auto;
     background: red;
-} */
+}

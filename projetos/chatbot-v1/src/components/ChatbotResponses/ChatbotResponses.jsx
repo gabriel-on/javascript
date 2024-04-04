@@ -98,7 +98,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
             }
         } else {
             // Exibe uma mensagem indicando que o limite máximo de 10 pontos por atributo foi excedido
-            alert("O limite máximo de pontos por atributo (10) foi excedido!");
+            alert("Cada habilidade do atributo só pode ter no máximo 10 pontos!");
         }
     };    
 

@@ -54,9 +54,7 @@
     }
 
     .attribute-container {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
+        justify-content: center;
     }
 
     .details-character {
@@ -124,17 +122,24 @@
         margin-top: 20px;
         background: red;
     }
+
+    form > .attribute-powers-origin {
+        flex-direction: column;
+        align-items: center;
+        border: none;
+    }
 }
 
-/* .edit-Character-container {
+.edit-Character-container {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     max-width: 100%;
-    margin: auto;
 }
 
-.edit-Character-container>h2, h3 {
+
+.edit-Character-container>h2,
+h3 {
     text-transform: uppercase;
     display: flex;
     flex-wrap: wrap;
@@ -150,31 +155,60 @@
     justify-content: center;
 }
 
+.attribute-powers-origin {
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+}
+
 .attribute-container {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
 }
 
-.details-character{
+.powers-origin {
+    flex-direction: column;
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.powersDescription,
+.origin {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 380px;
+}
+
+.details-character {
     display: flex;
 }
 
-.details-character > p{
+.details-character>p {
     color: yellow;
     text-transform: uppercase;
 }
 
-.details-character> input, select{
+.details-character>input,
+select {
     display: flex;
     width: 250px;
     padding: 10px;
 }
 
+.attribute-table>table>tbody {
+    border: 1px solid black;
+    padding: 10px;
+}
+
 .attribute-table>table>tbody>tr {
+    border: 1px solid black;
     display: flex;
     gap: 20px;
 }
+
 
 .attribute-table>table>tbody>tr>td {
     color: yellow;
@@ -194,6 +228,7 @@
     width: 50px;
 }
 
+/*
 .attribute-table>table>tbody>tr>td>button {
     display: flex;
     border: none;

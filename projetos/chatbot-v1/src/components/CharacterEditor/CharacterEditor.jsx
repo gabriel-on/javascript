@@ -101,7 +101,7 @@ function CharacterEditor() {
     // Verifica se o novo valor excede o limite de 10 pontos por habilidade
     if (value <= 10) {
       const currentTotal = Object.values(editedCharacterAttributes).reduce((total, val) => total + val, 0);
-  
+
       // Verifica se o novo valor excede o limite total de pontos (36)
       if (currentTotal + (value - (editedCharacterAttributes[attribute] || 0)) <= 36) {
         const updatedValue = Math.max(0, value);
@@ -115,12 +115,12 @@ function CharacterEditor() {
     } else {
       alert("Cada habilidade do atributo só pode ter no máximo 10 pontos!");
     }
-  };  
+  };
 
   const handleIncrement = (attribute) => {
     handleAttributeChange(attribute, (editedCharacterAttributes[attribute] || 0) + 1);
   };
-  
+
   const handleDecrement = (attribute) => {
     handleAttributeChange(attribute, Math.max((editedCharacterAttributes[attribute] || 0) - 1, 0));
   };
@@ -212,70 +212,48 @@ function CharacterEditor() {
             </select>
           </label>
         </div>
-        <h3>Atributos</h3>
-        <div className="field">
-          <div className="attribute-table attribute-container">
-            <table>
-              <tbody>
-                {Object.entries(editedCharacterAttributes).map(([attribute, value], index) => {
-                  if (index < Object.entries(editedCharacterAttributes).length / 2) {
-                    return (
-                      <tr key={attribute}>
-                        <td>{attribute}:</td>
-                        <td>
-                          <button type="button" onClick={() => handleDecrement(attribute)}>-</button>
-                          <span>{value}</span>
-                          <button type="button" onClick={() => handleIncrement(attribute)}>+</button>
-                        </td>
-                      </tr>
-                    );
-                  }
-                  return null;
-                })}
-              </tbody>
-            </table>
+        <div className='attribute-powers-origin'>
+          <div className="field">
+            <div className="attribute-table attribute-container">
+              <h3>Atributos</h3>
+              <table>
+                <tbody>
+                  {Object.entries(editedCharacterAttributes).map(([attribute, value], index) => (
+                    <tr key={attribute}>
+                      <td>{attribute}:</td>
+                      <td>
+                        <button type="button" onClick={() => handleDecrement(attribute)}>-</button>
+                        <span>{value}</span>
+                        <button type="button" onClick={() => handleIncrement(attribute)}>+</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-          <div className="attribute-table attribute-container">
-            <table>
-              <tbody>
-                {Object.entries(editedCharacterAttributes).map(([attribute, value], index) => {
-                  if (index >= Object.entries(editedCharacterAttributes).length / 2) {
-                    return (
-                      <tr key={attribute}>
-                        <td>{attribute}:</td>
-                        <td>
-                          <button type="button" onClick={() => handleDecrement(attribute)}>-</button>
-                          <span>{value}</span>
-                          <button type="button" onClick={() => handleIncrement(attribute)}>+</button>
-                        </td>
-                      </tr>
-                    );
-                  }
-                  return null;
-                })}
-              </tbody>
-            </table>
+          <div className='powers-origin'>
+            <div className="field powersDescription">
+              <label className=''>
+                <h3>Descrição de Poderes:</h3>
+                <textarea
+                  name="powersDescription"
+                  value={editedCharacterPowersDescription}
+                  onChange={handlePowersDescriptionChange}
+                ></textarea>
+              </label>
+            </div>
+            <div className="field origin">
+              <label>
+                <h3>Origem:</h3>
+                <textarea
+                  name="origin"
+                  value={editedCharacterOrigin}
+                  onChange={handleOriginChange}
+                ></textarea>
+              </label>
+            </div>
           </div>
-        </div>
-        <div className="field powersDescription">
-          <label className=''>
-            <h3>Descrição de Poderes:</h3>
-            <textarea
-              name="powersDescription"
-              value={editedCharacterPowersDescription}
-              onChange={handlePowersDescriptionChange}
-            ></textarea>
-          </label>
-        </div>
-        <div className="field origin">
-          <label>
-            <h3>Origem:</h3>
-            <textarea
-              name="origin"
-              value={editedCharacterOrigin}
-              onChange={handleOriginChange}
-            ></textarea>
-          </label>
         </div>
         <button className='change-btn' type="submit">Salvar</button>
       </form>

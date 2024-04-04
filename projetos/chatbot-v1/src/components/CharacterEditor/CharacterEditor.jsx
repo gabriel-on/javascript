@@ -97,18 +97,26 @@ function CharacterEditor() {
     setEditedCharacterClass(value);
   };
 
-  const handleIncrement = (attribute) => {
-    setEditedCharacterAttributes((prevAttributes) => ({
-      ...prevAttributes,
-      [attribute]: (prevAttributes[attribute] || 0) + 1,
-    }));
+  const handleAttributeChange = (attribute, value) => {
+    const currentTotal = Object.values(editedCharacterAttributes).reduce((total, val) => total + val, 0);
+
+    if (currentTotal + (value - (editedCharacterAttributes[attribute] || 0)) <= 36) {
+      const updatedValue = Math.max(0, value);
+      setEditedCharacterAttributes(prevAttributes => ({
+        ...prevAttributes,
+        [attribute]: updatedValue
+      }));
+    } else {
+      alert("O limite total de pontos (36) foi excedido!");
+    }
   };
 
+  const handleIncrement = (attribute) => {
+    handleAttributeChange(attribute, (editedCharacterAttributes[attribute] || 0) + 1);
+  };
+  
   const handleDecrement = (attribute) => {
-    setEditedCharacterAttributes((prevAttributes) => ({
-      ...prevAttributes,
-      [attribute]: Math.max((prevAttributes[attribute] || 0) - 1, 0),
-    }));
+    handleAttributeChange(attribute, Math.max((editedCharacterAttributes[attribute] || 0) - 1, 0));
   };
 
   const handlePowersDescriptionChange = (e) => {

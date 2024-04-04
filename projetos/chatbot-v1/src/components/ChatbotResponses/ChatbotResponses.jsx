@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { ref, onValue, push, serverTimestamp } from 'firebase/database';
+import { ref, onValue, set, push, serverTimestamp } from 'firebase/database';
 import { database } from "../../firebase/config";
 import '../Chatbot/Chatbot.css';
 import { useAuth } from '../../hooks/useAuthentication';
 
-//CSS
-import '../ChatbotResponses/ChatbotResponses.css'
+// CSS
+import '../ChatbotResponses/ChatbotResponses.css';
 
 const ChatbotResponses = ({ onSaveResult }) => {
     const { currentUser } = useAuth();
@@ -29,6 +29,17 @@ const ChatbotResponses = ({ onSaveResult }) => {
     const [origin, setOrigin] = useState("");
     const [successMessage, setSuccessMessage] = useState(false);
     const [powersDescription, setPowersDescription] = useState("");
+
+    // Função para gerar IDs personalizados com números
+    const generateCustomId = () => {
+        const length = 9; // Define o comprimento do ID personalizado
+        let customId = '';
+
+        for (let i = 0; i < length; i++) {
+            customId += Math.floor(Math.random() * 10); // Adiciona um dígito aleatório de 0 a 9 ao ID
+        }
+        return customId;
+    };
 
     useEffect(() => {
         const classesRef = ref(database, 'classes');
@@ -71,8 +82,30 @@ const ChatbotResponses = ({ onSaveResult }) => {
         if (step === 8) { // Verifica se é a última etapa
             const createdBy = currentUser.displayName;
             const createdAt = serverTimestamp();
-            onSaveResult(selectedClass, attributes, characterName, selectedRace, age, origin, createdBy, createdAt, powersDescription);
-            setSuccessMessage(true);
+            const customId = generateCustomId(); // Gera um ID personalizado
+
+            // Crie um objeto contendo os dados que você deseja salvar
+            const dataToSave = {
+                selectedClass,
+                attributes,
+                characterName,
+                selectedRace,
+                age,
+                origin,
+                createdBy,
+                createdAt,
+                powersDescription
+            };
+
+            // Enviar dados para o Firebase com a chave personalizada
+            set(ref(database, 'result/' + customId), dataToSave)
+                .then(() => {
+                    console.log("Dados enviados com sucesso!");
+                    setSuccessMessage(true);
+                })
+                .catch((error) => {
+                    console.error("Erro ao enviar dados:", error);
+                });
         } else {
             handleNextStep();
         }
@@ -100,7 +133,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
             // Exibe uma mensagem indicando que o limite máximo de 10 pontos por atributo foi excedido
             alert("Cada habilidade do atributo só pode ter no máximo 10 pontos!");
         }
-    };    
+    };
 
     const handlePowersDescriptionChange = (event) => {
         setPowersDescription(event.target.value);

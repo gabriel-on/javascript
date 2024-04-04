@@ -79,22 +79,28 @@ const ChatbotResponses = ({ onSaveResult }) => {
     };
 
     const handleAttributeChange = (attribute, value) => {
-        // Calcula a soma atual dos valores dos atributos
-        const currentTotal = Object.values(attributes).reduce((total, val) => total + val, 0);
-
-        // Verifica se o novo valor excede o limite total de 36 pontos
-        if (currentTotal + (value - attributes[attribute]) <= 36) {
-            // Garante que o valor não seja menor que 0
-            const updatedValue = Math.max(0, value);
-            setAttributes(prevAttributes => ({
-                ...prevAttributes,
-                [attribute]: updatedValue
-            }));
+        // Verifica se o novo valor excede o limite máximo de 10 pontos por atributo
+        if (value <= 10) {
+            // Calcula a soma atual dos valores dos atributos
+            const currentTotal = Object.values(attributes).reduce((total, val) => total + val, 0);
+    
+            // Verifica se a soma atual mais o valor atual do atributo não excede o limite total de 36 pontos
+            if (currentTotal + (value - (attributes[attribute] || 0)) <= 36) {
+                // Garante que o valor não seja menor que 0
+                const updatedValue = Math.max(0, value);
+                setAttributes(prevAttributes => ({
+                    ...prevAttributes,
+                    [attribute]: updatedValue
+                }));
+            } else {
+                // Exibe uma mensagem indicando que o limite total de pontos (36) foi excedido
+                alert("O limite total de pontos (36) foi excedido!");
+            }
         } else {
-            // Exibe uma mensagem ou toma outra ação, indicando que o limite foi excedido
-            alert("O limite total de pontos (36) foi excedido!");
+            // Exibe uma mensagem indicando que o limite máximo de 10 pontos por atributo foi excedido
+            alert("O limite máximo de pontos por atributo (10) foi excedido!");
         }
-    };
+    };    
 
     const handlePowersDescriptionChange = (event) => {
         setPowersDescription(event.target.value);

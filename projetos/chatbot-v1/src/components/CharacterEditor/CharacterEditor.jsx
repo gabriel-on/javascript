@@ -115,8 +115,7 @@ function CharacterEditor() {
     } else {
       alert("Cada habilidade do atributo só pode ter no máximo 10 pontos!");
     }
-  };
-  
+  };  
 
   const handleIncrement = (attribute) => {
     handleAttributeChange(attribute, (editedCharacterAttributes[attribute] || 0) + 1);

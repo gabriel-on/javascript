@@ -49,7 +49,7 @@ function Home() {
               <li>Raça: {character.selectedRace}</li>
               <li>Criador: {character.createdBy}</li>
             </ul>
-            <Link to={`/character-details/${character.id}`}>Ver Detalhes</Link>
+            <Link className='btn-details' to={`/character-details/${character.id}`}>Ver Detalhes</Link>
           </div>
         ))}
       </div>

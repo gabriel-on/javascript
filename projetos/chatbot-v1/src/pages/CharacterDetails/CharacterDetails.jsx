@@ -116,8 +116,10 @@ function CharacterDetails() {
       </table>
       <p>Feito por: {characterDetails.createdBy}</p>
       <p>Data de criação: <span>{formattedDate}</span></p>
-      <button onClick={handleExport}>Exportar Detalhes</button>
-      <Link to={`/character-editor/${characterId}`}>Editar Detalhes</Link>
+      <div>
+        <button className='btn-export-oc' onClick={handleExport}>Exportar Detalhes</button>
+        <Link className='btn-edit-details' to={`/character-editor/${characterId}`}>Editar Detalhes</Link>
+      </div>
     </div>
   );
 }

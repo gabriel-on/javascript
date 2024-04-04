@@ -20,7 +20,7 @@ function Navbar() {
         <ul >
           <li className='brand'>
             <NavLink to={"/"}>
-              <h1>Logo</h1>
+              <h1>OC Maker</h1>
             </NavLink>
           </li>
         </ul>

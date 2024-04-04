@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getDatabase, ref, get, update } from 'firebase/database';
+import '../CharacterEditor/CharacterEditor.css'
 
 function CharacterEditor() {
   const { characterId } = useParams();
@@ -152,12 +153,12 @@ function CharacterEditor() {
   }
 
   return (
-    <div>
+    <div className='edit-Character-container'>
       <h2>Editar Personagem</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Nome:
+        <div className="field">
+          <label className='details-character-name details-character'>
+            <p>Nome:</p>
             <input
               type="text"
               value={editedCharacterName}
@@ -165,9 +166,9 @@ function CharacterEditor() {
             />
           </label>
         </div>
-        <div>
-          <label>
-            Idade:
+        <div className="field">
+          <label className='details-character-age details-character'>
+            <p>Idade:</p>
             <input
               type="text"
               value={editedCharacterAge}
@@ -175,9 +176,9 @@ function CharacterEditor() {
             />
           </label>
         </div>
-        <div>
-          <label>
-            Raça:
+        <div className="field">
+          <label className='details-character'>
+            <p>Raça:</p>
             <select value={editedCharacterRace} onChange={handleRaceChange}>
               <option value="">Selecione uma raça</option>
               {raceOptions.map((race, index) => (
@@ -186,9 +187,9 @@ function CharacterEditor() {
             </select>
           </label>
         </div>
-        <div>
-          <label>
-            Classe:
+        <div className="field">
+          <label className='details-character'>
+            <p>Classe:</p>
             <select value={editedCharacterClass} onChange={handleClassChange}>
               <option value="">Selecione uma classe</option>
               {classOptions.map((className, index) => (
@@ -197,22 +198,54 @@ function CharacterEditor() {
             </select>
           </label>
         </div>
-        <div>
-          <h3>Atributos</h3>
-          {Object.entries(editedCharacterAttributes).map(([attribute, value]) => (
-            <div key={attribute}>
-              <div>
-                <span>{attribute}:</span>
-                <button type="button" onClick={() => handleDecrement(attribute)}>-</button>
-                <span>{value}</span>
-                <button type="button" onClick={() => handleIncrement(attribute)}>+</button>
-              </div>
-            </div>
-          ))}
+        <h3>Atributos</h3>
+        <div className="field">
+          <div className="attribute-table attribute-container">
+            <table>
+              <tbody>
+                {Object.entries(editedCharacterAttributes).map(([attribute, value], index) => {
+                  if (index < Object.entries(editedCharacterAttributes).length / 2) {
+                    return (
+                      <tr key={attribute}>
+                        <td>{attribute}:</td>
+                        <td>
+                          <button type="button" onClick={() => handleDecrement(attribute)}>-</button>
+                          <span>{value}</span>
+                          <button type="button" onClick={() => handleIncrement(attribute)}>+</button>
+                        </td>
+                      </tr>
+                    );
+                  }
+                  return null;
+                })}
+              </tbody>
+            </table>
+          </div>
+          <div className="attribute-table attribute-container">
+            <table>
+              <tbody>
+                {Object.entries(editedCharacterAttributes).map(([attribute, value], index) => {
+                  if (index >= Object.entries(editedCharacterAttributes).length / 2) {
+                    return (
+                      <tr key={attribute}>
+                        <td>{attribute}:</td>
+                        <td>
+                          <button type="button" onClick={() => handleDecrement(attribute)}>-</button>
+                          <span>{value}</span>
+                          <button type="button" onClick={() => handleIncrement(attribute)}>+</button>
+                        </td>
+                      </tr>
+                    );
+                  }
+                  return null;
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div>
-          <label>
-            Descrição de Poderes:
+        <div className="field powersDescription">
+          <label className=''>
+            <h3>Descrição de Poderes:</h3>
             <textarea
               name="powersDescription"
               value={editedCharacterPowersDescription}
@@ -220,9 +253,9 @@ function CharacterEditor() {
             ></textarea>
           </label>
         </div>
-        <div>
+        <div className="field origin">
           <label>
-            Origem:
+            <h3>Origem:</h3>
             <textarea
               name="origin"
               value={editedCharacterOrigin}
@@ -230,7 +263,7 @@ function CharacterEditor() {
             ></textarea>
           </label>
         </div>
-        <button type="submit">Salvar</button>
+        <button className='change-btn' type="submit">Salvar</button>
       </form>
     </div>
   );

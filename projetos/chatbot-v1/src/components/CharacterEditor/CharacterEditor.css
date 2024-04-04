@@ -1,0 +1,229 @@
+@media screen and (max-width: 420px) {
+    .edit-Character-container {
+        width: 400px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .edit-Character-container>h2,
+    h3 {
+        text-transform: uppercase;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
+        color: white;
+    }
+
+    .edit-Character-container>form {
+        width: 400px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .field {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .field>label {
+        width: 400px;
+        flex-direction: column;
+        display: flex;
+        align-content: center;
+    }
+
+    .field>label>textarea {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .powersDescription,
+    .origin {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 380px;
+    }
+
+    .attribute-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .details-character {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .details-character>p {
+        color: white;
+        text-transform: uppercase;
+    }
+
+    .details-character>input,
+    select {
+        display: flex;
+        width: 250px;
+        padding: 10px;
+    }
+
+    .attribute-table>table {
+        display: flex;
+        justify-content: center;
+    }
+
+    .attribute-table>table>tbody>tr {
+        display: flex;
+        gap: 20px;
+    }
+
+    .attribute-table>table>tbody>tr>td {
+        color: white;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        border: none;
+        width: 100px;
+        gap: 10px;
+    }
+
+    .attribute-table>table>tbody>tr>td>span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2em;
+        width: 50px;
+    }
+
+    .attribute-table>table>tbody>tr>td>button {
+        display: flex;
+        border: none;
+        cursor: pointer;
+        width: 50px;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2em;
+    }
+
+    .change-btn {
+        display: fle;
+        cursor: pointer;
+        width: 100px;
+        border: none;
+        padding: 10px;
+        margin: auto;
+        margin-top: 20px;
+        background: red;
+    }
+}
+
+/* .edit-Character-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    max-width: 100%;
+    margin: auto;
+}
+
+.edit-Character-container>h2, h3 {
+    text-transform: uppercase;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+    color: yellow;
+}
+
+.field {
+    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.attribute-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.details-character{
+    display: flex;
+}
+
+.details-character > p{
+    color: yellow;
+    text-transform: uppercase;
+}
+
+.details-character> input, select{
+    display: flex;
+    width: 250px;
+    padding: 10px;
+}
+
+.attribute-table>table>tbody>tr {
+    display: flex;
+    gap: 20px;
+}
+
+.attribute-table>table>tbody>tr>td {
+    color: yellow;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    border: none;
+    width: 100px;
+    gap: 10px;
+}
+
+.attribute-table>table>tbody>tr>td>span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    width: 50px;
+}
+
+.attribute-table>table>tbody>tr>td>button {
+    display: flex;
+    border: none;
+    cursor: pointer;
+    width: 50px;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+}
+
+.edit-Character-container>form {
+    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.field>label {
+    flex-direction: column;
+    display: flex;
+    width: 100%;
+}
+
+.change-btn {
+    display: fle;
+    cursor: pointer;
+    width: 100px;
+    border: none;
+    padding: 10px;
+    margin: auto;
+    background: red;
+} */

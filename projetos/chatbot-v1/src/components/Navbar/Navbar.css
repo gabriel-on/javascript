@@ -1,3 +1,22 @@
+@media screen and (max-width: 420px) {
+    .navbar-container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 420px;
+    }
+
+    .navbar-container > .navbar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    
+    .brand > a > h1{
+        display: none;
+    }
+}
+
 a {
     text-decoration: none;
 }
@@ -10,12 +29,12 @@ li {
     display: flex;
     flex-wrap: wrap;
     background: black;
+    width: 100%;
+    justify-content: center;
 }
 
 .navbar {
-    margin: auto;
-    max-width: 1200px;
-    width: 100%;
+    width: 1200px;
     align-items: center;
     justify-content: space-between;
     display: flex;

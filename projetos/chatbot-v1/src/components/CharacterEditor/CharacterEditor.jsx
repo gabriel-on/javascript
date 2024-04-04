@@ -98,18 +98,25 @@ function CharacterEditor() {
   };
 
   const handleAttributeChange = (attribute, value) => {
-    const currentTotal = Object.values(editedCharacterAttributes).reduce((total, val) => total + val, 0);
-
-    if (currentTotal + (value - (editedCharacterAttributes[attribute] || 0)) <= 36) {
-      const updatedValue = Math.max(0, value);
-      setEditedCharacterAttributes(prevAttributes => ({
-        ...prevAttributes,
-        [attribute]: updatedValue
-      }));
+    // Verifica se o novo valor excede o limite de 10 pontos por habilidade
+    if (value <= 10) {
+      const currentTotal = Object.values(editedCharacterAttributes).reduce((total, val) => total + val, 0);
+  
+      // Verifica se o novo valor excede o limite total de pontos (36)
+      if (currentTotal + (value - (editedCharacterAttributes[attribute] || 0)) <= 36) {
+        const updatedValue = Math.max(0, value);
+        setEditedCharacterAttributes(prevAttributes => ({
+          ...prevAttributes,
+          [attribute]: updatedValue
+        }));
+      } else {
+        alert("O limite total de pontos (36) foi excedido!");
+      }
     } else {
-      alert("O limite total de pontos (36) foi excedido!");
+      alert("Cada habilidade do atributo só pode ter no máximo 10 pontos!");
     }
   };
+  
 
   const handleIncrement = (attribute) => {
     handleAttributeChange(attribute, (editedCharacterAttributes[attribute] || 0) + 1);

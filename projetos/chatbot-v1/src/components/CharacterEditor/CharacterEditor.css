@@ -25,8 +25,6 @@
 
     .field {
         width: 100%;
-        display: flex;
-        flex-wrap: wrap;
         gap: 10px;
         justify-content: center;
     }
@@ -123,7 +121,7 @@
         background: red;
     }
 
-    form > .attribute-powers-origin {
+    form>.attribute-powers-origin {
         flex-direction: column;
         align-items: center;
         border: none;
@@ -158,20 +156,19 @@ h3 {
 .attribute-powers-origin {
     border: 1px solid black;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .attribute-container {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    justify-content: center;
 }
 
 .powers-origin {
     flex-direction: column;
     display: flex;
     gap: 10px;
-    width: 100%;
 }
 
 .powersDescription,
@@ -180,6 +177,23 @@ h3 {
     flex-wrap: wrap;
     align-items: center;
     width: 380px;
+}
+
+.powersDescription>label,
+.origin>label {
+    flex-direction: column;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.powersDescription>label>textarea,
+.origin>label>textarea {
+    max-width: 380px;
+    min-width: 380px;
+    max-height: 25vh;
+    min-height: 15vh;
+    padding: 10px;
 }
 
 .details-character {

@@ -2,6 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
 import { getDatabase, ref, onValue } from 'firebase/database';
 
+// Objeto que mapeia as habilidades para seus papéis correspondentes
+const habilidadePapeis = {
+  Agilidade: 'Esquiva e Velocidade',
+  Defesa: 'Resistência a Danos Físicos',
+  Destreza: 'Precisão e Coordenação',
+  Força: 'Ataque Físico',
+  Inteligencia: 'Conhecimento e Raciocínio',
+  Poder: 'Ataque Mágico',
+  Velocidade: 'Ações Rápidas',
+  Vigor: 'Resistência e Saúde Máxima'
+};
+
 const CharacterGame = ({ userId }) => {
     const { currentUser } = useAuth();
     const [loading, setLoading] = useState(true);
@@ -160,11 +172,14 @@ const CharacterGame = ({ userId }) => {
                     <div className="status">
                         <h2>{selectedCharacter.characterName}</h2>
                         <p>Health: {characterHealth}</p>
-                        {Object.entries(selectedCharacter.attributes).map(([key, value]) => (
-                            <div key={key}>
-                                <p>{key}: {value}</p>
-                            </div>
-                        ))}
+                        <h3>Habilidades:</h3>
+                        <ul>
+                            {Object.entries(selectedCharacter.attributes).map(([key, value]) => (
+                                <li key={key}>
+                                    <strong>{key}: </strong> {value} - {habilidadePapeis[key]}
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                     {isChoosingOpponent ? (
                         <div className="character-list">
@@ -181,11 +196,14 @@ const CharacterGame = ({ userId }) => {
                         <div className="status">
                             <h2>{opponent.characterName}</h2>
                             <p>Health: {opponentHealth}</p>
-                            {Object.entries(opponent.attributes).map(([key, value]) => (
-                                <div key={key}>
-                                    <p>{key}: {value}</p>
-                                </div>
-                            ))}
+                            <h3>Habilidades:</h3>
+                            <ul>
+                                {Object.entries(opponent.attributes).map(([key, value]) => (
+                                    <li key={key}>
+                                        <strong>{key}: </strong> {value} - {habilidadePapeis[key]}
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                     )}
                     <button onClick={attackOpponent} disabled={!opponent || opponentHealth <= 0 || !isPlayerTurn}>Attack</button>

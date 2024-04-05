@@ -20,6 +20,7 @@ import Login from './pages/Login/Login.jsx';
 import CharacterSheet from './pages/CharacterSheet/CharacterSheet.jsx';
 import CharacterDetails from './pages/CharacterDetails/CharacterDetails.jsx';
 import CharacterEditor from './components/CharacterEditor/CharacterEditor.jsx';
+import CharacterGame from './components/CharacterGame/CharacterGame.jsx';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -70,6 +71,10 @@ function App() {
               <Route
                 path='/character-editor/:characterId'
                 element={<CharacterEditor />}
+              />
+              <Route
+                path='/character-game'
+                element={<CharacterGame character={userId} />} // Passa os dados do personagem como uma propriedade
               />
               {userId && (
                 <Route path='/character-sheet' element={<CharacterSheet />} />

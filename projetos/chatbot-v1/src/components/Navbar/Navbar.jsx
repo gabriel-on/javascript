@@ -33,6 +33,11 @@ function Navbar() {
               <NavLink to={"/character-sheet"}>Criar</NavLink>
             </li>
           )}
+          {currentUser && (
+            <li className='nav-page'>
+              <NavLink to={"/character-game"}>Game</NavLink>
+            </li>
+          )}
           {!currentUser && (
             <li>
               <NavLink to={"/login"}>Login</NavLink>

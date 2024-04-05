@@ -49,16 +49,26 @@ const CharacterGame = ({ userId }) => {
     const selectCharacter = (character) => {
         setSelectedCharacter(character);
         setCharacterHealth(character.attributes.Vigor * 10); // Corrigido para definir a vida baseada no atributo Vigor
+
+        // Define os atributos do inimigo com pontos pré-definidos
         const randomEnemy = {
             name: 'Goblin',
-            health: 20,
-            attack: 7,
-            defense: 2
+            health: character.attributes.Vigor * 10, // Vida igual à do personagem selecionado
+            attack: Math.floor(Math.random() * 10) + 5, // Ataque aleatório entre 5 e 14
+            defense: Math.floor(Math.random() * 5) + 1, // Defesa aleatória entre 1 e 5
+            agility: Math.floor(Math.random() * 10) + 1, // Agilidade aleatória entre 1 e 10
+            dexterity: Math.floor(Math.random() * 10) + 1, // Destreza aleatória entre 1 e 10
+            intelligence: Math.floor(Math.random() * 10) + 1, // Inteligência aleatória entre 1 e 10
+            power: Math.floor(Math.random() * 10) + 1, // Poder aleatório entre 1 e 10
+            speed: Math.floor(Math.random() * 10) + 1, // Velocidade aleatória entre 1 e 10
+            vigor: Math.floor(Math.random() * 10) + 1 // Vigor aleatório entre 1 e 10
         };
+
         setEnemy(randomEnemy);
         setEnemyHealth(randomEnemy.health);
         setIsPlayerTurn(true);
     };
+
 
     const attackEnemy = () => {
         if (!selectedCharacter || !enemy || enemyHealth <= 0 || !isPlayerTurn) return;
@@ -119,8 +129,15 @@ const CharacterGame = ({ userId }) => {
                             <p>Health: {enemyHealth}</p>
                             <p>Attack: {enemy.attack}</p>
                             <p>Defense: {enemy.defense}</p>
+                            <p>Agility: {enemy.agility}</p>
+                            <p>Dexterity: {enemy.dexterity}</p>
+                            <p>Intelligence: {enemy.intelligence}</p>
+                            <p>Power: {enemy.power}</p>
+                            <p>Speed: {enemy.speed}</p>
+                            <p>Vigor: {enemy.vigor}</p>
                         </div>
                     )}
+
                     <button onClick={attackEnemy} disabled={!enemy || enemyHealth <= 0 || !isPlayerTurn}>Attack</button>
                     <button onClick={restartGame}>Restart</button>
                     <div className="combat-log">

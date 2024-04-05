@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { ref, onValue, set, push, serverTimestamp } from 'firebase/database';
 import { database } from "../../firebase/config";
-import '../Chatbot/Chatbot.css';
 import { useAuth } from '../../hooks/useAuthentication';
 
 // CSS
@@ -32,6 +31,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
     const [successMessage, setSuccessMessage] = useState(false);
     const [powersDescription, setPowersDescription] = useState("");
     const [customId, setCustomId] = useState(null);
+    const [isPublic, setIsPublic] = useState(false); // Novo estado para controlar se o personagem é público ou privado
 
     // Função para gerar IDs personalizados com números
     const generateCustomId = () => {
@@ -97,7 +97,8 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 origin,
                 createdBy,
                 createdAt,
-                powersDescription
+                powersDescription,
+                isPublic // Inclui a informação de público/privado nos dados salvos
             };
 
             // Enviar dados para o Firebase com a chave personalizada
@@ -176,6 +177,10 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 <button onClick={() => handleAttributeChange(attribute, value + 1)}>+</button>
             </div>
         ));
+    };
+
+    const handlePublicToggle = () => {
+        setIsPublic(!isPublic); // Inverte o estado de público/privado
     };
 
     const renderStepContent = () => {
@@ -278,6 +283,12 @@ const ChatbotResponses = ({ onSaveResult }) => {
                         <div>
                             <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
                             <button className="btn-step" onClick={handleSendButton}>Concluir</button>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" checked={isPublic} onChange={handlePublicToggle} />
+                                Tornar personagem público
+                            </label>
                         </div>
                     </div>
                 );

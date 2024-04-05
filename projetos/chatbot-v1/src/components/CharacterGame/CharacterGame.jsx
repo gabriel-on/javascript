@@ -4,14 +4,14 @@ import { getDatabase, ref, onValue } from 'firebase/database';
 
 // Objeto que mapeia as habilidades para seus papéis correspondentes
 const habilidadePapeis = {
-  Agilidade: 'Esquiva e Velocidade',
-  Defesa: 'Resistência a Danos Físicos',
-  Destreza: 'Precisão e Coordenação',
-  Força: 'Ataque Físico',
-  Inteligencia: 'Conhecimento e Raciocínio',
-  Poder: 'Ataque Mágico',
-  Velocidade: 'Ações Rápidas',
-  Vigor: 'Resistência e Saúde Máxima'
+    Agilidade: 'Esquiva e Velocidade',
+    Defesa: 'Resistência a Danos Físicos',
+    Destreza: 'Precisão e Coordenação',
+    Força: 'Ataque Físico',
+    Inteligencia: 'Conhecimento e Raciocínio',
+    Poder: 'Ataque Mágico',
+    Velocidade: 'Ações Rápidas',
+    Vigor: 'Resistência e Saúde Máxima'
 };
 
 const CharacterGame = ({ userId }) => {
@@ -111,17 +111,33 @@ const CharacterGame = ({ userId }) => {
     const attackOpponent = () => {
         if (!selectedCharacter || !opponent || opponentHealth <= 0 || !isPlayerTurn) return;
 
-        const damage = Math.max(0, selectedCharacter.attributes.Força - opponent.attributes.Defesa);
+        // Calcula o dano baseado na diferença entre a força do personagem e a defesa do oponente
+        let damage = Math.max(0, selectedCharacter.attributes.Força - opponent.attributes.Defesa);
+
+        // Se a agilidade do personagem for maior que a do oponente, há uma chance de evitar o dano
+        if (selectedCharacter.attributes.Agilidade > opponent.attributes.Agilidade) {
+            const avoidanceChance = 0.5; // Chance de evitar o dano (30%)
+            if (Math.random() < avoidanceChance) {
+                console.log("Attack avoided!"); // Log para indicar que o ataque foi evitado
+                damage = 0; // Define o dano como zero se o ataque for evitado
+            }
+        }
+
+        // Reduz a saúde do oponente pelo dano calculado
         const newOpponentHealth = Math.max(0, opponentHealth - damage);
         setOpponentHealth(newOpponentHealth);
+
+        // Registra o evento no log de combate
         setCombatLog([...combatLog, `You dealt ${damage} damage to ${opponent.characterName}`]);
 
-        if (newOpponentHealth > 0) {
-            setIsPlayerTurn(false); // Trocar para o turno do oponente
-        } else {
-            // O oponente foi derrotado, reiniciar o jogo
+        // Se a saúde do oponente chegar a zero, reinicia o jogo
+        if (newOpponentHealth <= 0) {
             restartGame();
+            return; // Encerra a função após reiniciar o jogo para evitar a execução do código restante
         }
+
+        // Troca para o turno do oponente após o ataque do jogador
+        setIsPlayerTurn(false);
     };
 
     useEffect(() => {
@@ -206,7 +222,9 @@ const CharacterGame = ({ userId }) => {
                             </ul>
                         </div>
                     )}
-                    <button onClick={attackOpponent} disabled={!opponent || opponentHealth <= 0 || !isPlayerTurn}>Attack</button>
+                    <button onClick={attackOpponent} disabled={!opponent || opponentHealth <= 0 || !isPlayerTurn || characterHealth <= 0}>
+                        Attack
+                    </button>
                     <button onClick={restartGame}>Restart</button>
                     <div className="combat-log">
                         <h3>Combat Log</h3>

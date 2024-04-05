@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import { ref, onValue, set, push, serverTimestamp } from 'firebase/database';
 import { database } from "../../firebase/config";
 import '../Chatbot/Chatbot.css';
@@ -9,6 +10,7 @@ import '../ChatbotResponses/ChatbotResponses.css';
 
 const ChatbotResponses = ({ onSaveResult }) => {
     const { currentUser } = useAuth();
+    const navigate = useNavigate(); 
     const [step, setStep] = useState(1);
     const [classes, setClasses] = useState([]);
     const [selectedClass, setSelectedClass] = useState("");
@@ -29,6 +31,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
     const [origin, setOrigin] = useState("");
     const [successMessage, setSuccessMessage] = useState(false);
     const [powersDescription, setPowersDescription] = useState("");
+    const [customId, setCustomId] = useState(null);
 
     // Função para gerar IDs personalizados com números
     const generateCustomId = () => {
@@ -82,8 +85,8 @@ const ChatbotResponses = ({ onSaveResult }) => {
         if (step === 8) { // Verifica se é a última etapa
             const createdBy = currentUser.displayName;
             const createdAt = serverTimestamp();
-            const customId = generateCustomId(); // Gera um ID personalizado
-
+            const id = generateCustomId(); // Gera um ID personalizado
+            setCustomId(id); // Armazena o ID personalizado
             // Crie um objeto contendo os dados que você deseja salvar
             const dataToSave = {
                 selectedClass,
@@ -98,7 +101,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
             };
 
             // Enviar dados para o Firebase com a chave personalizada
-            set(ref(database, 'result/' + customId), dataToSave)
+            set(ref(database, 'result/' + id), dataToSave)
                 .then(() => {
                     console.log("Dados enviados com sucesso!");
                     setSuccessMessage(true);
@@ -180,6 +183,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
             return (
                 <div>
                     <p>Personagem criado com sucesso!</p>
+                    <button onClick={() => navigate(`/character-details/${customId}`)}>Ver Detalhes do Personagem</button>
                 </div>
             );
         }
@@ -269,8 +273,8 @@ const ChatbotResponses = ({ onSaveResult }) => {
                         <p>Idade: {age}</p>
                         <p>Raça: {selectedRace}</p>
                         <p>Classe: {selectedClass}</p>
-                        <p>Origem: {origin}</p>
                         <p>Poderes: {powersDescription}</p>
+                        <p>Origem: {origin}</p>
                         <div>
                             <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
                             <button className="btn-step" onClick={handleSendButton}>Concluir</button>

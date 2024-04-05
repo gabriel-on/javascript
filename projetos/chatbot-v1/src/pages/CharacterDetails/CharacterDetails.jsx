@@ -54,14 +54,14 @@ function CharacterDetails() {
       URL.revokeObjectURL(url);
       document.body.removeChild(link);
     }
-  };  
+  };
 
   if (!characterDetails) {
     return <div>Loading...</div>;
   }
 
-   // Formatação da data no formato brasileiro
-   const formattedDate = new Date(characterDetails.createdAt).toLocaleString('pt-BR');
+  // Formatação da data no formato brasileiro
+  const formattedDate = new Date(characterDetails.createdAt).toLocaleString('pt-BR');
 
   return (
     <div className="character-details">
@@ -85,12 +85,12 @@ function CharacterDetails() {
             <td>{characterDetails.age}</td>
           </tr>
           <tr>
-            <td>Origem:</td>
-            <td>{characterDetails.origin}</td>
-          </tr>
-          <tr>
             <td>Poderes:</td>
             <td>{characterDetails.powersDescription}</td>
+          </tr>
+          <tr>
+            <td>Origem:</td>
+            <td>{characterDetails.origin}</td>
           </tr>
           <tr>
             <td>

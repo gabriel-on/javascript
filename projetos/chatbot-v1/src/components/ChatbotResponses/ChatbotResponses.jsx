@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { ref, onValue, set, push, serverTimestamp } from 'firebase/database';
+import { ref, onValue, set, serverTimestamp } from 'firebase/database';
 import { database } from "../../firebase/config";
 import { useAuth } from '../../hooks/useAuthentication';
 
@@ -31,18 +31,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
     const [successMessage, setSuccessMessage] = useState(false);
     const [powersDescription, setPowersDescription] = useState("");
     const [customId, setCustomId] = useState(null);
-    const [isPublic, setIsPublic] = useState(false); // Novo estado para controlar se o personagem é público ou privado
-
-    // Função para gerar IDs personalizados com números
-    const generateCustomId = () => {
-        const length = 9; // Define o comprimento do ID personalizado
-        let customId = '';
-
-        for (let i = 0; i < length; i++) {
-            customId += Math.floor(Math.random() * 10); // Adiciona um dígito aleatório de 0 a 9 ao ID
-        }
-        return customId;
-    };
+    const [isPublic, setIsPublic] = useState(false);
 
     useEffect(() => {
         const classesRef = ref(database, 'classes');
@@ -65,6 +54,16 @@ const ChatbotResponses = ({ onSaveResult }) => {
         });
     }, []);
 
+    const generateCustomId = () => {
+        const length = 9;
+        let customId = '';
+
+        for (let i = 0; i < length; i++) {
+            customId += Math.floor(Math.random() * 10);
+        }
+        return customId;
+    };
+
     const handleSelectClass = (className) => {
         setSelectedClass(className);
     };
@@ -82,12 +81,12 @@ const ChatbotResponses = ({ onSaveResult }) => {
     };
 
     const handleSendButton = () => {
-        if (step === 8) { // Verifica se é a última etapa
+        if (step === 8) {
             const createdBy = currentUser.displayName;
+            const userId = currentUser.uid;
             const createdAt = serverTimestamp();
-            const id = generateCustomId(); // Gera um ID personalizado
-            setCustomId(id); // Armazena o ID personalizado
-            // Crie um objeto contendo os dados que você deseja salvar
+            const id = generateCustomId();
+            setCustomId(id);
             const dataToSave = {
                 selectedClass,
                 attributes,
@@ -98,17 +97,17 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 createdBy,
                 createdAt,
                 powersDescription,
-                isPublic // Inclui a informação de público/privado nos dados salvos
+                isPublic
             };
 
-            // Enviar dados para o Firebase com a chave personalizada
-            set(ref(database, 'result/' + id), dataToSave)
+            // Save character data under "characters/userId/customId"
+            set(ref(database, `characters/${userId}/${id}`), dataToSave)
                 .then(() => {
-                    console.log("Dados enviados com sucesso!");
+                    console.log("Character data sent successfully!");
                     setSuccessMessage(true);
                 })
                 .catch((error) => {
-                    console.error("Erro ao enviar dados:", error);
+                    console.error("Error sending data:", error);
                 });
         } else {
             handleNextStep();
@@ -116,26 +115,20 @@ const ChatbotResponses = ({ onSaveResult }) => {
     };
 
     const handleAttributeChange = (attribute, value) => {
-        // Verifica se o novo valor excede o limite máximo de 10 pontos por atributo
         if (value <= 10) {
-            // Calcula a soma atual dos valores dos atributos
             const currentTotal = Object.values(attributes).reduce((total, val) => total + val, 0);
     
-            // Verifica se a soma atual mais o valor atual do atributo não excede o limite total de 36 pontos
             if (currentTotal + (value - (attributes[attribute] || 0)) <= 36) {
-                // Garante que o valor não seja menor que 0
                 const updatedValue = Math.max(0, value);
                 setAttributes(prevAttributes => ({
                     ...prevAttributes,
                     [attribute]: updatedValue
                 }));
             } else {
-                // Exibe uma mensagem indicando que o limite total de pontos (36) foi excedido
-                alert("O limite total de pontos (36) foi excedido!");
+                alert("Total attribute points limit (36) exceeded!");
             }
         } else {
-            // Exibe uma mensagem indicando que o limite máximo de 10 pontos por atributo foi excedido
-            alert("Cada habilidade do atributo só pode ter no máximo 10 pontos!");
+            alert("Each attribute skill can have a maximum of 10 points!");
         }
     };
 

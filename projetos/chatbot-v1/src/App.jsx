@@ -33,8 +33,11 @@ function App() {
       setUser(user);
 
       if (user) {
+        const userId = user.uid; // Obtém o ID do usuário
+        console.log('ID do usuário:', userId); // Imprime o ID do usuário no console
+
         const database = getDatabase();
-        const dbRef = ref(database, 'users/' + user.uid);
+        const dbRef = ref(database, 'users/' + userId);
 
         try {
           const snapshot = await get(dbRef);
@@ -44,10 +47,11 @@ function App() {
             const isAdmin = userData.isAdmin || false;
             setUser((prevUser) => ({ ...prevUser, isAdmin }));
             setCharacterData(userData.character); // Define os dados do personagem
+            console.log('Dados do usuário:', userData); // Adiciona um console.log aqui
             console.log('Dados do personagem:', userData.character);
           }
         } catch (error) {
-          console.error('Error fetching user data:', error);
+          console.error('Erro ao buscar dados do usuário:', error);
         }
         setLoading(false);
       }
@@ -74,7 +78,7 @@ function App() {
               />
               <Route
                 path='/character-game'
-                element={<CharacterGame character={userId} />} // Passa os dados do personagem como uma propriedade
+                element={<CharacterGame userId={userId} />}
               />
               {userId && (
                 <Route path='/character-sheet' element={<CharacterSheet />} />

@@ -1,6 +1,12 @@
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    updateProfile as updateProfileAuth,
+    signOut,
+} from "firebase/auth";
 import { useState, useEffect, useRef } from "react";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile as updateProfileAuth, signOut } from "firebase/auth";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set } from "firebase/database"; // Importação do Realtime Database
 
 export const useAuth = () => {
     const [error, setError] = useState(null);
@@ -8,7 +14,7 @@ export const useAuth = () => {
     const [currentUser, setCurrentUser] = useState(null);
 
     const auth = getAuth();
-    const db = getDatabase();
+    const db = getDatabase(); // Inicialização do Realtime Database
     const isMounted = useRef(true);
 
     const handleCancellation = () => {
@@ -17,42 +23,42 @@ export const useAuth = () => {
         }
     };
 
-    const createUser = async (userData) => {
+    const createUser = async (data) => {
         handleCancellation();
         setLoading(true);
-
+        
         try {
-            if (!userData) {
-                throw new Error("Dados de usuário não fornecidos.");
-            }
 
-            const isAdmin = userData.email === "admin@example.com"; // Verificação simplificada para isAdmin
+            data.isAdmin = 
+            data.email === 'black@gmail.com' || 
+            data.email === 'black2@gmail.com' ||
+            data.email === 'black3@gmail.com';
 
-            const { user } = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
 
-            await updateProfileAuth(user, { displayName: userData.displayName });
+            const { user } = await createUserWithEmailAndPassword(
+                auth,
+                data.email,
+                data.password
+            );
 
-            const joinedAt = Date.now();
+            await updateProfileAuth(user, { displayName: data.displayName });
 
-            const dbUserRef = ref(db, `users/${user.uid}`);
-            await set(dbUserRef, {
-                email: userData.email,
-                displayName: userData.displayName,
-                isAdmin: isAdmin || false,
+            const joinedAt = getUnixTime(new Date()); // Obtém o timestamp UNIX atual
+
+            // Criar um documento para o usuário no Realtime Database
+            const dbRef = ref(db, `users/${user.uid}`);
+            await set(dbRef, {
+                email: data.email,
+                displayName: data.displayName,
+                isAdmin: data.isAdmin || false,
                 joinedAt: joinedAt,
-            });
-
-            const dbUserDetailsRef = ref(db, `userDetails/${user.uid}`); // Criar nó "userDetails" para cada usuário
-            await set(dbUserDetailsRef, {
-                registrationDate: joinedAt,
-                // Adicione outras informações adicionais conforme necessário
             });
 
             setCurrentUser({
                 uid: user.uid,
                 email: user.email,
-                displayName: userData.displayName,
-                isAdmin: isAdmin || false,
+                displayName: data.displayName,
+                isAdmin: data.isAdmin || false,
             });
 
             setLoading(false);
@@ -66,10 +72,12 @@ export const useAuth = () => {
             } else if (error.code === "auth/email-already-in-use") {
                 systemErrorMessage = "E-mail já cadastrado.";
             } else {
-                systemErrorMessage = "Ocorreu um erro, por favor tente mais tarde.";
+                systemErrorMessage =
+                    "Ocorreu um erro, por favor tente mais tarde.";
             }
 
             setLoading(false);
+
             setError(systemErrorMessage);
         }
     };
@@ -88,13 +96,13 @@ export const useAuth = () => {
         }
     };
 
-    const login = async (userData) => {
+    const login = async (data) => {
         handleCancellation();
         setLoading(true);
         setError(false);
 
         try {
-            await signInWithEmailAndPassword(auth, userData.email, userData.password);
+            await signInWithEmailAndPassword(auth, data.email, data.password);
 
             const user = auth.currentUser;
 
@@ -104,7 +112,7 @@ export const useAuth = () => {
                 uid: user.uid,
                 email: user.email,
                 displayName: user.displayName,
-                isAdmin: userData.isAdmin || false,
+                isAdmin: data.isAdmin || false,
             });
         } catch (error) {
             let systemErrorMessage;
@@ -112,7 +120,8 @@ export const useAuth = () => {
             if (error.message) {
                 systemErrorMessage = "E-mail inválido ou Senha incorreta";
             } else {
-                systemErrorMessage = "Ocorreu um erro, por favor tente mais tarde.";
+                systemErrorMessage =
+                    "Ocorreu um erro, por favor tente mais tarde.";
             }
 
             setError(systemErrorMessage);
@@ -154,6 +163,7 @@ export const useAuth = () => {
         login,
         loading,
         currentUser,
+        setCurrentUser,
         getCurrentUser
     };
-};
+};  

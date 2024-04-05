@@ -62,7 +62,7 @@ const CharacterGame = ({ userId }) => {
                     });
 
                     // Filtrar os personagens que não pertencem ao usuário atual para criar a lista de oponentes
-                    const opponentOptions = allCharacters.filter(character => character.userId !== userId);
+                    const opponentOptions = allCharacters.filter(character => character.userId !== userId && (!selectedCharacter || character.characterId !== selectedCharacter.characterId));
                     setOpponentOptions(opponentOptions);
                 } else {
                     console.log("Nenhum personagem encontrado para os usuários.");
@@ -73,7 +73,7 @@ const CharacterGame = ({ userId }) => {
                 unsubscribe();
             };
         }
-    }, [userId]);
+    }, [userId, selectedCharacter]);
 
     const selectCharacter = (character) => {
         if (!character) return;

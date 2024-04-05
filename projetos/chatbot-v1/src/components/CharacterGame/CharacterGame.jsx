@@ -111,32 +111,36 @@ const CharacterGame = ({ userId }) => {
     const attackOpponent = () => {
         if (!selectedCharacter || !opponent || opponentHealth <= 0 || !isPlayerTurn) return;
 
-        // Calcula o dano baseado na diferença entre a força do personagem e a defesa do oponente
         let damage = Math.max(0, selectedCharacter.attributes.Força - opponent.attributes.Defesa);
 
-        // Se a agilidade do personagem for maior que a do oponente, há uma chance de evitar o dano
+        // Verifica se a agilidade concede uma chance de evitar dano
         if (selectedCharacter.attributes.Agilidade > opponent.attributes.Agilidade) {
-            const avoidanceChance = 0.5; // Chance de evitar o dano (30%)
+            const avoidanceChance = selectedCharacter.attributes.Agilidade * 0.05; // 5% de chance por ponto de agilidade
             if (Math.random() < avoidanceChance) {
-                console.log("Attack avoided!"); // Log para indicar que o ataque foi evitado
+                console.log("Attack avoided!");
                 damage = 0; // Define o dano como zero se o ataque for evitado
             }
         }
 
-        // Reduz a saúde do oponente pelo dano calculado
-        const newOpponentHealth = Math.max(0, opponentHealth - damage);
-        setOpponentHealth(newOpponentHealth);
-
-        // Registra o evento no log de combate
-        setCombatLog([...combatLog, `You dealt ${damage} damage to ${opponent.characterName}`]);
-
-        // Se a saúde do oponente chegar a zero, reinicia o jogo
-        if (newOpponentHealth <= 0) {
-            restartGame();
-            return; // Encerra a função após reiniciar o jogo para evitar a execução do código restante
+        // Verifica se a destreza concede uma chance de dano extra
+        if (selectedCharacter.attributes.Destreza > opponent.attributes.Destreza) {
+            const extraDamageChance = selectedCharacter.attributes.Destreza * 0.1; // 5% de chance por ponto de destreza
+            if (Math.random() < extraDamageChance) {
+                const extraDamage = selectedCharacter.attributes.Destreza * 2; // Dano extra é o dobro dos pontos de destreza
+                damage += extraDamage;
+                setCombatLog([...combatLog, `You dealt ${extraDamage} extra damage to ${opponent.characterName}`]);
+            }
         }
 
-        // Troca para o turno do oponente após o ataque do jogador
+        const newOpponentHealth = Math.max(0, opponentHealth - damage);
+        setOpponentHealth(newOpponentHealth);
+        setCombatLog([...combatLog, `You dealt ${damage} damage to ${opponent.characterName}`]);
+
+        if (newOpponentHealth <= 0) {
+            restartGame();
+            return;
+        }
+
         setIsPlayerTurn(false);
     };
 

@@ -8,6 +8,7 @@ const CharacterGame = ({ userId }) => {
     const [userCharacters, setUserCharacters] = useState([]);
     const [selectedCharacter, setSelectedCharacter] = useState(null);
     const [characterHealth, setCharacterHealth] = useState(0);
+    const [opponentOptions, setOpponentOptions] = useState([]);
     const [opponent, setOpponent] = useState(null);
     const [opponentHealth, setOpponentHealth] = useState(0);
     const [combatLog, setCombatLog] = useState([]);
@@ -44,12 +45,42 @@ const CharacterGame = ({ userId }) => {
         }
     }, [userId]);
 
+    useEffect(() => {
+        if (userId) {
+            const database = getDatabase();
+            const usersRef = ref(database, 'characters');
+
+            const unsubscribe = onValue(usersRef, (snapshot) => {
+                const usersData = snapshot.val();
+                if (usersData) {
+                    const allCharacters = Object.values(usersData).flatMap(user => {
+                        return Object.entries(user).map(([characterId, characterData]) => ({
+                            characterId,
+                            userId: user.userId,
+                            ...characterData
+                        }));
+                    });
+
+                    // Filtrar os personagens que não pertencem ao usuário atual para criar a lista de oponentes
+                    const opponentOptions = allCharacters.filter(character => character.userId !== userId);
+                    setOpponentOptions(opponentOptions);
+                } else {
+                    console.log("Nenhum personagem encontrado para os usuários.");
+                }
+            });
+
+            return () => {
+                unsubscribe();
+            };
+        }
+    }, [userId]);
+
     const selectCharacter = (character) => {
         if (!character) return;
 
         setSelectedCharacter(character);
         setCharacterHealth(character.attributes.Vigor * 10);
-        setIsChoosingOpponent(true); // Permite ao usuário escolher um oponente após selecionar seu personagem
+        setIsChoosingOpponent(true); // Permitir que o usuário escolha um oponente após selecionar seu personagem
     };
 
     const selectOpponent = (opponent) => {
@@ -57,12 +88,12 @@ const CharacterGame = ({ userId }) => {
 
         setOpponent(opponent);
         setOpponentHealth(opponent.attributes.Vigor * 10);
-        setIsChoosingOpponent(false); // Bloqueia a escolha do oponente após selecioná-lo
-        startGame(); // Inicia o jogo após selecionar o oponente
+        setIsChoosingOpponent(false); // Bloquear a escolha do oponente após selecioná-lo
+        startGame(); // Iniciar o jogo após selecionar o oponente
     };
 
     const startGame = () => {
-        setIsPlayerTurn(true); // Inicia a partida
+        setIsPlayerTurn(true); // Iniciar o jogo
     };
 
     const attackOpponent = () => {
@@ -74,22 +105,22 @@ const CharacterGame = ({ userId }) => {
         setCombatLog([...combatLog, `You dealt ${damage} damage to ${opponent.characterName}`]);
 
         if (newOpponentHealth > 0) {
-            setIsPlayerTurn(false); // Troca para o turno do oponente
+            setIsPlayerTurn(false); // Trocar para o turno do oponente
         } else {
-            // O oponente foi derrotado, reinicia o jogo
+            // O oponente foi derrotado, reiniciar o jogo
             restartGame();
         }
     };
 
     useEffect(() => {
         if (opponent && !isPlayerTurn) {
-            // Simula o ataque do oponente depois de um curto período de tempo
+            // Simular o ataque do oponente após um curto período de tempo
             const opponentAttackTimer = setInterval(() => {
                 if (opponentHealth > 0 && selectedCharacter) {
                     const damage = Math.max(0, opponent.attributes.Força - selectedCharacter.attributes.Defesa);
                     setCharacterHealth(prevHealth => Math.max(0, prevHealth - damage));
                     setCombatLog([...combatLog, `${opponent.characterName} dealt ${damage} damage to you`]);
-                    setIsPlayerTurn(true); // Troca para o turno do jogador após o ataque do oponente
+                    setIsPlayerTurn(true); // Trocar para o turno do jogador após o ataque do oponente
                 }
             }, 2000);
 
@@ -103,8 +134,8 @@ const CharacterGame = ({ userId }) => {
         setOpponent(null);
         setOpponentHealth(0);
         setCombatLog([]);
-        setIsPlayerTurn(true); // Reinicia o turno para o jogador
-        setIsChoosingOpponent(false); // Permite ao usuário escolher um novo oponente
+        setIsPlayerTurn(true); // Reiniciar o turno para o jogador
+        setIsChoosingOpponent(false); // Permitir ao usuário escolher um novo oponente
     };
 
     if (loading) {
@@ -139,13 +170,11 @@ const CharacterGame = ({ userId }) => {
                         <div className="character-list">
                             <h2>Choose your opponent:</h2>
                             <ul>
-                                {userCharacters
-                                    .filter(character => character.characterId !== selectedCharacter.characterId) // Remove o próprio usuário da lista de oponentes
-                                    .map((opponent, index) => (
-                                        <li key={index} onClick={() => selectOpponent(opponent)}>
-                                            {opponent.characterName}
-                                        </li>
-                                    ))}
+                                {opponentOptions.map((opponent, index) => (
+                                    <li key={index} onClick={() => selectOpponent(opponent)}>
+                                        {opponent.characterName}
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     ) : (
@@ -159,7 +188,6 @@ const CharacterGame = ({ userId }) => {
                             ))}
                         </div>
                     )}
-
                     <button onClick={attackOpponent} disabled={!opponent || opponentHealth <= 0 || !isPlayerTurn}>Attack</button>
                     <button onClick={restartGame}>Restart</button>
                     <div className="combat-log">

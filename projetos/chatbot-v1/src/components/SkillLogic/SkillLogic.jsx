@@ -13,6 +13,9 @@ const SkillLogic = ({ character, opponent, isPlayerTurn, combatLog, setCombatLog
         // Aplica dano extra
         damage += applyExtraDamage(character.attributes.Destreza, opponent.attributes.Destreza);
 
+        // Aplica estratégia inteligente
+        damage += applyIntelligenceStrategy(character.attributes.Inteligencia);
+
         // Atualiza a saúde do oponente e o registro de combate
         const newOpponentHealth = Math.max(0, opponentHealth - damage);
         setOpponentHealth(newOpponentHealth);
@@ -45,6 +48,9 @@ const SkillLogic = ({ character, opponent, isPlayerTurn, combatLog, setCombatLog
         // Aplica dano extra
         damage += applyExtraDamage(opponent.attributes.Destreza, character.attributes.Destreza);
 
+        // Aplica estratégia inteligente
+        damage += applyIntelligenceStrategy(opponent.attributes.Inteligencia);
+
         // Atualiza a saúde do jogador e o registro de combate
         const newCharacterHealth = Math.max(0, characterHealth - damage);
         setCharacterHealth(newCharacterHealth);
@@ -73,6 +79,14 @@ const SkillLogic = ({ character, opponent, isPlayerTurn, combatLog, setCombatLog
             return extraDamage;
         }
         return 0;
+    };
+
+    // Função para aplicar estratégia inteligente
+    const applyIntelligenceStrategy = (intelligence) => {
+        // Aqui você pode definir como a inteligência afeta a estratégia de combate
+        // Por exemplo, você pode adicionar um bônus ao dano com base na inteligência do personagem
+        const intelligenceBonus = Math.round(intelligence * 0.1); // Bônus de inteligência como número inteiro
+        return intelligenceBonus;
     };
 
     useEffect(() => {

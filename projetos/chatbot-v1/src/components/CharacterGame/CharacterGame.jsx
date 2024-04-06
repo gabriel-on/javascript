@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
 import { getDatabase, ref, onValue } from 'firebase/database';
+import SkillLogic from '../SkillLogic/SkillLogic'
 
 // Objeto que mapeia as habilidades para seus papéis correspondentes
 const habilidadePapeis = {
@@ -108,58 +109,6 @@ const CharacterGame = ({ userId }) => {
         setIsPlayerTurn(true); // Iniciar o jogo
     };
 
-    const attackOpponent = () => {
-        if (!selectedCharacter || !opponent || opponentHealth <= 0 || !isPlayerTurn) return;
-
-        let damage = Math.max(0, selectedCharacter.attributes.Força - opponent.attributes.Defesa);
-
-        // Verifica se a agilidade concede uma chance de evitar dano
-        if (selectedCharacter.attributes.Agilidade > opponent.attributes.Agilidade) {
-            const avoidanceChance = selectedCharacter.attributes.Agilidade * 0.05; // 5% de chance por ponto de agilidade
-            if (Math.random() < avoidanceChance) {
-                console.log("Attack avoided!");
-                damage = 0; // Define o dano como zero se o ataque for evitado
-            }
-        }
-
-        // Verifica se a destreza concede uma chance de dano extra
-        if (selectedCharacter.attributes.Destreza > opponent.attributes.Destreza) {
-            const extraDamageChance = selectedCharacter.attributes.Destreza * 0.1; // 5% de chance por ponto de destreza
-            if (Math.random() < extraDamageChance) {
-                const extraDamage = selectedCharacter.attributes.Destreza * 2; // Dano extra é o dobro dos pontos de destreza
-                damage += extraDamage;
-                setCombatLog([...combatLog, `You dealt ${extraDamage} extra damage to ${opponent.characterName}`]);
-            }
-        }
-
-        const newOpponentHealth = Math.max(0, opponentHealth - damage);
-        setOpponentHealth(newOpponentHealth);
-        setCombatLog([...combatLog, `You dealt ${damage} damage to ${opponent.characterName}`]);
-
-        if (newOpponentHealth <= 0) {
-            restartGame();
-            return;
-        }
-
-        setIsPlayerTurn(false);
-    };
-
-    useEffect(() => {
-        if (opponent && !isPlayerTurn) {
-            // Simular o ataque do oponente após um curto período de tempo
-            const opponentAttackTimer = setInterval(() => {
-                if (opponentHealth > 0 && selectedCharacter) {
-                    const damage = Math.max(0, opponent.attributes.Força - selectedCharacter.attributes.Defesa);
-                    setCharacterHealth(prevHealth => Math.max(0, prevHealth - damage));
-                    setCombatLog([...combatLog, `${opponent.characterName} dealt ${damage} damage to you`]);
-                    setIsPlayerTurn(true); // Trocar para o turno do jogador após o ataque do oponente
-                }
-            }, 2000);
-
-            return () => clearInterval(opponentAttackTimer);
-        }
-    }, [opponent, opponentHealth, selectedCharacter, isPlayerTurn, combatLog]);
-
     const restartGame = () => {
         setSelectedCharacter(null);
         setCharacterHealth(0);
@@ -226,9 +175,19 @@ const CharacterGame = ({ userId }) => {
                             </ul>
                         </div>
                     )}
-                    <button onClick={attackOpponent} disabled={!opponent || opponentHealth <= 0 || !isPlayerTurn || characterHealth <= 0}>
-                        Attack
-                    </button>
+                    <SkillLogic
+                        character={selectedCharacter}
+                        opponent={opponent}
+                        isPlayerTurn={isPlayerTurn}
+                        combatLog={combatLog}
+                        setCombatLog={setCombatLog}
+                        opponentHealth={opponentHealth}
+                        setOpponentHealth={setOpponentHealth}
+                        characterHealth={characterHealth}
+                        setCharacterHealth={setCharacterHealth}
+                        setIsPlayerTurn={setIsPlayerTurn}
+                        restartGame={restartGame}
+                    />
                     <button onClick={restartGame}>Restart</button>
                     <div className="combat-log">
                         <h3>Combat Log</h3>

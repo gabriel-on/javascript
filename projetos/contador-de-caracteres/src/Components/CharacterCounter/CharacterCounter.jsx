@@ -160,6 +160,10 @@ function CharacterCounter() {
         element.click();
     };
 
+    const clearText = () => {
+        setText('');
+    };
+
     return (
         <div className={`container ${theme}`}>
             <textarea
@@ -169,6 +173,10 @@ function CharacterCounter() {
                 rows={4}
                 cols={50}
             />
+            <div className='btns'>
+                <button onClick={toggleTheme}>Tema</button>
+                <button onClick={clearText}>Limpar</button>
+            </div>
             <div>
                 <label>
                     <input
@@ -190,16 +198,17 @@ function CharacterCounter() {
             <p>Total de caracteres: {totalCharacters}</p>
             <p>Total de palavras: {totalWords}</p>
             <LineAndParagraphCounter text={text} />
-            <button onClick={toggleStatistics}>
-                {showStatistics ? "Esconder Estatísticas" : "Mostrar Estatísticas"}
-            </button>
+            <div className='btns'>
+                <button onClick={toggleStatistics}>
+                    {showStatistics ? "Esconder Estatísticas" : "Mostrar Estatísticas"}
+                </button>
+            </div>
             {showStatistics && (
                 <div>
                     <FrequencyStatistics text={text} />
                 </div>
             )}
             <div className='btns'>
-                <button onClick={toggleTheme}>Tema</button>
                 <button onClick={saveAsPDF}>Salvar como PDF</button>
                 <button onClick={saveAsTXT}>Salvar como TXT</button>
                 <button onClick={saveAsDOCX}>Salvar como DOCX</button>

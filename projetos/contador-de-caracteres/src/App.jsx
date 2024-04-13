@@ -1,5 +1,5 @@
 import './App.css'
-import CharacterCounter from './Components/CharacterCounter'
+import CharacterCounter from './Components/CharacterCounter/CharacterCounter'
 import { ThemeProvider } from './Context/ThemeContext'
 
 function App() {
@@ -7,7 +7,9 @@ function App() {
   return (
     <ThemeProvider>
       <div className='App'>
-        <CharacterCounter />
+        <div className='container-main'>
+          <CharacterCounter />
+        </div>
       </div>
     </ThemeProvider>
   )

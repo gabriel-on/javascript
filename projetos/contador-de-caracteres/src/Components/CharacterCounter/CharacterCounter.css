@@ -1,0 +1,62 @@
+:root {
+    --background-light: #fff;
+    --text-color-light: #000;
+    --background-dark: #000;
+    --text-color-dark: #fff;
+}
+
+ul {
+    list-style: none;
+}
+
+/* light-theme */
+.light {
+    background: var(--background-light);
+    color: var(--text-color-light);
+}
+
+/* dark-theme */
+.dark {
+    background: var(--background-dark);
+    color: var(--text-color-dark);
+}
+
+.dark.container>.btns>button {
+    background: var(--background-light);
+    color: var(--text-color-light);
+}
+
+.light.container>.btns>button {
+    background: var(--background-dark);
+    color: var(--text-color-dark);
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    /* margin: auto; */
+    padding: 10px;
+    gap: 20px;
+}
+
+.container > textarea{
+    padding: 10px;
+    max-width: 1000px;
+    min-height: 40vh;
+}
+
+.btns {
+    display: flex;
+    gap: 20px;
+}
+
+.btns>button {
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    padding: 10px;
+    border: none;
+}

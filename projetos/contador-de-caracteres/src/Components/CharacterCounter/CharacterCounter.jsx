@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import { saveAs } from 'file-saver';
-import LineAndParagraphCounter from './LineAndParagraphCounter/LineAndParagraphCounter';
-import FrequencyStatistics from './FrequencyStatistics/FrequencyStatistics';
-import { useTheme } from '../Context/ThemeContext';
-import TextMarker from './TextMarker/TextMarker';
+import LineAndParagraphCounter from '../LineAndParagraphCounter/LineAndParagraphCounter';
+import FrequencyStatistics from '../FrequencyStatistics/FrequencyStatistics';
+import { useTheme } from '../../Context/ThemeContext';
+import '../CharacterCounter/CharacterCounter.css'
 
 function CharacterCounter() {
     const [text, setText] = useState('');
@@ -12,7 +12,6 @@ function CharacterCounter() {
     const [countSpecialChars, setCountSpecialChars] = useState(true);
     const [totalCharacters, setTotalCharacters] = useState(0);
     const [totalWords, setTotalWords] = useState(0);
-    const [selection, setSelection] = useState({ bold: false, italic: false, underline: false });
     const resultRef = useRef(null);
     const { theme, toggleTheme } = useTheme();
 
@@ -31,22 +30,6 @@ function CharacterCounter() {
 
     const handleCountSpecialCharsChange = () => {
         setCountSpecialChars(prevState => !prevState);
-    };
-
-    const [textStyle, setTextStyle] = useState({
-        fontWeight: 'normal',
-        fontStyle: 'normal',
-        textDecoration: 'none',
-    });
-
-    const handleStyleChange = (style, selectedText) => {
-        const newText = text.substring(0, selection.start) +
-            `<span style="${style === 'fontWeight' ? 'font-weight: bold;' : ''}${style === 'fontStyle' ? 'font-style: italic;' : ''}${style === 'textDecoration' ? 'text-decoration: underline;' : ''}">` +
-            selectedText +
-            '</span>' +
-            text.substring(selection.end);
-
-        setText(newText);
     };
 
     const updateCounters = (value) => {
@@ -168,7 +151,7 @@ function CharacterCounter() {
         const file = new Blob([docxContent], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
         element.href = URL.createObjectURL(file);
         element.download = "seu_texto.docx";
-        document.body.appendChild(element); // Required for this to work in FireFox
+        document.body.appendChild(element);
         element.click();
     };
 
@@ -180,13 +163,7 @@ function CharacterCounter() {
                 placeholder="Digite seu texto aqui..."
                 rows={4}
                 cols={50}
-                style={{
-                    fontWeight: selection.bold ? 'bold' : 'normal',
-                    fontStyle: selection.italic ? 'italic' : 'normal',
-                    textDecoration: selection.underline ? 'underline' : 'none',
-                }}
             />
-            <TextMarker text={text} onStyleChange={handleStyleChange} />
             <div>
                 <label>
                     <input
@@ -209,10 +186,12 @@ function CharacterCounter() {
             <p>Total de palavras: {totalWords}</p>
             <LineAndParagraphCounter text={text} />
             <FrequencyStatistics text={text} />
-            <button onClick={toggleTheme}>Toggle Theme</button>
-            <button onClick={saveAsPDF}>Salvar como PDF</button>
-            <button onClick={saveAsTXT}>Salvar como TXT</button>
-            <button onClick={saveAsDOCX}>Salvar como DOCX</button>
+            <div className='btns'>
+                <button onClick={toggleTheme}>Tema</button>
+                <button onClick={saveAsPDF}>Salvar como PDF</button>
+                <button onClick={saveAsTXT}>Salvar como TXT</button>
+                <button onClick={saveAsDOCX}>Salvar como DOCX</button>
+            </div>
             <div ref={resultRef}>
                 {/* Não é necessário renderizar o texto aqui */}
             </div>

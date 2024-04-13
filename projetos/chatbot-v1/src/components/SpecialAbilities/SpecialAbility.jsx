@@ -1,35 +1,27 @@
 import React, { useState } from 'react';
 
-const SpecialAbility = ({ characterName, opponent, opponentHealth, setOpponentHealth, characterHealth, setCharacterHealth, setIsPlayerTurn, combatLog, setCombatLog, restartGame }) => {
+const SpecialAbility = ({ characterName, opponent, opponentHealth, setOpponentHealth, characterHealth, setCharacterHealth, setIsPlayerTurn, combatLog, setCombatLog, restartGame, CharacterGame, onSpecialAbility, disabled }) => {
     const [isSpecialAbilityUsed, setIsSpecialAbilityUsed] = useState(false);
 
     const handleSpecialAbility = () => {
         if (!characterName || !opponent || opponentHealth <= 0 || characterHealth <= 0 || isSpecialAbilityUsed) return;
 
-        // Reduz a saúde do personagem em 25%
-        const characterDamage = Math.round(characterHealth * 0.25);
-        const newCharacterHealth = Math.max(0, characterHealth - characterDamage);
+        const specialAbilityDamage = 20; // Dano fixo para ambos (20 de dano)
+
+        console.log(`${characterName} used their special ability and dealt ${specialAbilityDamage} damage to themselves and ${opponent.name}`);
+
+        const newCharacterHealth = Math.max(0, characterHealth - specialAbilityDamage);
         setCharacterHealth(newCharacterHealth);
 
-        // Causa um dano fixo de 20 ao oponente
-        const opponentDamage = 20;
-        const newOpponentHealth = Math.max(0, opponentHealth - opponentDamage);
+        const newOpponentHealth = Math.max(0, opponentHealth - specialAbilityDamage);
         setOpponentHealth(newOpponentHealth);
-
-        // Registra a ação no log de combate
-        setCombatLog([...combatLog, `${characterName} used their special ability and took ${characterDamage} damage. They dealt ${opponentDamage} damage to ${opponent.name}`]);
-
-        // Verifica se o oponente foi derrotado
-        if (newOpponentHealth <= 0) {
-            restartGame();
-            return;
-        }
 
         setIsSpecialAbilityUsed(true);
 
-        // Troca para o turno do oponente após um breve atraso
+        // Troca para o turno do oponente
         setIsPlayerTurn(false);
 
+        // Aguarda um curto período de tempo e, em seguida, permite que o oponente ataque
         setTimeout(() => {
             opponentAttack();
         }, 2000);
@@ -44,10 +36,23 @@ const SpecialAbility = ({ characterName, opponent, opponentHealth, setOpponentHe
         setIsPlayerTurn(true);
     };
 
+    // Função para determinar se a habilidade especial será usada nesta rodada
+    const shouldUseSpecialAbility = () => {
+        return Math.random() < 0.5; // 50% de chance
+    };
+
+    // Verifica se a habilidade especial será usada nesta rodada e se não foi usada antes
+    if (shouldUseSpecialAbility() && !isSpecialAbilityUsed) {
+        // Ativa a habilidade especial
+        handleSpecialAbility();
+    }
+
     return (
-        <button onClick={handleSpecialAbility} disabled={!opponent || opponentHealth <= 0 || characterHealth <= 0 || isSpecialAbilityUsed}>
-            Special Ability
-        </button>
+        <>
+            <button onClick={onSpecialAbility} disabled={disabled}>
+                Special Ability
+            </button>
+        </>
     );
 };
 

@@ -95,18 +95,16 @@ const SkillLogic = ({ character, opponent, isPlayerTurn, combatLog, setCombatLog
                 Attack
             </button>
             <SpecialAbility
-                characterName={character.characterName}
+                character={character}
                 opponent={opponent}
-                opponentHealth={opponentHealth}
-                setOpponentHealth={setOpponentHealth}
                 characterHealth={characterHealth}
                 setCharacterHealth={setCharacterHealth}
+                opponentHealth={opponentHealth}
+                setOpponentHealth={setOpponentHealth}
+                isPlayerTurn={isPlayerTurn}
                 setIsPlayerTurn={setIsPlayerTurn}
-                combatLog={combatLog}
-                setCombatLog={setCombatLog}
                 restartGame={restartGame}
             />
-
         </div>
     );
 };

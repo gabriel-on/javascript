@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import SkillLogic from '../SkillLogic/SkillLogic'
+import SpecialAbility from '../SpecialAbilities/SpecialAbility';
 
 // Objeto que mapeia as habilidades para seus papéis correspondentes
 const habilidadePapeis = {
@@ -119,6 +120,13 @@ const CharacterGame = ({ userId }) => {
         setIsChoosingOpponent(false); // Permitir ao usuário escolher um novo oponente
     };
 
+    const [isSpecialAbilityUsed, setIsSpecialAbilityUsed] = useState(false);
+
+    const handleSpecialAbility = () => {
+        // Lógica para lidar com a habilidade especial
+        setIsSpecialAbilityUsed(true);
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -188,6 +196,8 @@ const CharacterGame = ({ userId }) => {
                         setIsPlayerTurn={setIsPlayerTurn}
                         restartGame={restartGame}
                     />
+                    <SpecialAbility onSpecialAbility={handleSpecialAbility} disabled={isSpecialAbilityUsed} />
+
                     <button onClick={restartGame}>Restart</button>
                     <div className="combat-log">
                         <h3>Combat Log</h3>

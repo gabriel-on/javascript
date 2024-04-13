@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import { saveAs } from 'file-saver';
+import LineAndParagraphCounter from './LineAndParagraphCounter/LineAndParagraphCounter';
+import FrequencyStatistics from './FrequencyStatistics/FrequencyStatistics';
+import KeywordOccurrences from './KeywordOccurrences/KeywordOccurrences';
 
 function CharacterCounter() {
     const [text, setText] = useState('');
@@ -179,6 +182,9 @@ function CharacterCounter() {
             </div>
             <p>Total de caracteres: {totalCharacters}</p>
             <p>Total de palavras: {totalWords}</p>
+            <LineAndParagraphCounter text={text}/>
+            <FrequencyStatistics text={text}/>
+            <KeywordOccurrences text={text} keywords={[]} />
             <button onClick={saveAsPDF}>Salvar como PDF</button>
             <button onClick={saveAsTXT}>Salvar como TXT</button>
             <button onClick={saveAsDOCX}>Salvar como DOCX</button>

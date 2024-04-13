@@ -13,12 +13,17 @@ function CharacterCounter() {
     const [totalCharacters, setTotalCharacters] = useState(0);
     const [totalWords, setTotalWords] = useState(0);
     const resultRef = useRef(null);
+    const [showStatistics, setShowStatistics] = useState(false);
     const { theme, toggleTheme } = useTheme();
 
     // Recalculate totals when text, countLetters, or countSpecialChars change
     useEffect(() => {
         updateCounters(text);
     }, [text, countLetters, countSpecialChars]);
+
+    const toggleStatistics = () => {
+        setShowStatistics(prevState => !prevState);
+    };
 
     const handleChange = (event) => {
         setText(event.target.value);
@@ -185,7 +190,14 @@ function CharacterCounter() {
             <p>Total de caracteres: {totalCharacters}</p>
             <p>Total de palavras: {totalWords}</p>
             <LineAndParagraphCounter text={text} />
-            <FrequencyStatistics text={text} />
+            <button onClick={toggleStatistics}>
+                {showStatistics ? "Esconder Estatísticas" : "Mostrar Estatísticas"}
+            </button>
+            {showStatistics && (
+                <div>
+                    <FrequencyStatistics text={text} />
+                </div>
+            )}
             <div className='btns'>
                 <button onClick={toggleTheme}>Tema</button>
                 <button onClick={saveAsPDF}>Salvar como PDF</button>

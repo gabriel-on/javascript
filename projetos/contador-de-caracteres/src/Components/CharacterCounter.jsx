@@ -3,7 +3,8 @@ import jsPDF from 'jspdf';
 import { saveAs } from 'file-saver';
 import LineAndParagraphCounter from './LineAndParagraphCounter/LineAndParagraphCounter';
 import FrequencyStatistics from './FrequencyStatistics/FrequencyStatistics';
-import KeywordOccurrences from './KeywordOccurrences/KeywordOccurrences';
+import { useTheme } from '../Context/ThemeContext';
+import TextMarker from './TextMarker/TextMarker';
 
 function CharacterCounter() {
     const [text, setText] = useState('');
@@ -12,6 +13,8 @@ function CharacterCounter() {
     const [totalCharacters, setTotalCharacters] = useState(0);
     const [totalWords, setTotalWords] = useState(0);
     const resultRef = useRef(null);
+
+    const { theme, toggleTheme } = useTheme();
 
     // Recalculate totals when text, countLetters, or countSpecialChars change
     useEffect(() => {
@@ -154,7 +157,7 @@ function CharacterCounter() {
     };
 
     return (
-        <div>
+        <div className={`container ${theme}`}>
             <textarea
                 value={text}
                 onChange={handleChange}
@@ -182,9 +185,10 @@ function CharacterCounter() {
             </div>
             <p>Total de caracteres: {totalCharacters}</p>
             <p>Total de palavras: {totalWords}</p>
+            <TextMarker/>
             <LineAndParagraphCounter text={text}/>
             <FrequencyStatistics text={text}/>
-            <KeywordOccurrences text={text} keywords={[]} />
+            <button onClick={toggleTheme}>Toggle Theme</button>
             <button onClick={saveAsPDF}>Salvar como PDF</button>
             <button onClick={saveAsTXT}>Salvar como TXT</button>
             <button onClick={saveAsDOCX}>Salvar como DOCX</button>

@@ -1,12 +1,15 @@
 import './App.css'
 import CharacterCounter from './Components/CharacterCounter'
+import { ThemeProvider } from './Context/ThemeContext'
 
 function App() {
 
   return (
-    <>
-      <CharacterCounter/>
-    </>
+    <ThemeProvider>
+      <div className='App'>
+        <CharacterCounter />
+      </div>
+    </ThemeProvider>
   )
 }
 

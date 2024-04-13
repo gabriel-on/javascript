@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function TextMarker({ text }) {
+function TextMarker({ text, onStyleChange }) {
     const [selection, setSelection] = useState({ start: 0, end: 0 });
 
     const handleSelection = () => {
@@ -12,28 +12,32 @@ function TextMarker({ text }) {
         console.log('Selected Text:', selectedText);
     };
 
-    const applyBold = () => {
-        // Implemente a lógica para aplicar negrito ao texto selecionado
-        console.log('Applying Bold...');
-    };
+    const applyStyle = (style) => {
+        const selectedText = window.getSelection().toString();
+        const textNode = document.createTextNode(selectedText);
 
-    const applyItalic = () => {
-        // Implemente a lógica para aplicar itálico ao texto selecionado
-        console.log('Applying Italic...');
-    };
+        const range = window.getSelection().getRangeAt(0);
+        range.deleteContents();
+        range.insertNode(textNode);
 
-    const applyUnderline = () => {
-        // Implemente a lógica para aplicar sublinhado ao texto selecionado
-        console.log('Applying Underline...');
+        const span = document.createElement('span');
+        span.style[style] = 'true';
+        span.appendChild(textNode);
+
+        range.insertNode(span);
+        console.log(`Applying ${style}...`);
+        
+        // Chama a função onStyleChange passando o estilo e o texto selecionado
+        onStyleChange(style, selectedText);
     };
 
     return (
-        <div onMouseUp={handleSelection}>
+        <div onMouseUp={handleSelection} style={{ userSelect: 'text' }}>
             <p>{text}</p>
             <div>
-                <button onClick={applyBold}>Bold</button>
-                <button onClick={applyItalic}>Italic</button>
-                <button onClick={applyUnderline}>Underline</button>
+                <button onClick={() => applyStyle('fontWeight')}>Bold</button>
+                <button onClick={() => applyStyle('fontStyle')}>Italic</button>
+                <button onClick={() => applyStyle('textDecoration')}>Underline</button>
             </div>
         </div>
     );

@@ -12,8 +12,8 @@ function CharacterCounter() {
     const [countSpecialChars, setCountSpecialChars] = useState(true);
     const [totalCharacters, setTotalCharacters] = useState(0);
     const [totalWords, setTotalWords] = useState(0);
+    const [selection, setSelection] = useState({ bold: false, italic: false, underline: false });
     const resultRef = useRef(null);
-
     const { theme, toggleTheme } = useTheme();
 
     // Recalculate totals when text, countLetters, or countSpecialChars change
@@ -33,6 +33,22 @@ function CharacterCounter() {
         setCountSpecialChars(prevState => !prevState);
     };
 
+    const [textStyle, setTextStyle] = useState({
+        fontWeight: 'normal',
+        fontStyle: 'normal',
+        textDecoration: 'none',
+    });
+
+    const handleStyleChange = (style, selectedText) => {
+        const newText = text.substring(0, selection.start) +
+            `<span style="${style === 'fontWeight' ? 'font-weight: bold;' : ''}${style === 'fontStyle' ? 'font-style: italic;' : ''}${style === 'textDecoration' ? 'text-decoration: underline;' : ''}">` +
+            selectedText +
+            '</span>' +
+            text.substring(selection.end);
+
+        setText(newText);
+    };
+
     const updateCounters = (value) => {
         let totalLetters = countLetters ? countLettersOnly(value) : 0;
         let totalSpecialChars = countSpecialChars ? countSpecialCharsOnly(value) : 0;
@@ -46,7 +62,7 @@ function CharacterCounter() {
 
     const countSpecialCharsOnly = (value) => {
         return value.replace(/[a-zA-Z0-9]/g, '').length;
-    };        
+    };
 
     const countWords = (value) => {
         const words = value.trim().split(/\s+|[-—]/);
@@ -164,7 +180,13 @@ function CharacterCounter() {
                 placeholder="Digite seu texto aqui..."
                 rows={4}
                 cols={50}
+                style={{
+                    fontWeight: selection.bold ? 'bold' : 'normal',
+                    fontStyle: selection.italic ? 'italic' : 'normal',
+                    textDecoration: selection.underline ? 'underline' : 'none',
+                }}
             />
+            <TextMarker text={text} onStyleChange={handleStyleChange} />
             <div>
                 <label>
                     <input
@@ -185,9 +207,8 @@ function CharacterCounter() {
             </div>
             <p>Total de caracteres: {totalCharacters}</p>
             <p>Total de palavras: {totalWords}</p>
-            <TextMarker/>
-            <LineAndParagraphCounter text={text}/>
-            <FrequencyStatistics text={text}/>
+            <LineAndParagraphCounter text={text} />
+            <FrequencyStatistics text={text} />
             <button onClick={toggleTheme}>Toggle Theme</button>
             <button onClick={saveAsPDF}>Salvar como PDF</button>
             <button onClick={saveAsTXT}>Salvar como TXT</button>

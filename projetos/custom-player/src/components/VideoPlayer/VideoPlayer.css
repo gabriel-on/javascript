@@ -1,16 +1,16 @@
 .custom-video {
-    /* position: relative; */
+    position: relative;
     width: 100%;
     display: flex;
     justify-content: center;
     height: auto;
 }
 
-video {
+/* video {
     display: flex;
     justify-content: center;
     max-width: 100%;
-}
+} */
 
 .fullscreen {
     position: fixed;

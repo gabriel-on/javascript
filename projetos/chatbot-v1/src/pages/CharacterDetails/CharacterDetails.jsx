@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { getDatabase, ref, get } from 'firebase/database';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { getDatabase, ref, get, remove } from 'firebase/database';
 
 // CSS
 import '../CharacterDetails/CharacterDetails.css';
@@ -9,6 +9,8 @@ function CharacterDetails({ userId }) {
   const { characterId } = useParams();
   const [characterDetails, setCharacterDetails] = useState(null);
   const database = getDatabase();
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCharacterDetails = async () => {
@@ -67,6 +69,31 @@ function CharacterDetails({ userId }) {
       URL.revokeObjectURL(url);
       document.body.removeChild(link);
     }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const characterRef = ref(database, `characters/${userId}/${characterId}`);
+      await remove(characterRef);
+      console.log('Character deleted successfully');
+      // Redirecionar após a exclusão
+      navigate('/');
+    } catch (error) {
+      console.error('Error deleting character:', error);
+    }
+  };
+
+  const confirmDeleteAction = () => {
+    setConfirmDelete(true);
+  };
+
+  const cancelDeleteAction = () => {
+    setConfirmDelete(false);
+  };
+
+  const confirmDeleteActionFinal = () => {
+    setConfirmDelete(false);
+    handleDelete();
   };
 
   if (!characterDetails) {
@@ -137,9 +164,17 @@ function CharacterDetails({ userId }) {
           <>
             <button className='btn-export-oc' onClick={handleExport}>Exportar Detalhes</button>
             <Link className='btn-edit-details' to={`/character-editor/${characterId}`}>Editar Detalhes</Link>
+            <button className='btn-delete-character' onClick={confirmDeleteAction}>Excluir Personagem</button>
           </>
         )}
       </div>
+      {confirmDelete && (
+        <div className="confirm-delete-dialog">
+          <p>Deseja realmente excluir este personagem?</p>
+          <button onClick={confirmDeleteActionFinal}>Sim</button>
+          <button onClick={cancelDeleteAction}>Cancelar</button>
+        </div>
+      )}
     </div>
   );
 }

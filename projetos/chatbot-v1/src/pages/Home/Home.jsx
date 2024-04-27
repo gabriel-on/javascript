@@ -10,15 +10,19 @@ function Home() {
   useEffect(() => {
     const fetchResult = async () => {
       try {
-        const resultRef = ref(database, 'result');
-        const snapshot = await get(resultRef);
+        const charactersRef = ref(database, 'characters');
+        const snapshot = await get(charactersRef);
         if (snapshot.exists()) {
           const characterList = [];
-          snapshot.forEach((childSnapshot) => {
-            const characterData = childSnapshot.val();
-            characterList.push({
-              id: childSnapshot.key, // Adicionando o ID do personagem
-              ...characterData
+          snapshot.forEach((userSnapshot) => {
+            const userId = userSnapshot.key;
+            userSnapshot.forEach((characterSnapshot) => {
+              const characterData = characterSnapshot.val();
+              characterList.push({
+                id: characterSnapshot.key, // ID do personagem
+                userId: userId, // ID do usuário
+                ...characterData
+              });
             });
           });
           // Revertendo a ordem para colocar o mais recente em primeiro lugar

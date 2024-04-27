@@ -2,19 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getDatabase, ref, get } from 'firebase/database';
 
-//CSS
-import '../CharacterDetails/CharacterDetails.css'
+// CSS
+import '../CharacterDetails/CharacterDetails.css';
 
-function CharacterDetails() {
+function CharacterDetails({ userId }) {
   const { characterId } = useParams();
   const [characterDetails, setCharacterDetails] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const database = getDatabase();
 
   useEffect(() => {
     const fetchCharacterDetails = async () => {
       try {
-        const characterRef = ref(database, `result/${characterId}`);
+        const characterRef = ref(database, `characters/${userId}/${characterId}`); // Incluindo userId na referência
         const snapshot = await get(characterRef);
         if (snapshot.exists()) {
           const characterData = snapshot.val();
@@ -28,7 +28,7 @@ function CharacterDetails() {
     };
 
     fetchCharacterDetails();
-  }, [database, characterId]);
+  }, [database, userId, characterId]);
 
   const handleExport = () => {
     if (characterDetails) {

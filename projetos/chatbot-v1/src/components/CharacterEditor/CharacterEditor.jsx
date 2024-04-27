@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getDatabase, ref, get, update } from 'firebase/database';
 import '../CharacterEditor/CharacterEditor.css'
 
-function CharacterEditor() {
+function CharacterEditor({ userId }) {
   const { characterId } = useParams();
   const [characterData, setCharacterData] = useState(null);
   const [editedCharacterName, setEditedCharacterName] = useState('');
@@ -20,7 +20,7 @@ function CharacterEditor() {
   useEffect(() => {
     const fetchCharacterData = async () => {
       try {
-        const characterRef = ref(database, `result/${characterId}`);
+        const characterRef = ref(database, `characters/${userId}/${characterId}`);
         const snapshot = await get(characterRef);
         if (snapshot.exists()) {
           const characterData = snapshot.val();
@@ -103,14 +103,14 @@ function CharacterEditor() {
       const currentTotal = Object.values(editedCharacterAttributes).reduce((total, val) => total + val, 0);
 
       // Verifica se o novo valor excede o limite total de pontos (36)
-      if (currentTotal + (value - (editedCharacterAttributes[attribute] || 0)) <= 36) {
+      if (currentTotal + (value - (editedCharacterAttributes[attribute] || 0)) <= 40) {
         const updatedValue = Math.max(0, value);
         setEditedCharacterAttributes(prevAttributes => ({
           ...prevAttributes,
           [attribute]: updatedValue
         }));
       } else {
-        alert("O limite total de pontos (36) foi excedido!");
+        alert("O limite total de pontos (40) foi excedido!");
       }
     } else {
       alert("Cada habilidade do atributo só pode ter no máximo 10 pontos!");
@@ -138,7 +138,7 @@ function CharacterEditor() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const characterRef = ref(database, `result/${characterId}`);
+      const characterRef = ref(database, `characters/${userId}/${characterId}`);
       await update(characterRef, {
         characterName: editedCharacterName,
         age: editedCharacterAge,

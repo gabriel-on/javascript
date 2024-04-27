@@ -70,10 +70,10 @@ function App() {
           <div className='container'>
             <Routes>
               <Route path='/' element={<Home />} />
-              <Route path='/character-details/:characterId' element={<CharacterDetails />} />
+              <Route path='/character-details/:characterId' element={<CharacterDetails userId={userId} />} />
               <Route
                 path='/character-editor/:characterId'
-                element={<CharacterEditor />}
+                element={<CharacterEditor userId={userId} />}
               />
               <Route
                 path='/character-game'

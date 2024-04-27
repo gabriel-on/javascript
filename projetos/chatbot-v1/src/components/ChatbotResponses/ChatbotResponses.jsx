@@ -83,7 +83,19 @@ const ChatbotResponses = ({ onSaveResult }) => {
     };
 
     const handleSendButton = () => {
-        if (step === 8) {
+        // Logs existentes
+        console.log("Step:", step);
+        console.log("Selected Class:", selectedClass);
+        console.log("Attributes:", attributes);
+        console.log("Character Name:", characterName);
+        console.log("Selected Race:", selectedRace);
+        console.log("Age:", age);
+        console.log("Origin:", origin);
+        console.log("Powers Description:", powersDescription);
+        console.log("Is Public:", isPublic);
+        console.log("Character Image:", characterImage);
+
+        if (step === 9) {
             const createdBy = currentUser.displayName;
             const userId = currentUser.uid;
             const createdAt = serverTimestamp();
@@ -103,7 +115,8 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 characterImage
             };
 
-            // Save character data under "characters/userId/customId"
+            console.log("About to save character data...");
+
             set(ref(database, `characters/${userId}/${id}`), dataToSave)
                 .then(() => {
                     console.log("Character data sent successfully!");
@@ -112,6 +125,9 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 .catch((error) => {
                     console.error("Error sending data:", error);
                 });
+
+            console.log("Character data save request completed.");
+
         } else {
             handleNextStep();
         }
@@ -278,7 +294,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 return (
                     <div className="step-step">
                         <h2>Etapa 5: Descreva os poderes do seu personagem</h2>
-                        <textarea value={powersDescription} onChange={handlePowersDescriptionChange} placeholder="Descrição dos poderes do personagem 👀" />
+                        <textarea value={powersDescription} onChange={handlePowersDescriptionChange} placeholder="Descrição dos poderes do personagem ( ͡° ͜ʖ ͡°)" />
                         <div>
                             <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
                             <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
@@ -302,7 +318,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 return (
                     <div className="step-step">
                         <h2>Etapa 7: Escreva a origem do seu personagem</h2>
-                        <textarea value={origin} onChange={handleOriginChange} placeholder="Descreva a origem do personagem ( ͡° ͜ʖ ͡°)"/>
+                        <textarea value={origin} onChange={handleOriginChange} placeholder="Descreva a origem do personagem ( ͡° ͜ʖ ͡°)" />
                         <div>
                             <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
                             <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>

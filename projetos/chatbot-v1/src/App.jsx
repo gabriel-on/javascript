@@ -48,7 +48,6 @@ function App() {
             setUser((prevUser) => ({ ...prevUser, isAdmin }));
             setCharacterData(userData.character); // Define os dados do personagem
             console.log('Dados do usuário:', userData); // Adiciona um console.log aqui
-            console.log('Dados do personagem:', userData.character);
           }
         } catch (error) {
           console.error('Erro ao buscar dados do usuário:', error);

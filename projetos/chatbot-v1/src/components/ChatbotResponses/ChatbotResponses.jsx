@@ -121,14 +121,14 @@ const ChatbotResponses = ({ onSaveResult }) => {
         if (value <= 10) {
             const currentTotal = Object.values(attributes).reduce((total, val) => total + val, 0);
 
-            if (currentTotal + (value - (attributes[attribute] || 0)) <= 36) {
+            if (currentTotal + (value - (attributes[attribute] || 0)) <= 40) {
                 const updatedValue = Math.max(0, value);
                 setAttributes(prevAttributes => ({
                     ...prevAttributes,
                     [attribute]: updatedValue
                 }));
             } else {
-                alert("Total attribute points limit (36) exceeded!");
+                alert("Total attribute points limit (40) exceeded!");
             }
         } else {
             alert("Each attribute skill can have a maximum of 10 points!");
@@ -154,25 +154,60 @@ const ChatbotResponses = ({ onSaveResult }) => {
 
     const renderClasses = () => {
         return classes.map((className, index) => (
-            <button key={index} onClick={() => handleSelectClass(className)}>{className}</button>
+            <div key={index}>
+                <input
+                    className="input-radio"
+                    type="radio"
+                    id={className}
+                    name="class"
+                    value={className}
+                    checked={selectedClass === className}
+                    onChange={() => handleSelectClass(className)}
+                />
+                <label htmlFor={className}>{className}</label>
+            </div>
         ));
     };
 
     const renderRaces = () => {
         return races.map((raceName, index) => (
-            <button key={index} onClick={() => handleSelectRace(raceName)}>{raceName}</button>
+            <div key={index} >
+                <input
+                    className="input-radio"
+                    type="radio"
+                    id={raceName}
+                    name="race"
+                    value={raceName}
+                    checked={selectedRace === raceName}
+                    onChange={() => handleSelectRace(raceName)}
+                />
+                <label htmlFor={raceName}>{raceName}</label>
+            </div>
         ));
     };
 
     const renderAttributes = () => {
-        return Object.entries(attributes).map(([attribute, value]) => (
-            <div key={attribute}>
-                <span>{attribute}: </span>
-                <button onClick={() => handleAttributeChange(attribute, value - 1)}>-</button>
-                <span>{value}</span>
-                <button onClick={() => handleAttributeChange(attribute, value + 1)}>+</button>
+        return (
+            <div className="field">
+                <div className="attribute-table attribute-container">
+                    <h3>Atributos</h3>
+                    <table>
+                        <tbody>
+                            {Object.entries(attributes).map(([attribute, value]) => (
+                                <tr key={attribute}>
+                                    <td>{attribute}:</td>
+                                    <td>
+                                        <button onClick={() => handleAttributeChange(attribute, value - 1)}>-</button>
+                                        <span>{value}</span>
+                                        <button onClick={() => handleAttributeChange(attribute, value + 1)}>+</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        ));
+        );
     };
 
     const handlePublicToggle = () => {
@@ -198,7 +233,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 return (
                     <div className="step-step">
                         <h2>Etapa 1: Insira o nome do personagem</h2>
-                        <input type="text" value={characterName} onChange={handleNameChange} placeholder="Nome do personagem"/>
+                        <input type="text" value={characterName} onChange={handleNameChange} placeholder="Nome do personagem" />
                         <div>
                             <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
                         </div>
@@ -208,7 +243,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 return (
                     <div className="step-step">
                         <h2>Etapa 2: Insira a idade do personagem</h2>
-                        <input type="text" value={age} onChange={handleAgeChange} placeholder="Idade do personagem"/>
+                        <input type="text" value={age} onChange={handleAgeChange} placeholder="Idade do personagem" />
                         <div>
                             <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
                             <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
@@ -219,7 +254,9 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 return (
                     <div className="step-step">
                         <h2>Etapa 3: Escolha a raça do personagem</h2>
-                        {renderRaces()}
+                        <div className="races-render">
+                            {renderRaces()}
+                        </div>
                         <div>
                             <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
                             <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
@@ -241,7 +278,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 return (
                     <div className="step-step">
                         <h2>Etapa 5: Descreva os poderes do seu personagem</h2>
-                        <textarea value={powersDescription} onChange={handlePowersDescriptionChange} />
+                        <textarea value={powersDescription} onChange={handlePowersDescriptionChange} placeholder="Descrição dos poderes do personagem 👀" />
                         <div>
                             <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
                             <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
@@ -251,8 +288,10 @@ const ChatbotResponses = ({ onSaveResult }) => {
             case 6:
                 return (
                     <div className="step-step">
-                        <h2>Etapa 6: Escolha sua classe</h2>
-                        {renderClasses()}
+                        <h2>Etapa 6: Escolha a classe do personagem</h2>
+                        <div className="classes-render">
+                            {renderClasses()}
+                        </div>
                         <div>
                             <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
                             <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
@@ -263,7 +302,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 return (
                     <div className="step-step">
                         <h2>Etapa 7: Escreva a origem do seu personagem</h2>
-                        <textarea value={origin} onChange={handleOriginChange} />
+                        <textarea value={origin} onChange={handleOriginChange} placeholder="Descreva a origem do personagem ( ͡° ͜ʖ ͡°)"/>
                         <div>
                             <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
                             <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>

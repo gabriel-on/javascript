@@ -109,6 +109,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 age,
                 origin,
                 createdBy,
+                userId,
                 createdAt,
                 powersDescription,
                 isPublic,

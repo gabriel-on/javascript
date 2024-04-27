@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getDatabase, ref, get } from 'firebase/database';
 
 // CSS
@@ -8,17 +8,30 @@ import '../CharacterDetails/CharacterDetails.css';
 function CharacterDetails({ userId }) {
   const { characterId } = useParams();
   const [characterDetails, setCharacterDetails] = useState(null);
-  const navigate = useNavigate();
   const database = getDatabase();
 
   useEffect(() => {
     const fetchCharacterDetails = async () => {
       try {
-        const characterRef = ref(database, `characters/${userId}/${characterId}`); // Incluindo userId na referência
-        const snapshot = await get(characterRef);
+        const charactersRef = ref(database, 'characters');
+        const snapshot = await get(charactersRef);
         if (snapshot.exists()) {
-          const characterData = snapshot.val();
-          setCharacterDetails(characterData);
+          const characterList = [];
+          snapshot.forEach((userSnapshot) => {
+            userSnapshot.forEach((characterSnapshot) => {
+              const characterData = characterSnapshot.val();
+              characterList.push({
+                id: characterSnapshot.key, // ID do personagem
+                ...characterData
+              });
+            });
+          });
+          const character = characterList.find(character => character.id === characterId);
+          if (character) {
+            setCharacterDetails(character);
+          } else {
+            console.log('Character not found');
+          }
         } else {
           console.log('No character data available');
         }
@@ -28,7 +41,7 @@ function CharacterDetails({ userId }) {
     };
 
     fetchCharacterDetails();
-  }, [database, userId, characterId]);
+  }, [database, characterId]);
 
   const handleExport = () => {
     if (characterDetails) {
@@ -62,6 +75,9 @@ function CharacterDetails({ userId }) {
 
   // Formatação da data no formato brasileiro
   const formattedDate = new Date(characterDetails.createdAt).toLocaleString('pt-BR');
+
+  // Verificar se o usuário atual é o dono do personagem
+  const isOwner = characterDetails.userId === userId;
 
   return (
     <div className="character-details">
@@ -117,8 +133,12 @@ function CharacterDetails({ userId }) {
       <p>Feito por: {characterDetails.createdBy}</p>
       <p>Data de criação: <span>{formattedDate}</span></p>
       <div>
-        <button className='btn-export-oc' onClick={handleExport}>Exportar Detalhes</button>
-        <Link className='btn-edit-details' to={`/character-editor/${characterId}`}>Editar Detalhes</Link>
+        {isOwner && (
+          <>
+            <button className='btn-export-oc' onClick={handleExport}>Exportar Detalhes</button>
+            <Link className='btn-edit-details' to={`/character-editor/${characterId}`}>Editar Detalhes</Link>
+          </>
+        )}
       </div>
     </div>
   );

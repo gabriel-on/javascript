@@ -61,7 +61,7 @@ function Home() {
               <ul>
               <li>
                 <p>Nome:</p>
-                <span>{truncateString(character.characterName, 16)}</span>
+                <span>{truncateString(character.characterName, 14)}</span>
               </li>
                 <li>
                   <p>Idade:</p> <span>{character.age}</span>

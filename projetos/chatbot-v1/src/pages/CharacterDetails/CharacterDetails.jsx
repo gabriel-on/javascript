@@ -107,56 +107,73 @@ function CharacterDetails({ userId }) {
   const isOwner = characterDetails.userId === userId;
 
   return (
-    <div className="character-details">
+    <div className="character-details-container">
       <h2>Detalhes do Personagem:</h2>
-      <table>
-        <tbody>
-          <tr>
-            <td>Nome:</td>
-            <td>{characterDetails.characterName}</td>
-          </tr>
-          <tr>
-            <td>Classe:</td>
-            <td>{characterDetails.selectedClass}</td>
-          </tr>
-          <tr>
-            <td>Raça:</td>
-            <td>{characterDetails.selectedRace}</td>
-          </tr>
-          <tr>
-            <td>Idade:</td>
-            <td>{characterDetails.age}</td>
-          </tr>
-          <tr>
-            <td>Poderes:</td>
-            <td>{characterDetails.powersDescription}</td>
-          </tr>
-          <tr>
-            <td>Origem:</td>
-            <td>{characterDetails.origin}</td>
-          </tr>
-          <tr>
-            <td>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Atributo</th>
-                    <th>Pontos</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.entries(characterDetails.attributes).map(([attribute, value]) => (
-                    <tr key={attribute}>
-                      <td>{attribute}</td>
-                      <td>{value}</td>
+      <div className='character-details'>
+        <div className='character-image-details'>
+          <img src={characterDetails.characterImage} alt={`Imagem do ${characterDetails.characterName}`} />
+        </div>
+        <table>
+          <tbody>
+            <tr>
+              <td>Nome:</td>
+              <td>{characterDetails.characterName}</td>
+            </tr>
+            <tr>
+              <td>Classe:</td>
+              <td>{characterDetails.selectedClass}</td>
+            </tr>
+            <tr>
+              <td>Raça:</td>
+              <td>{characterDetails.selectedRace}</td>
+            </tr>
+            <tr>
+              <td>Idade:</td>
+              <td>{characterDetails.age}</td>
+            </tr>
+            <tr>
+              <td>Ocupação:</td>
+              <td>Nula</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className='character-details-item'>
+        <table className='table-attributes'>
+          <tbody>
+            <tr>
+              <td>
+                <table>
+                  <thead>
+                    <tr >
+                      <th >Atributo</th>
+                      <th className='points-item'>Pontos</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                  </thead>
+                  <tbody >
+                    {Object.entries(characterDetails.attributes).map(([attribute, value]) => (
+                      <tr key={attribute} >
+                        <td className='attribute-item'>{attribute}</td>
+                        <td className='points-item points'>{value}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div className='table-origin-powers'>
+            <div>
+              <h2>Poderes:</h2>
+              <p>{characterDetails.powersDescription}</p>
+            </div>
+            <div>
+              <h2>Origem:</h2>
+              <p>{characterDetails.origin}</p>
+            </div>
+        </div>
+      </div>
       <p>Feito por: {characterDetails.createdBy}</p>
       <p>Data de criação: <span>{formattedDate}</span></p>
       <div>

@@ -1,11 +1,11 @@
 @media screen and (max-width: 420px) {
-    .character-details {
+    .character-details-container {
         display: flex;
         flex-direction: column;
         width: 400px;
     }
 
-    .character-details > div {
+    .character-details-container>div {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
@@ -33,16 +33,126 @@
     }
 }
 
-.character-details {
+.character-details-container {
+    width: 950px;
     display: flex;
     flex-direction: column;
+    margin: auto;
+    gap: 10px;
 }
 
-.character-details > div {
+.character-details-container>div {
+    border: 2px solid black;
+    padding: 2px;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.character-image-details {
+    border: 2px solid black;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.character-image-details>img {
+    object-fit: cover;
+    aspect-ratio: 4/4;
+    width: 260px;
+}
+
+.character-details {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.character-details>table {
+    width: 668px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.character-details>table>tbody {
+    padding: 10px;
+    justify-content: space-between;
+    background: #333333;
+    width: 668px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Tributos */
+.character-details-item {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* .character-details-item>table {
+    max-width: 400px;
+    display: flex;
+    flex-wrap: wrap;
+} */
+
+.table-attributes {
+    display: flex;
+    flex-wrap: wrap;
+    width: auto;
+}
+
+.table-attributes>tbody {
+    background: #333333;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.table-attributes>tbody td {
+    background: #333333;
+    border: 2px solid black;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.table-attributes .attribute-item {
+    background: white;
+    color: black;
+}
+
+.table-attributes>tbody .points-item {
+    width: 120px;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+}
+
+.table-attributes>tbody .points {
+    color: red;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+/* Descrição */
+.table-origin-powers {
+    /* width: 700px; */
+    display: flex;
+
+    flex-direction: column;
+    gap: 10px;
+}
+
+.table-origin-powers>div {
+    background: #333333;
+    width: 668px;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    min-height: 30vh;
 }
 
 .btn-edit-details {

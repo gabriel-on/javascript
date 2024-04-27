@@ -5,6 +5,17 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+:root {
+    /* Padrão */
+    color: #000000;
+    color: #ffffff;
+    /* Secundária */
+    color: #ff0000;
+    color: #ffff00;
+    color: #CED4DA;
+    color: #333333;
+}
+
 .container {
     width: 1200px;
     margin: auto;

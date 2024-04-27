@@ -18,12 +18,14 @@ function CharacterEditor({ userId }) {
   const database = getDatabase();
 
   useEffect(() => {
+    console.log('Fetching character data...');
     const fetchCharacterData = async () => {
       try {
         const characterRef = ref(database, `characters/${userId}/${characterId}`);
         const snapshot = await get(characterRef);
         if (snapshot.exists()) {
           const characterData = snapshot.val();
+          console.log('Character data:', characterData);
           setCharacterData(characterData);
           setEditedCharacterName(characterData.characterName);
           setEditedCharacterAge(characterData.age);
@@ -41,12 +43,14 @@ function CharacterEditor({ userId }) {
     };
 
     const fetchRaceOptions = async () => {
+      console.log('Fetching race options...');
       try {
         const racesRef = ref(database, 'races');
         const snapshot = await get(racesRef);
         if (snapshot.exists()) {
           const racesData = snapshot.val();
           const racesArray = Object.keys(racesData).map((key) => racesData[key]);
+          console.log('Race options:', racesArray);
           setRaceOptions(racesArray);
         } else {
           console.log('No race options available');
@@ -57,12 +61,14 @@ function CharacterEditor({ userId }) {
     };
 
     const fetchClassOptions = async () => {
+      console.log('Fetching class options...');
       try {
         const classesRef = ref(database, 'classes');
         const snapshot = await get(classesRef);
         if (snapshot.exists()) {
           const classesData = snapshot.val();
           const classesArray = Object.keys(classesData).map((key) => classesData[key]);
+          console.log('Class options:', classesArray);
           setClassOptions(classesArray);
         } else {
           console.log('No class options available');
@@ -75,7 +81,7 @@ function CharacterEditor({ userId }) {
     fetchCharacterData();
     fetchRaceOptions();
     fetchClassOptions();
-  }, [database, characterId]);
+  }, [database, userId, characterId]);
 
   const handleNameChange = (e) => {
     const { value } = e.target;

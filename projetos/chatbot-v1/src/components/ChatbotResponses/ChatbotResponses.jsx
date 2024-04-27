@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { ref, onValue, set, serverTimestamp } from 'firebase/database';
 import { database } from "../../firebase/config";
 import { useAuth } from '../../hooks/useAuthentication';
+import CharacterImageUploader from "../CharacterImageUploader/CharacterImageUploader";
 
 // CSS
 import '../ChatbotResponses/ChatbotResponses.css';
 
 const ChatbotResponses = ({ onSaveResult }) => {
     const { currentUser } = useAuth();
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     const [step, setStep] = useState(1);
     const [classes, setClasses] = useState([]);
     const [selectedClass, setSelectedClass] = useState("");
@@ -32,6 +33,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
     const [powersDescription, setPowersDescription] = useState("");
     const [customId, setCustomId] = useState(null);
     const [isPublic, setIsPublic] = useState(false);
+    const [characterImage, setCharacterImage] = useState(null);
 
     useEffect(() => {
         const classesRef = ref(database, 'classes');
@@ -97,7 +99,8 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 createdBy,
                 createdAt,
                 powersDescription,
-                isPublic
+                isPublic,
+                characterImage
             };
 
             // Save character data under "characters/userId/customId"
@@ -117,7 +120,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
     const handleAttributeChange = (attribute, value) => {
         if (value <= 10) {
             const currentTotal = Object.values(attributes).reduce((total, val) => total + val, 0);
-    
+
             if (currentTotal + (value - (attributes[attribute] || 0)) <= 36) {
                 const updatedValue = Math.max(0, value);
                 setAttributes(prevAttributes => ({
@@ -176,6 +179,10 @@ const ChatbotResponses = ({ onSaveResult }) => {
         setIsPublic(!isPublic); // Inverte o estado de público/privado
     };
 
+    const handleImageUpload = (imageUrl) => {
+        setCharacterImage(imageUrl);
+    };
+
     const renderStepContent = () => {
         if (successMessage) {
             return (
@@ -191,7 +198,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 return (
                     <div className="step-step">
                         <h2>Etapa 1: Insira o nome do personagem</h2>
-                        <input type="text" value={characterName} onChange={handleNameChange} />
+                        <input type="text" value={characterName} onChange={handleNameChange} placeholder="Nome do personagem"/>
                         <div>
                             <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
                         </div>
@@ -201,7 +208,7 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 return (
                     <div className="step-step">
                         <h2>Etapa 2: Insira a idade do personagem</h2>
-                        <input type="text" value={age} onChange={handleAgeChange} />
+                        <input type="text" value={age} onChange={handleAgeChange} placeholder="Idade do personagem"/>
                         <div>
                             <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
                             <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
@@ -265,8 +272,27 @@ const ChatbotResponses = ({ onSaveResult }) => {
                 );
             case 8:
                 return (
+                    <div className="step-step">
+                        <h2>Etapa 8: Faça o upload da imagem do personagem</h2>
+                        <CharacterImageUploader onUpload={handleImageUpload} />
+                        <div>
+                            <button className="btn-step" onClick={handlePreviousStep}>Voltar</button>
+                            <button className="btn-step" onClick={handleNextStep}>Próxima Etapa</button>
+                        </div>
+                    </div>
+                );
+            case 9:
+                return (
                     <div className="step-step final-step">
                         <h2>Etapa Final: Confirme os dados e conclua</h2>
+                        <div>
+                            {characterImage && (
+                                <div className="character-image-preview">
+                                    <p>Imagem do Personagem:</p>
+                                    <img src={characterImage} alt="Imagem do Personagem" />
+                                </div>
+                            )}
+                        </div>
                         <p>Nome: {characterName}</p>
                         <p>Idade: {age}</p>
                         <p>Raça: {selectedRace}</p>

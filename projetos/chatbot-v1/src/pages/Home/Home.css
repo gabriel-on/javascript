@@ -2,29 +2,45 @@
     .character-list-container {
         align-items: center;
     }
-    
-    .character-list-container > h1 {
+
+    .character-list-container>h1 {
         font-size: 1.5em;
     }
     
-    .character-list {
+    .character-list-container .character-list {
+        display: flex;
         max-width: 400px;
         flex-direction: column;
-        margin: 10px;
-    }
-    
-    .character-list > div{
-        border: 1px solid yellow;
-        background: black;
-        padding: 10px;
-        gap: 20px;
-        display: flex;
-        flex-wrap: wrap;
-        width: 250px;
     }
 
-    .character-list > div > h2{
+    .character-list-container .character-list>div {
+        gap: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        width: 400px;
+        flex-direction: column;
+    }
+
+    .character-list>div>h2 {
         font-size: 1.2em;
+    }
+
+    .character-list-container .character-item {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 380px;
+    }
+
+    .character-list-container .character-item>ul {
+        width: 200px;
+    }
+
+    .character-list-container .character-image>img {
+        object-fit: cover;
+        aspect-ratio: 4/4;
+        width: 200px;
     }
 
     .btn-details {
@@ -54,15 +70,60 @@
     /* width: 100%; */
 }
 
-.character-list > div{
-    flex-direction: column;
+.character-list>div {
+    /* flex-direction: column; */
     border: 1px solid yellow;
     background: black;
     padding: 10px;
-    gap: 20px;
+    gap: 10px;
     display: flex;
     flex-wrap: wrap;
-    width: 280px;
+    width: 500px;
+}
+
+.character-item {
+    /* flex-direction: column; */
+    border: 1px solid yellow;
+    padding: 10px;
+    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+}
+
+.character-item>ul {
+    flex-direction: column;
+    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 220px;
+    justify-content: space-between;
+}
+
+.character-item>ul>li {
+    display: flex;
+    flex-wrap: wrap;
+    font-weight: bold;
+    gap: 10px;
+    color: yellow;
+}
+
+.character-item>ul>li p {
+    text-transform: uppercase;
+    color: yellow;
+    opacity: 0.7;
+}
+
+.character-item>ul>li span {
+    text-transform: capitalize;
+    color: white;
+    opacity: 1;
+}
+
+.character-image>img {
+    object-fit: cover;
+    aspect-ratio: 4/4;
+    max-width: 220px;
 }
 
 .btn-details {

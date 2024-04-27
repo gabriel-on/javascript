@@ -35,9 +35,17 @@ function Home() {
         console.error('Error fetching data:', error);
       }
     };
-  
+
     fetchResult();
   }, [database]);
+
+  function truncateString(str, maxLength) {
+    if (str.length > maxLength) {
+      return str.substring(0, maxLength) + '...';
+    } else {
+      return str;
+    }
+  }
 
   return (
     <div className='character-list-container'>
@@ -46,13 +54,28 @@ function Home() {
         {characterDataList.map((character, index) => (
           <div key={index}>
             <h2>Personagem {index + 1}</h2>
-            <ul>
-              <li>Nome: {character.characterName}</li>
-              <li>Idade: {character.age}</li>
-              <li>Classe: {character.selectedClass}</li>
-              <li>Raça: {character.selectedRace}</li>
-              <li>Criador: {character.createdBy}</li>
-            </ul>
+            <div className='character-item'>
+              <div className='character-image'>
+                <img src={character.characterImage} alt={`Imagem do ${character.characterName}`} />
+              </div>
+              <ul>
+              <li>
+                <p>Nome:</p>
+                <span>{truncateString(character.characterName, 16)}</span>
+              </li>
+                <li>
+                  <p>Idade:</p> <span>{character.age}</span>
+                </li>
+                <li>
+                  <p>Classe:</p> <span>{character.selectedClass}</span></li>
+                <li><
+                  p>Raça:</p> <span>{character.selectedRace}</span>
+                </li>
+                <li>
+                  <p>Criador:</p> <span>{character.createdBy}</span>
+                </li>
+              </ul>
+            </div>
             <Link className='btn-details' to={`/character-details/${character.id}`}>Ver Detalhes</Link>
           </div>
         ))}

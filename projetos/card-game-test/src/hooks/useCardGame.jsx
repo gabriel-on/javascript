@@ -43,6 +43,7 @@ function useCardGame(initialPlayerCards, initialAICards) {
             }
 
             setPlayerCards(playerCards.filter((card) => card.id !== playerSelectedCard.id));
+            setAICards(aiCards.filter((card) => card.id !== selectedAICard.id));
             setPlayerPlayedCard(playerSelectedCard);
             setPlayerSelectedCard(null);
 

@@ -23,21 +23,19 @@ const aiInitialCards = [
 function Game() {
     const [gameState, setGameState] = useState(null);
     const { auth } = useAuth();
-    const [round, setRound] = useState(1);
-
-    const nextRound = () => {
-        setRound(round + 1);
-    };
 
     useEffect(() => {
-        if (round > 3) return;
-
         const gameRef = ref(database, "game");
+
+        const unsubscribe = onValue(gameRef, (snapshot) => {
+            const data = snapshot.val();
+            setGameState(data);
+        });
 
         return () => {
             off(gameRef);
         };
-    }, [auth, round]);
+    }, [auth]);
 
     const {
         playerCards,
@@ -47,21 +45,16 @@ function Game() {
         aiPlayedCard,
         result,
         selectPlayerCard,
-        playCard
+        playCard,
+        round,
+        playerScore,
+        aiScore
     } = useCardGame(playerInitialCards, aiInitialCards);
-
-    useEffect(() => {
-        if (result && round <= 3) {
-            const delay = setTimeout(() => {
-                nextRound();
-            }, 2000);
-            return () => clearTimeout(delay);
-        }
-    }, [result, round]);
 
     return (
         <div>
-            <h2>Suas Cartas:</h2>
+            <h2>Game State:</h2>
+            <pre>{JSON.stringify(gameState, null, 2)}</pre>
             <div className="cards-container">
                 {playerCards.map((card) => (
                     <div key={card.id} className="card-container">
@@ -84,6 +77,8 @@ function Game() {
                 ))}
             </div>
             <h3>Round: {round}</h3>
+            <h3>Player Score: {playerScore}</h3>
+            <h3>AI Score: {aiScore}</h3>
             <div>
                 <h3>Carta jogada pelo jogador:</h3>
                 <PlayedCard card={playerPlayedCard} />
@@ -98,7 +93,7 @@ function Game() {
                 </div>
             )}
             <div className="ai-cards-container">
-                <h3>Cartas da IA:</h3>
+                <h3>AI's Cards:</h3>
                 <div className="cards-container">
                     {aiCards.map((card) => (
                         <div key={card.id} className="card-container">

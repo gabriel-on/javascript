@@ -29,12 +29,10 @@ function useCardGame(initialPlayerCards, initialAICards) {
 
     const playCard = () => {
         if (playerSelectedCard) {
-            // IA escolhe uma carta aleatoriamente
             const randomIndex = Math.floor(Math.random() * aiCards.length);
             const selectedAICard = aiCards[randomIndex];
             setAIPlayedCard(selectedAICard);
 
-            // Determine o resultado
             const playerTotal = playerSelectedCard.attack + playerSelectedCard.defense;
             const aiTotal = selectedAICard.attack + selectedAICard.defense;
 
@@ -44,14 +42,18 @@ function useCardGame(initialPlayerCards, initialAICards) {
                 setAIScore(aiScore + 1);
             }
 
-            // Remova a carta do jogador do baralho
             setPlayerCards(playerCards.filter((card) => card.id !== playerSelectedCard.id));
             setPlayerPlayedCard(playerSelectedCard);
             setPlayerSelectedCard(null);
 
-            if (round < 3) {
-                setRound(round + 1);
-            }
+            setTimeout(() => {
+                if (round < 3) {
+                    setRound(round + 1);
+                    setPlayerPlayedCard(null);
+                    setAIPlayedCard(null);
+                    setResult(null);
+                }
+            }, 2000);
         }
     };
 

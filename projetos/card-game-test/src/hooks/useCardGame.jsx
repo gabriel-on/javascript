@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
+import { ref, onValue, set } from "firebase/database";
+import { database } from "../firebase/config"; // Certifique-se de que o caminho está correto
 
-function useCardGame(initialPlayerCards, initialAICards) {
+function useCardGame(roomId, playerId, initialPlayerCards, initialAICards) {
+    const [gameState, setGameState] = useState(null);
     const [playerCards, setPlayerCards] = useState(initialPlayerCards);
     const [aiCards, setAICards] = useState(initialAICards);
     const [playerSelectedCard, setPlayerSelectedCard] = useState(null);
@@ -12,16 +15,50 @@ function useCardGame(initialPlayerCards, initialAICards) {
     const [aiScore, setAIScore] = useState(0);
 
     useEffect(() => {
-        if (round > 3) {
-            if (playerScore > aiScore) {
-                setResult('Player Wins the Game!');
-            } else if (playerScore < aiScore) {
-                setResult('AI Wins the Game!');
-            } else {
-                setResult('It\'s a Draw!');
+        const gameRef = ref(database, `games/${roomId}`);
+
+        const unsubscribe = onValue(gameRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                setGameState(data);
+                setPlayerCards(data.playerCards);
+                setAICards(data.aiCards);
+                setPlayerPlayedCard(data.playerPlayedCard);
+                setAIPlayedCard(data.aiPlayedCard);
+                setPlayerScore(data.playerScore);
+                setAIScore(data.aiScore);
+                setRound(data.round);
+                setResult(data.result);
             }
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, [roomId]);
+
+    useEffect(() => {
+        if (round > 3) {
+            let gameResult;
+            if (playerScore > aiScore) {
+                gameResult = 'Player Wins the Game!';
+            } else if (playerScore < aiScore) {
+                gameResult = 'AI Wins the Game!';
+            } else {
+                gameResult = 'It\'s a Draw!';
+            }
+            setResult(gameResult);
+            updateGameState({ result: gameResult });
         }
     }, [round, playerScore, aiScore]);
+
+    const updateGameState = (updates) => {
+        const gameRef = ref(database, `games/${roomId}`);
+        set(gameRef, {
+            ...gameState,
+            ...updates,
+        });
+    };
 
     const selectPlayerCard = (card) => {
         setPlayerSelectedCard(card);
@@ -36,16 +73,33 @@ function useCardGame(initialPlayerCards, initialAICards) {
             const playerTotal = playerSelectedCard.attack + playerSelectedCard.defense;
             const aiTotal = selectedAICard.attack + selectedAICard.defense;
 
+            let newPlayerScore = playerScore;
+            let newAIScore = aiScore;
             if (playerTotal > aiTotal) {
-                setPlayerScore(playerScore + 1);
+                newPlayerScore++;
             } else if (playerTotal < aiTotal) {
-                setAIScore(aiScore + 1);
+                newAIScore++;
             }
 
-            setPlayerCards(playerCards.filter((card) => card.id !== playerSelectedCard.id));
-            setAICards(aiCards.filter((card) => card.id !== selectedAICard.id));
+            const newPlayerCards = playerCards.filter((card) => card.id !== playerSelectedCard.id);
+            const newAICards = aiCards.filter((card) => card.id !== selectedAICard.id);
+
+            setPlayerCards(newPlayerCards);
+            setAICards(newAICards);
             setPlayerPlayedCard(playerSelectedCard);
             setPlayerSelectedCard(null);
+            setPlayerScore(newPlayerScore);
+            setAIScore(newAIScore);
+
+            updateGameState({
+                playerCards: newPlayerCards,
+                aiCards: newAICards,
+                playerPlayedCard: playerSelectedCard,
+                aiPlayedCard: selectedAICard,
+                playerScore: newPlayerScore,
+                aiScore: newAIScore,
+                round: round + 1,
+            });
 
             setTimeout(() => {
                 if (round < 3) {
@@ -53,6 +107,12 @@ function useCardGame(initialPlayerCards, initialAICards) {
                     setPlayerPlayedCard(null);
                     setAIPlayedCard(null);
                     setResult(null);
+
+                    updateGameState({
+                        playerPlayedCard: null,
+                        aiPlayedCard: null,
+                        result: null,
+                    });
                 }
             }, 2000);
         }

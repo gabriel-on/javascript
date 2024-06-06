@@ -18,6 +18,7 @@ import Footer from './components/Footer/Footer.jsx';
 import Register from './pages/Register/Register.jsx';
 import Login from './pages/Login/Login.jsx';
 import Sidebar from './components/Sidebar/Sidebar.jsx';
+import Lobby from './components/Lobby/Lobby.jsx';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -65,6 +66,7 @@ function App() {
             <Sidebar />
             <Routes>
               <Route path='/' element={<Home />} />
+              <Route path='/game/roomId' element={<Lobby />} />
               <Route path='/login' element={!user ? <Login /> : <Navigate to={`/`} />} />
               <Route path='/register' element={!user ? <Register /> : <Navigate to="/" />} />
             </Routes>

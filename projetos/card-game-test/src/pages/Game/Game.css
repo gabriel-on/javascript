@@ -1,4 +1,5 @@
 .cards-container {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -47,4 +48,11 @@
 .card:hover .card-overlay {
   opacity: 0;
   /* Esconde a camada de sobreposição quando a carta é hover */
+}
+
+.match {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
 }

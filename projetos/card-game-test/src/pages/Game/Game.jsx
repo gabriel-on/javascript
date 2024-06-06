@@ -53,66 +53,75 @@ function Game() {
 
     return (
         <div>
-            <h2>Game State:</h2>
-            <pre>{JSON.stringify(gameState, null, 2)}</pre>
-            <div className="cards-container">
-                {playerCards.map((card) => (
-                    <div key={card.id} className="card-container">
-                        <div className="card">
-                            <img
-                                src={card.image}
-                                alt={`Card ${card.id}`}
-                                onClick={() => selectPlayerCard(card)}
-                                className={`card-image ${playerSelectedCard && playerSelectedCard.id === card.id ? 'selected' : ''}`}
-                            />
-                            {!playerSelectedCard && (
-                                <div className="card-overlay"></div>
-                            )}
-                            <div className="card-stats">
-                                <p>Attack: {card.attack}</p>
-                                <p>Defense: {card.defense}</p>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <h3>Round: {round}</h3>
-            <h3>Player Score: {playerScore}</h3>
-            <h3>AI Score: {aiScore}</h3>
             <div>
-                <h3>Carta jogada pelo jogador:</h3>
-                <PlayedCard card={playerPlayedCard} />
+                <h2>Game State:</h2>
+                <pre>{JSON.stringify(gameState, null, 2)}</pre>
             </div>
-            <div>
-                <h3>Carta jogada pela IA:</h3>
-                <PlayedCard card={aiPlayedCard} />
-            </div>
-            {playerSelectedCard && (
+            <div className="match">
                 <div>
-                    <button onClick={playCard}>Play Card</button>
-                </div>
-            )}
-            <div className="ai-cards-container">
-                <h3>AI's Cards:</h3>
-                <div className="cards-container">
-                    {aiCards.map((card) => (
-                        <div key={card.id} className="card-container">
-                            <div className="card">
-                                <img
-                                    src="/cards/card-back.png"
-                                    alt="AI Card"
-                                    className="card-image"
-                                />
-                                {!aiPlayedCard && (
-                                    <div className="card-overlay"></div>
-                                )}
-                                <div className="card-stats">
-                                    <p>Attack: ??</p>
-                                    <p>Defense: ??</p>
+                    <h3>Suas Cartas:</h3>
+                    <div className="cards-container">
+                        {playerCards.map((card) => (
+                            <div key={card.id} className="card-container">
+                                <div className="card">
+                                    <img
+                                        src={card.image}
+                                        alt={`Card ${card.id}`}
+                                        onClick={() => selectPlayerCard(card)}
+                                        className={`card-image ${playerSelectedCard && playerSelectedCard.id === card.id ? 'selected' : ''}`}
+                                    />
+                                    {!playerSelectedCard && (
+                                        <div className="card-overlay"></div>
+                                    )}
+                                    <div className="card-stats">
+                                        <p>Attack: {card.attack}</p>
+                                        <p>Defense: {card.defense}</p>
+                                    </div>
                                 </div>
                             </div>
+                        ))}
+                    </div>
+                    <div className="ai-cards-container">
+                        <h3>Cartas da IA:</h3>
+                        <div className="cards-container">
+                            {aiCards.map((card) => (
+                                <div key={card.id} className="card-container">
+                                    <div className="card">
+                                        <img
+                                            src="/cards/card-back.png"
+                                            alt="AI Card"
+                                            className="card-image"
+                                        />
+                                        {!aiPlayedCard && (
+                                            <div className="card-overlay"></div>
+                                        )}
+                                        <div className="card-stats">
+                                            <p>Attack: ??</p>
+                                            <p>Defense: ??</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    </div>
+                </div>
+                <div>
+                    <h3>Round: {round}</h3>
+                    <h3>Player Score: {playerScore}</h3>
+                    <h3>AI Score: {aiScore}</h3>
+                    <div>
+                        <h3>Carta jogada pelo jogador:</h3>
+                        <PlayedCard card={playerPlayedCard} />
+                    </div>
+                    <div>
+                        <h3>Carta jogada pela IA:</h3>
+                        <PlayedCard card={aiPlayedCard} />
+                    </div>
+                    {playerSelectedCard && (
+                        <div>
+                            <button onClick={playCard}>Play Card</button>
+                        </div>
+                    )}
                 </div>
             </div>
             {result && (

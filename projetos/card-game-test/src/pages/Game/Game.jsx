@@ -62,7 +62,6 @@ function Game() {
     return (
         <div>
             <h2>Game State:</h2>
-            <pre>{JSON.stringify(gameState, null, 2)}</pre>
             <div className="cards-container">
                 {playerCards.map((card) => (
                     <div key={card.id} className="card-container">
@@ -120,18 +119,6 @@ function Game() {
                         </div>
                     ))}
                 </div>
-                {aiPlayedCard && (
-                    <div>
-                        <h3>AI played:</h3>
-                        <div className="card-container">
-                            <img src={aiPlayedCard.image} alt={`Card ${aiPlayedCard.id}`} className="card-image" />
-                            <div className="card-stats">
-                                <p>Attack: {aiPlayedCard.attack}</p>
-                                <p>Defense: {aiPlayedCard.defense}</p>
-                            </div>
-                        </div>
-                    </div>
-                )}
             </div>
             {result && (
                 <div>

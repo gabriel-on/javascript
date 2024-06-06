@@ -5,7 +5,7 @@ function Footer() {
     return (
         <footer>
             <div>
-                <p>&copy; - MusicPlay - Version: 0.9.6</p>
+                <p>&copy; - CardGame - Version: 0.1.0</p>
             </div>
         </footer>
     )

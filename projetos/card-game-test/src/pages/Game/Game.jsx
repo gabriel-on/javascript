@@ -23,14 +23,14 @@ const aiInitialCards = [
 function Game() {
     const [gameState, setGameState] = useState(null);
     const { auth } = useAuth();
-    const [round, setRound] = useState(1); 
+    const [round, setRound] = useState(1);
 
     const nextRound = () => {
         setRound(round + 1);
     };
 
     useEffect(() => {
-        if (round > 3) return; 
+        if (round > 3) return;
 
         const gameRef = ref(database, "game");
 
@@ -54,7 +54,7 @@ function Game() {
         if (result && round <= 3) {
             const delay = setTimeout(() => {
                 nextRound();
-            }, 2000); 
+            }, 2000);
             return () => clearTimeout(delay);
         }
     }, [result, round]);
@@ -84,7 +84,7 @@ function Game() {
                     </div>
                 ))}
             </div>
-            <h3>Round: {round}</h3> 
+            <h3>Round: {round}</h3>
             <div>
                 <h3>Player's Played Card:</h3>
                 <PlayedCard card={playerPlayedCard} />

@@ -1,0 +1,79 @@
+@media screen and (max-width: 420px) {
+    .navbar-container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 420px;
+    }
+
+    .navbar-container>.navbar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+
+    .brand>a>h1 {
+        display: none;
+    }
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+.navbar-container {
+    display: flex;
+    flex-wrap: wrap;
+    background: black;
+    width: 100%;
+    justify-content: center;
+    padding: 0;
+}
+
+.navbar {
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.brand>a>h1 {
+    color: yellow;
+    text-transform: uppercase;
+    font-size: 2.5em;
+}
+
+.navbar>ul {
+    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.navbar>ul>li>a {
+    text-transform: uppercase;
+}
+
+.navbar>ul>.nav-page>a {
+    color: yellow;
+    text-transform: uppercase;
+}
+
+.display-name {
+    font-weight: bold;
+}
+
+.logout-btn>button {
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    padding: 5px;
+    background: red;
+}

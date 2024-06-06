@@ -53,10 +53,6 @@ function Game() {
 
     return (
         <div>
-            <div>
-                <h2>Game State:</h2>
-                <pre>{JSON.stringify(gameState, null, 2)}</pre>
-            </div>
             <div className="match">
                 <div>
                     <h3>Suas Cartas:</h3>

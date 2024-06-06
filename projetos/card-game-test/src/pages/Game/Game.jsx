@@ -1,131 +1,145 @@
 import React, { useEffect, useState } from "react";
-import { ref, onValue, off, set } from "firebase/database";
+import { ref, onValue, off } from "firebase/database";
 import { database } from "../../firebase/config";
 import { useAuth } from "../../hooks/useAuthentication";
+import useCardGame from "../../hooks/useCardGame";
 import './Game.css';
+import PlayedCard from "../../components/PlayedCard/PlayedCard";
 
-const initialCards = [
-  { id: 1, image: '/cards/card1.png', attack: 5, defense: 3 },
-  { id: 2, image: '/cards/card2.png', attack: 7, defense: 2 },
-  { id: 3, image: '/cards/card3.png', attack: 6, defense: 4 },
-  // Adicione mais cartas conforme necessário
+const playerInitialCards = [
+    { id: 1, image: '/cards/card1.png', attack: 5, defense: 3 },
+    { id: 2, image: '/cards/card2.png', attack: 7, defense: 2 },
+    { id: 3, image: '/cards/card3.png', attack: 6, defense: 4 },
+    // Adicione mais cartas conforme necessário
 ];
 
-const aiCards = [
-  { id: 4, image: '/cards/card4.png', attack: 4, defense: 5 },
-  { id: 5, image: '/cards/card5.png', attack: 8, defense: 1 },
-  { id: 6, image: '/cards/card6.png', attack: 3, defense: 6 },
-  // Adicione mais cartas conforme necessário
+const aiInitialCards = [
+    { id: 1, image: '/cards/card1.png', attack: 4, defense: 5 },
+    { id: 2, image: '/cards/card2.png', attack: 8, defense: 1 },
+    { id: 3, image: '/cards/card3.png', attack: 3, defense: 6 },
+    // Adicione mais cartas conforme necessário
 ];
 
 function Game() {
-  const [gameState, setGameState] = useState(null);
-  const [cards, setCards] = useState(initialCards);
-  const [aiDeck, setAiDeck] = useState(aiCards);
-  const [playerCard, setPlayerCard] = useState(null);
-  const [aiCard, setAiCard] = useState(null);
-  const [result, setResult] = useState(null);
-  const { auth } = useAuth();
+    const [gameState, setGameState] = useState(null);
+    const { auth } = useAuth();
+    const [round, setRound] = useState(1); 
 
-  useEffect(() => {
-    const gameRef = ref(database, "game");
-
-    const unsubscribe = onValue(gameRef, (snapshot) => {
-      const data = snapshot.val();
-      setGameState(data);
-    });
-
-    return () => {
-      off(gameRef);
+    const nextRound = () => {
+        setRound(round + 1);
     };
-  }, [auth]);
 
-  const handleSelectCard = (card) => {
-    setPlayerCard(card);
-  };
+    useEffect(() => {
+        if (round > 3) return; 
 
-  const handlePlayCard = () => {
-    if (playerCard) {
-      // IA escolhe uma carta aleatoriamente
-      const randomIndex = Math.floor(Math.random() * aiDeck.length);
-      const selectedAiCard = aiDeck[randomIndex];
-      setAiCard(selectedAiCard);
+        const gameRef = ref(database, "game");
 
-      // Remova a carta selecionada do baralho da IA
-      setAiDeck(aiDeck.filter((card) => card.id !== selectedAiCard.id));
+        return () => {
+            off(gameRef);
+        };
+    }, [auth, round]);
 
-      // Determine o resultado
-      const playerTotal = playerCard.attack + playerCard.defense;
-      const aiTotal = selectedAiCard.attack + selectedAiCard.defense;
+    const {
+        playerCards,
+        aiCards,
+        playerSelectedCard,
+        playerPlayedCard,
+        aiPlayedCard,
+        result,
+        selectPlayerCard,
+        playCard
+    } = useCardGame(playerInitialCards, aiInitialCards);
 
-      let gameResult;
-      if (playerTotal > aiTotal) {
-        gameResult = 'Player Wins!';
-      } else if (playerTotal < aiTotal) {
-        gameResult = 'AI Wins!';
-      } else {
-        gameResult = 'It\'s a Draw!';
-      }
-      setResult(gameResult);
+    useEffect(() => {
+        if (result && round <= 3) {
+            const delay = setTimeout(() => {
+                nextRound();
+            }, 2000); 
+            return () => clearTimeout(delay);
+        }
+    }, [result, round]);
 
-      // Atualize o estado do jogo no Firebase
-      const gameRef = ref(database, "game");
-      set(gameRef, {
-        ...gameState,
-        lastPlayedCard: playerCard,
-        aiCard: selectedAiCard,
-        result: gameResult
-      });
-
-      // Remova a carta do jogador do baralho
-      setCards(cards.filter((card) => card.id !== playerCard.id));
-      setPlayerCard(null);
-    }
-  };
-
-  return (
-    <div>
-      <h2>Game State:</h2>
-      <pre>{JSON.stringify(gameState, null, 2)}</pre>
-      <div className="cards-container">
-        {cards.map((card) => (
-          <div key={card.id} className="card-container">
-            <img
-              src={card.image}
-              alt={`Card ${card.id}`}
-              onClick={() => handleSelectCard(card)}
-              className={`card ${playerCard && playerCard.id === card.id ? 'selected' : ''}`}
-            />
-            <div className="card-stats">
-              <p>Attack: {card.attack}</p>
-              <p>Defense: {card.defense}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-      {playerCard && (
+    return (
         <div>
-          <button onClick={handlePlayCard}>Play Card</button>
-        </div>
-      )}
-      <div className="result">
-        {aiCard && (
-          <div>
-            <h3>AI played:</h3>
-            <div className="card-container">
-              <img src={aiCard.image} alt={`Card ${aiCard.id}`} className="card" />
-              <div className="card-stats">
-                <p>Attack: {aiCard.attack}</p>
-                <p>Defense: {aiCard.defense}</p>
-              </div>
+            <h2>Game State:</h2>
+            <pre>{JSON.stringify(gameState, null, 2)}</pre>
+            <div className="cards-container">
+                {playerCards.map((card) => (
+                    <div key={card.id} className="card-container">
+                        <div className="card">
+                            <img
+                                src={card.image}
+                                alt={`Card ${card.id}`}
+                                onClick={() => selectPlayerCard(card)}
+                                className={`card-image ${playerSelectedCard && playerSelectedCard.id === card.id ? 'selected' : ''}`}
+                            />
+                            {!playerSelectedCard && (
+                                <div className="card-overlay"></div>
+                            )}
+                            <div className="card-stats">
+                                <p>Attack: {card.attack}</p>
+                                <p>Defense: {card.defense}</p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
-          </div>
-        )}
-        {result && <h3>{result}</h3>}
-      </div>
-      <button onClick={() => auth.signOut()}>Logout</button>
-    </div>
-  );
+            <h3>Round: {round}</h3> 
+            <div>
+                <h3>Player's Played Card:</h3>
+                <PlayedCard card={playerPlayedCard} />
+            </div>
+            <div>
+                <h3>AI's Played Card:</h3>
+                <PlayedCard card={aiPlayedCard} />
+            </div>
+            {playerSelectedCard && (
+                <div>
+                    <button onClick={playCard}>Play Card</button>
+                </div>
+            )}
+            <div className="ai-cards-container">
+                <h3>AI's Cards:</h3>
+                <div className="cards-container">
+                    {aiCards.map((card) => (
+                        <div key={card.id} className="card-container">
+                            <div className="card">
+                                <img
+                                    src="/cards/card-back.png"
+                                    alt="AI Card"
+                                    className="card-image"
+                                />
+                                {!aiPlayedCard && (
+                                    <div className="card-overlay"></div>
+                                )}
+                                <div className="card-stats">
+                                    <p>Attack: ??</p>
+                                    <p>Defense: ??</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                {aiPlayedCard && (
+                    <div>
+                        <h3>AI played:</h3>
+                        <div className="card-container">
+                            <img src={aiPlayedCard.image} alt={`Card ${aiPlayedCard.id}`} className="card-image" />
+                            <div className="card-stats">
+                                <p>Attack: {aiPlayedCard.attack}</p>
+                                <p>Defense: {aiPlayedCard.defense}</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+            {result && (
+                <div>
+                    <h3>{result}</h3>
+                </div>
+            )}
+        </div>
+    );
 }
 
 export default Game;

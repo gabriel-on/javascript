@@ -2,17 +2,16 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-  }
-  
-  .card-container {
+}
+
+.card-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  
-  .card {
+}
+.card img {
+    position: relative; /* Para posicionar o conteúdo sobreposto */
     width: 100px;
-    height: 150px;
     cursor: pointer;
     border: 2px solid transparent;
     transition: border-color 0.3s;
@@ -23,11 +22,24 @@
   }
   
   .card-stats {
+    position: absolute; /* Para posicionar as estatísticas */
+    bottom: 10px;
+    left: 10px;
     text-align: center;
-    margin-top: 5px;
+    color: white; /* Cor do texto */
+    font-size: 12px;
   }
   
-  .result {
-    margin-top: 20px;
+  .card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    background-color: rgba(0, 0, 0, 0.5); /* Cor semi-transparente */
+    transition: opacity 0.3s;
+  }
+  
+  .card:hover .card-overlay {
+    opacity: 0; /* Esconde a camada de sobreposição quando a carta é hover */
   }
   

@@ -61,7 +61,7 @@ function Game() {
 
     return (
         <div>
-            <h2>Game State:</h2>
+            <h2>Suas Cartas:</h2>
             <div className="cards-container">
                 {playerCards.map((card) => (
                     <div key={card.id} className="card-container">
@@ -85,11 +85,11 @@ function Game() {
             </div>
             <h3>Round: {round}</h3>
             <div>
-                <h3>Player's Played Card:</h3>
+                <h3>Carta jogada pelo jogador:</h3>
                 <PlayedCard card={playerPlayedCard} />
             </div>
             <div>
-                <h3>AI's Played Card:</h3>
+                <h3>Carta jogada pela IA:</h3>
                 <PlayedCard card={aiPlayedCard} />
             </div>
             {playerSelectedCard && (
@@ -98,7 +98,7 @@ function Game() {
                 </div>
             )}
             <div className="ai-cards-container">
-                <h3>AI's Cards:</h3>
+                <h3>Cartas da IA:</h3>
                 <div className="cards-container">
                     {aiCards.map((card) => (
                         <div key={card.id} className="card-container">

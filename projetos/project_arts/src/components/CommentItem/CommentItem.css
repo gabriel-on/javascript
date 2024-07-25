@@ -1,0 +1,60 @@
+/* src/components/CommentItem/CommentItem.css */
+
+.comment-item {
+    display: flex;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    align-items: flex-start;
+}
+
+.comment-avatar {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin-right: 10px;
+}
+
+.comment-content {
+    flex-grow: 1;
+}
+
+.comment-user {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.comment-text {
+    margin-bottom: 5px;
+}
+
+.comment-date {
+    color: #666;
+    font-size: 0.8em;
+}
+
+.comment-reply-button {
+    background: none;
+    border: none;
+    color: #065fd4;
+    cursor: pointer;
+    font-size: 0.9em;
+    padding: 0;
+    margin-top: 5px;
+}
+
+.comment-reply-button:hover {
+    text-decoration: underline;
+}
+
+.reply-form {
+    margin-top: 10px;
+    margin-left: 50px;
+}
+
+.replies-list {
+    margin-left: 50px;
+    margin-top: 10px;
+}

@@ -1,8 +1,9 @@
 // src/components/Home.js
 import React from 'react';
-import { Link } from 'react-router-dom'; // Importa o Link para navegação
+import { Link } from 'react-router-dom';
 import usePosts from '../../hooks/useArtPosts';
-import './Home.css'; // Importa o CSS para o layout
+import PostInteractions from '../../components/PostInteractions/PostInteractions'; // Importa o novo componente
+import './Home.css';
 
 function Home() {
     const { posts, loading, error } = usePosts();
@@ -18,20 +19,23 @@ function Home() {
                     <p>Nenhum post encontrado.</p>
                 ) : (
                     posts.map(post => (
-                        <Link
-                            key={post.id}
-                            to={`/art/${post.id}`}
-                            className="post-item" // Usando Link como um wrapper
-                        >
-                            {post.imageUrl && (
-                                <img
-                                    src={post.imageUrl}
-                                    alt={post.title}
-                                    className="post-image"
-                                />
-                            )}
-                            <div className="post-title">{post.title}</div>
-                        </Link>
+                        <div key={post.id} className="post-item">
+                            <Link to={`/art/${post.id}`} className="post-link">
+                                {post.imageUrl && (
+                                    <img
+                                        src={post.imageUrl}
+                                        alt={post.title}
+                                        className="post-image"
+                                    />
+                                )}
+                                <div className="post-title">{post.title}</div>
+                            </Link>
+                            <PostInteractions
+                                postId={post.id}
+                                initialLikes={post.likes}
+                                initialFavorites={post.favorites}
+                            />
+                        </div>
                     ))
                 )}
             </div>

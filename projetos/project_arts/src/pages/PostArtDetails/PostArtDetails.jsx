@@ -75,7 +75,7 @@ function PostArtDetails() {
                             rel="noopener noreferrer"
                             className="post-link"
                         >
-                            Leia mais
+                            Site de Terceiros
                         </a>
                     )}
                     {post.createdAt && (

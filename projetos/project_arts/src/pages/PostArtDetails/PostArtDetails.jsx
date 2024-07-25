@@ -7,6 +7,7 @@ import PostInteractions from '../../components/PostInteractions/PostInteractions
 function PostArtDetails() {
     const { id } = useParams();
     const [post, setPost] = useState(null);
+    const [userName, setUserName] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -15,9 +16,23 @@ function PostArtDetails() {
         const db = getDatabase();
         const postRef = ref(db, `posts/${id}`);
 
+        // Fetch the post data
         get(postRef).then((snapshot) => {
             if (snapshot.exists()) {
-                setPost(snapshot.val());
+                const postData = snapshot.val();
+                setPost(postData);
+                // Fetch the user's display name if userId is available
+                if (postData.userId) {
+                    const userRef = ref(db, `users/${postData.userId}`);
+                    get(userRef).then((userSnapshot) => {
+                        if (userSnapshot.exists()) {
+                            const userData = userSnapshot.val();
+                            setUserName(userData.displayName || 'Usuário');
+                        }
+                    }).catch((error) => {
+                        console.error('Erro ao carregar dados do usuário', error);
+                    });
+                }
             } else {
                 setError('Post não encontrado');
             }
@@ -69,7 +84,7 @@ function PostArtDetails() {
                         </p>
                     )}
                     <p className="post-by">
-                        Criado Por:
+                        Criado por: {userName}
                     </p>
                     <PostInteractions
                         postId={id}

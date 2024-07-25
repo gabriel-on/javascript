@@ -1,0 +1,55 @@
+footer {
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 60px 0;
+    background: black;
+    margin-top: 100px;
+}
+
+footer > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.hr-footer{
+    width: 1200px;
+    border-bottom: 1px solid #BABABA;
+}
+    
+footer > div > p {
+    color: yellow;
+}
+.links-associate {
+    align-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
+}
+
+.links-associate > p {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: rgb(255, 0, 0);
+    opacity: 0.6;
+}
+
+.links-associate > a{
+    color: red;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    opacity: 1;
+    transition: 0.3s;
+}
+
+.links-associate > a:hover{
+    opacity: 0.5;
+    transition: 0.3s;
+}

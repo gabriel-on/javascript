@@ -1,33 +1,34 @@
-/* src/components/Home.css */
 .posts-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    display: flex;
     gap: 16px;
-  }
-  
-  .post-item {
+}
+
+.post-item {
+    width: 250px;
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
-    background-color: #fff;
+    background: #CED4DA;
     cursor: pointer;
     transition: transform 0.3s;
-  }
-  
-  .post-item:hover {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.post-item:hover {
     transform: scale(1.05);
-  }
-  
-  .post-image {
-    width: 100%;
-    height: 200px;
+}
+
+.post-item > .post-image {
+    width: 250px;
+    aspect-ratio: 4/4;
     object-fit: cover;
-  }
-  
-  .post-title {
+    padding: 10px;
+}
+
+.post-title {
     padding: 8px;
     text-align: center;
     font-size: 16px;
     font-weight: bold;
-  }
-  
+}

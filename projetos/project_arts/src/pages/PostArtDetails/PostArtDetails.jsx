@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getDatabase, ref, get } from 'firebase/database';
 import './PostArtDetails.css';
 import PostInteractions from '../../components/PostInteractions/PostInteractions';
+import CommentSection from '../../components/CommentSection/CommentSection';
 
 function PostArtDetails() {
     const { id } = useParams();
@@ -91,6 +92,7 @@ function PostArtDetails() {
                         initialLikes={post.likes || 0}
                         initialFavorites={post.favorites || 0}
                     />
+                    <CommentSection postId={id} />
                     <button onClick={handleGoBack} className="back-button">Voltar</button>
                 </>
             )}

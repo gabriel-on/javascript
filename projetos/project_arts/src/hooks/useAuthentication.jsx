@@ -51,6 +51,7 @@ export const useAuth = () => {
             await set(dbRef, {
                 email: data.email,
                 displayName: data.displayName,
+                mentionName: data.mentionName,
                 isAdmin: data.isAdmin || false,
                 joinedAt: joinedAt,
             });
@@ -59,6 +60,7 @@ export const useAuth = () => {
                 uid: user.uid,
                 email: user.email,
                 displayName: data.displayName,
+                mentionName: data.mentionName,
                 isAdmin: data.isAdmin || false,
             });
 

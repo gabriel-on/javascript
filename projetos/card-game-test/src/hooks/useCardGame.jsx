@@ -66,8 +66,11 @@ function useCardGame(roomId, playerId, initialPlayerCards, initialAICards) {
 
     const playCard = () => {
         if (playerSelectedCard) {
-            const randomIndex = Math.floor(Math.random() * aiCards.length);
-            const selectedAICard = aiCards[randomIndex];
+            const selectedAICard = aiCards.reduce((bestCard, currentCard) => {
+                const currentTotal = currentCard.attack + currentCard.defense;
+                const bestTotal = bestCard.attack + bestCard.defense;
+                return currentTotal > bestTotal ? currentCard : bestCard;
+            }, aiCards[0]);
             setAIPlayedCard(selectedAICard);
 
             const playerTotal = playerSelectedCard.attack + playerSelectedCard.defense;

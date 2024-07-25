@@ -65,6 +65,7 @@ function CommentSection({ postId }) {
                         postId={postId}
                         commentId={commentId}
                         comment={comment}
+                        replies={comment.replies}
                     />
                 ))}
             </div>

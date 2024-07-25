@@ -26,6 +26,12 @@
     margin-bottom: 5px;
 }
 
+.comment-reply-to {
+    color: #065fd4;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
 .comment-text {
     margin-bottom: 5px;
 }
@@ -56,5 +62,22 @@
 
 .replies-list {
     margin-left: 50px;
+}
+
+.reply-item {
+    display: flex;
     margin-top: 10px;
+}
+
+.reply-avatar {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin-right: 10px;
+}
+
+.reply-content {
+    flex-grow: 1;
 }

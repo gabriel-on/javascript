@@ -19,7 +19,7 @@
     transform: scale(1.05);
 }
 
-.post-item > .post-image {
+.post-item>.post-image {
     width: 250px;
     aspect-ratio: 4/4;
     object-fit: cover;

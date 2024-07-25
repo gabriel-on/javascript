@@ -1,15 +1,15 @@
-// src/components/PostArtDetails.js
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Adiciona useNavigate para navegação
+import { useParams, useNavigate } from 'react-router-dom';
 import { getDatabase, ref, get } from 'firebase/database';
-import './PostArtDetails.css'; // Importa o CSS para estilização
+import './PostArtDetails.css'; 
+import PostInteractions from '../../components/PostInteractions/PostInteractions';
 
 function PostArtDetails() {
     const { id } = useParams();
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const navigate = useNavigate(); // Usando useNavigate para navegação
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         const db = getDatabase();
@@ -68,6 +68,11 @@ function PostArtDetails() {
                             Criado em: {new Date(post.createdAt).toLocaleString()}
                         </p>
                     )}
+                    <PostInteractions
+                        postId={id}
+                        initialLikes={post.likes || 0}
+                        initialFavorites={post.favorites || 0}
+                    />
                     <button onClick={handleGoBack} className="back-button">Voltar</button>
                 </>
             )}

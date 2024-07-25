@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getDatabase, ref, get } from 'firebase/database';
-import './PostArtDetails.css'; 
+import './PostArtDetails.css';
 import PostInteractions from '../../components/PostInteractions/PostInteractions';
 
 function PostArtDetails() {
@@ -9,7 +9,7 @@ function PostArtDetails() {
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     useEffect(() => {
         const db = getDatabase();
@@ -65,9 +65,12 @@ function PostArtDetails() {
                     )}
                     {post.createdAt && (
                         <p className="post-date">
-                            Criado em: {new Date(post.createdAt).toLocaleString()}
+                            Postado em: {new Date(post.createdAt).toLocaleString()}
                         </p>
                     )}
+                    <p className="post-by">
+                        Criado Por:
+                    </p>
                     <PostInteractions
                         postId={id}
                         initialLikes={post.likes || 0}

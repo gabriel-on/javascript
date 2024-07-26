@@ -33,10 +33,17 @@ const CommentSection = () => {
             content: content,
             userId: currentUser.uid,
             timestamp: Date.now(),
-            parentId: parentId,
-            replyingUserId: replyingUserId,
+            parentId: parentId, // ID do comentário pai
+            replyingUserId: replyingUserId, // ID do usuário que está sendo respondido
         });
         setNewComment('');
+    };
+
+    const getTopLevelComments = () => {
+        // Filtra apenas os comentários de nível superior (sem parentId)
+        return Object.keys(comments)
+            .filter((key) => !comments[key].parentId)
+            .map((key) => ({ id: key, ...comments[key] })); // Incluindo ID no objeto
     };
 
     return (
@@ -50,12 +57,13 @@ const CommentSection = () => {
                 <button onClick={() => handleAddComment(newComment, null)}>Post Comment</button>
             </div>
             <div>
-                {Object.keys(comments).map((key) => (
+                {getTopLevelComments().map((commentData) => (
                     <Comment
-                        key={key}
-                        commentId={key}
-                        commentData={comments[key]}
+                        key={commentData.id} // Usar o ID do comentário
+                        commentId={commentData.id}
+                        commentData={commentData}
                         users={users}
+                        comments={comments} // Passando comments para o Comment
                         onReply={handleAddComment}
                     />
                 ))}

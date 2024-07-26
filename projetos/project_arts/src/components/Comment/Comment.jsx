@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
 import './Comment.css';
 
-const Comment = ({ commentId, commentData, users, onReply }) => {
+const Comment = ({ commentId, commentData, users, comments, onReply }) => {
     const [newReply, setNewReply] = useState('');
     const { currentUser } = useAuth();
 
@@ -17,7 +17,7 @@ const Comment = ({ commentId, commentData, users, onReply }) => {
     };
 
     return (
-        <div style={{ marginLeft: commentData.parentId ? '40px' : '0' }}> {/* Indentação */}
+        <div style={{ marginLeft: commentData.parentId ? '40px' : '0' }}>
             <div>
                 <p>{commentData.content}</p>
                 <p>
@@ -28,19 +28,22 @@ const Comment = ({ commentId, commentData, users, onReply }) => {
                 )}
             </div>
             {/* Renderiza apenas um nível de respostas */}
-            {commentData.parentId === null && commentData.replies && (
-                <div>
-                    {Object.keys(commentData.replies).map((key) => (
+            {Object.keys(comments).map((key) => {
+                const replyData = comments[key];
+                if (replyData.parentId === commentId) { // Verifica se a resposta pertence ao comentário
+                    return (
                         <Comment
                             key={key}
                             commentId={key}
-                            commentData={commentData.replies[key]}
+                            commentData={replyData}
                             users={users}
+                            comments={comments} // Passando comments para a resposta
                             onReply={onReply}
                         />
-                    ))}
-                </div>
-            )}
+                    );
+                }
+                return null;
+            })}
             <div>
                 <textarea
                     value={newReply}

@@ -1,24 +1,31 @@
-// src/components/CommentSection/CommentSection.js
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, set, push, onValue } from 'firebase/database';
+import { getDatabase, ref, onValue, push, serverTimestamp } from 'firebase/database';
 import { useAuth } from '../../hooks/useAuthentication';
-import CommentItem from '../CommentItem/CommentItem';
 import './CommentSection.css';
+import CommentItem from '../CommentItem/CommentItem';
 
 function CommentSection({ postId }) {
+    const { currentUser } = useAuth();
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
-    const { currentUser } = useAuth();
-    const userName = currentUser?.displayName || 'Usuário Anônimo';
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const db = getDatabase();
-        const commentsRef = ref(db, `posts/${postId}/comments`);
-
+        const commentsRef = ref(db, `comments/${postId}`);
+        
         const unsubscribe = onValue(commentsRef, (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                setComments(data);
+            if (snapshot.exists()) {
+                const commentsData = snapshot.val();
+                const commentsList = Object.keys(commentsData).map(key => ({
+                    id: key,
+                    ...commentsData[key],
+                }));
+                const parentComments = commentsList.filter(comment => !comment.parentId);
+                parentComments.forEach(parentComment => {
+                    parentComment.replies = commentsList.filter(comment => comment.parentId === parentComment.id);
+                });
+                setComments(parentComments);
             } else {
                 setComments([]);
             }
@@ -29,21 +36,26 @@ function CommentSection({ postId }) {
 
     const handleCommentSubmit = (e) => {
         e.preventDefault();
-        if (!newComment.trim()) return;
+        if (newComment.trim() === '') return;
 
         const db = getDatabase();
-        const commentsRef = ref(db, `posts/${postId}/comments`);
-        const newCommentRef = push(commentsRef);
-
-        set(newCommentRef, {
-            userName,
+        const commentsRef = ref(db, `comments/${postId}`);
+        
+        const newCommentData = {
             text: newComment,
-            date: new Date().toISOString(),
-        }).then(() => {
-            setNewComment('');
-        }).catch((error) => {
-            console.error('Erro ao adicionar comentário', error);
-        });
+            userId: currentUser.uid,
+            userName: currentUser.displayName,
+            createdAt: serverTimestamp(),
+        };
+
+        push(commentsRef, newCommentData)
+            .then(() => {
+                setNewComment('');
+            })
+            .catch((error) => {
+                setError('Erro ao enviar comentário');
+                console.error(error);
+            });
     };
 
     return (
@@ -54,19 +66,14 @@ function CommentSection({ postId }) {
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder="Adicione um comentário..."
-                    required
+                    className="comment-input"
                 />
-                <button type="submit">Comentar</button>
+                <button type="submit" className="submit-button">Comentar</button>
+                {error && <p className="error">{error}</p>}
             </form>
             <div className="comments-list">
-                {Object.entries(comments).map(([commentId, comment]) => (
-                    <CommentItem
-                        key={commentId}
-                        postId={postId}
-                        commentId={commentId}
-                        comment={comment}
-                        replies={comment.replies}
-                    />
+                {comments.map(comment => (
+                    <CommentItem key={comment.id} comment={comment} postId={postId} replies={comment.replies} />
                 ))}
             </div>
         </div>

@@ -1,74 +1,66 @@
-// src/components/CommentItem/CommentItem.js
 import React, { useState } from 'react';
-import { getDatabase, ref, set, push } from 'firebase/database';
+import { getDatabase, ref, push, serverTimestamp } from 'firebase/database';
 import { useAuth } from '../../hooks/useAuthentication';
 import './CommentItem.css';
 
-function CommentItem({ postId, commentId, comment, replies }) {
-    const [reply, setReply] = useState('');
-    const [showReplyForm, setShowReplyForm] = useState(false);
+function CommentItem({ comment, postId, parentId = null }) {
     const { currentUser } = useAuth();
-    const userName = currentUser?.displayName || 'Usuário Anônimo';
+    const [reply, setReply] = useState('');
+    const [showReply, setShowReply] = useState(false);
+    const [error, setError] = useState(null);
 
     const handleReplySubmit = (e) => {
         e.preventDefault();
-        if (!reply.trim()) return;
+        if (reply.trim() === '') return;
 
         const db = getDatabase();
-        const commentsRef = ref(db, `posts/${postId}/comments/${commentId}/replies`);
-        const newReplyRef = push(commentsRef);
+        const commentsRef = ref(db, `comments/${postId}`);
 
-        set(newReplyRef, {
-            userName,
+        const newReplyData = {
             text: reply,
-            date: new Date().toISOString(),
-        }).then(() => {
-            setReply('');
-            setShowReplyForm(false);
-        }).catch((error) => {
-            console.error('Erro ao adicionar resposta', error);
-        });
-    };
+            userId: currentUser.uid,
+            userName: currentUser.displayName,
+            createdAt: serverTimestamp(),
+            parentId: comment.id,
+        };
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return isNaN(date) ? 'Data Inválida' : date.toLocaleString();
+        push(commentsRef, newReplyData)
+            .then(() => {
+                setReply('');
+                setShowReply(false);
+            })
+            .catch((error) => {
+                setError('Erro ao enviar resposta');
+                console.error(error);
+            });
     };
 
     return (
         <div className="comment-item">
-            <div className="comment-avatar"></div>
-            <div className="comment-content">
-                <p className="comment-user">{comment.userName}</p>
-                <p className="comment-text">{comment.text}</p>
-                <p className="comment-date">{formatDate(comment.date)}</p>
-                <button onClick={() => setShowReplyForm(!showReplyForm)} className="comment-reply-button">Responder</button>
-                {showReplyForm && (
-                    <form onSubmit={handleReplySubmit} className="reply-form">
-                        <textarea
-                            value={reply}
-                            onChange={(e) => setReply(e.target.value)}
-                            placeholder={`Respondendo a ${comment.userName}`}
-                            required
-                        />
-                        <button type="submit">Responder</button>
-                    </form>
-                )}
-                {replies && (
-                    <div className="replies-list">
-                        {Object.entries(replies).map(([replyId, reply]) => (
-                            <div key={replyId} className="reply-item">
-                                <div className="reply-avatar"></div>
-                                <div className="reply-content">
-                                    <p className="comment-reply-to">Respondendo a {comment.userName}</p>
-                                    <p className="comment-user">{reply.userName}</p>
-                                    <p className="comment-text">{reply.text}</p>
-                                    <p className="comment-date">{formatDate(reply.date)}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
+            <p className="comment-user">{comment.userName}</p>
+            <p className="comment-text">{comment.text}</p>
+            <p className="comment-date">
+                {new Date(comment.createdAt).toLocaleString()}
+            </p>
+            <button onClick={() => setShowReply(!showReply)} className="reply-button">
+                Responder
+            </button>
+            {showReply && (
+                <form onSubmit={handleReplySubmit} className="reply-form">
+                    <textarea
+                        value={reply}
+                        onChange={(e) => setReply(e.target.value)}
+                        placeholder="Escreva uma resposta..."
+                        className="reply-input"
+                    />
+                    <button type="submit" className="submit-button">Responder</button>
+                    {error && <p className="error">{error}</p>}
+                </form>
+            )}
+            <div className="replies-list">
+                {comment.replies && comment.replies.map(reply => (
+                    <CommentItem key={reply.id} comment={reply} postId={postId} parentId={comment.id} />
+                ))}
             </div>
         </div>
     );

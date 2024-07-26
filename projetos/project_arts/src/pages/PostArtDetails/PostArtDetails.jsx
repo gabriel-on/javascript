@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getDatabase, ref, get } from 'firebase/database';
+import { saveAs } from 'file-saver';
 import './PostArtDetails.css';
 import PostInteractions from '../../components/PostInteractions/PostInteractions';
 import CommentSection from '../../components/CommentSection/CommentSection';
@@ -48,6 +49,12 @@ function PostArtDetails() {
         navigate(-1); // Volta à página anterior
     };
 
+    const handleDownloadImage = () => {
+        if (post && post.imageUrl) {
+            saveAs(post.imageUrl, `${post.title}.jpg`); // Nome do arquivo baixado
+        }
+    };
+
     if (loading) return <div>Carregando...</div>;
     if (error) return (
         <div>
@@ -87,6 +94,11 @@ function PostArtDetails() {
                     <p className="post-by">
                         Criado por: {userName}
                     </p>
+                    {post.allowDownload && post.imageUrl && (
+                        <button onClick={handleDownloadImage} className="download-button">
+                            Baixar Imagem
+                        </button>
+                    )}
                     <PostInteractions
                         postId={id}
                         initialLikes={post.likes || 0}

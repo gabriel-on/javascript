@@ -5,7 +5,7 @@ import { useAuth } from '../../hooks/useAuthentication';
 import Comment from '../Comment/Comment';
 import './CommentSection.css'; // Importando CSS
 
-const CommentSection = () => {
+const CommentSection = ({ postId }) => {
     const [comments, setComments] = useState({});
     const [users, setUsers] = useState({});
     const [newComment, setNewComment] = useState('');
@@ -17,11 +17,13 @@ const CommentSection = () => {
         const commentsRef = ref(db, 'comments');
         const usersRef = ref(db, 'users');
 
+        // Buscar todos os comentários
         onValue(commentsRef, (snapshot) => {
             const data = snapshot.val();
             setComments(data || {});
         });
 
+        // Buscar todos os usuários
         onValue(usersRef, (snapshot) => {
             const data = snapshot.val();
             setUsers(data || {});
@@ -31,7 +33,8 @@ const CommentSection = () => {
     // Função para adicionar um novo comentário
     const handleAddComment = async (content, parentId = null) => {
         if (content.trim() === '' || !currentUser) return;
-        const commentsRef = ref(db, 'comments');
+
+        const commentsRef = ref(db, `comments/${postId}`); // Adiciona o postId à referência de comentários
         await push(commentsRef, {
             content: content,
             userId: currentUser.uid,
@@ -41,11 +44,11 @@ const CommentSection = () => {
         setNewComment('');
     };
 
-    // Filtrando apenas os comentários principais
+    // Filtrando apenas os comentários do post atual
     const getTopLevelComments = () => {
-        return Object.keys(comments)
-            .filter((key) => !comments[key].parentId)
-            .map((key) => ({ id: key, ...comments[key] }));
+        return Object.keys(comments[postId] || {})
+            .filter((key) => !comments[postId][key].parentId)
+            .map((key) => ({ id: key, ...comments[postId][key] }));
     };
 
     return (
@@ -65,7 +68,7 @@ const CommentSection = () => {
                         commentId={commentData.id}
                         commentData={commentData}
                         users={users}
-                        comments={comments}
+                        comments={comments[postId] || {}} // Passando apenas os comentários do post atual
                         onReply={handleAddComment}
                     />
                 ))}

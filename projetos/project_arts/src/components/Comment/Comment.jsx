@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { ref, push } from 'firebase/database';
-import { getDatabase } from 'firebase/database';
 import { useAuth } from '../../hooks/useAuthentication';
 
 const Comment = ({ commentId, commentData, users, onReply }) => {
     const [newReply, setNewReply] = useState('');
     const { currentUser } = useAuth();
-    const db = getDatabase();
 
     const handleAddReply = async () => {
         if (newReply.trim() === '' || !currentUser) return;
-        await onReply(newReply, commentId);
+        await onReply(newReply, commentId, commentData.userId); // Passando o userId do comentário
         setNewReply('');
     };
 
@@ -25,8 +22,8 @@ const Comment = ({ commentId, commentData, users, onReply }) => {
                 <p>
                     By: {getUserMention(commentData.userId)} at {new Date(commentData.timestamp).toLocaleString()}
                 </p>
-                {commentData.parentId && (
-                    <p>Replying to: {getUserMention(commentData.parentId)}</p>
+                {commentData.replyingUserId && (
+                    <p>Replying to: {getUserMention(commentData.replyingUserId)}</p>
                 )}
             </div>
             <div>

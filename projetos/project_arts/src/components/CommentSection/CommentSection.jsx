@@ -26,7 +26,7 @@ const CommentSection = () => {
         });
     }, [db]);
 
-    const handleAddComment = async (content, parentId = null) => {
+    const handleAddComment = async (content, parentId = null, replyingUserId = null) => {
         if (content.trim() === '' || !currentUser) return;
         const commentsRef = ref(db, 'comments');
         await push(commentsRef, {
@@ -34,6 +34,7 @@ const CommentSection = () => {
             userId: currentUser.uid,
             timestamp: Date.now(),
             parentId: parentId,
+            replyingUserId: replyingUserId, // Adicionando este campo
         });
         setNewComment('');
     };

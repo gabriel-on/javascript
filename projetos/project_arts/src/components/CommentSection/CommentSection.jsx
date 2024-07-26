@@ -71,7 +71,7 @@ const CommentSection = ({ postId }) => {
 
     return (
         <div className="comment-section">
-            <h2>Comentários</h2>
+            <h3>Comentários (Em desenvolvimento, portanto pode conter erros.)</h3>
             <div className="new-comment">
                 <textarea
                     value={newComment}

@@ -4,7 +4,7 @@ import './Comment.css';
 
 const Comment = ({ commentId, commentData, users, comments, onReply }) => {
     const [newReply, setNewReply] = useState('');
-    const [showReplies, setShowReplies] = useState(false);
+    const [showReplies, setShowReplies] = useState(false); // Estado para controlar a visibilidade das respostas
     const { currentUser } = useAuth();
 
     // Função para adicionar uma nova resposta
@@ -18,7 +18,7 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
         return users[userId]?.mentionName || 'Unknown User';
     };
 
-    // Função para alternar a visibilidade das respostas
+    // Função para alternar a visibilidade de todas as respostas
     const toggleReplies = () => {
         setShowReplies((prev) => !prev);
     };
@@ -53,7 +53,7 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
                     <div className="replies">
                         {Object.keys(comments).map((key) => {
                             const replyData = comments[key];
-                            if (replyData.parentId === commentId) {
+                            if (replyData.parentId === commentId) { // Verifica se a resposta pertence ao comentário
                                 return (
                                     <Comment
                                         key={key}

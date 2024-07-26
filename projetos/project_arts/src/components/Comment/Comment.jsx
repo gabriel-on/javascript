@@ -4,18 +4,27 @@ import './Comment.css';
 
 const Comment = ({ commentId, commentData, users, comments, onReply }) => {
     const [newReply, setNewReply] = useState('');
+    const [showReplies, setShowReplies] = useState(false);
     const { currentUser } = useAuth();
 
     // Função para adicionar uma nova resposta
     const handleAddReply = async () => {
         if (newReply.trim() === '' || !currentUser) return;
-        await onReply(newReply, commentId); // Passando ID do comentário pai
+        await onReply(newReply, commentId);
         setNewReply('');
     };
 
     const getUserMention = (userId) => {
         return users[userId]?.mentionName || 'Unknown User';
     };
+
+    // Função para alternar a visibilidade das respostas
+    const toggleReplies = () => {
+        setShowReplies((prev) => !prev);
+    };
+
+    // Verificando se o comentário tem respostas
+    const hasReplies = Object.keys(comments).some((key) => comments[key].parentId === commentId);
 
     return (
         <div className="comment">
@@ -34,24 +43,32 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
                     />
                     <button onClick={handleAddReply}>Post Reply</button>
                 </div>
-                <div className="replies">
-                    {Object.keys(comments).map((key) => {
-                        const replyData = comments[key];
-                        if (replyData.parentId === commentId) { // Verificando se é resposta
-                            return (
-                                <Comment
-                                    key={key}
-                                    commentId={key}
-                                    commentData={replyData}
-                                    users={users}
-                                    comments={comments}
-                                    onReply={onReply}
-                                />
-                            );
-                        }
-                        return null;
-                    })}
-                </div>
+                {/* Renderiza o botão apenas se houver respostas */}
+                {hasReplies && (
+                    <button onClick={toggleReplies}>
+                        {showReplies ? 'Hide Replies' : 'Show Replies'}
+                    </button>
+                )}
+                {showReplies && (
+                    <div className="replies">
+                        {Object.keys(comments).map((key) => {
+                            const replyData = comments[key];
+                            if (replyData.parentId === commentId) {
+                                return (
+                                    <Comment
+                                        key={key}
+                                        commentId={key}
+                                        commentData={replyData}
+                                        users={users}
+                                        comments={comments}
+                                        onReply={onReply}
+                                    />
+                                );
+                            }
+                            return null;
+                        })}
+                    </div>
+                )}
             </div>
         </div>
     );

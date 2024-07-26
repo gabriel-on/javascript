@@ -33,7 +33,7 @@ const Comment = ({ commentId, commentData, users, comments, onReply, onUpdate, o
             <div className="comment-content">
                 <p>{commentData.content}</p>
                 <p>
-                    By: {getUserMention(commentData.userId)} at {new Date(commentData.timestamp).toLocaleString()}
+                    By: @{getUserMention(commentData.userId)} at {new Date(commentData.timestamp).toLocaleString()}
                 </p>
                 {currentUser && currentUser.uid === commentData.userId && (
                     <div>

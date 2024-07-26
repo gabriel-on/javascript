@@ -12,6 +12,7 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
         if (newReply.trim() === '' || !currentUser) return;
         await onReply(newReply, commentId);
         setNewReply('');
+        setShowReplies(true); // Expande automaticamente as respostas após adicionar uma nova resposta
     };
 
     const getUserMention = (userId) => {
@@ -41,7 +42,7 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
                         onChange={(e) => setNewReply(e.target.value)}
                         placeholder="Add a reply..."
                     />
-                    <button onClick={handleAddReply} aria-label="Post your reply">Post Reply</button>
+                    <button onClick={handleAddReply}>Post Reply</button>
                 </div>
                 {/* Renderiza o botão apenas se houver respostas */}
                 {hasReplies && (

@@ -57,14 +57,14 @@ const CommentSection = ({ postId }) => {
 
     return (
         <div className="comment-section">
-            <h2>Comentarios (Ainda Em Teste)</h2>
+            <h2>Comentários (Em desenvolvimento, portanto pode conter erros.)</h2>
             <div className="new-comment">
                 <textarea
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
-                    placeholder="Add a comment..."
+                    placeholder="Adicionar um Comentário..."
                 />
-                <button onClick={() => handleAddComment(newComment)}>Post Comment</button>
+                <button onClick={() => handleAddComment(newComment)}>Postar Comentário</button>
             </div>
             <div className="comments">
                 {getTopLevelComments().map((commentData) => (

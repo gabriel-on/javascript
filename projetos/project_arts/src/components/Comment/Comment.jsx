@@ -18,7 +18,7 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
     };
 
     const getUserMention = (userId) => {
-        return users[userId]?.mentionName || 'Unknown User';
+        return users[userId]?.mentionName || 'Usuário Anônimo';
     };
 
     // Função para alternar a visibilidade de todas as respostas
@@ -40,23 +40,23 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
             <div className="reply-container">
                 {/* Botão para mostrar o campo de resposta */}
                 {!showReplyInput && (
-                    <button onClick={() => setShowReplyInput(true)}>Reply</button>
+                    <button onClick={() => setShowReplyInput(true)}>Responder</button>
                 )}
                 {showReplyInput && (
                     <div className="reply-input">
                         <textarea
                             value={newReply}
                             onChange={(e) => setNewReply(e.target.value)}
-                            placeholder="Add a reply..."
+                            placeholder="Adicionar Resposta..."
                         />
-                        <button onClick={handleAddReply}>Post Reply</button>
-                        <button onClick={() => setShowReplyInput(false)}>Cancel</button>
+                        <button onClick={handleAddReply}>Postar Resposta</button>
+                        <button onClick={() => setShowReplyInput(false)}>Cancelar</button>
                     </div>
                 )}
                 {/* Renderiza o botão apenas se houver respostas */}
                 {hasReplies && (
                     <button onClick={toggleReplies}>
-                        {showReplies ? 'Hide Replies' : 'Show Replies'}
+                        {showReplies ? 'Ocultar Respostas' : 'Ver Resposts'}
                     </button>
                 )}
                 {showReplies && (

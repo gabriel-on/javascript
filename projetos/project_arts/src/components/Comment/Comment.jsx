@@ -3,19 +3,14 @@ import { ref, push } from 'firebase/database';
 import { getDatabase } from 'firebase/database';
 import { useAuth } from '../../hooks/useAuthentication';
 
-const Comment = ({ commentId, commentData, users }) => {
+const Comment = ({ commentId, commentData, users, onReply }) => {
     const [newReply, setNewReply] = useState('');
     const { currentUser } = useAuth();
     const db = getDatabase();
 
     const handleAddReply = async () => {
         if (newReply.trim() === '' || !currentUser) return;
-        const repliesRef = ref(db, `comments/${commentId}/replies`);
-        await push(repliesRef, {
-            content: newReply,
-            userId: currentUser.uid,
-            timestamp: Date.now(),
-        });
+        await onReply(newReply, commentId);
         setNewReply('');
     };
 
@@ -30,10 +25,19 @@ const Comment = ({ commentId, commentData, users }) => {
                 <p>
                     By: {getUserMention(commentData.userId)} at {new Date(commentData.timestamp).toLocaleString()}
                 </p>
+                {commentData.parentId && (
+                    <p>Replying to: {getUserMention(commentData.parentId)}</p>
+                )}
             </div>
             <div>
                 {commentData.replies && Object.keys(commentData.replies).map((key) => (
-                    <Comment key={key} commentId={key} commentData={commentData.replies[key]} users={users} />
+                    <Comment
+                        key={key}
+                        commentId={key}
+                        commentData={commentData.replies[key]}
+                        users={users}
+                        onReply={onReply}
+                    />
                 ))}
             </div>
             <div>

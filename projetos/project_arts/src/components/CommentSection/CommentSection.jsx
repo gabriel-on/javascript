@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ref, onValue, push, get } from 'firebase/database';
+import { ref, onValue, push } from 'firebase/database';
 import { getDatabase } from 'firebase/database';
 import { useAuth } from '../../hooks/useAuthentication';
 import Comment from '../Comment/Comment';
@@ -26,13 +26,14 @@ const CommentSection = () => {
         });
     }, [db]);
 
-    const handleAddComment = async () => {
-        if (newComment.trim() === '' || !currentUser) return;
+    const handleAddComment = async (content, parentId = null) => {
+        if (content.trim() === '' || !currentUser) return;
         const commentsRef = ref(db, 'comments');
         await push(commentsRef, {
-            content: newComment,
+            content: content,
             userId: currentUser.uid,
             timestamp: Date.now(),
+            parentId: parentId,
         });
         setNewComment('');
     };
@@ -45,7 +46,7 @@ const CommentSection = () => {
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder="Add a comment..."
                 />
-                <button onClick={handleAddComment}>Post Comment</button>
+                <button onClick={() => handleAddComment(newComment, null)}>Post Comment</button>
             </div>
             <div>
                 {Object.keys(comments).map((key) => (
@@ -54,6 +55,7 @@ const CommentSection = () => {
                         commentId={key}
                         commentData={comments[key]}
                         users={users}
+                        onReply={handleAddComment}
                     />
                 ))}
             </div>

@@ -1,67 +1,76 @@
 .comment {
-    margin-bottom: 20px;
-    border: 1px solid #e1e1e1;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    /* Fundo claro */
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
 
 .comment-content {
     margin-bottom: 10px;
 }
 
+.comment-content p {
+    margin: 5px 0;
+}
+
 .reply-container {
     margin-top: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
 }
 
 .reply-input {
     display: flex;
-    align-items: center;
+    flex-direction: column;
 }
 
 .reply-input textarea {
-    flex: 1;
-    margin-right: 10px;
-    padding: 5px;
+    width: 100%;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    resize: none;
     font-size: 14px;
+    margin-bottom: 10px;
 }
 
 .reply-input button {
-    padding: 5px 10px;
-    background-color: #28a745;
-    color: white;
+    padding: 8px 12px;
     border: none;
     border-radius: 5px;
+    background-color: #007BFF;
+    /* Azul */
+    color: white;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.reply-input button:hover {
+    background-color: #0056b3;
+    /* Azul escuro ao passar o mouse */
+}
+
+button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #6c757d;
+    /* Cinza */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #5a6268;
+    /* Cinza escuro ao passar o mouse */
 }
 
 .replies {
     margin-top: 10px;
-    padding-left: 20px;
-    /* Espaçamento para as respostas */
-    border-left: 2px solid #e1e1e1;
-    /* Linha de separação */
-}
-
-.reply-container {
-    margin-top: 10px;
-}
-
-.reply-container button {
-    margin-top: 10px;
-    background-color: #007bff;
-    /* Cor do botão */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
-.reply-container button:hover {
-    background-color: #0056b3;
-    /* Cor do botão ao passar o mouse */
+    padding-left: 15px;
+    /* Indentação para as respostas */
+    border-left: 2px solid #eee;
 }

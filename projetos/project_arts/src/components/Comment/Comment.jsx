@@ -5,6 +5,7 @@ import './Comment.css';
 const Comment = ({ commentId, commentData, users, comments, onReply }) => {
     const [newReply, setNewReply] = useState('');
     const [showReplies, setShowReplies] = useState(false); // Estado para controlar a visibilidade das respostas
+    const [showReplyInput, setShowReplyInput] = useState(false); // Estado para controlar a visibilidade do campo de resposta
     const { currentUser } = useAuth();
 
     // Função para adicionar uma nova resposta
@@ -13,6 +14,7 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
         await onReply(newReply, commentId);
         setNewReply('');
         setShowReplies(true); // Expande automaticamente as respostas após adicionar uma nova resposta
+        setShowReplyInput(false); // Oculta o campo de resposta após o envio
     };
 
     const getUserMention = (userId) => {
@@ -36,14 +38,21 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
                 </p>
             </div>
             <div className="reply-container">
-                <div className="reply-input">
-                    <textarea
-                        value={newReply}
-                        onChange={(e) => setNewReply(e.target.value)}
-                        placeholder="Add a reply..."
-                    />
-                    <button onClick={handleAddReply}>Post Reply</button>
-                </div>
+                {/* Botão para mostrar o campo de resposta */}
+                {!showReplyInput && (
+                    <button onClick={() => setShowReplyInput(true)}>Reply</button>
+                )}
+                {showReplyInput && (
+                    <div className="reply-input">
+                        <textarea
+                            value={newReply}
+                            onChange={(e) => setNewReply(e.target.value)}
+                            placeholder="Add a reply..."
+                        />
+                        <button onClick={handleAddReply}>Post Reply</button>
+                        <button onClick={() => setShowReplyInput(false)}>Cancel</button>
+                    </div>
+                )}
                 {/* Renderiza o botão apenas se houver respostas */}
                 {hasReplies && (
                     <button onClick={toggleReplies}>

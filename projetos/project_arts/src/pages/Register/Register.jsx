@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 
 const Register = () => {
   const [displayName, setDisplayName] = useState('');
+  const [mentionName, setMentionName] = useState(''); // Novo estado para o nome de menção
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -23,30 +23,13 @@ const Register = () => {
 
     const userCredentials = {
       displayName,
+      mentionName, // Adiciona o campo mentionName
       email,
       password,
     };
 
     try {
-      // Chame a função createUser fornecida pelo seu hook useAuthentication
-      const res = await createUser(userCredentials);
-
-      // Check if the user creation was successful before trying to set the user role
-      if (res && res.user) {
-        // Adicione o usuário ao Firestore
-        const firestore = getFirestore();
-        const userRef = collection(firestore, 'users');
-
-        // Adicione um novo documento para o usuário com o ID gerado automaticamente
-        await addDoc(userRef, {
-          uid: res.user.uid,
-          displayName,
-          email,
-          role: 'user',
-        });
-      }
-
-      console.log(res);
+      await createUser(userCredentials);
     } catch (error) {
       setError('Erro ao criar o usuário: ' + error.message);
     }
@@ -65,19 +48,58 @@ const Register = () => {
       <form onSubmit={handleSubmit}>
         <label>
           <span>Nome:</span>
-          <input type="text" name="displayName" required placeholder="Nome do usuário" value={displayName} onChange={(e) => setDisplayName(e.target.value)} />
+          <input
+            type="text"
+            name="displayName"
+            required
+            placeholder="Nome do usuário"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+          />
+        </label>
+        <label>
+          <span>Nome de Menção (sem espaços):</span>
+          <input
+            type="text"
+            name="mentionName"
+            required
+            placeholder="Nome para menção"
+            value={mentionName}
+            onChange={(e) => setMentionName(e.target.value)}
+          />
         </label>
         <label>
           <span>E-mail:</span>
-          <input type="email" name="email" required placeholder="E-mail do usuário" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="E-mail do usuário"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </label>
         <label>
           <span>Senha:</span>
-          <input type="password" name="password" required placeholder="Insira sua senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input
+            type="password"
+            name="password"
+            required
+            placeholder="Insira sua senha"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </label>
         <label>
           <span>Confirmação de senha:</span>
-          <input type="password" name="confirmPassword" required placeholder="Confirme a sua senha" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+          <input
+            type="password"
+            name="confirmPassword"
+            required
+            placeholder="Confirme a sua senha"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
         </label>
         {!loading && <button className="btn">Cadastrar</button>}
         {loading && <button className="btn" disabled>Aguarde...</button>}

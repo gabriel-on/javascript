@@ -6,7 +6,7 @@ import {
     signOut,
 } from "firebase/auth";
 import { useState, useEffect, useRef } from "react";
-import { getDatabase, ref, set } from "firebase/database"; // Importação do Realtime Database
+import { getDatabase, ref, set, get } from "firebase/database"; // Importação do Realtime Database
 import { getUnixTime } from 'date-fns';
 
 export const useAuth = () => {
@@ -35,12 +35,29 @@ export const useAuth = () => {
                 data.email === 'black1@gmail.com' ||
                 data.email === 'black2@gmail.com';
 
+            // Verificar se o mentionName já existe no Realtime Database
+            const mentionNameRef = ref(db, 'users'); // Referência à coleção de usuários
+            const snapshot = await get(mentionNameRef);
 
-            const { user } = await createUserWithEmailAndPassword(
-                auth,
-                data.email,
-                data.password
-            );
+            let mentionNameExists = false;
+            if (snapshot.exists()) {
+                const users = snapshot.val();
+                // Verifica se algum usuário já tem o mesmo mentionName
+                for (const key in users) {
+                    if (users[key].mentionName === data.mentionName) {
+                        mentionNameExists = true;
+                        break;
+                    }
+                }
+            }
+
+            if (mentionNameExists) {
+                setLoading(false);
+                setError('O nome de menção já está em uso. Escolha outro.');
+                return;
+            }
+
+            const { user } = await createUserWithEmailAndPassword(auth, data.email, data.password);
 
             await updateProfileAuth(user, { displayName: data.displayName });
 

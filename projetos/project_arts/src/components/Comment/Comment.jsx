@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
+import './Comment.css'
 
 const Comment = ({ commentId, commentData, users, onReply }) => {
     const [newReply, setNewReply] = useState('');

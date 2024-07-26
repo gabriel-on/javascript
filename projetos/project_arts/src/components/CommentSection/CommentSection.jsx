@@ -34,7 +34,7 @@ const CommentSection = () => {
             userId: currentUser.uid,
             timestamp: Date.now(),
             parentId: parentId,
-            replyingUserId: replyingUserId, // Adicionando este campo
+            replyingUserId: replyingUserId,
         });
         setNewComment('');
     };

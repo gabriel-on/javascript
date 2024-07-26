@@ -65,3 +65,13 @@
 .replies-list {
     margin-top: 10px;
 }
+
+.replies-list {
+    margin-left: 20px;
+    /* Indentação para as respostas */
+}
+
+.comment-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}

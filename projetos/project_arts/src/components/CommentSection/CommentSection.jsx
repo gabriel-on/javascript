@@ -8,13 +8,16 @@ function CommentSection({ postId }) {
     const { currentUser } = useAuth();
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
+    const [mentionedUsers, setMentionedUsers] = useState([]);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const db = getDatabase();
         const commentsRef = ref(db, `comments/${postId}`);
+        const usersRef = ref(db, 'users');
 
-        const unsubscribe = onValue(commentsRef, (snapshot) => {
+        // Obter comentários
+        const unsubscribeComments = onValue(commentsRef, (snapshot) => {
             if (snapshot.exists()) {
                 const commentsData = snapshot.val();
                 const commentsList = Object.keys(commentsData).map(key => ({
@@ -24,9 +27,6 @@ function CommentSection({ postId }) {
                 const parentComments = commentsList.filter(comment => !comment.parentId);
                 parentComments.forEach(parentComment => {
                     parentComment.replies = commentsList.filter(comment => comment.parentId === parentComment.id);
-                    parentComment.replies.forEach(reply => {
-                        reply.replies = commentsList.filter(comment => comment.parentId === reply.id);
-                    });
                 });
                 setComments(parentComments);
             } else {
@@ -34,7 +34,22 @@ function CommentSection({ postId }) {
             }
         });
 
-        return () => unsubscribe();
+        // Obter usuários
+        const unsubscribeUsers = onValue(usersRef, (snapshot) => {
+            if (snapshot.exists()) {
+                const usersData = snapshot.val();
+                const usersList = Object.keys(usersData).map(key => ({
+                    id: key,
+                    ...usersData[key],
+                }));
+                setMentionedUsers(usersList);
+            }
+        });
+
+        return () => {
+            unsubscribeComments();
+            unsubscribeUsers();
+        };
     }, [postId]);
 
     const handleCommentSubmit = (e) => {
@@ -76,7 +91,12 @@ function CommentSection({ postId }) {
             </form>
             <div className="comments-list">
                 {comments.map(comment => (
-                    <CommentItem key={comment.id} comment={comment} postId={postId} />
+                    <CommentItem
+                        key={comment.id}
+                        comment={comment}
+                        postId={postId}
+                        mentionedUsers={mentionedUsers} // Passar lista de usuários mencionáveis
+                    />
                 ))}
             </div>
         </div>

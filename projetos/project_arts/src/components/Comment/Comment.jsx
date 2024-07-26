@@ -6,9 +6,10 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
     const [newReply, setNewReply] = useState('');
     const { currentUser } = useAuth();
 
+    // Função para adicionar uma nova resposta
     const handleAddReply = async () => {
         if (newReply.trim() === '' || !currentUser) return;
-        await onReply(newReply, commentId, commentData.userId); // Passando o userId do comentário
+        await onReply(newReply, commentId); // Passando ID do comentário pai
         setNewReply('');
     };
 
@@ -17,40 +18,40 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
     };
 
     return (
-        <div style={{ marginLeft: commentData.parentId ? '40px' : '0' }}>
-            <div>
+        <div className="comment">
+            <div className="comment-content">
                 <p>{commentData.content}</p>
                 <p>
                     By: {getUserMention(commentData.userId)} at {new Date(commentData.timestamp).toLocaleString()}
                 </p>
-                {commentData.replyingUserId && (
-                    <p>Replying to: {getUserMention(commentData.replyingUserId)}</p>
-                )}
             </div>
-            {/* Renderiza apenas um nível de respostas */}
-            {Object.keys(comments).map((key) => {
-                const replyData = comments[key];
-                if (replyData.parentId === commentId) { // Verifica se a resposta pertence ao comentário
-                    return (
-                        <Comment
-                            key={key}
-                            commentId={key}
-                            commentData={replyData}
-                            users={users}
-                            comments={comments} // Passando comments para a resposta
-                            onReply={onReply}
-                        />
-                    );
-                }
-                return null;
-            })}
-            <div>
-                <textarea
-                    value={newReply}
-                    onChange={(e) => setNewReply(e.target.value)}
-                    placeholder="Add a reply..."
-                />
-                <button onClick={handleAddReply}>Post Reply</button>
+            <div className="reply-container">
+                <div className="reply-input">
+                    <textarea
+                        value={newReply}
+                        onChange={(e) => setNewReply(e.target.value)}
+                        placeholder="Add a reply..."
+                    />
+                    <button onClick={handleAddReply}>Post Reply</button>
+                </div>
+                <div className="replies">
+                    {Object.keys(comments).map((key) => {
+                        const replyData = comments[key];
+                        if (replyData.parentId === commentId) { // Verificando se é resposta
+                            return (
+                                <Comment
+                                    key={key}
+                                    commentId={key}
+                                    commentData={replyData}
+                                    users={users}
+                                    comments={comments}
+                                    onReply={onReply}
+                                />
+                            );
+                        }
+                        return null;
+                    })}
+                </div>
             </div>
         </div>
     );

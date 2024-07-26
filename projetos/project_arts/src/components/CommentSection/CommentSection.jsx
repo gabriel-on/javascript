@@ -3,6 +3,7 @@ import { ref, onValue, push } from 'firebase/database';
 import { getDatabase } from 'firebase/database';
 import { useAuth } from '../../hooks/useAuthentication';
 import Comment from '../Comment/Comment';
+import './CommentSection.css'; // Importando CSS
 
 const CommentSection = () => {
     const [comments, setComments] = useState({});
@@ -11,6 +12,7 @@ const CommentSection = () => {
     const { currentUser } = useAuth();
     const db = getDatabase();
 
+    // UseEffect para buscar comentários e usuários
     useEffect(() => {
         const commentsRef = ref(db, 'comments');
         const usersRef = ref(db, 'users');
@@ -26,44 +28,44 @@ const CommentSection = () => {
         });
     }, [db]);
 
-    const handleAddComment = async (content, parentId = null, replyingUserId = null) => {
+    // Função para adicionar um novo comentário
+    const handleAddComment = async (content, parentId = null) => {
         if (content.trim() === '' || !currentUser) return;
         const commentsRef = ref(db, 'comments');
         await push(commentsRef, {
             content: content,
             userId: currentUser.uid,
             timestamp: Date.now(),
-            parentId: parentId, // ID do comentário pai
-            replyingUserId: replyingUserId, // ID do usuário que está sendo respondido
+            parentId: parentId,
         });
         setNewComment('');
     };
 
+    // Filtrando apenas os comentários principais
     const getTopLevelComments = () => {
-        // Filtra apenas os comentários de nível superior (sem parentId)
         return Object.keys(comments)
             .filter((key) => !comments[key].parentId)
-            .map((key) => ({ id: key, ...comments[key] })); // Incluindo ID no objeto
+            .map((key) => ({ id: key, ...comments[key] }));
     };
 
     return (
-        <div>
-            <div>
+        <div className="comment-section">
+            <div className="new-comment">
                 <textarea
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder="Add a comment..."
                 />
-                <button onClick={() => handleAddComment(newComment, null)}>Post Comment</button>
+                <button onClick={() => handleAddComment(newComment)}>Post Comment</button>
             </div>
-            <div>
+            <div className="comments">
                 {getTopLevelComments().map((commentData) => (
                     <Comment
-                        key={commentData.id} // Usar o ID do comentário
+                        key={commentData.id}
                         commentId={commentData.id}
                         commentData={commentData}
                         users={users}
-                        comments={comments} // Passando comments para o Comment
+                        comments={comments}
                         onReply={handleAddComment}
                     />
                 ))}

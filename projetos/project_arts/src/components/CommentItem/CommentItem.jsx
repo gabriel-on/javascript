@@ -3,7 +3,7 @@ import { getDatabase, ref, push, serverTimestamp } from 'firebase/database';
 import { useAuth } from '../../hooks/useAuthentication';
 import './CommentItem.css';
 
-function CommentItem({ comment, postId, parentId = null }) {
+function CommentItem({ comment, postId }) {
     const { currentUser } = useAuth();
     const [reply, setReply] = useState('');
     const [showReply, setShowReply] = useState(false);
@@ -59,7 +59,7 @@ function CommentItem({ comment, postId, parentId = null }) {
             )}
             <div className="replies-list">
                 {comment.replies && comment.replies.map(reply => (
-                    <CommentItem key={reply.id} comment={reply} postId={postId} parentId={comment.id} />
+                    <CommentItem key={reply.id} comment={reply} postId={postId} />
                 ))}
             </div>
         </div>

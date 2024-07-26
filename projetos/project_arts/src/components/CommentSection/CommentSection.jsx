@@ -13,7 +13,7 @@ function CommentSection({ postId }) {
     useEffect(() => {
         const db = getDatabase();
         const commentsRef = ref(db, `comments/${postId}`);
-        
+
         const unsubscribe = onValue(commentsRef, (snapshot) => {
             if (snapshot.exists()) {
                 const commentsData = snapshot.val();
@@ -24,6 +24,9 @@ function CommentSection({ postId }) {
                 const parentComments = commentsList.filter(comment => !comment.parentId);
                 parentComments.forEach(parentComment => {
                     parentComment.replies = commentsList.filter(comment => comment.parentId === parentComment.id);
+                    parentComment.replies.forEach(reply => {
+                        reply.replies = commentsList.filter(comment => comment.parentId === reply.id);
+                    });
                 });
                 setComments(parentComments);
             } else {
@@ -40,7 +43,7 @@ function CommentSection({ postId }) {
 
         const db = getDatabase();
         const commentsRef = ref(db, `comments/${postId}`);
-        
+
         const newCommentData = {
             text: newComment,
             userId: currentUser.uid,
@@ -73,7 +76,7 @@ function CommentSection({ postId }) {
             </form>
             <div className="comments-list">
                 {comments.map(comment => (
-                    <CommentItem key={comment.id} comment={comment} postId={postId} replies={comment.replies} />
+                    <CommentItem key={comment.id} comment={comment} postId={postId} />
                 ))}
             </div>
         </div>

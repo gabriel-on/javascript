@@ -1,32 +1,31 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
+import Modal from '../Modal/Modal';
 import './Comment.css';
 
-const Comment = ({ commentId, commentData, users, comments, onReply }) => {
+const Comment = ({ commentId, commentData, users, comments, onReply, onUpdate, onDelete }) => {
     const [newReply, setNewReply] = useState('');
-    const [showReplies, setShowReplies] = useState(false); // Estado para controlar a visibilidade das respostas
-    const [showReplyInput, setShowReplyInput] = useState(false); // Estado para controlar a visibilidade do campo de resposta
+    const [showReplies, setShowReplies] = useState(false);
+    const [showReplyInput, setShowReplyInput] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const { currentUser } = useAuth();
 
-    // Função para adicionar uma nova resposta
     const handleAddReply = async () => {
         if (newReply.trim() === '' || !currentUser) return;
         await onReply(newReply, commentId);
         setNewReply('');
-        setShowReplies(true); // Expande automaticamente as respostas após adicionar uma nova resposta
-        setShowReplyInput(false); // Oculta o campo de resposta após o envio
+        setShowReplies(true);
+        setShowReplyInput(false);
     };
 
     const getUserMention = (userId) => {
         return users[userId]?.mentionName || 'Usuário Anônimo';
     };
 
-    // Função para alternar a visibilidade de todas as respostas
     const toggleReplies = () => {
         setShowReplies((prev) => !prev);
     };
 
-    // Verificando se o comentário tem respostas
     const hasReplies = Object.keys(comments).some((key) => comments[key].parentId === commentId);
 
     return (
@@ -36,9 +35,13 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
                 <p>
                     By: {getUserMention(commentData.userId)} at {new Date(commentData.timestamp).toLocaleString()}
                 </p>
+                {currentUser && currentUser.uid === commentData.userId && (
+                    <div>
+                        <button onClick={() => setIsModalOpen(true)}>Editar</button>
+                    </div>
+                )}
             </div>
             <div className="reply-container">
-                {/* Botão para mostrar o campo de resposta */}
                 {!showReplyInput && (
                     <button onClick={() => setShowReplyInput(true)}>Responder</button>
                 )}
@@ -53,17 +56,16 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
                         <button onClick={() => setShowReplyInput(false)}>Cancelar</button>
                     </div>
                 )}
-                {/* Renderiza o botão apenas se houver respostas */}
                 {hasReplies && (
                     <button onClick={toggleReplies}>
-                        {showReplies ? 'Ocultar Respostas' : 'Ver Resposts'}
+                        {showReplies ? 'Ocultar Respostas' : 'Ver Respostas'}
                     </button>
                 )}
                 {showReplies && (
                     <div className="replies">
                         {Object.keys(comments).map((key) => {
                             const replyData = comments[key];
-                            if (replyData.parentId === commentId) { // Verifica se a resposta pertence ao comentário
+                            if (replyData.parentId === commentId) {
                                 return (
                                     <Comment
                                         key={key}
@@ -72,6 +74,8 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
                                         users={users}
                                         comments={comments}
                                         onReply={onReply}
+                                        onUpdate={onUpdate}
+                                        onDelete={onDelete}
                                     />
                                 );
                             }
@@ -80,6 +84,15 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
                     </div>
                 )}
             </div>
+
+            <Modal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                commentData={commentData}
+                onUpdate={onUpdate}
+                onDelete={onDelete}
+                currentUser={currentUser}
+            />
         </div>
     );
 };

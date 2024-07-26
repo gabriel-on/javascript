@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ref, onValue, push } from 'firebase/database';
+import { ref, onValue, push, update, remove } from 'firebase/database';
 import { getDatabase } from 'firebase/database';
 import { useAuth } from '../../hooks/useAuthentication';
 import Comment from '../Comment/Comment';
@@ -55,6 +55,26 @@ const CommentSection = ({ postId }) => {
             .map((key) => ({ id: key, ...comments[postId][key] }));
     };
 
+    // Edição e Exclusão
+    const handleUpdateComment = async (commentId, updatedContent) => {
+        if (updatedContent.trim() === '') return; // Adicione validação para não atualizar com conteúdo vazio
+        const commentRef = ref(db, `comments/${postId}/${commentId}`);
+        try {
+            await update(commentRef, { content: updatedContent });
+        } catch (error) {
+            console.error("Erro ao atualizar comentário:", error);
+        }
+    };
+
+    const handleDeleteComment = async (commentId) => {
+        const commentRef = ref(db, `comments/${postId}/${commentId}`);
+        try {
+            await remove(commentRef);
+        } catch (error) {
+            console.error("Erro ao excluir comentário:", error);
+        }
+    };
+
     return (
         <div className="comment-section">
             <h2>Comentários (Em desenvolvimento, portanto pode conter erros.)</h2>
@@ -73,8 +93,10 @@ const CommentSection = ({ postId }) => {
                         commentId={commentData.id}
                         commentData={commentData}
                         users={users}
-                        comments={comments[postId] || {}} // Passando apenas os comentários do post atual
+                        comments={comments[postId] || {}}
                         onReply={handleAddComment}
+                        onUpdate={handleUpdateComment}
+                        onDelete={handleDeleteComment}
                     />
                 ))}
             </div>

@@ -3,7 +3,7 @@ import { ref, onValue, push, update, remove } from 'firebase/database';
 import { getDatabase } from 'firebase/database';
 import { useAuth } from '../../hooks/useAuthentication';
 import Comment from '../Comment/Comment';
-import './CommentSection.css'; // Importando CSS
+import './CommentSection.css';
 
 const CommentSection = ({ postId }) => {
     const [comments, setComments] = useState({});
@@ -12,25 +12,21 @@ const CommentSection = ({ postId }) => {
     const { currentUser } = useAuth();
     const db = getDatabase();
 
-    // UseEffect para buscar comentários e usuários
     useEffect(() => {
-        const commentsRef = ref(db, 'comments');
+        const commentsRef = ref(db, `comments/${postId}`);
         const usersRef = ref(db, 'users');
 
-        // Buscar todos os comentários
         onValue(commentsRef, (snapshot) => {
             const data = snapshot.val();
             setComments(data || {});
         });
 
-        // Buscar todos os usuários
         onValue(usersRef, (snapshot) => {
             const data = snapshot.val();
             setUsers(data || {});
         });
-    }, [db]);
+    }, [db, postId]);
 
-    // Função para adicionar um novo comentário
     const handleAddComment = async (content, parentId = null) => {
         if (content.trim() === '' || !currentUser) return;
 
@@ -44,20 +40,12 @@ const CommentSection = ({ postId }) => {
             });
             setNewComment('');
         } catch (error) {
-            console.error("Error adding comment:", error);
+            console.error("Erro ao adicionar comentário:", error);
         }
     };
 
-    // Filtrando apenas os comentários do post atual
-    const getTopLevelComments = () => {
-        return Object.keys(comments[postId] || {})
-            .filter((key) => !comments[postId][key].parentId)
-            .map((key) => ({ id: key, ...comments[postId][key] }));
-    };
-
-    // Edição e Exclusão
     const handleUpdateComment = async (commentId, updatedContent) => {
-        if (updatedContent.trim() === '') return; // Adicione validação para não atualizar com conteúdo vazio
+        if (updatedContent.trim() === '') return;
         const commentRef = ref(db, `comments/${postId}/${commentId}`);
         try {
             await update(commentRef, { content: updatedContent });
@@ -75,9 +63,15 @@ const CommentSection = ({ postId }) => {
         }
     };
 
+    const getTopLevelComments = () => {
+        return Object.keys(comments)
+            .filter((key) => !comments[key].parentId)
+            .map((key) => ({ id: key, ...comments[key] }));
+    };
+
     return (
         <div className="comment-section">
-            <h2>Comentários (Em desenvolvimento, portanto pode conter erros.)</h2>
+            <h2>Comentários</h2>
             <div className="new-comment">
                 <textarea
                     value={newComment}
@@ -93,7 +87,7 @@ const CommentSection = ({ postId }) => {
                         commentId={commentData.id}
                         commentData={commentData}
                         users={users}
-                        comments={comments[postId] || {}}
+                        comments={comments}
                         onReply={handleAddComment}
                         onUpdate={handleUpdateComment}
                         onDelete={handleDeleteComment}

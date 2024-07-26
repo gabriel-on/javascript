@@ -88,7 +88,7 @@ const Comment = ({ commentId, commentData, users, comments, onReply, onUpdate, o
             <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                commentData={commentData}
+                commentData={{ ...commentData, id: commentId }}
                 onUpdate={onUpdate}
                 onDelete={onDelete}
                 currentUser={currentUser}

@@ -1,4 +1,3 @@
-// src/components/PostFormArt.js
 import React, { useState } from 'react';
 import { ref as dbRef, set } from 'firebase/database';
 import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -11,7 +10,8 @@ const PostFormArt = () => {
     const [link, setLink] = useState('');
     const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false);
-    const { currentUser } = useAuth(); // Obtém o usuário autenticado
+    const [allowDownload, setAllowDownload] = useState(true);
+    const { currentUser } = useAuth();
 
     const handleImageChange = (e) => {
         setImage(e.target.files[0]);
@@ -28,15 +28,16 @@ const PostFormArt = () => {
                 const imageUrl = await getDownloadURL(imageRef);
 
                 const postId = Date.now().toString();
-                const timestamp = new Date().toISOString(); // Captura o timestamp atual em formato ISO
+                const timestamp = new Date().toISOString();
 
                 await set(dbRef(database, 'posts/' + postId), {
-                    userId: currentUser.uid, // Adiciona o ID do usuário
+                    userId: currentUser.uid,
                     title,
                     description,
                     link,
                     imageUrl,
-                    createdAt: timestamp // Adiciona o timestamp
+                    allowDownload, // Adiciona a preferência de download
+                    createdAt: timestamp
                 });
 
                 setTitle('');
@@ -71,6 +72,16 @@ const PostFormArt = () => {
             <div>
                 <label>Imagem:</label>
                 <input type="file" onChange={handleImageChange} required />
+            </div>
+            <div>
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={allowDownload}
+                        onChange={(e) => setAllowDownload(e.target.checked)}
+                    />
+                    Permitir download da imagem
+                </label>
             </div>
             <button type="submit" disabled={loading}>Postar</button>
         </form>

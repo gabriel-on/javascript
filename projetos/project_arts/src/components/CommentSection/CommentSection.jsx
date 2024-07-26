@@ -1,106 +1,64 @@
-import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue, push, serverTimestamp } from 'firebase/database';
+import React, { useState, useEffect } from 'react';
+import { ref, onValue, push, get } from 'firebase/database';
+import { getDatabase } from 'firebase/database';
 import { useAuth } from '../../hooks/useAuthentication';
-import './CommentSection.css';
-import CommentItem from '../CommentItem/CommentItem';
+import Comment from '../Comment/Comment';
 
-function CommentSection({ postId }) {
-    const { currentUser } = useAuth();
-    const [comments, setComments] = useState([]);
+const CommentSection = () => {
+    const [comments, setComments] = useState({});
+    const [users, setUsers] = useState({});
     const [newComment, setNewComment] = useState('');
-    const [mentionedUsers, setMentionedUsers] = useState([]);
-    const [error, setError] = useState(null);
+    const { currentUser } = useAuth();
+    const db = getDatabase();
 
     useEffect(() => {
-        const db = getDatabase();
-        const commentsRef = ref(db, `comments/${postId}`);
+        const commentsRef = ref(db, 'comments');
         const usersRef = ref(db, 'users');
 
-        // Obter comentários
-        const unsubscribeComments = onValue(commentsRef, (snapshot) => {
-            if (snapshot.exists()) {
-                const commentsData = snapshot.val();
-                const commentsList = Object.keys(commentsData).map(key => ({
-                    id: key,
-                    ...commentsData[key],
-                }));
-                const parentComments = commentsList.filter(comment => !comment.parentId);
-                parentComments.forEach(parentComment => {
-                    parentComment.replies = commentsList.filter(comment => comment.parentId === parentComment.id);
-                });
-                setComments(parentComments);
-            } else {
-                setComments([]);
-            }
+        onValue(commentsRef, (snapshot) => {
+            const data = snapshot.val();
+            setComments(data || {});
         });
 
-        // Obter usuários
-        const unsubscribeUsers = onValue(usersRef, (snapshot) => {
-            if (snapshot.exists()) {
-                const usersData = snapshot.val();
-                const usersList = Object.keys(usersData).map(key => ({
-                    id: key,
-                    ...usersData[key],
-                }));
-                setMentionedUsers(usersList);
-            }
+        onValue(usersRef, (snapshot) => {
+            const data = snapshot.val();
+            setUsers(data || {});
         });
+    }, [db]);
 
-        return () => {
-            unsubscribeComments();
-            unsubscribeUsers();
-        };
-    }, [postId]);
-
-    const handleCommentSubmit = (e) => {
-        e.preventDefault();
-        if (newComment.trim() === '') return;
-
-        const db = getDatabase();
-        const commentsRef = ref(db, `comments/${postId}`);
-
-        const newCommentData = {
-            text: newComment,
+    const handleAddComment = async () => {
+        if (newComment.trim() === '' || !currentUser) return;
+        const commentsRef = ref(db, 'comments');
+        await push(commentsRef, {
+            content: newComment,
             userId: currentUser.uid,
-            userName: currentUser.displayName,
-            createdAt: serverTimestamp(),
-        };
-
-        push(commentsRef, newCommentData)
-            .then(() => {
-                setNewComment('');
-            })
-            .catch((error) => {
-                setError('Erro ao enviar comentário');
-                console.error(error);
-            });
+            timestamp: Date.now(),
+        });
+        setNewComment('');
     };
 
     return (
-        <div className="comment-section">
-            <h2>Comentários</h2>
-            <form onSubmit={handleCommentSubmit}>
+        <div>
+            <div>
                 <textarea
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
-                    placeholder="Adicione um comentário..."
-                    className="comment-input"
+                    placeholder="Add a comment..."
                 />
-                <button type="submit" className="submit-button">Comentar</button>
-                {error && <p className="error">{error}</p>}
-            </form>
-            <div className="comments-list">
-                {comments.map(comment => (
-                    <CommentItem
-                        key={comment.id}
-                        comment={comment}
-                        postId={postId}
-                        mentionedUsers={mentionedUsers} // Passar lista de usuários mencionáveis
+                <button onClick={handleAddComment}>Post Comment</button>
+            </div>
+            <div>
+                {Object.keys(comments).map((key) => (
+                    <Comment
+                        key={key}
+                        commentId={key}
+                        commentData={comments[key]}
+                        users={users}
                     />
                 ))}
             </div>
         </div>
     );
-}
+};
 
 export default CommentSection;

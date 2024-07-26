@@ -41,7 +41,7 @@ const Comment = ({ commentId, commentData, users, comments, onReply }) => {
                         onChange={(e) => setNewReply(e.target.value)}
                         placeholder="Add a reply..."
                     />
-                    <button onClick={handleAddReply}>Post Reply</button>
+                    <button onClick={handleAddReply} aria-label="Post your reply">Post Reply</button>
                 </div>
                 {/* Renderiza o botão apenas se houver respostas */}
                 {hasReplies && (

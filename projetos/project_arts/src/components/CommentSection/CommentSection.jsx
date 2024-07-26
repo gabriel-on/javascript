@@ -34,14 +34,18 @@ const CommentSection = ({ postId }) => {
     const handleAddComment = async (content, parentId = null) => {
         if (content.trim() === '' || !currentUser) return;
 
-        const commentsRef = ref(db, `comments/${postId}`); // Adiciona o postId à referência de comentários
-        await push(commentsRef, {
-            content: content,
-            userId: currentUser.uid,
-            timestamp: Date.now(),
-            parentId: parentId,
-        });
-        setNewComment('');
+        const commentsRef = ref(db, `comments/${postId}`);
+        try {
+            await push(commentsRef, {
+                content: content,
+                userId: currentUser.uid,
+                timestamp: Date.now(),
+                parentId: parentId,
+            });
+            setNewComment('');
+        } catch (error) {
+            console.error("Error adding comment:", error);
+        }
     };
 
     // Filtrando apenas os comentários do post atual

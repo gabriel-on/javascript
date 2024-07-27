@@ -35,3 +35,20 @@
     font-size: 24px;
     cursor: pointer;
 }
+
+.download-button {
+    margin-top: 10px;
+    /* Espaçamento entre a imagem e o botão */
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    /* Cor verde */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.download-button:hover {
+    background-color: #45a049;
+    /* Cor verde mais escura no hover */
+}

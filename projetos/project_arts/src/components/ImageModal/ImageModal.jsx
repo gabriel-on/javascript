@@ -1,7 +1,7 @@
 import React from 'react';
 import './ImageModal.css';
 
-const ImageModal = ({ isOpen, onClose, imageSrc }) => {
+const ImageModal = ({ isOpen, onClose, imageSrc, onDownload }) => {
     if (!isOpen) return null;
 
     return (
@@ -9,6 +9,9 @@ const ImageModal = ({ isOpen, onClose, imageSrc }) => {
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 <button className="close-button" onClick={onClose}>✖</button>
                 <img src={imageSrc} alt="Imagem em tela cheia" className="modal-image" />
+                <button className="download-button" onClick={onDownload}>
+                    Baixar Imagem
+                </button>
             </div>
         </div>
     );

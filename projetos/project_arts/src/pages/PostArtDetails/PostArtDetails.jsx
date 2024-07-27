@@ -19,9 +19,9 @@ function PostArtDetails() {
         navigate(-1); // Volta à página anterior
     };
 
-    const handleDownloadImage = () => {
-        if (post && post.imageUrl) {
-            saveAs(post.imageUrl, `${post.title}.jpg`); // Nome do arquivo baixado
+    const handleDownloadImage = (image) => {
+        if (image) {
+            saveAs(image, `${post.title}.jpg`); // Nome do arquivo baixado
         }
     };
 
@@ -92,7 +92,7 @@ function PostArtDetails() {
                             Criado por: {userName}
                         </p>
                         {post.allowDownload && post.imageUrl && (
-                            <button onClick={handleDownloadImage} className="download-button">
+                            <button onClick={() => handleDownloadImage(post.imageUrl)} className="download-button">
                                 Baixar Imagem
                             </button>
                         )}
@@ -100,7 +100,12 @@ function PostArtDetails() {
                     </div>
                 </div>
             )}
-            <ImageModal isOpen={isModalOpen} onClose={closeModal} imageSrc={currentImage} />
+            <ImageModal
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                imageSrc={currentImage}
+                onDownload={() => handleDownloadImage(currentImage)} // Passar a função de download
+            />
         </div>
     );
 }

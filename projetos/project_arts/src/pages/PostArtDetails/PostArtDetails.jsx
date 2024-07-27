@@ -1,53 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getDatabase, ref, get } from 'firebase/database';
 import { saveAs } from 'file-saver';
 import './PostArtDetails.css';
 import PostInteractions from '../../components/PostInteractions/PostInteractions';
 import CommentSection from '../../components/CommentSection/CommentSection';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import ImageModal from '../../components/ImageModal/ImageModal';
+import usePostDetails from '../../hooks/usePostDetails';
 
 function PostArtDetails() {
     const { id } = useParams();
-    const [post, setPost] = useState(null);
-    const [userName, setUserName] = useState('');
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const { post, userName, loading, error } = usePostDetails(id);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentImage, setCurrentImage] = useState('');
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const db = getDatabase();
-        const postRef = ref(db, `posts/${id}`);
-
-        // Fetch the post data
-        get(postRef).then((snapshot) => {
-            if (snapshot.exists()) {
-                const postData = snapshot.val();
-                setPost(postData);
-                // Fetch the user's display name if userId is available
-                if (postData.userId) {
-                    const userRef = ref(db, `users/${postData.userId}`);
-                    get(userRef).then((userSnapshot) => {
-                        if (userSnapshot.exists()) {
-                            const userData = userSnapshot.val();
-                            setUserName(userData.displayName || 'Usuário');
-                        }
-                    }).catch((error) => {
-                        console.error('Erro ao carregar dados do usuário', error);
-                    });
-                }
-            } else {
-                setError('Post não encontrado');
-            }
-            setLoading(false);
-        }).catch((error) => {
-            setError('Erro ao carregar post');
-            setLoading(false);
-        });
-    }, [id]);
 
     const handleGoBack = () => {
         navigate(-1); // Volta à página anterior

@@ -6,6 +6,7 @@ import './PostArtDetails.css';
 import PostInteractions from '../../components/PostInteractions/PostInteractions';
 import CommentSection from '../../components/CommentSection/CommentSection';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
+import ImageModal from '../../components/ImageModal/ImageModal';
 
 function PostArtDetails() {
     const { id } = useParams();
@@ -13,6 +14,8 @@ function PostArtDetails() {
     const [userName, setUserName] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentImage, setCurrentImage] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -56,6 +59,15 @@ function PostArtDetails() {
         }
     };
 
+    const openModal = (image) => {
+        setCurrentImage(image);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     if (loading) return <div>Carregando...</div>;
     if (error) return (
         <div>
@@ -73,13 +85,14 @@ function PostArtDetails() {
                 <div>
                     <div>
                         {post.imageUrls && post.imageUrls.length > 1 ? (
-                            <ImageSlider images={post.imageUrls} />
+                            <ImageSlider images={post.imageUrls} onImageClick={openModal} />
                         ) : (
                             post.imageUrl && (
                                 <img
                                     src={post.imageUrl}
                                     alt={post.title}
                                     className="post-image"
+                                    onClick={() => openModal(post.imageUrl)} // Abrir modal na única imagem
                                 />
                             )
                         )}
@@ -121,6 +134,7 @@ function PostArtDetails() {
                     </div>
                 </div>
             )}
+            <ImageModal isOpen={isModalOpen} onClose={closeModal} imageSrc={currentImage} />
         </div>
     );
 }

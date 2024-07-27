@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ImageSlider.css';
 
-const ImageSlider = ({ images }) => {
+const ImageSlider = ({ images, onImageClick }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleNext = () => {
@@ -31,13 +31,14 @@ const ImageSlider = ({ images }) => {
             </div>
             <div className='slider-button-container'>
                 <div className='slider-button'>
-                    <button onClick={handlePrevious} className=" btn-1">Anterior</button>
-                    <button onClick={handleNext} className=" btn-2">Próxima</button>
+                    <button onClick={handlePrevious} className="btn-1">Anterior</button>
+                    <button onClick={handleNext} className="btn-2">Próxima</button>
                 </div>
                 <img
                     src={images[currentIndex]}
                     alt={`Imagem ${currentIndex + 1}`}
                     className="slider-image"
+                    onClick={() => onImageClick(images[currentIndex])} // Chama a função ao clicar na imagem
                 />
             </div>
         </div>

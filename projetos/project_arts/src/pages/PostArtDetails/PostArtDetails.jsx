@@ -5,6 +5,7 @@ import { saveAs } from 'file-saver';
 import './PostArtDetails.css';
 import PostInteractions from '../../components/PostInteractions/PostInteractions';
 import CommentSection from '../../components/CommentSection/CommentSection';
+import ImageSlider from '../../components/ImageSlider/ImageSlider';
 
 function PostArtDetails() {
     const { id } = useParams();
@@ -68,12 +69,16 @@ function PostArtDetails() {
             {post && (
                 <>
                     <h1>{post.title}</h1>
-                    {post.imageUrl && (
-                        <img
-                            src={post.imageUrl}
-                            alt={post.title}
-                            className="post-image"
-                        />
+                    {post.imageUrls && post.imageUrls.length > 1 ? (
+                        <ImageSlider images={post.imageUrls} />
+                    ) : (
+                        post.imageUrl && (
+                            <img
+                                src={post.imageUrl}
+                                alt={post.title}
+                                className="post-image"
+                            />
+                        )
                     )}
                     <p className='description'>{post.description}</p>
                     {post.link && (

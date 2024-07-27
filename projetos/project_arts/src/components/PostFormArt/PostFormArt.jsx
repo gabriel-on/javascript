@@ -1,6 +1,6 @@
 import React from 'react';
 import usePostForm from '../../hooks/usePostForm';
-import './PostFormArt.css'; // Certifique-se de ajustar o caminho conforme necessário
+import './PostFormArt.css';
 
 const PostFormArt = () => {
     const {
@@ -10,13 +10,13 @@ const PostFormArt = () => {
         setDescription,
         link,
         setLink,
-        image,
+        images, // Agora você deve lidar com várias imagens
         handleImageChange,
         loading,
         allowDownload,
         setAllowDownload,
         error,
-        preview,
+        previews, // Alterado para lidar com várias pré-visualizações
         handleSubmit
     } = usePostForm();
 
@@ -36,10 +36,19 @@ const PostFormArt = () => {
                     <input type="url" value={link} onChange={(e) => setLink(e.target.value)} />
                 </div>
                 <div>
-                    <label>Imagem:</label>
-                    <input type="file" onChange={handleImageChange} required />
+                    <label>Imagens:</label>
+                    <input
+                        type="file"
+                        onChange={handleImageChange}
+                        multiple // Permitir múltiplos arquivos
+                        required
+                    />
                     {error && <p className='error-message'>{error}</p>}
-                    {preview && <img src={preview} alt="Pré-visualização" className='preview-image' />}
+                    <div className='preview-container'>
+                        {previews.map((preview, index) => (
+                            <img key={index} src={preview} alt={`Pré-visualização ${index + 1}`} className='preview-image' />
+                        ))}
+                    </div>
                 </div>
                 <div>
                     <label>
@@ -48,7 +57,7 @@ const PostFormArt = () => {
                             checked={allowDownload}
                             onChange={(e) => setAllowDownload(e.target.checked)}
                         />
-                        Permitir download da imagem
+                        Permitir download das imagens
                     </label>
                 </div>
                 <button type="submit" disabled={loading}>Postar</button>

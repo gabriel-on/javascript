@@ -1,4 +1,3 @@
-// hooks/usePostForm.js
 import { useState } from 'react';
 import { ref as dbRef, set } from 'firebase/database';
 import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -9,27 +8,32 @@ const usePostForm = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [link, setLink] = useState('');
-    const [image, setImage] = useState(null);
+    const [images, setImages] = useState([]); // Agora um array para várias imagens
     const [loading, setLoading] = useState(false);
     const [allowDownload, setAllowDownload] = useState(true);
     const [error, setError] = useState('');
-    const [preview, setPreview] = useState(null);
+    const [previews, setPreviews] = useState([]); // Agora um array para pré-visualizações
     const { currentUser } = useAuth();
 
     const MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2MB
 
     const handleImageChange = (e) => {
-        const file = e.target.files[0];
+        const files = Array.from(e.target.files);
+        const validImages = [];
+        const validPreviews = [];
 
-        // Verifica se o arquivo é uma imagem e se não ultrapassa o tamanho máximo
-        if (file && file.size <= MAX_IMAGE_SIZE) {
-            setImage(file);
-            setPreview(URL.createObjectURL(file)); // Cria uma pré-visualização da imagem
-            setError('');
-        } else if (file) {
-            setError('O tamanho da imagem deve ser menor que 2MB.');
-            setImage(null);
-        }
+        files.forEach(file => {
+            if (file.size <= MAX_IMAGE_SIZE) {
+                validImages.push(file);
+                validPreviews.push(URL.createObjectURL(file)); // Cria pré-visualização
+            } else {
+                setError('O tamanho da imagem deve ser menor que 2MB.');
+            }
+        });
+
+        setImages(validImages);
+        setPreviews(validPreviews);
+        setError('');
     };
 
     const compressImage = (file) => {
@@ -40,7 +44,6 @@ const usePostForm = () => {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
 
-                // Redimensiona a imagem
                 const MAX_WIDTH = 1920;
                 const MAX_HEIGHT = 1080;
                 let width = img.width;
@@ -62,10 +65,9 @@ const usePostForm = () => {
                 canvas.height = height;
                 ctx.drawImage(img, 0, 0, width, height);
 
-                // Converte o canvas para um arquivo de imagem
                 canvas.toBlob((blob) => {
                     resolve(blob);
-                }, 'image/jpeg', 0.8); // Qualidade JPEG
+                }, 'image/jpeg', 0.8);
             };
         });
     };
@@ -74,16 +76,17 @@ const usePostForm = () => {
         e.preventDefault();
         setLoading(true);
 
-        if (image && currentUser) {
+        if (images.length > 0 && currentUser) {
             try {
-                const compressedImage = await compressImage(image); // Comprime a imagem
+                const uploadedImages = await Promise.all(images.map(async (image) => {
+                    const compressedImage = await compressImage(image);
 
-                // Gera um nome de arquivo baseado no título, removendo caracteres inválidos
-                const sanitizedTitle = title.replace(/[<>:"/\\|?*]+/g, ''); // Remove caracteres inválidos
-                const imageRef = storageRef(storage, `images/${sanitizedTitle}-${Date.now()}.jpg`); // Adiciona timestamp para evitar conflitos de nomes
+                    const sanitizedTitle = title.replace(/[<>:"/\\|?*]+/g, '');
+                    const imageRef = storageRef(storage, `images/${sanitizedTitle}-${Date.now()}.jpg`);
 
-                await uploadBytes(imageRef, compressedImage);
-                const imageUrl = await getDownloadURL(imageRef);
+                    await uploadBytes(imageRef, compressedImage);
+                    return await getDownloadURL(imageRef);
+                }));
 
                 const postId = Date.now().toString();
                 const timestamp = new Date().toISOString();
@@ -93,17 +96,16 @@ const usePostForm = () => {
                     title,
                     description,
                     link,
-                    imageUrl,
+                    imageUrls: uploadedImages, // Agora um array de URLs
                     allowDownload,
                     createdAt: timestamp
                 });
 
-                // Limpa o estado do formulário após o envio
                 setTitle('');
                 setDescription('');
                 setLink('');
-                setImage(null);
-                setPreview(null); // Limpa a pré-visualização
+                setImages([]); // Limpa o estado das imagens
+                setPreviews([]); // Limpa as pré-visualizações
             } catch (error) {
                 console.error('Erro ao criar post:', error);
             } finally {
@@ -111,7 +113,6 @@ const usePostForm = () => {
             }
         } else {
             setLoading(false);
-            // Handle the case where image or currentUser is not available
         }
     };
 
@@ -122,14 +123,14 @@ const usePostForm = () => {
         setDescription,
         link,
         setLink,
-        image,
+        images,
         handleImageChange,
         loading,
         setLoading,
         allowDownload,
         setAllowDownload,
         error,
-        preview,
+        previews,
         handleSubmit
     };
 };

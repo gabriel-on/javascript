@@ -66,52 +66,60 @@ function PostArtDetails() {
 
     return (
         <div className="post-details">
+            <div>
+                <button onClick={handleGoBack} className="back-button">Voltar</button>
+            </div>
             {post && (
-                <>
-                    <h1>{post.title}</h1>
-                    {post.imageUrls && post.imageUrls.length > 1 ? (
-                        <ImageSlider images={post.imageUrls} />
-                    ) : (
-                        post.imageUrl && (
-                            <img
-                                src={post.imageUrl}
-                                alt={post.title}
-                                className="post-image"
-                            />
-                        )
-                    )}
-                    <p className='description'>{post.description}</p>
-                    {post.link && (
-                        <a
-                            href={post.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="post-link"
-                        >
-                            Site de Terceiros
-                        </a>
-                    )}
-                    {post.createdAt && (
-                        <p className="post-date">
-                            Postado em: {new Date(post.createdAt).toLocaleString()}
+                <div>
+                    <div>
+                        {post.imageUrls && post.imageUrls.length > 1 ? (
+                            <ImageSlider images={post.imageUrls} />
+                        ) : (
+                            post.imageUrl && (
+                                <img
+                                    src={post.imageUrl}
+                                    alt={post.title}
+                                    className="post-image"
+                                />
+                            )
+                        )}
+                    </div>
+                    <div className='interactions'>
+                        <PostInteractions
+                            postId={id}
+                            initialLikes={post.likes || 0}
+                            initialFavorites={post.favorites || 0}
+                        />
+                    </div>
+                    <div className='vertical-scroll'>
+                        <h1>{post.title}</h1>
+                        <p className='description'>{post.description}</p>
+                        {post.link && (
+                            <a
+                                href={post.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="post-link"
+                            >
+                                Site de Terceiros
+                            </a>
+                        )}
+                        {post.createdAt && (
+                            <p className="post-date">
+                                Postado em: {new Date(post.createdAt).toLocaleString()}
+                            </p>
+                        )}
+                        <p className="post-by">
+                            Criado por: {userName}
                         </p>
-                    )}
-                    <p className="post-by">
-                        Criado por: {userName}
-                    </p>
-                    {post.allowDownload && post.imageUrl && (
-                        <button onClick={handleDownloadImage} className="download-button">
-                            Baixar Imagem
-                        </button>
-                    )}
-                    <PostInteractions
-                        postId={id}
-                        initialLikes={post.likes || 0}
-                        initialFavorites={post.favorites || 0}
-                    />
-                    <CommentSection postId={id} />
-                    <button onClick={handleGoBack} className="back-button">Voltar</button>
-                </>
+                        {post.allowDownload && post.imageUrl && (
+                            <button onClick={handleDownloadImage} className="download-button">
+                                Baixar Imagem
+                            </button>
+                        )}
+                        <CommentSection postId={id} />
+                    </div>
+                </div>
             )}
         </div>
     );

@@ -18,13 +18,6 @@ const ImageSlider = ({ images }) => {
 
     return (
         <div className="image-slider">
-            <button onClick={handlePrevious} className="slider-button">Anterior</button>
-            <img
-                src={images[currentIndex]}
-                alt={`Imagem ${currentIndex + 1}`}
-                className="slider-image"
-            />
-            <button onClick={handleNext} className="slider-button">Próxima</button>
             <div className="thumbnails">
                 {images.map((image, index) => (
                     <img
@@ -35,6 +28,17 @@ const ImageSlider = ({ images }) => {
                         onClick={() => handleThumbnailClick(index)}
                     />
                 ))}
+            </div>
+            <div className='slider-button-container'>
+                <div className='slider-button'>
+                    <button onClick={handlePrevious} className=" btn-1">Anterior</button>
+                    <button onClick={handleNext} className=" btn-2">Próxima</button>
+                </div>
+                <img
+                    src={images[currentIndex]}
+                    alt={`Imagem ${currentIndex + 1}`}
+                    className="slider-image"
+                />
             </div>
         </div>
     );

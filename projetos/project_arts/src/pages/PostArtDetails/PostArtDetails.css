@@ -1,12 +1,27 @@
-/* src/components/PostArtDetails.css */
 .post-details {
+  display: flex;
   padding: 20px;
-  max-width: 800px;
+  max-width: 1200px;
   margin: auto;
+  flex-direction: column;
+}
+
+.post-details>div {
+  gap: 20px;
+  display: flex;
 }
 
 .post-details h1 {
   color: white;
+}
+
+.vertical-scroll {
+  flex: 1;
+  max-height: 500px;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
 .description {
@@ -14,6 +29,7 @@
 }
 
 .post-image {
+  max-width: 500px;
   width: 100%;
   height: auto;
 }
@@ -29,7 +45,8 @@
   text-decoration: underline;
 }
 
-.post-date, .post-by {
+.post-date,
+.post-by {
   font-style: italic;
   color: #555;
 }
@@ -46,4 +63,13 @@
 
 .back-button:hover {
   background-color: #0056b3;
+}
+
+.interactions {
+  display: flex;
+}
+
+.post-interactions {
+  display: flex;
+  flex-direction: column;
 }

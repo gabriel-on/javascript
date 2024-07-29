@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
 import { getDatabase, ref, onValue, push } from 'firebase/database';
+import { getUnixTime } from 'date-fns';
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
@@ -29,7 +30,9 @@ const Dashboard = () => {
       const linksRef = ref(database, 'links');
       const newLink = {
         title,
-        url
+        url,
+        userId: currentUser.uid, // Armazenar o ID do usuário
+        createdAt: getUnixTime(new Date()), // Armazenar a data de criação como timestamp UNIX
       };
       push(linksRef, newLink);
       setTitle('');
@@ -66,6 +69,7 @@ const Dashboard = () => {
           {links.map(link => (
             <li key={link.id}>
               <a href={link.url} target="_blank" rel="noopener noreferrer">{link.title}</a>
+              <span> (Added by: {link.userId}, Date: {new Date(link.createdAt * 1000).toLocaleString()})</span>
             </li>
           ))}
         </ul>

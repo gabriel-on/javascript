@@ -1,23 +1,25 @@
 // src/components/BannerUploader/BannerUploader.jsx
 import React, { useEffect, useState } from 'react';
-import { ref, onValue, set } from 'firebase/database';
-import { database } from '../../firebase/config';
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import { ref as dbRef, onValue, set as dbSet } from 'firebase/database';
+import { storage, database } from '../../firebase/config'; // Certifique-se de exportar storage e database do seu config
 import { useAuth } from '../../hooks/useAuthentication';
 import './BannerUploader.css';
 
 const BannerUploader = () => {
     const { currentUser } = useAuth();
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState(null);
     const [color, setColor] = useState('#ffffff');
     const [previewImage, setPreviewImage] = useState('');
-    const [testingColor, setTestingColor] = useState(false);
+    const [bannerData, setBannerData] = useState({ image: '', color: '#ffffff', imageUpdatedAt: null, colorUpdatedAt: null });
 
     useEffect(() => {
         if (currentUser) {
-            const bannerRef = ref(database, `users/${currentUser.uid}/banner`);
+            const bannerRef = dbRef(database, `users/${currentUser.uid}/banner`);
             onValue(bannerRef, (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
+                    setBannerData(data);
                     setPreviewImage(data.image || '');
                     setColor(data.color || '#ffffff');
                 }
@@ -28,6 +30,7 @@ const BannerUploader = () => {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            setImage(file);
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreviewImage(reader.result);
@@ -38,47 +41,81 @@ const BannerUploader = () => {
 
     const handleColorChange = (e) => {
         setColor(e.target.value);
-        setTestingColor(true);
     };
 
     const handleSaveImage = async () => {
-        if (currentUser) {
-            const bannerRef = ref(database, `users/${currentUser.uid}/banner`);
+        if (currentUser && image) {
+            const storageRef = ref(storage, `banners/${currentUser.uid}/${image.name}`);
             try {
-                await set(bannerRef, {
-                    image: previewImage,
+                // Se já existe uma imagem, exclua a antiga
+                if (bannerData.image) {
+                    const oldImageRef = ref(storage, bannerData.image);
+                    await deleteObject(oldImageRef);
+                }
+
+                // Fazer upload da nova imagem
+                await uploadBytes(storageRef, image);
+                const imageUrl = await getDownloadURL(storageRef);
+
+                // Salvar a URL da imagem e a cor no banco de dados
+                const bannerRef = dbRef(database, `users/${currentUser.uid}/banner`);
+                await dbSet(bannerRef, {
+                    image: imageUrl,
                     color,
-                    imageUpdatedAt: new Date().toISOString() // Adiciona data de atualização da imagem
+                    imageUpdatedAt: new Date().toISOString(),
+                    colorUpdatedAt: bannerData.colorUpdatedAt // Mantenha a data de atualização da cor
                 });
+
                 alert('Imagem do banner atualizada com sucesso!');
-                setTestingColor(false);
             } catch (error) {
                 console.error("Erro ao salvar a imagem do banner:", error);
+                alert('Falha ao salvar a imagem do banner.');
             }
         }
     };
 
     const handleSaveColor = async () => {
         if (currentUser) {
-            const bannerRef = ref(database, `users/${currentUser.uid}/banner`);
+            const bannerRef = dbRef(database, `users/${currentUser.uid}/banner`);
             try {
-                await set(bannerRef, {
-                    image: previewImage,
+                await dbSet(bannerRef, {
+                    image: bannerData.image,
                     color,
-                    colorUpdatedAt: new Date().toISOString() // Adiciona data de atualização da cor
+                    colorUpdatedAt: new Date().toISOString(),
+                    imageUpdatedAt: bannerData.imageUpdatedAt // Mantenha a data de atualização da imagem
                 });
                 alert('Cor do banner atualizada com sucesso!');
-                setTestingColor(false);
             } catch (error) {
                 console.error("Erro ao salvar a cor do banner:", error);
+                alert('Falha ao salvar a cor do banner.');
             }
         }
+    };
+
+    const displayBanner = () => {
+        if (bannerData.imageUpdatedAt && bannerData.colorUpdatedAt) {
+            return new Date(bannerData.imageUpdatedAt) > new Date(bannerData.colorUpdatedAt)
+                ? { backgroundImage: `url(${bannerData.image})`, backgroundColor: 'transparent' }
+                : { backgroundImage: 'none', backgroundColor: bannerData.color };
+        } else if (bannerData.imageUpdatedAt) {
+            return { backgroundImage: `url(${bannerData.image})`, backgroundColor: 'transparent' };
+        } else if (bannerData.colorUpdatedAt) {
+            return { backgroundImage: 'none', backgroundColor: bannerData.color };
+        }
+        return { backgroundImage: 'none', backgroundColor: '#ffffff' };
     };
 
     return (
         <div className="banner-uploader">
             <h2>Atualizar Banner</h2>
-            <div className="banner-preview" style={{ backgroundColor: color, backgroundImage: testingColor ? 'none' : `url(${previewImage})`, backgroundSize: 'cover', height: '150px', width: '100%', borderRadius: '8px', marginBottom: '10px' }}>
+            <div className="banner-preview" style={{
+                ...displayBanner(),
+                backgroundSize: 'cover',
+                height: '150px',
+                width: '100%',
+                borderRadius: '8px',
+                marginBottom: '10px'
+            }}>
                 {!previewImage && <p>Pré-visualização do banner</p>}
             </div>
             <input
@@ -90,7 +127,6 @@ const BannerUploader = () => {
                 type="color"
                 value={color}
                 onChange={handleColorChange}
-                onBlur={() => setTestingColor(false)}
             />
             <button onClick={handleSaveImage}>Salvar Imagem</button>
             <button onClick={handleSaveColor}>Salvar Cor</button>

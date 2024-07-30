@@ -1,0 +1,9 @@
+/* src/components/ProfileBanner/ProfileBanner.css */
+.profile-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 10px;
+}

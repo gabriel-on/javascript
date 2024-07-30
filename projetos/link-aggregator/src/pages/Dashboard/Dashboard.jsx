@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
 import useLinks from '../../hooks/useLinks';
 import { NavLink } from 'react-router-dom';
-import ProfilePictureUploader from '../../components/ProfilePictureUploader/ProfilePictureUploader'; // Importando o novo componente
+import ProfilePictureUploader from '../../components/ProfilePictureUploader/ProfilePictureUploader';
+import BannerUploader from '../../components/BannerUploader/BannerUploader'; // Importando o novo componente
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
@@ -27,6 +28,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Dashboard</h1>
+      <BannerUploader /> {/* Adicionando o BannerUploader */}
       <ProfilePictureUploader />
       <ul>
         {currentUser && (

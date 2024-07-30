@@ -54,10 +54,20 @@ const UserProfile = () => {
         setModalOpen(true);
     };
 
+    const handleProfileShareClick = () => {
+        const profileLink = `${window.location.origin}/${mentionName}`; // Cria o link do perfil
+        const profileData = { url: profileLink, title: `Perfil de @${mentionName}` }; // Dados do perfil
+        setSelectedLink(profileData);
+        setModalOpen(true);
+    };
+
     return (
         <div>
             {userId && <ProfilePicture userId={userId} />}
             <h1>@{mentionName}</h1>
+            <button onClick={handleProfileShareClick} style={{ marginBottom: '20px' }}>
+                Compartilhar Perfil
+            </button>
             <ul>
                 {links.length > 0 ? (
                     links.map(link => (

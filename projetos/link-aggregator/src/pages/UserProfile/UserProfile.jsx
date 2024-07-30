@@ -93,7 +93,7 @@ const UserProfile = () => {
                 <div className="banner" style={{
                     ...displayBanner(),
                     backgroundSize: 'cover',
-                    height: '250px',
+                    height: '200px',
                     width: '100%',
                     borderRadius: '8px',
                     marginBottom: '10px'

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuthentication';
-import '../Navbar/Navbar.css';
+import './Navbar.css';
 
 function Navbar() {
   const { currentUser, logout } = useAuth();
   const location = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -17,11 +18,23 @@ function Navbar() {
   };
 
   useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
   return (
-    <div className='navbar-container'>
+    <div className={`navbar-container ${isScrolled ? 'scrolled' : ''}`}>
       <div className='navbar'>
         <ul >
           <li className='brand'>

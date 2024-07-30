@@ -1,9 +1,28 @@
-// src/components/ShareModal/ShareModal.jsx
-import React from 'react';
-import QRCodeGenerator from '../QRCodeGenerator/QRCodeGenerator'; // Importe o QRCodeGenerator
+import React, { useRef, useEffect } from 'react';
+import QRCodeGenerator from '../QRCodeGenerator/QRCodeGenerator';
 import './ShareModal.css';
 
 const ShareModal = ({ isOpen, onClose, link }) => {
+    const modalRef = useRef(); // Referência para o conteúdo do modal
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                onClose(); // Fecha o modal se clicar fora
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isOpen, onClose]);
+
     if (!isOpen) return null;
 
     const shareLink = async (platform) => {
@@ -46,7 +65,7 @@ const ShareModal = ({ isOpen, onClose, link }) => {
 
     return (
         <div className="modal-overlay">
-            <div className="modal-content">
+            <div className="modal-content" ref={modalRef}>
                 <h2>Compartilhar Link</h2>
                 <p>{link.title}</p>
 

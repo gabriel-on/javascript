@@ -1,17 +1,19 @@
-// src/pages/Dashboard/Dashboard.jsx
 import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
 import useLinks from '../../hooks/useLinks';
 import { NavLink } from 'react-router-dom';
 import ProfilePictureUploader from '../../components/ProfilePictureUploader/ProfilePictureUploader';
-import BannerUploader from '../../components/BannerUploader/BannerUploader'; // Importando o novo componente
+import BannerUploader from '../../components/BannerUploader/BannerUploader';
+import Modal from '../../components/Modal/Modal';
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
+  const [selectedLink, setSelectedLink] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
 
-  const { links, addLink } = useLinks(currentUser ? currentUser.uid : null);
+  const { links, addLink, editLink, deleteLink } = useLinks(currentUser ? currentUser.uid : null);
 
   if (!currentUser) {
     return <p>Faça <a href="/login">Login</a> para visualizar seu dashboard.</p>;
@@ -23,6 +25,24 @@ const Dashboard = () => {
       setTitle('');
       setUrl('');
     }
+  };
+
+  const handleEditLink = (id, newTitle, newUrl) => {
+    editLink(id, newTitle, newUrl);
+  };
+
+  const handleDeleteLink = (id) => {
+    deleteLink(id);
+  };
+
+  const openModal = (link) => {
+    setSelectedLink(link);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedLink(null);
   };
 
   return (
@@ -61,11 +81,20 @@ const Dashboard = () => {
             .map(link => (
               <li key={link.id}>
                 <a href={link.url} target="_blank" rel="noopener noreferrer">{link.title}</a>
+                <button onClick={() => openModal(link)}>Edit</button>
                 <span> (Added on: {new Date(link.createdAt * 1000).toLocaleString()})</span>
               </li>
             ))}
         </ul>
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        link={selectedLink}
+        onEdit={handleEditLink}
+        onDelete={handleDeleteLink}
+      />
     </div>
   );
 };

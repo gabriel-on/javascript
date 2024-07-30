@@ -1,6 +1,5 @@
-// src/hooks/useLinks.js
 import { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue, push } from 'firebase/database';
+import { getDatabase, ref, onValue, push, update, remove } from 'firebase/database';
 import { getUnixTime } from 'date-fns';
 
 const useLinks = (userId) => {
@@ -21,15 +20,15 @@ const useLinks = (userId) => {
             setLinks(linkList);
         });
 
-        return () => unsubscribe(); // Limpeza do listener quando o componente desmonta
+        return () => unsubscribe();
     }, []);
 
     const addLink = (title, url) => {
         const newLink = {
             title,
             url,
-            userId, // Armazenar o ID do usuário
-            createdAt: getUnixTime(new Date()), // Armazenar a data de criação como timestamp UNIX
+            userId,
+            createdAt: getUnixTime(new Date()),
         };
 
         const database = getDatabase();
@@ -37,7 +36,19 @@ const useLinks = (userId) => {
         push(linksRef, newLink);
     };
 
-    return { links, addLink };
+    const editLink = (id, newTitle, newUrl) => {
+        const database = getDatabase();
+        const linkRef = ref(database, `links/${id}`);
+        update(linkRef, { title: newTitle, url: newUrl });
+    };
+
+    const deleteLink = (id) => {
+        const database = getDatabase();
+        const linkRef = ref(database, `links/${id}`);
+        remove(linkRef);
+    };
+
+    return { links, addLink, editLink, deleteLink };
 };
 
 export default useLinks;

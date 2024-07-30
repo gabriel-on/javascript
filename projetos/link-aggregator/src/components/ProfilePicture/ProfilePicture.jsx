@@ -1,4 +1,3 @@
-// src/components/ProfilePicture/ProfilePicture.jsx
 import React, { useEffect, useState } from 'react';
 import { getDatabase, ref, onValue } from 'firebase/database';
 
@@ -19,9 +18,9 @@ const ProfilePicture = ({ userId }) => {
     }, [userId]);
 
     return (
-        <div>
+        <div className='profile-img'>
             {profileImage ? (
-                <img src={profileImage} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
+                <img src={profileImage} alt="Profile" />
             ) : (
                 <p>No profile picture uploaded</p>
             )}

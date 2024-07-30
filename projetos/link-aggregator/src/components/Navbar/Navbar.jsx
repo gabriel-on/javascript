@@ -23,6 +23,13 @@ function Navbar() {
   return (
     <div className='navbar-container'>
       <div className='navbar'>
+        <ul >
+          <li className='brand'>
+            <NavLink to={"/"}>
+              <h1>HighLinks</h1>
+            </NavLink>
+          </li>
+        </ul>
         <ul>
           <li className='nav-page'>
             <NavLink to={"/"}>Home</NavLink>

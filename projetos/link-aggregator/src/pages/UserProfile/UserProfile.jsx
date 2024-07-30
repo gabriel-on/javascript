@@ -6,6 +6,8 @@ import { database } from '../../firebase/config';
 import ProfilePicture from '../../components/ProfilePicture/ProfilePicture';
 import ShareModal from '../../components/ShareModal/ShareModal';
 
+import './UserProfile.css'
+
 const UserProfile = () => {
     const { mentionName } = useParams();
     const [links, setLinks] = useState([]);
@@ -86,32 +88,41 @@ const UserProfile = () => {
     };
 
     return (
-        <div>
-            <div className="banner" style={{
-                ...displayBanner(),
-                backgroundSize: 'cover',
-                height: '150px',
-                width: '100%',
-                borderRadius: '8px',
-                marginBottom: '10px'
-            }}></div>
-            {userId && <ProfilePicture userId={userId} />}
-            <h1>@{mentionName}</h1>
-            <button onClick={handleProfileShareClick} style={{ marginBottom: '20px' }}>
-                Compartilhar Perfil
-            </button>
-            <ul>
-                {links.length > 0 ? (
-                    links.map(link => (
-                        <li key={link.id}>
-                            <a href={link.url} target="_blank" rel="noopener noreferrer">{link.title}</a>
-                            <button onClick={() => handleShareClick(link)} style={{ marginLeft: '10px' }}>⋮</button>
-                        </li>
-                    ))
-                ) : (
-                    <li>Nenhum link disponível para este usuário.</li>
-                )}
-            </ul>
+        <div className='user-container'>
+            <div className='profile-user'>
+                <div className="banner" style={{
+                    ...displayBanner(),
+                    backgroundSize: 'cover',
+                    height: '250px',
+                    width: '100%',
+                    borderRadius: '8px',
+                    marginBottom: '10px'
+                }}></div>
+            </div>
+            <div className='user-links-container'>
+                <div className='profile-picture-info'>
+                    <div className='profile-info'>
+                        {userId && <ProfilePicture userId={userId} />}
+                        <div>
+                            <h2>@{mentionName}</h2>
+                            <h2>{"displayName"}</h2>
+                        </div>
+                    </div>
+                    <button className='share-btn' onClick={handleProfileShareClick}>⋮</button>
+                </div>
+                <ul className='link-list'>
+                    {links.length > 0 ? (
+                        links.map(link => (
+                            <li key={link.id}>
+                                <a href={link.url} target="_blank" rel="noopener noreferrer">{link.title}</a>
+                                <button onClick={() => handleShareClick(link)} style={{ marginLeft: '10px' }}>⋮</button>
+                            </li>
+                        ))
+                    ) : (
+                        <li>Nenhum link disponível para este usuário.</li>
+                    )}
+                </ul>
+            </div>
             <ShareModal
                 isOpen={modalOpen}
                 onClose={() => setModalOpen(false)}

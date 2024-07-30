@@ -67,7 +67,6 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Navbar />
-          <Breadcrumb />
           <div className='container'>
             <Routes>
               <Route path="/error" element={<ErrorPage />} />

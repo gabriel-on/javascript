@@ -1,5 +1,5 @@
 // src/components/BannerUploader/BannerUploader.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import useBanner from '../../hooks/useBanner';
 import './BannerUploader.css';
 
@@ -14,6 +14,7 @@ const BannerUploader = () => {
         handleSaveImage,
         handleSaveColor
     } = useBanner();
+    const [isTestingColor, setIsTestingColor] = useState(false);
 
     const displayBanner = () => {
         const imageUpdated = new Date(bannerData.imageUpdatedAt);
@@ -24,7 +25,9 @@ const BannerUploader = () => {
 
         if (isTestingImage && previewImage) {
             return { backgroundImage: `url(${previewImage})`, backgroundColor: 'transparent' };
-        } else if (bannerData.image && imageUpdated >= colorUpdated) {
+        } else if (isTestingColor) {
+            return { backgroundImage: 'none', backgroundColor: color };
+        } else if (imageUpdated >= colorUpdated && bannerData.image) {
             console.log('Displaying image:', bannerData.image);
             return { backgroundImage: `url(${bannerData.image})`, backgroundColor: 'transparent' };
         } else {
@@ -64,12 +67,11 @@ const BannerUploader = () => {
                             top: 0,
                             left: 0,
                             zIndex: 2,
-                            opacity: 0.6,
                             objectFit: 'cover'
                         }}
                     />
                 )}
-                {!isTestingImage && bannerData.image && (
+                {!isTestingImage && bannerData.image && new Date(bannerData.imageUpdatedAt) >= new Date(bannerData.colorUpdatedAt) && (
                     <img
                         src={bannerData.image}
                         alt="Banner"
@@ -85,15 +87,17 @@ const BannerUploader = () => {
                         }}
                     />
                 )}
-                <div style={{
-                    backgroundColor: isTestingImage ? 'transparent' : color,
-                    height: '150px',
-                    width: '100%',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    zIndex: 0,
-                }} />
+                {!isTestingImage && !bannerData.image && (
+                    <div style={{
+                        backgroundColor: color,
+                        height: '150px',
+                        width: '100%',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        zIndex: 0,
+                    }} />
+                )}
                 <p style={{ zIndex: 3 }}>Cor: {color}</p>
             </div>
             <input
@@ -105,6 +109,8 @@ const BannerUploader = () => {
                 type="color"
                 value={color}
                 onChange={handleColorChange}
+                onFocus={() => setIsTestingColor(true)}
+                onBlur={() => setIsTestingColor(false)}
             />
             <button onClick={handleSaveImage}>Salvar Imagem</button>
             <button onClick={handleSaveColor}>Salvar Cor</button>

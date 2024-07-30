@@ -7,11 +7,12 @@ import { useAuth } from './useAuthentication';
 
 const useBanner = () => {
     const { currentUser } = useAuth();
-    const [bannerData, setBannerData] = useState({ image: '', color: '#ffffff', imageUpdatedAt: '', colorUpdatedAt: '' });
     const [image, setImage] = useState(null);
     const [color, setColor] = useState('#ffffff');
     const [previewImage, setPreviewImage] = useState('');
     const [isTestingImage, setIsTestingImage] = useState(false);
+    const [isTestingColor, setIsTestingColor] = useState(false);
+    const [bannerData, setBannerData] = useState({ image: '', color: '#ffffff', imageUpdatedAt: null, colorUpdatedAt: null });
 
     useEffect(() => {
         if (currentUser) {
@@ -21,7 +22,6 @@ const useBanner = () => {
                 if (data) {
                     console.log('Banner data fetched:', data);
                     setBannerData(data);
-                    setPreviewImage('');
                     setColor(data.color || '#ffffff');
                 }
             });
@@ -36,6 +36,7 @@ const useBanner = () => {
             reader.onloadend = () => {
                 setPreviewImage(reader.result);
                 setIsTestingImage(true);
+                setIsTestingColor(false);
             };
             reader.readAsDataURL(file);
         }
@@ -43,6 +44,7 @@ const useBanner = () => {
 
     const handleColorChange = (e) => {
         setColor(e.target.value);
+        setIsTestingColor(true);
         setIsTestingImage(false);
     };
 
@@ -54,24 +56,17 @@ const useBanner = () => {
                     const oldImageRef = ref(storage, bannerData.image);
                     await deleteObject(oldImageRef);
                 }
-
                 await uploadBytes(storageRef, image);
                 const imageUrl = await getDownloadURL(storageRef);
-
                 const bannerRef = dbRef(database, `users/${currentUser.uid}/banner`);
                 await dbSet(bannerRef, {
                     image: imageUrl,
-                    color,
+                    color: bannerData.color,
                     imageUpdatedAt: new Date().toISOString(),
-                    colorUpdatedAt: bannerData.colorUpdatedAt || '',
+                    colorUpdatedAt: bannerData.colorUpdatedAt
                 });
 
-                console.log('Image URL after save:', imageUrl);
-                setBannerData(prev => ({
-                    ...prev,
-                    image: imageUrl,
-                    imageUpdatedAt: new Date().toISOString(),
-                }));
+                alert('Imagem do banner atualizada com sucesso!');
                 setIsTestingImage(false);
                 setPreviewImage('');
             } catch (error) {
@@ -86,19 +81,13 @@ const useBanner = () => {
             const bannerRef = dbRef(database, `users/${currentUser.uid}/banner`);
             try {
                 await dbSet(bannerRef, {
-                    image: bannerData.image || '',
+                    image: bannerData.image,
                     color,
                     colorUpdatedAt: new Date().toISOString(),
-                    imageUpdatedAt: bannerData.imageUpdatedAt || '',
+                    imageUpdatedAt: bannerData.imageUpdatedAt
                 });
-
-                setBannerData(prev => ({
-                    ...prev,
-                    color,
-                    colorUpdatedAt: new Date().toISOString(),
-                }));
-                setIsTestingImage(false);
-                setPreviewImage('');
+                alert('Cor do banner atualizada com sucesso!');
+                setIsTestingColor(false);
             } catch (error) {
                 console.error("Erro ao salvar a cor do banner:", error);
                 alert('Falha ao salvar a cor do banner.');
@@ -111,6 +100,7 @@ const useBanner = () => {
         color,
         previewImage,
         isTestingImage,
+        isTestingColor,
         handleImageChange,
         handleColorChange,
         handleSaveImage,

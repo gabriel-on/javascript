@@ -30,8 +30,6 @@ function App() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setUser(user);
-
       if (user) {
         const userId = user.uid; // Obtém o ID do usuário
         console.log('ID do usuário:', userId); // Imprime o ID do usuário no console
@@ -41,18 +39,28 @@ function App() {
 
         try {
           const snapshot = await get(dbRef);
-
+          if (snapshot.exists()) {
+            // Aqui você pode processar os dados do usuário, se necessário
+            console.log('Dados do usuário:', snapshot.val());
+          } else {
+            console.log('Usuário não encontrado no banco de dados.');
+          }
         } catch (error) {
           console.error('Erro ao buscar dados do usuário:', error);
         }
-        setLoading(false);
       }
+      setUser(user); // Define o usuário após verificar os dados
+      setLoading(false); // Certifique-se de definir o estado de carregamento aqui
     });
 
     return () => unsubscribe();
   }, [auth]);
 
   const userId = user ? user.uid : null;
+
+  if (loading) {
+    return <div>Loading...</div>; // Pode adicionar um componente de carregamento
+  }
 
   return (
     <div className='App'>
@@ -65,14 +73,13 @@ function App() {
               <Route path="/error" element={<ErrorPage />} />
               <Route path="*" element={<Navigate to="/error" />} /> {/* Redireciona para a página de erro */}
 
-              <Route path="/:mentionName" element={<UserProfile/>} />
+              <Route path="/:mentionName" element={<UserProfile />} />
               <Route path='/' element={<Home />} />
 
               <Route path='/dashboard' element={<Dashboard userId={userId} />} />
-              <Route path='dashboard/edit/:id' element=
-                {<Edit userId={userId} />} />
+              <Route path='dashboard/edit/:id' element={<Edit userId={userId} />} />
 
-              <Route path='/login' element={!user ? <Login /> : <Navigate to={`/profile/${user.userId}`} />} />
+              <Route path='/login' element={!user ? <Login /> : <Navigate to={`/profile/${userId}`} />} />
               <Route path='/register' element={!user ? <Register /> : <Navigate to="/" />} />
             </Routes>
           </div>

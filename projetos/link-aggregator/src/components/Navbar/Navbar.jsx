@@ -5,16 +5,16 @@ import '../Navbar/Navbar.css';
 
 function Navbar() {
   const { currentUser, logout } = useAuth();
+  const location = useLocation();
 
   const handleLogout = async () => {
     try {
       await logout();
     } catch (error) {
       console.error('Erro ao fazer logout:', error);
+      // Aqui você pode mostrar um alert ou notificação para o usuário
     }
   };
-
-  const location = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -23,13 +23,18 @@ function Navbar() {
   return (
     <div className='navbar-container'>
       <div className='navbar'>
-        <ul >
+        <ul>
           <li className='nav-page'>
             <NavLink to={"/"}>Home</NavLink>
           </li>
           {currentUser && (
             <li className='nav-page'>
               <NavLink to={"/dashboard"}>Dashboard</NavLink>
+            </li>
+          )}
+          {currentUser && (
+            <li className='nav-page'>
+              <NavLink to={`/${currentUser.mentionName}`}>Perfil</NavLink>
             </li>
           )}
           {!currentUser && (

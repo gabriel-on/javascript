@@ -1,6 +1,5 @@
-// src/components/BannerUploader/BannerUploader.jsx
-import React, { useState } from 'react';
-import { ref, set } from 'firebase/database';
+import React, { useEffect, useState } from 'react';
+import { ref, onValue, set } from 'firebase/database';
 import { database } from '../../firebase/config';
 import { useAuth } from '../../hooks/useAuthentication';
 import './BannerUploader.css';
@@ -10,6 +9,19 @@ const BannerUploader = () => {
     const [image, setImage] = useState('');
     const [color, setColor] = useState('#ffffff');
     const [previewImage, setPreviewImage] = useState('');
+
+    useEffect(() => {
+        if (currentUser) {
+            const bannerRef = ref(database, `users/${currentUser.uid}/banner`);
+            onValue(bannerRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    setPreviewImage(data.image || '');
+                    setColor(data.color || '#ffffff');
+                }
+            });
+        }
+    }, [currentUser]);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];

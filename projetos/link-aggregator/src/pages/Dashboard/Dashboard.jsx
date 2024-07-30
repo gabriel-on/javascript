@@ -48,12 +48,12 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      <ProfilePictureUploader />
-      <BannerUploader />
+      {/* <ProfilePictureUploader /> */}
+      {/* <BannerUploader /> */}
       <ul>
         {currentUser && (
           <li className='profile-link-page'>
-            <NavLink to={`/${currentUser.mentionName}`}>Ver ou Compartilhar link</NavLink>
+            <NavLink to={`/${currentUser.mentionName}`}>Ver Links</NavLink>
           </li>
         )}
       </ul>

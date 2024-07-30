@@ -67,6 +67,7 @@ export const useAuth = () => {
                 email: data.email,
                 displayName: data.displayName,
                 mentionName: data.mentionName,
+                customUrl: `http://localhost:5173/${data.mentionName}`,
                 isAdmin: data.isAdmin || false,
                 joinedAt: joinedAt,
             });
@@ -125,14 +126,18 @@ export const useAuth = () => {
             const userSnapshot = await get(userRef);
             const userData = userSnapshot.val();
 
-            // Atualizar o estado do usuário atual
-            setCurrentUser({
-                uid: user.uid,
-                email: user.email,
-                displayName: userData.displayName,
-                mentionName: userData.mentionName,
-                isAdmin: userData.isAdmin || false,
-            });
+            if (userData) {
+                // Atualizar o estado do usuário atual
+                setCurrentUser({
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: userData.displayName,
+                    mentionName: userData.mentionName,
+                    isAdmin: userData.isAdmin || false,
+                });
+            } else {
+                setError("Dados do usuário não encontrados.");
+            }
         } catch (error) {
             let systemErrorMessage;
 
@@ -158,13 +163,17 @@ export const useAuth = () => {
                 const userSnapshot = await get(userRef);
                 const userData = userSnapshot.val();
 
-                setCurrentUser({
-                    uid: user.uid,
-                    email: user.email,
-                    displayName: userData.displayName,
-                    mentionName: userData.mentionName,
-                    isAdmin: userData.isAdmin || false,
-                });
+                if (userData) {
+                    setCurrentUser({
+                        uid: user.uid,
+                        email: user.email,
+                        displayName: userData.displayName,
+                        mentionName: userData.mentionName,
+                        isAdmin: userData.isAdmin || false,
+                    });
+                } else {
+                    setCurrentUser(null);
+                }
             } else {
                 setCurrentUser(null);
             }

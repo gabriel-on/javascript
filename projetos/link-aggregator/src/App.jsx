@@ -21,6 +21,7 @@ import ToTop from './components/ToTop/ToTop.jsx';
 import Dashboard from './pages/Dashboard/Dashboard.jsx';
 import Edit from './pages/Edit/Edit.jsx';
 import ErrorPage from './pages/ErrorPage/ErrorPage.jsx';
+import UserProfile from './pages/UserProfile/UserProfile.jsx';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -64,6 +65,7 @@ function App() {
               <Route path="/error" element={<ErrorPage />} />
               <Route path="*" element={<Navigate to="/error" />} /> {/* Redireciona para a página de erro */}
 
+              <Route path="/:mentionName" element={<UserProfile/>} />
               <Route path='/' element={<Home />} />
 
               <Route path='/dashboard' element={<Dashboard userId={userId} />} />

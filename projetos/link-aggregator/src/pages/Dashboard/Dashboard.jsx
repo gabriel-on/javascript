@@ -64,14 +64,16 @@ const Dashboard = () => {
         <button onClick={handleAddLink}>Add Link</button>
       </div>
       <div>
-        <h2>Link List</h2>
+        <h2>Your Links</h2>
         <ul>
-          {links.map(link => (
-            <li key={link.id}>
-              <a href={link.url} target="_blank" rel="noopener noreferrer">{link.title}</a>
-              <span> (Added by: {link.userId}, Date: {new Date(link.createdAt * 1000).toLocaleString()})</span>
-            </li>
-          ))}
+          {links
+            .filter(link => link.userId === currentUser.uid) // Filtra os links para mostrar apenas os do usuário atual
+            .map(link => (
+              <li key={link.id}>
+                <a href={link.url} target="_blank" rel="noopener noreferrer">{link.title}</a>
+                <span> (Added on: {new Date(link.createdAt * 1000).toLocaleString()})</span>
+              </li>
+            ))}
         </ul>
       </div>
     </div>

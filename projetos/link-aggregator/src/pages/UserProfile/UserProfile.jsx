@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { ref, onValue, get } from 'firebase/database';
+import { ref, onValue } from 'firebase/database';
 import { database } from '../../firebase/config';
+import ProfilePicture from '../../components/ProfilePicture/ProfilePicture';
 
 const UserProfile = () => {
     const { mentionName } = useParams();
@@ -10,7 +11,7 @@ const UserProfile = () => {
 
     useEffect(() => {
         // Função para obter o userId a partir do mentionName
-        const fetchUserId = async () => {
+        const fetchUserId = () => {
             const usersRef = ref(database, 'users');
             onValue(usersRef, (snapshot) => {
                 const data = snapshot.val();
@@ -50,6 +51,7 @@ const UserProfile = () => {
 
     return (
         <div>
+            {userId && <ProfilePicture userId={userId} />} {/* Passa o userId para o componente ProfilePicture */}
             <h1>@{mentionName}</h1>
             <ul>
                 {links.length > 0 ? (

@@ -1,14 +1,15 @@
+// src/pages/Dashboard/Dashboard.jsx
 import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
 import useLinks from '../../hooks/useLinks';
 import { NavLink } from 'react-router-dom';
+import ProfilePictureUploader from '../../components/ProfilePictureUploader/ProfilePictureUploader'; // Importando o novo componente
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
 
-  // Usando o hook useLinks
   const { links, addLink } = useLinks(currentUser ? currentUser.uid : null);
 
   if (!currentUser) {
@@ -17,7 +18,7 @@ const Dashboard = () => {
 
   const handleAddLink = () => {
     if (title && url) {
-      addLink(title, url); // Adiciona o link usando o hook
+      addLink(title, url);
       setTitle('');
       setUrl('');
     }
@@ -26,6 +27,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Dashboard</h1>
+      <ProfilePictureUploader /> {/* Adicionando o componente de upload */}
       <ul>
         {currentUser && (
           <li className='profile-link-page'>
@@ -53,7 +55,7 @@ const Dashboard = () => {
         <h2>Your Links</h2>
         <ul>
           {links
-            .filter(link => link.userId === currentUser.uid) // Filtra os links para mostrar apenas os do usuário atual
+            .filter(link => link.userId === currentUser.uid)
             .map(link => (
               <li key={link.id}>
                 <a href={link.url} target="_blank" rel="noopener noreferrer">{link.title}</a>

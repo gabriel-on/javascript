@@ -52,6 +52,23 @@ const BannerUploader = () => {
                 textAlign: 'center',
                 overflow: 'hidden',
             }}>
+                {isTestingImage && previewImage && (
+                    <img
+                        src={previewImage}
+                        alt="Preview"
+                        style={{
+                            width: '100%',
+                            height: '150px',
+                            borderRadius: '8px',
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            zIndex: 2,
+                            opacity: 0.6,
+                            objectFit: 'cover'
+                        }}
+                    />
+                )}
                 {!isTestingImage && bannerData.image && (
                     <img
                         src={bannerData.image}
@@ -75,26 +92,9 @@ const BannerUploader = () => {
                     position: 'absolute',
                     top: 0,
                     left: 0,
-                    zIndex: 2,
+                    zIndex: 0,
                 }} />
-                {isTestingImage && previewImage && (
-                    <img
-                        src={previewImage}
-                        alt="Preview"
-                        style={{
-                            width: '100%',
-                            height: '150px',
-                            borderRadius: '8px',
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            zIndex: 3,
-                            opacity: 0.6,
-                            objectFit: 'cover'
-                        }}
-                    />
-                )}
-                <p style={{ zIndex: 4 }}>Cor: {color}</p>
+                <p style={{ zIndex: 3 }}>Cor: {color}</p>
             </div>
             <input
                 type="file"

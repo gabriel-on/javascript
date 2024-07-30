@@ -19,9 +19,9 @@ const useBanner = () => {
             onValue(bannerRef, (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
-                    console.log('Banner data fetched:', data); // Log para depuração
+                    console.log('Banner data fetched:', data);
                     setBannerData(data);
-                    setPreviewImage(data.image || '');
+                    setPreviewImage('');
                     setColor(data.color || '#ffffff');
                 }
             });
@@ -66,7 +66,7 @@ const useBanner = () => {
                     colorUpdatedAt: bannerData.colorUpdatedAt || '',
                 });
 
-                console.log('Image URL after save:', imageUrl); // Log para depuração
+                console.log('Image URL after save:', imageUrl);
                 setBannerData(prev => ({
                     ...prev,
                     image: imageUrl,
@@ -108,7 +108,6 @@ const useBanner = () => {
 
     return {
         bannerData,
-        image,
         color,
         previewImage,
         isTestingImage,

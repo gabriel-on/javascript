@@ -13,7 +13,7 @@ const Dashboard = () => {
   const { links, addLink } = useLinks(currentUser ? currentUser.uid : null);
 
   if (!currentUser) {
-    return <p>Please log in to view your dashboard.</p>;
+    return <p>Faça <a href="/login">Login</a> para visualizar seu dashboard.</p>;
   }
 
   const handleAddLink = () => {
@@ -27,7 +27,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      <ProfilePictureUploader /> {/* Adicionando o componente de upload */}
+      <ProfilePictureUploader />
       <ul>
         {currentUser && (
           <li className='profile-link-page'>

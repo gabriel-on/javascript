@@ -1,5 +1,6 @@
 // src/components/ShareModal/ShareModal.jsx
 import React from 'react';
+import QRCodeGenerator from '../QRCodeGenerator/QRCodeGenerator'; // Importe o QRCodeGenerator
 import './ShareModal.css';
 
 const ShareModal = ({ isOpen, onClose, link }) => {
@@ -48,6 +49,10 @@ const ShareModal = ({ isOpen, onClose, link }) => {
             <div className="modal-content">
                 <h2>Compartilhar Link</h2>
                 <p>{link.title}</p>
+
+                {/* Componente QRCodeGenerator para gerar o QR Code */}
+                <QRCodeGenerator value={link.url} />
+
                 <button onClick={copyLink}>Copiar Link</button> {/* Botão para copiar o link */}
                 <div>
                     <h3>Compartilhar via:</h3>

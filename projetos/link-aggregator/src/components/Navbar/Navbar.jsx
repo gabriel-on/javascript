@@ -32,11 +32,6 @@ function Navbar() {
               <NavLink to={"/dashboard"}>Dashboard</NavLink>
             </li>
           )}
-          {currentUser && (
-            <li className='nav-page'>
-              <NavLink to={`/${currentUser.mentionName}`}>Perfil</NavLink>
-            </li>
-          )}
           {!currentUser && (
             <li>
               <NavLink to={"/login"}>Login</NavLink>

@@ -1,52 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
-import { getDatabase, ref, onValue, push } from 'firebase/database';
-import { getUnixTime } from 'date-fns';
+import useLinks from '../../hooks/useLinks';
+import { NavLink } from 'react-router-dom';
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
-  const [links, setLinks] = useState([]);
 
-  const database = getDatabase();
-
-  useEffect(() => {
-    if (currentUser) {
-      const linksRef = ref(database, 'links');
-      onValue(linksRef, (snapshot) => {
-        const data = snapshot.val();
-        const linkList = data ? Object.keys(data).map(key => ({
-          id: key,
-          ...data[key]
-        })) : [];
-        setLinks(linkList);
-      });
-    }
-  }, [currentUser, database]);
-
-  const handleAddLink = () => {
-    if (title && url) {
-      const linksRef = ref(database, 'links');
-      const newLink = {
-        title,
-        url,
-        userId: currentUser.uid, // Armazenar o ID do usuário
-        createdAt: getUnixTime(new Date()), // Armazenar a data de criação como timestamp UNIX
-      };
-      push(linksRef, newLink);
-      setTitle('');
-      setUrl('');
-    }
-  };
+  // Usando o hook useLinks
+  const { links, addLink } = useLinks(currentUser ? currentUser.uid : null);
 
   if (!currentUser) {
     return <p>Please log in to view your dashboard.</p>;
   }
 
+  const handleAddLink = () => {
+    if (title && url) {
+      addLink(title, url); // Adiciona o link usando o hook
+      setTitle('');
+      setUrl('');
+    }
+  };
+
   return (
     <div>
       <h1>Dashboard</h1>
+      <ul>
+        {currentUser && (
+          <li className='profile-link-page'>
+            <NavLink to={`/${currentUser.mentionName}`}>Ver ou Compartilhar link</NavLink>
+          </li>
+        )}
+      </ul>
       <div>
         <h2>Add a new link</h2>
         <input

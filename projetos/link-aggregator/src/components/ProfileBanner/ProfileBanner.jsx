@@ -1,6 +1,6 @@
 // src/components/ProfileBanner/ProfileBanner.jsx
 import React, { useState, useEffect } from 'react';
-import { ref, onValue } from 'firebase/database';
+import { ref, get } from 'firebase/database';
 import { database } from '../../firebase/config';
 import './ProfileBanner.css';
 
@@ -11,13 +11,16 @@ const ProfileBanner = ({ userId }) => {
     useEffect(() => {
         const fetchBannerData = async () => {
             const bannerRef = ref(database, `users/${userId}/banner`);
-            onValue(bannerRef, (snapshot) => {
+            try {
+                const snapshot = await get(bannerRef);
                 const data = snapshot.val();
                 if (data) {
                     setBannerImage(data.image || '');
                     setBgColor(data.color || '#ffffff');
                 }
-            });
+            } catch (error) {
+                console.error("Erro ao buscar dados do banner:", error);
+            }
         };
 
         if (userId) {

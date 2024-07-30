@@ -28,8 +28,8 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      <BannerUploader /> {/* Adicionando o BannerUploader */}
       <ProfilePictureUploader />
+      <BannerUploader />
       <ul>
         {currentUser && (
           <li className='profile-link-page'>

@@ -11,6 +11,7 @@ const BannerUploader = () => {
     const [image, setImage] = useState(null);
     const [color, setColor] = useState('#ffffff');
     const [previewImage, setPreviewImage] = useState('');
+    const [isTestingImage, setIsTestingImage] = useState(false);
     const [bannerData, setBannerData] = useState({ image: '', color: '#ffffff', imageUpdatedAt: null, colorUpdatedAt: null });
 
     useEffect(() => {
@@ -34,6 +35,7 @@ const BannerUploader = () => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreviewImage(reader.result);
+                setIsTestingImage(true); // Indica que está testando uma nova imagem
             };
             reader.readAsDataURL(file);
         }
@@ -41,6 +43,7 @@ const BannerUploader = () => {
 
     const handleColorChange = (e) => {
         setColor(e.target.value);
+        setIsTestingImage(false); // Indica que não está testando uma imagem
     };
 
     const handleSaveImage = async () => {
@@ -67,6 +70,8 @@ const BannerUploader = () => {
                 });
 
                 alert('Imagem do banner atualizada com sucesso!');
+                setIsTestingImage(false); // Resetar estado após salvar
+                setPreviewImage(''); // Limpar pré-visualização após salvar
             } catch (error) {
                 console.error("Erro ao salvar a imagem do banner:", error);
                 alert('Falha ao salvar a imagem do banner.');
@@ -85,6 +90,8 @@ const BannerUploader = () => {
                     imageUpdatedAt: bannerData.imageUpdatedAt // Mantenha a data de atualização da imagem
                 });
                 alert('Cor do banner atualizada com sucesso!');
+                setIsTestingImage(false); // Resetar estado após salvar
+                setPreviewImage(''); // Limpar pré-visualização após salvar
             } catch (error) {
                 console.error("Erro ao salvar a cor do banner:", error);
                 alert('Falha ao salvar a cor do banner.');
@@ -93,7 +100,10 @@ const BannerUploader = () => {
     };
 
     const displayBanner = () => {
-        if (bannerData.imageUpdatedAt && bannerData.colorUpdatedAt) {
+        // Verifica se deve mostrar a imagem ou a cor
+        if (isTestingImage) {
+            return { backgroundImage: `url(${previewImage})`, backgroundColor: 'transparent' };
+        } else if (bannerData.imageUpdatedAt && bannerData.colorUpdatedAt) {
             return new Date(bannerData.imageUpdatedAt) > new Date(bannerData.colorUpdatedAt)
                 ? { backgroundImage: `url(${bannerData.image})`, backgroundColor: 'transparent' }
                 : { backgroundImage: 'none', backgroundColor: bannerData.color };
@@ -114,9 +124,42 @@ const BannerUploader = () => {
                 height: '150px',
                 width: '100%',
                 borderRadius: '8px',
-                marginBottom: '10px'
+                marginBottom: '10px',
+                position: 'relative',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: '#fff',
+                fontWeight: 'bold',
+                textAlign: 'center',
+                overflow: 'hidden',
             }}>
                 {!previewImage && <p>Pré-visualização do banner</p>}
+                {isTestingImage && previewImage && (
+                    <div style={{
+                        backgroundImage: `url(${previewImage})`,
+                        backgroundSize: 'cover',
+                        height: '150px',
+                        width: '100%',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        zIndex: 1,
+                        opacity: 0.6,
+                    }} />
+                )}
+                {!isTestingImage && (
+                    <div style={{
+                        backgroundColor: color,
+                        height: '150px',
+                        width: '100%',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        zIndex: 0,
+                    }} />
+                )}
+                <p style={{ zIndex: 2 }}>Cor: {color}</p>
             </div>
             <input
                 type="file"

@@ -10,7 +10,7 @@ const UserProfile = () => {
     const { mentionName } = useParams();
     const [links, setLinks] = useState([]);
     const [userId, setUserId] = useState(null);
-    const [banner, setBanner] = useState({ image: '', color: '#ffffff' });
+    const [banner, setBanner] = useState({ image: '', color: '#ffffff', imageUpdatedAt: null, colorUpdatedAt: null });
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedLink, setSelectedLink] = useState(null);
 
@@ -71,9 +71,30 @@ const UserProfile = () => {
         setModalOpen(true);
     };
 
+    // Verifica qual foi a última atualização e decide o que exibir
+    const displayBanner = () => {
+        if (banner.imageUpdatedAt && banner.colorUpdatedAt) {
+            return new Date(banner.imageUpdatedAt) > new Date(banner.colorUpdatedAt)
+                ? { backgroundImage: `url(${banner.image})`, backgroundColor: 'transparent' }
+                : { backgroundImage: 'none', backgroundColor: banner.color };
+        } else if (banner.imageUpdatedAt) {
+            return { backgroundImage: `url(${banner.image})`, backgroundColor: 'transparent' };
+        } else if (banner.colorUpdatedAt) {
+            return { backgroundImage: 'none', backgroundColor: banner.color };
+        }
+        return { backgroundImage: 'none', backgroundColor: '#ffffff' }; // Cor padrão
+    };
+
     return (
         <div>
-            <div className="banner" style={{ backgroundColor: banner.color, backgroundImage: `url(${banner.image})`, backgroundSize: 'cover', height: '150px', width: '100%', borderRadius: '8px', marginBottom: '10px' }}></div>
+            <div className="banner" style={{
+                ...displayBanner(),
+                backgroundSize: 'cover',
+                height: '150px',
+                width: '100%',
+                borderRadius: '8px',
+                marginBottom: '10px'
+            }}></div>
             {userId && <ProfilePicture userId={userId} />}
             <h1>@{mentionName}</h1>
             <button onClick={handleProfileShareClick} style={{ marginBottom: '20px' }}>

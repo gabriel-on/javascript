@@ -10,7 +10,7 @@ const BannerUploader = () => {
     const [image, setImage] = useState('');
     const [color, setColor] = useState('#ffffff');
     const [previewImage, setPreviewImage] = useState('');
-    const [testingColor, setTestingColor] = useState(false); // Novo estado
+    const [testingColor, setTestingColor] = useState(false);
 
     useEffect(() => {
         if (currentUser) {
@@ -38,18 +38,39 @@ const BannerUploader = () => {
 
     const handleColorChange = (e) => {
         setColor(e.target.value);
-        setTestingColor(true); // Define que o usuário está testando a cor
+        setTestingColor(true);
     };
 
-    const handleSave = async () => {
+    const handleSaveImage = async () => {
         if (currentUser) {
             const bannerRef = ref(database, `users/${currentUser.uid}/banner`);
             try {
-                await set(bannerRef, { image: previewImage, color });
-                alert('Banner atualizado com sucesso!');
-                setTestingColor(false); // Redefine para falso ao salvar
+                await set(bannerRef, {
+                    image: previewImage,
+                    color,
+                    imageUpdatedAt: new Date().toISOString() // Adiciona data de atualização da imagem
+                });
+                alert('Imagem do banner atualizada com sucesso!');
+                setTestingColor(false);
             } catch (error) {
-                console.error("Erro ao salvar o banner:", error);
+                console.error("Erro ao salvar a imagem do banner:", error);
+            }
+        }
+    };
+
+    const handleSaveColor = async () => {
+        if (currentUser) {
+            const bannerRef = ref(database, `users/${currentUser.uid}/banner`);
+            try {
+                await set(bannerRef, {
+                    image: previewImage,
+                    color,
+                    colorUpdatedAt: new Date().toISOString() // Adiciona data de atualização da cor
+                });
+                alert('Cor do banner atualizada com sucesso!');
+                setTestingColor(false);
+            } catch (error) {
+                console.error("Erro ao salvar a cor do banner:", error);
             }
         }
     };
@@ -69,9 +90,10 @@ const BannerUploader = () => {
                 type="color"
                 value={color}
                 onChange={handleColorChange}
-                onBlur={() => setTestingColor(false)} // Volta a mostrar a imagem quando termina de testar a cor
+                onBlur={() => setTestingColor(false)}
             />
-            <button onClick={handleSave}>Salvar</button>
+            <button onClick={handleSaveImage}>Salvar Imagem</button>
+            <button onClick={handleSaveColor}>Salvar Cor</button>
         </div>
     );
 };

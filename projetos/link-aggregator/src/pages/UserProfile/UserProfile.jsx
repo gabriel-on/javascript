@@ -50,7 +50,7 @@ const UserProfile = () => {
 
     return (
         <div>
-            <h1>User Profile for @{mentionName}</h1>
+            <h1>@{mentionName}</h1>
             <ul>
                 {links.length > 0 ? (
                     links.map(link => (
@@ -59,7 +59,7 @@ const UserProfile = () => {
                         </li>
                     ))
                 ) : (
-                    <li>No links available for this user.</li>
+                    <li>Nenhum link disponível para este usuário.</li>
                 )}
             </ul>
         </div>

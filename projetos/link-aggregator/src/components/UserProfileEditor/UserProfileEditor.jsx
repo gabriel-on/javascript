@@ -1,4 +1,3 @@
-// src/components/UserProfileEditor/UserProfileEditor.jsx
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
 import { getDatabase, ref, update, get } from 'firebase/database';
@@ -7,10 +6,11 @@ import BannerUploader from '../../components/BannerUploader/BannerUploader';
 import './UserProfileEditor.css';
 
 const UserProfileEditor = () => {
-    const { currentUser } = useAuth();
+    const { currentUser, updateEmailAddress, updatePassword } = useAuth();
     const [name, setName] = useState('');
     const [mention, setMention] = useState('');
     const [email, setEmail] = useState('');
+    const [newPassword, setNewPassword] = useState('');
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -63,12 +63,35 @@ const UserProfileEditor = () => {
         if (currentUser) {
             updates[`/users/${currentUser.uid}/displayName`] = name; // O nome pode ser salvo mesmo sem alteração
             updates[`/users/${currentUser.uid}/mentionName`] = mention;
-            updates[`/users/${currentUser.uid}/email`] = email;
 
             const database = getDatabase();
             await update(ref(database), updates);
             setSuccessMessage('Informações atualizadas com sucesso!'); // Define a mensagem de sucesso
             setError(''); // Limpa a mensagem de erro
+        }
+
+        // Atualiza o e-mail se estiver verificado
+        if (currentUser.emailVerified) {
+            await updateEmailAddress(email);
+        } else {
+            setError('Você precisa verificar seu e-mail antes de poder atualizá-lo.');
+        }
+    };
+
+    const handlePasswordChange = async () => {
+        if (newPassword.length < 6) {
+            setError('A nova senha deve conter pelo menos 6 caracteres.');
+            return;
+        }
+
+        try {
+            await updatePassword(newPassword);
+            setSuccessMessage('Senha atualizada com sucesso!');
+            setError('');
+            setNewPassword(''); // Limpa o campo de senha
+        } catch (error) {
+            setError('Erro ao atualizar a senha: ' + error.message);
+            setSuccessMessage('');
         }
     };
 
@@ -76,6 +99,7 @@ const UserProfileEditor = () => {
         <div className="user-profile-editor">
             <h2>Editar Perfil</h2>
             {successMessage && <p className="success">{successMessage}</p>}
+            {error && <p className="error">{error}</p>}
             <ProfilePictureUploader />
             <BannerUploader />
             <div>
@@ -88,7 +112,6 @@ const UserProfileEditor = () => {
                         placeholder="Seu nome"
                     />
                 </label>
-                {error && <p className="error">{error}</p>}
                 <label>
                     Menção/Apelido (obrigatório):
                     <input
@@ -112,7 +135,19 @@ const UserProfileEditor = () => {
                     />
                 </label>
             </div>
-            <button onClick={handleSave}>Salvar</button>
+            <div>
+                <label>
+                    Nova Senha:
+                    <input
+                        type="password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        placeholder="Digite a nova senha"
+                    />
+                </label>
+            </div>
+            <button onClick={handleSave}>Salvar Informações</button>
+            <button onClick={handlePasswordChange}>Atualizar Senha</button>
         </div>
     );
 };

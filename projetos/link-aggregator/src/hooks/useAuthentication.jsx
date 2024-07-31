@@ -67,7 +67,6 @@ export const useAuth = () => {
                 email: data.email,
                 displayName: data.displayName,
                 mentionName: data.mentionName,
-                customUrl: `http://localhost:5173/${data.mentionName}`,
                 isAdmin: data.isAdmin || false,
                 joinedAt: joinedAt,
             });

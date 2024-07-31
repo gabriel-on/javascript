@@ -108,7 +108,14 @@ export const useAuth = () => {
             const user = auth.currentUser;
             if (user) {
                 if (user.emailVerified) {
-                    await sendEmailVerification(user, { requestType: 'VERIFY_AND_CHANGE_EMAIL', newEmail });
+                    // Configura a URL de redirecionamento para a verificação de e-mail
+                    const actionCodeSettings = {
+                        url: 'http://localhost:5173/', // URL base do seu aplicativo
+                        handleCodeInApp: true, // Para lidar com o código no aplicativo
+                    };
+
+                    // Envie o e-mail de verificação
+                    await sendEmailVerification(user, actionCodeSettings);
                     console.log("E-mail de verificação para o novo e-mail enviado.");
                     setEmailUpdateInProgress(true);
                     setError("Um e-mail de verificação foi enviado para o novo e-mail. Por favor, verifique seu e-mail antes de atualizar.");

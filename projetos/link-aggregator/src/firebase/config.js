@@ -6,6 +6,7 @@ import { getDatabase } from "firebase/database";
 const firebaseConfig = {
     apiKey: "AIzaSyCbLNXH64CSPkoN9XpW6ebkzsieo6Qk11k",
     authDomain: "link-aggregator-brasil.firebaseapp.com",
+    databaseURL: "https://link-aggregator-brasil-default-rtdb.firebaseio.com",
     projectId: "link-aggregator-brasil",
     storageBucket: "link-aggregator-brasil.appspot.com",
     messagingSenderId: "361047906652",

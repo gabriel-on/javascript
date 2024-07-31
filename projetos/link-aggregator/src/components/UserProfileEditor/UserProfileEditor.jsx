@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
 import { getDatabase, ref, update, get } from 'firebase/database';
-import { getAuth, fetchSignInMethodsForEmail } from 'firebase/auth';
+import { getAuth, fetchSignInMethodsForEmail, sendSignInLinkToEmail } from 'firebase/auth';
 import ProfilePictureUploader from '../../components/ProfilePictureUploader/ProfilePictureUploader';
 import BannerUploader from '../../components/BannerUploader/BannerUploader';
 import './UserProfileEditor.css';
@@ -71,34 +71,32 @@ const UserProfileEditor = () => {
         const updatedUser = auth.currentUser;
 
         if (updatedUser) {
-            console.log('E-mail verificado:', updatedUser.emailVerified);
+            console.log('E-mail verificado:', updatedUser.emailVerified); // Log do status de verificação
 
             if (updatedUser.emailVerified) {
-                const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-                if (signInMethods.length > 0) {
-                    setError('Este e-mail já está associado a outra conta.');
-                    setIsLoading(false);
-                    return;
-                }
-
                 try {
-                    await updateEmailUser(email); // Atualiza o e-mail no Auth
-                    await update(ref(getDatabase()), {
-                        [`users/${currentUser.uid}/email`]: email,
-                        [`users/${currentUser.uid}/mentionName`]: mention,
-                        [`users/${currentUser.uid}/displayName`]: name,
-                    }); // Atualiza o e-mail e menção no Realtime Database
-                    setSuccessMessage('Informações atualizadas com sucesso!');
-                    setError('');
-                    // Limpar os campos após sucesso
-                    setName('');
-                    setMention('');
-                    setEmail('');
+                    const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+                    if (signInMethods.length > 0) {
+                        setError('Este e-mail já está associado a outra conta.');
+                        setIsLoading(false);
+                        return;
+                    }
+
+                    const actionCodeSettings = {
+                        url: 'http://localhost:5173/finishSignUp', // URL de redirecionamento após a verificação
+                        handleCodeInApp: true
+                    };
+
+                    // Enviar link de verificação para o novo e-mail
+                    await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+                    window.localStorage.setItem('emailForSignIn', email);
+                    setSuccessMessage('Um link de verificação foi enviado para o novo endereço de e-mail. Por favor, verifique o e-mail e clique no link para continuar.');
                 } catch (error) {
-                    setError('Erro ao atualizar e-mail: ' + error.message);
+                    setError('Erro ao enviar link de verificação: ' + error.message);
                 }
             } else {
-                setError('Você precisa verificar seu e-mail antes de poder atualizá-lo.');
+                console.log('E-mail não verificado.'); // Log caso o e-mail não esteja verificado
+                setError('Você precisa verificar seu e-mail atual antes de poder atualizá-lo.');
             }
         } else {
             setError('Usuário não encontrado. Faça login novamente.');

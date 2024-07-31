@@ -22,6 +22,7 @@ import Dashboard from './pages/Dashboard/Dashboard.jsx';
 import Edit from './pages/Edit/Edit.jsx';
 import ErrorPage from './pages/ErrorPage/ErrorPage.jsx';
 import UserProfile from './pages/UserProfile/UserProfile.jsx';
+import EmailVerification from './components/EmailVerification/EmailVerification.jsx';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -71,6 +72,7 @@ function App() {
             <Routes>
               <Route path="/error" element={<ErrorPage />} />
               <Route path="*" element={<Navigate to="/error" />} /> {/* Redireciona para a página de erro */}
+              <Route path="/finishSignUp" element={<EmailVerification />} />
 
               <Route path="/:mentionName" element={<UserProfile />} />
               <Route path='/' element={<Home />} />

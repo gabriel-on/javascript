@@ -1,0 +1,42 @@
+/* src/components/UserProfileEditor/UserProfileEditor.css */
+.user-profile-editor {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.user-profile-editor h2 {
+    margin-bottom: 20px;
+}
+
+.user-profile-editor label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.user-profile-editor input {
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.user-profile-editor button {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.user-profile-editor button:hover {
+    background-color: #218838;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}

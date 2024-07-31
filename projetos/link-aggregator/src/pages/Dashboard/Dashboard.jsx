@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
 import useLinks from '../../hooks/useLinks';
 import { NavLink } from 'react-router-dom';
-import ProfilePictureUploader from '../../components/ProfilePictureUploader/ProfilePictureUploader';
-import BannerUploader from '../../components/BannerUploader/BannerUploader';
 import Modal from '../../components/Modal/Modal';
+import UserProfileEditor from '../../components/UserProfileEditor/UserProfileEditor';
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
@@ -48,8 +47,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      {/* <ProfilePictureUploader /> */}
-      {/* <BannerUploader /> */}
+      <UserProfileEditor />
       <ul>
         {currentUser && (
           <li className='profile-link-page'>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
 import { getDatabase, ref, update, get } from 'firebase/database';
-import { getAuth } from 'firebase/auth'; // Importe getAuth
+import { getAuth, fetchSignInMethodsForEmail } from 'firebase/auth';
 import ProfilePictureUploader from '../../components/ProfilePictureUploader/ProfilePictureUploader';
 import BannerUploader from '../../components/BannerUploader/BannerUploader';
 import './UserProfileEditor.css';
@@ -14,6 +14,7 @@ const UserProfileEditor = () => {
     const [newPassword, setNewPassword] = useState('');
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (currentUser) {
@@ -23,55 +24,109 @@ const UserProfileEditor = () => {
         }
     }, [currentUser]);
 
-    const handleSave = async () => {
-        if (!mention || !email) {
-            setError('Por favor, preencha todos os campos obrigatórios.');
-            return;
-        }
-
-        // Validação básica para o e-mail
+    const validateEmail = (email) => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(email)) {
-            setError('Por favor, insira um e-mail válido.');
-            return;
-        }
+        return emailPattern.test(email);
+    };
 
-        // ... (código de verificação de menção)
-
-        const updates = {};
-        if (currentUser) {
-            updates[`/users/${currentUser.uid}/displayName`] = name; // O nome pode ser salvo mesmo sem alteração
-            updates[`/users/${currentUser.uid}/mentionName`] = mention;
-
-            const database = getDatabase();
-            await update(ref(database), updates);
-            setSuccessMessage('Informações atualizadas com sucesso!');
-            setError('');
-
-            // Verifique se o e-mail atual está verificado antes de permitir a atualização
-            if (currentUser.emailVerified) {
-                await updateEmailUser(email); // Altere esta linha para chamar a função correta
-            } else {
-                setError('Você precisa verificar seu e-mail antes de poder atualizá-lo.');
-                return; // Retorna para não tentar atualizar o e-mail
+    const checkMentionAvailability = async (mention) => {
+        const mentionNameRef = ref(getDatabase(), 'users');
+        const snapshot = await get(mentionNameRef);
+        if (snapshot.exists()) {
+            const users = snapshot.val();
+            for (const key in users) {
+                if (users[key].mentionName === mention && key !== currentUser.uid) {
+                    return false; // Menção já em uso
+                }
             }
         }
+        return true; // Menção disponível
+    };
+
+    const handleSave = async () => {
+        setError('');
+        setSuccessMessage('');
+        setIsLoading(true);
+
+        if (!mention || !email) {
+            setError('Por favor, preencha todos os campos obrigatórios.');
+            setIsLoading(false);
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            setError('Por favor, insira um e-mail válido.');
+            setIsLoading(false);
+            return;
+        }
+
+        const isMentionAvailable = await checkMentionAvailability(mention);
+        if (!isMentionAvailable) {
+            setError('A menção já está em uso. Escolha outra.');
+            setIsLoading(false);
+            return;
+        }
+
+        const auth = getAuth();
+        const updatedUser = auth.currentUser;
+
+        if (updatedUser) {
+            console.log('E-mail verificado:', updatedUser.emailVerified);
+
+            if (updatedUser.emailVerified) {
+                const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+                if (signInMethods.length > 0) {
+                    setError('Este e-mail já está associado a outra conta.');
+                    setIsLoading(false);
+                    return;
+                }
+
+                try {
+                    await updateEmailUser(email); // Atualiza o e-mail no Auth
+                    await update(ref(getDatabase()), {
+                        [`users/${currentUser.uid}/email`]: email,
+                        [`users/${currentUser.uid}/mentionName`]: mention,
+                        [`users/${currentUser.uid}/displayName`]: name,
+                    }); // Atualiza o e-mail e menção no Realtime Database
+                    setSuccessMessage('Informações atualizadas com sucesso!');
+                    setError('');
+                    // Limpar os campos após sucesso
+                    setName('');
+                    setMention('');
+                    setEmail('');
+                } catch (error) {
+                    setError('Erro ao atualizar e-mail: ' + error.message);
+                }
+            } else {
+                setError('Você precisa verificar seu e-mail antes de poder atualizá-lo.');
+            }
+        } else {
+            setError('Usuário não encontrado. Faça login novamente.');
+        }
+
+        setIsLoading(false);
     };
 
     const handlePasswordChange = async () => {
+        setError('');
+        setSuccessMessage('');
+        setIsLoading(true);
+
         if (newPassword.length < 6) {
             setError('A nova senha deve conter pelo menos 6 caracteres.');
+            setIsLoading(false);
             return;
         }
 
         try {
-            await updatePasswordUser(newPassword); // Chama a função do hook
+            await updatePasswordUser(newPassword);
             setSuccessMessage('Senha atualizada com sucesso!');
-            setError('');
-            setNewPassword(''); // Limpa o campo de senha
+            setNewPassword(''); // Limpar o campo de senha após sucesso
         } catch (error) {
             setError('Erro ao atualizar a senha: ' + error.message);
             setSuccessMessage('');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -126,8 +181,8 @@ const UserProfileEditor = () => {
                     />
                 </label>
             </div>
-            <button onClick={handleSave}>Salvar Informações</button>
-            <button onClick={handlePasswordChange}>Atualizar Senha</button>
+            <button onClick={handleSave} disabled={isLoading}>Salvar Informações</button>
+            <button onClick={handlePasswordChange} disabled={isLoading}>Atualizar Senha</button>
         </div>
     );
 };

@@ -16,6 +16,7 @@ export const useAuth = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
+    const [emailUpdateInProgress, setEmailUpdateInProgress] = useState(false); // Novo estado
 
     const auth = getAuth();
     const db = getDatabase();
@@ -102,32 +103,31 @@ export const useAuth = () => {
     const updateEmailUser = async (newEmail) => {
         handleCancellation();
         setLoading(true);
-    
+
         try {
             const user = auth.currentUser;
             if (user) {
-                if (!user.emailVerified) {
-                    // Tente enviar o e-mail de verificação
+                if (user.emailVerified) {
+                    await sendEmailVerification(user, { requestType: 'VERIFY_AND_CHANGE_EMAIL', newEmail });
+                    console.log("E-mail de verificação para o novo e-mail enviado.");
+                    setEmailUpdateInProgress(true);
+                    setError("Um e-mail de verificação foi enviado para o novo e-mail. Por favor, verifique seu e-mail antes de atualizar.");
+                } else {
                     await sendEmailVerification(user);
-                    console.log("E-mail de verificação enviado."); // Log para confirmar o envio
+                    console.log("E-mail de verificação enviado.");
                     setError("Um e-mail de verificação foi enviado. Por favor, verifique seu e-mail antes de atualizar.");
-                    return;
                 }
-    
-                await updateEmail(user, newEmail);
-                setCurrentUser(prev => ({ ...prev, email: newEmail })); // Atualiza o estado local
-                setError("E-mail atualizado com sucesso.");
             } else {
                 setError("Usuário não autenticado.");
             }
         } catch (error) {
-            console.error("Erro ao atualizar e-mail:", error);
-            setError("Erro ao atualizar o e-mail.");
+            console.error("Erro ao enviar e-mail de verificação:", error);
+            setError("Erro ao enviar o e-mail de verificação. " + error.message);
         } finally {
             setLoading(false);
         }
     };
-    
+
     const updatePasswordUser = async (newPassword) => {
         handleCancellation();
         setLoading(true);
@@ -253,6 +253,7 @@ export const useAuth = () => {
         loading,
         currentUser,
         setCurrentUser,
-        getCurrentUser
+        getCurrentUser,
+        emailUpdateInProgress // Novo retorno
     };
 };

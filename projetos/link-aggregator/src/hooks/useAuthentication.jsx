@@ -4,7 +4,9 @@ import {
     signInWithEmailAndPassword,
     updateProfile as updateProfileAuth,
     signOut,
-    sendEmailVerification
+    sendEmailVerification,
+    updateEmail,
+    updatePassword
 } from "firebase/auth";
 import { useState, useEffect, useRef } from "react";
 import { getDatabase, ref, set, get } from "firebase/database";
@@ -92,6 +94,55 @@ export const useAuth = () => {
 
             console.error("Erro ao criar usuário:", error);
             setError(systemErrorMessage);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const updateEmailUser = async (newEmail) => {
+        handleCancellation();
+        setLoading(true);
+    
+        try {
+            const user = auth.currentUser;
+            if (user) {
+                if (!user.emailVerified) {
+                    // Tente enviar o e-mail de verificação
+                    await sendEmailVerification(user);
+                    console.log("E-mail de verificação enviado."); // Log para confirmar o envio
+                    setError("Um e-mail de verificação foi enviado. Por favor, verifique seu e-mail antes de atualizar.");
+                    return;
+                }
+    
+                await updateEmail(user, newEmail);
+                setCurrentUser(prev => ({ ...prev, email: newEmail })); // Atualiza o estado local
+                setError("E-mail atualizado com sucesso.");
+            } else {
+                setError("Usuário não autenticado.");
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar e-mail:", error);
+            setError("Erro ao atualizar o e-mail.");
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+    const updatePasswordUser = async (newPassword) => {
+        handleCancellation();
+        setLoading(true);
+
+        try {
+            const user = auth.currentUser;
+            if (user) {
+                await updatePassword(user, newPassword);
+                setError("Senha atualizada com sucesso.");
+            } else {
+                setError("Usuário não autenticado.");
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar a senha:", error);
+            setError("Erro ao atualizar a senha.");
         } finally {
             setLoading(false);
         }
@@ -194,6 +245,8 @@ export const useAuth = () => {
     return {
         auth,
         createUser,
+        updateEmailUser,
+        updatePasswordUser,
         error,
         logout,
         login,

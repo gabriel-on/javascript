@@ -1,48 +1,56 @@
 import React, { useEffect, useState } from 'react';
-import { getAuth, isSignInWithEmailLink, signInWithEmailLink, updateEmail } from 'firebase/auth';
-import { getDatabase, ref, update } from 'firebase/database';
+import { getAuth, isSignInWithEmailLink, signInWithEmailLink } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
 const EmailVerification = () => {
     const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const auth = getAuth();
     const emailForSignIn = window.localStorage.getItem('emailForSignIn');
 
     useEffect(() => {
-        if (isSignInWithEmailLink(auth, window.location.href)) {
-            if (!emailForSignIn) {
-                setMessage('Nenhum e-mail encontrado para verificação.');
-                return;
-            }
+        const verifyEmail = async () => {
+            if (isSignInWithEmailLink(auth, window.location.href)) {
+                if (!emailForSignIn) {
+                    setMessage('Nenhum e-mail encontrado para verificação.');
+                    setLoading(false);
+                    return;
+                }
 
-            signInWithEmailLink(auth, emailForSignIn, window.location.href)
-                .then(async (result) => {
-                    // Update email in Firebase Auth
-                    await updateEmail(auth.currentUser, emailForSignIn);
+                try {
+                    // Autentica o usuário com o link
+                    const userCredential = await signInWithEmailLink(auth, emailForSignIn, window.location.href);
+                    const user = userCredential.user;
 
-                    // Update email in Realtime Database
-                    const userRef = ref(getDatabase(), `users/${auth.currentUser.uid}`);
-                    await update(userRef, {
-                        email: emailForSignIn
-                    });
+                    // Verifica se o e-mail foi verificado
+                    if (user.emailVerified) {
+                        setMessage('Seu e-mail já foi verificado.');
+                    } else {
+                        setMessage('Seu e-mail foi verificado com sucesso!');
+                        // Aqui você pode atualizar o estado do usuário ou realizar outras ações
+                    }
 
-                    window.localStorage.removeItem('emailForSignIn');
-                    setMessage('Seu e-mail foi verificado e atualizado com sucesso!');
-                    navigate('/'); // Redirect to profile or any other page
-                })
-                .catch((error) => {
+                    // Redirecionar após a verificação
+                    navigate('/'); // Redireciona para a página desejada
+                } catch (error) {
                     setMessage(`Erro ao verificar o e-mail: ${error.message}`);
-                });
-        } else {
-            setMessage('Link de verificação inválido.');
-        }
+                } finally {
+                    setLoading(false);
+                }
+            } else {
+                setMessage('Link de verificação inválido.');
+                setLoading(false);
+            }
+        };
+
+        verifyEmail();
     }, [auth, emailForSignIn, navigate]);
 
     return (
         <div>
             <h2>Verificação de E-mail</h2>
-            <p>{message}</p>
+            {loading ? <p>Verificando...</p> : <p>{message}</p>}
         </div>
     );
 };

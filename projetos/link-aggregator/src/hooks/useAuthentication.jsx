@@ -5,9 +5,7 @@ import {
     updateProfile as updateProfileAuth,
     signOut,
     sendEmailVerification,
-    updateEmail,
     updatePassword,
-    fetchSignInMethodsForEmail
 } from "firebase/auth";
 import { useState, useEffect, useRef } from "react";
 import { getDatabase, ref, set, get } from "firebase/database";
@@ -17,7 +15,6 @@ export const useAuth = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
-    const [emailUpdateInProgress, setEmailUpdateInProgress] = useState(false); // Novo estado
 
     const auth = getAuth();
     const db = getDatabase();
@@ -96,55 +93,6 @@ export const useAuth = () => {
 
             console.error("Erro ao criar usuário:", error);
             setError(systemErrorMessage);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const updateEmailUser = async (newEmail) => {
-        handleCancellation();
-        setLoading(true);
-
-        try {
-            const user = auth.currentUser;
-            if (user) {
-                console.log("Usuário autenticado:", user.email); // Log para verificar o e-mail atual do usuário
-
-                // Verifica se o e-mail atual está verificado
-                if (!user.emailVerified) {
-                    console.log("E-mail atual não verificado:", user.email); // Log se o e-mail não estiver verificado
-                    setError("Você precisa verificar seu e-mail atual antes de atualizar para um novo e-mail.");
-                    return;
-                }
-
-                // Verifica se o novo e-mail já está associado a outra conta
-                const signInMethods = await fetchSignInMethodsForEmail(auth, newEmail);
-                if (signInMethods.length > 0) {
-                    console.log("Novo e-mail já associado a outra conta:", newEmail); // Log se o novo e-mail já estiver associado
-                    setError("Este e-mail já está associado a outra conta.");
-                    return;
-                }
-
-                // Atualiza o e-mail
-                await updateEmail(user, newEmail);
-                console.log("E-mail atualizado com sucesso:", newEmail); // Log após atualização bem-sucedida
-
-                // Envie o e-mail de verificação para o novo e-mail
-                const actionCodeSettings = {
-                    url: 'http://localhost:5173/', // URL base do seu aplicativo
-                    handleCodeInApp: true, // Para lidar com o código no aplicativo
-                };
-                await sendEmailVerification(user, actionCodeSettings);
-                console.log("E-mail de verificação para o novo e-mail enviado.");
-                setEmailUpdateInProgress(true);
-                setError("Um e-mail de verificação foi enviado para o novo e-mail. Por favor, verifique seu e-mail antes de fazer login novamente.");
-            } else {
-                console.log("Usuário não autenticado."); // Log se o usuário não estiver autenticado
-                setError("Usuário não autenticado.");
-            }
-        } catch (error) {
-            console.error("Erro ao enviar e-mail de verificação:", error); // Log do erro
-            setError("Erro ao enviar o e-mail de verificação. " + error.message);
         } finally {
             setLoading(false);
         }
@@ -267,7 +215,6 @@ export const useAuth = () => {
     return {
         auth,
         createUser,
-        updateEmailUser,
         updatePasswordUser,
         error,
         logout,
@@ -276,6 +223,5 @@ export const useAuth = () => {
         currentUser,
         setCurrentUser,
         getCurrentUser,
-        emailUpdateInProgress // Novo retorno
     };
 };

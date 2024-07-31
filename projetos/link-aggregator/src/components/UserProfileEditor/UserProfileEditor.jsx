@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
-import { getDatabase, ref, update, get } from 'firebase/database';
-import { getAuth, fetchSignInMethodsForEmail, sendSignInLinkToEmail } from 'firebase/auth';
+import { getDatabase, ref, get } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
 import ProfilePictureUploader from '../../components/ProfilePictureUploader/ProfilePictureUploader';
 import BannerUploader from '../../components/BannerUploader/BannerUploader';
 import './UserProfileEditor.css';
 
 const UserProfileEditor = () => {
-    const { currentUser, updateEmailUser, updatePasswordUser } = useAuth();
+    const { currentUser, updatePasswordUser } = useAuth();
     const [name, setName] = useState('');
     const [mention, setMention] = useState('');
-    const [email, setEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
@@ -20,14 +19,8 @@ const UserProfileEditor = () => {
         if (currentUser) {
             setName(currentUser.displayName || '');
             setMention(currentUser.mentionName || '');
-            setEmail(currentUser.email || '');
         }
     }, [currentUser]);
-
-    const validateEmail = (email) => {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailPattern.test(email);
-    };
 
     const checkMentionAvailability = async (mention) => {
         const mentionNameRef = ref(getDatabase(), 'users');
@@ -48,14 +41,8 @@ const UserProfileEditor = () => {
         setSuccessMessage('');
         setIsLoading(true);
 
-        if (!mention || !email) {
+        if (!mention) {
             setError('Por favor, preencha todos os campos obrigatórios.');
-            setIsLoading(false);
-            return;
-        }
-
-        if (!validateEmail(email)) {
-            setError('Por favor, insira um e-mail válido.');
             setIsLoading(false);
             return;
         }
@@ -67,41 +54,7 @@ const UserProfileEditor = () => {
             return;
         }
 
-        const auth = getAuth();
-        const updatedUser = auth.currentUser;
-
-        if (updatedUser) {
-            console.log('E-mail verificado:', updatedUser.emailVerified); // Log do status de verificação
-
-            if (updatedUser.emailVerified) {
-                try {
-                    const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-                    if (signInMethods.length > 0) {
-                        setError('Este e-mail já está associado a outra conta.');
-                        setIsLoading(false);
-                        return;
-                    }
-
-                    const actionCodeSettings = {
-                        url: 'http://localhost:5173/finishSignUp', // URL de redirecionamento após a verificação
-                        handleCodeInApp: true
-                    };
-
-                    // Enviar link de verificação para o novo e-mail
-                    await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-                    window.localStorage.setItem('emailForSignIn', email);
-                    setSuccessMessage('Um link de verificação foi enviado para o novo endereço de e-mail. Por favor, verifique o e-mail e clique no link para continuar.');
-                } catch (error) {
-                    setError('Erro ao enviar link de verificação: ' + error.message);
-                }
-            } else {
-                console.log('E-mail não verificado.'); // Log caso o e-mail não esteja verificado
-                setError('Você precisa verificar seu e-mail atual antes de poder atualizá-lo.');
-            }
-        } else {
-            setError('Usuário não encontrado. Faça login novamente.');
-        }
-
+        setSuccessMessage('Informações salvas com sucesso!');
         setIsLoading(false);
     };
 
@@ -158,13 +111,12 @@ const UserProfileEditor = () => {
             </div>
             <div>
                 <label>
-                    E-mail (obrigatório):
+                    E-mail:
                     <input
                         type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={currentUser ? currentUser.email : ''}
+                        disabled
                         placeholder="Seu e-mail"
-                        required
                     />
                 </label>
             </div>

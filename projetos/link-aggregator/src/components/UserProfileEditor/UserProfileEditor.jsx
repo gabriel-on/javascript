@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
-import { getDatabase, ref, get } from 'firebase/database';
-import { getAuth } from 'firebase/auth';
+import { getDatabase, ref, get, update } from 'firebase/database';
+import { getAuth, updateProfile } from 'firebase/auth';
 import ProfilePictureUploader from '../../components/ProfilePictureUploader/ProfilePictureUploader';
 import BannerUploader from '../../components/BannerUploader/BannerUploader';
 import './UserProfileEditor.css';
@@ -54,8 +54,33 @@ const UserProfileEditor = () => {
             return;
         }
 
-        setSuccessMessage('Informações salvas com sucesso!');
-        setIsLoading(false);
+        try {
+            const auth = getAuth();
+            const user = auth.currentUser;
+
+            if (user) {
+                // Atualiza o perfil no Firebase Auth
+                await updateProfile(user, {
+                    displayName: name,
+                });
+
+                // Atualiza o perfil no Realtime Database
+                const db = getDatabase();
+                const userRef = ref(db, `users/${user.uid}`);
+                await update(userRef, {
+                    displayName: name,
+                    mentionName: mention,
+                });
+
+                setSuccessMessage('Informações salvas com sucesso!');
+            } else {
+                setError('Usuário não encontrado. Faça login novamente.');
+            }
+        } catch (error) {
+            setError('Erro ao salvar as informações: ' + error.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handlePasswordChange = async () => {

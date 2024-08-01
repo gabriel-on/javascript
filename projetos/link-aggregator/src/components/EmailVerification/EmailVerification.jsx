@@ -29,15 +29,13 @@ const EmailVerification = () => {
                         setMessage('Seu e-mail já foi verificado.');
                     } else {
                         await applyActionCode(auth, oobCode);
-                        setMessage('Seu e-mail foi verificado com sucesso. Você será redirecionado em breve.');
-
-                        // Atualizar o estado do usuário
-                        await auth.currentUser.reload();
+                        await auth.currentUser.reload(); // Atualiza o estado do usuário após a aplicação do código
 
                         if (auth.currentUser.emailVerified) {
+                            setMessage('Seu e-mail foi verificado com sucesso. Você será redirecionado em breve.');
                             setTimeout(() => {
                                 navigate('/');
-                            }, 3000); // Redireciona após 3 segundos
+                            }, 5000); // Redireciona após 5 segundos
                         } else {
                             setMessage('Ocorreu um erro ao verificar seu e-mail. Por favor, tente novamente.');
                         }

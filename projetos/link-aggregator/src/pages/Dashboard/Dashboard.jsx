@@ -82,7 +82,7 @@ const Dashboard = () => {
         )}
       </ul>
       <div>
-        <h2>Add a new link</h2>
+        <h2>Adicionar um novo link</h2>
         <input
           type="text"
           value={title}
@@ -95,17 +95,17 @@ const Dashboard = () => {
           onChange={(e) => setUrl(e.target.value)}
           placeholder="URL"
         />
-        <button onClick={handleAddLink}>Add Link</button>
+        <button onClick={handleAddLink}>Adicionar Link</button>
       </div>
       <div>
-        <h2>Your Links</h2>
+        <h2>Seus links</h2>
         <ul>
           {links
             .filter(link => link.userId === currentUser.uid)
             .map(link => (
               <li key={link.id}>
                 <a href={link.url} target="_blank" rel="noopener noreferrer">{link.title}</a>
-                <button onClick={() => openModal(link)}>Edit</button>
+                <button onClick={() => openModal(link)}>Editar</button>
                 <span> (Added on: {new Date(link.createdAt * 1000).toLocaleString()})</span>
               </li>
             ))}

@@ -6,7 +6,8 @@ import {
     signOut,
     sendEmailVerification,
     updatePassword,
-    sendPasswordResetEmail as firebaseSendPasswordResetEmail
+    sendPasswordResetEmail as firebaseSendPasswordResetEmail,
+    deleteUser,
 } from "firebase/auth";
 import { useState, useEffect, useRef } from "react";
 import { getDatabase, ref, set, get } from "firebase/database";
@@ -157,6 +158,33 @@ export const useAuth = () => {
         }
     };
 
+    const deleteAccount = async () => {
+        handleCancellation();
+        setLoading(true);
+
+        try {
+            const user = auth.currentUser;
+            if (user) {
+                // Delete user from Authentication
+                await deleteUser(user);
+
+                // Delete user data from Realtime Database
+                const userRef = ref(db, `users/${user.uid}`);
+                await set(userRef, null);
+
+                setCurrentUser(null);
+                setError("Conta deletada com sucesso.");
+            } else {
+                setError("Usuário não autenticado.");
+            }
+        } catch (error) {
+            console.error("Erro ao deletar conta:", error);
+            setError("Erro ao deletar conta.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const logout = async () => {
         handleCancellation();
         setLoading(true);
@@ -258,6 +286,7 @@ export const useAuth = () => {
         createUser,
         updatePasswordUser,
         sendPasswordResetEmail,
+        deleteAccount,
         error,
         logout,
         login,

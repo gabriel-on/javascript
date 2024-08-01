@@ -7,7 +7,7 @@ import './UserProfileEditor.css';
 import { Link } from 'react-router-dom';
 
 const UserProfileEditor = () => {
-    const { currentUser } = useAuth();
+    const { currentUser, deleteAccount } = useAuth(); // Import deleteAccount here
     const {
         name, setName,
         mention, setMention,
@@ -28,7 +28,18 @@ const UserProfileEditor = () => {
         return 'forte';
     };
 
-    // UserProfileEditor.js
+    const handleDeleteAccount = async () => {
+        if (window.confirm("Tem certeza que deseja deletar sua conta? Esta ação não pode ser desfeita.")) {
+            try {
+                await deleteAccount();
+                alert("Conta deletada com sucesso.");
+                // Redirecionar ou realizar outras ações conforme necessário
+            } catch (error) {
+                alert("Erro ao deletar conta. Tente novamente.");
+            }
+        }
+    };
+
     return (
         <div className="user-profile-editor">
             <h2>Editar Perfil</h2>
@@ -124,6 +135,9 @@ const UserProfileEditor = () => {
             </>
             <button onClick={handleSubmit} disabled={isLoading}>
                 Salvar
+            </button>
+            <button onClick={handleDeleteAccount} className="delete-account-button">
+                Deletar Conta
             </button>
         </div>
     );

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuthentication';
 import { getAuth, applyActionCode, sendEmailVerification } from "firebase/auth";
+import { getDatabase, ref, update } from "firebase/database"; // Alterado para importar update
 
 const EmailVerification = () => {
     const [message, setMessage] = useState('');
@@ -21,8 +22,6 @@ const EmailVerification = () => {
             if (mode === 'verifyEmail' && oobCode) {
                 try {
                     const auth = getAuth();
-
-                    // Verifica se o usuário já está autenticado e se o e-mail foi verificado
                     const user = auth.currentUser;
 
                     if (user && user.emailVerified) {
@@ -32,6 +31,12 @@ const EmailVerification = () => {
                         await auth.currentUser.reload(); // Atualiza o estado do usuário após a aplicação do código
 
                         if (auth.currentUser.emailVerified) {
+                            // Atualiza o estado do usuário no Realtime Database
+                            const db = getDatabase();
+                            await update(ref(db, 'users/' + user.uid), {
+                                emailVerified: true,
+                            });
+
                             setMessage('Seu e-mail foi verificado com sucesso. Você será redirecionado em breve.');
                             setTimeout(() => {
                                 navigate('/');

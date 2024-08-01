@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
 import useLinks from '../../hooks/useLinks';
 import { NavLink } from 'react-router-dom';
 import Modal from '../../components/Modal/Modal';
 import UserProfileEditor from '../../components/UserProfileEditor/UserProfileEditor';
+import { getAuth } from "firebase/auth";
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
@@ -11,8 +12,21 @@ const Dashboard = () => {
   const [url, setUrl] = useState('');
   const [selectedLink, setSelectedLink] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // State for loading
 
   const { links, addLink, editLink, deleteLink } = useLinks(currentUser ? currentUser.uid : null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (currentUser) {
+        const auth = getAuth();
+        await auth.currentUser.reload(); // Reload the user to get the latest data
+        setIsLoading(false); // Set loading to false after fetching
+      }
+    };
+
+    fetchUserData();
+  }, [currentUser]);
 
   if (!currentUser) {
     return <p>Faça <a href="/login">Login</a> para visualizar seu dashboard.</p>;
@@ -48,6 +62,18 @@ const Dashboard = () => {
     <div>
       <h1>Dashboard</h1>
       <UserProfileEditor />
+
+      {/* Indicativo de verificação de e-mail */}
+      <div>
+        {isLoading ? (
+          <p>Carregando...</p>
+        ) : currentUser.emailVerified ? (
+          <p style={{ color: 'green' }}>✅ Seu e-mail está verificado!</p>
+        ) : (
+          <p style={{ color: 'red' }}>⚠️ Seu e-mail não foi verificado. Verifique sua caixa de entrada.</p>
+        )}
+      </div>
+
       <ul>
         {currentUser && (
           <li className='profile-link-page'>

@@ -81,6 +81,7 @@ export const useAuth = () => {
                 mentionName: data.mentionName,
                 isAdmin: data.isAdmin || false,
                 joinedAt: joinedAt,
+                emailVerified: false, // Adicionando a verificação do e-mail no banco de dados
             });
 
             setCurrentUser({
@@ -89,6 +90,7 @@ export const useAuth = () => {
                 displayName: data.displayName,
                 mentionName: data.mentionName,
                 isAdmin: data.isAdmin || false,
+                emailVerified: false, // Inicialmente definido como falso
             });
 
             return user;
@@ -194,6 +196,7 @@ export const useAuth = () => {
                     displayName: userData.displayName,
                     mentionName: userData.mentionName,
                     isAdmin: userData.isAdmin || false,
+                    emailVerified: user.emailVerified || false, // Atualiza o estado com emailVerified
                 });
             } else {
                 setError("Dados do usuário não encontrados.");
@@ -230,6 +233,7 @@ export const useAuth = () => {
                         displayName: userData.displayName,
                         mentionName: userData.mentionName,
                         isAdmin: userData.isAdmin || false,
+                        emailVerified: user.emailVerified || false, // Garantindo que o emailVerified é atualizado
                     });
                 } else {
                     setCurrentUser(null);

@@ -25,19 +25,21 @@ const UserProfileEditor = () => {
             <ProfilePictureUploader />
             <BannerUploader />
             <div>
-                <label>
+                <label htmlFor="name">
                     Nome (opcional):
                     <input
                         type="text"
+                        id="name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Seu nome"
                     />
                 </label>
-                <label>
+                <label htmlFor="mention">
                     Menção/Apelido (obrigatório):
                     <input
                         type="text"
+                        id="mention"
                         value={mention}
                         onChange={(e) => setMention(e.target.value)}
                         placeholder="menção/apelido"
@@ -46,10 +48,11 @@ const UserProfileEditor = () => {
                 </label>
             </div>
             <div>
-                <label>
+                <label htmlFor="email">
                     E-mail:
                     <input
                         type="email"
+                        id="email"
                         value={currentUser ? currentUser.email : ''}
                         disabled
                         placeholder="Seu e-mail"
@@ -57,24 +60,28 @@ const UserProfileEditor = () => {
                 </label>
             </div>
             <div>
-                <label>
-                    Nova Senha:
-                    <input
-                        type="password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        placeholder="Digite a nova senha"
-                    />
-                </label>
-                <label>
-                    Confirmar Nova Senha:
-                    <input
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        placeholder="Confirme a nova senha"
-                    />
-                </label>
+                <form onSubmit={(e) => e.preventDefault()}>
+                    <label htmlFor="new-password">
+                        <span>Nova Senha:</span>
+                        <input
+                            type="password"
+                            id="new-password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            placeholder="Digite a nova senha"
+                        />
+                    </label>
+                    <label htmlFor="confirm-password">
+                        <span>Confirmar Nova Senha:</span>
+                        <input
+                            type="password"
+                            id="confirm-password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            placeholder="Confirme a nova senha"
+                        />
+                    </label>
+                </form>
             </div>
             <button onClick={handleSave} disabled={isLoading}>Salvar Informações</button>
             <button onClick={() => handlePasswordChange(updatePasswordUser)} disabled={isLoading}>Atualizar Senha</button>

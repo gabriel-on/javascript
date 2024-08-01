@@ -12,7 +12,7 @@ const Dashboard = () => {
   const [url, setUrl] = useState('');
   const [selectedLink, setSelectedLink] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // State for loading
+  const [isLoading, setIsLoading] = useState(true);
 
   const { links, addLink, editLink, deleteLink } = useLinks(currentUser ? currentUser.uid : null);
 
@@ -88,14 +88,21 @@ const Dashboard = () => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Title"
+          disabled={!currentUser.emailVerified}
         />
         <input
           type="url"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="URL"
+          disabled={!currentUser.emailVerified}
         />
-        <button onClick={handleAddLink}>Adicionar Link</button>
+        <button onClick={handleAddLink} disabled={!currentUser.emailVerified}>
+          Adicionar Link
+        </button>
+        {!currentUser.emailVerified && (
+          <p style={{ color: 'red' }}>⚠️ Verifique seu e-mail para poder adicionar novos links.</p>
+        )}
       </div>
       <div>
         <h2>Seus links</h2>

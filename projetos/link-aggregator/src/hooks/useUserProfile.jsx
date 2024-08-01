@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { getDatabase, ref, get, update } from 'firebase/database';
-import { getAuth, updateProfile } from 'firebase/auth';
+import { getAuth, updateProfile, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 
 const useUserProfile = (currentUser) => {
     const [name, setName] = useState('');
     const [mention, setMention] = useState('');
+    const [currentPassword, setCurrentPassword] = useState(''); // Novo estado para a senha atual
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
@@ -97,10 +98,19 @@ const useUserProfile = (currentUser) => {
         }
 
         try {
+            const auth = getAuth();
+            const user = auth.currentUser;
+
+            // Reautenticar o usuário com a senha atual
+            const credential = EmailAuthProvider.credential(user.email, currentPassword);
+            await reauthenticateWithCredential(user, credential);
+
+            // Atualizar a senha
             await updatePasswordUser(newPassword);
             setSuccessMessage('Senha atualizada com sucesso!');
             setNewPassword(''); // Limpar o campo de senha após sucesso
             setConfirmPassword(''); // Limpar o campo de confirmação de senha
+            setCurrentPassword(''); // Limpar o campo de senha atual
         } catch (error) {
             setError('Erro ao atualizar a senha: ' + error.message);
             setSuccessMessage('');
@@ -114,6 +124,8 @@ const useUserProfile = (currentUser) => {
         setName,
         mention,
         setMention,
+        currentPassword,
+        setCurrentPassword,
         newPassword,
         setNewPassword,
         confirmPassword,

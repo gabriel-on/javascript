@@ -4,6 +4,7 @@ import useUserProfile from '../../hooks/useUserProfile';
 import ProfilePictureUploader from '../../components/ProfilePictureUploader/ProfilePictureUploader';
 import BannerUploader from '../../components/BannerUploader/BannerUploader';
 import './UserProfileEditor.css';
+import { Link } from 'react-router-dom';
 
 const UserProfileEditor = () => {
     const { currentUser } = useAuth();
@@ -83,6 +84,8 @@ const UserProfileEditor = () => {
                         required
                         className={currentPassword ? '' : 'error-input'}
                     />
+                    <p>Esqueceu a Senha? <Link to="/forgot-password">Clique a Aqui</Link>.</p>
+
                     <button type="button" onClick={() => setShowCurrentPassword(!showCurrentPassword)}>
                         {showCurrentPassword ? 'Ocultar' : 'Mostrar'}
                     </button>

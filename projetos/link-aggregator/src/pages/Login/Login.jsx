@@ -73,6 +73,7 @@ const Login = () => {
                 )}
                 {error && <p className="error">{error}</p>}
             </form>
+            <p>Esqueceu a Senha? <Link to="/forgot-password">Clique a Aqui</Link>.</p>
             <p>Não tem uma conta? <Link to="/register">Cadastre-se</Link>.</p>
         </div>
     );

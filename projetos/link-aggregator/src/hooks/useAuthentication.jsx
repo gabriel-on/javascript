@@ -6,6 +6,7 @@ import {
     signOut,
     sendEmailVerification,
     updatePassword,
+    sendPasswordResetEmail as firebaseSendPasswordResetEmail
 } from "firebase/auth";
 import { useState, useEffect, useRef } from "react";
 import { getDatabase, ref, set, get } from "firebase/database";
@@ -118,6 +119,31 @@ export const useAuth = () => {
         }
     };
 
+    // Função para enviar e-mail de redefinição de senha
+    const sendPasswordResetEmail = async (email) => {
+        handleCancellation();
+        setLoading(true);
+        setError(null);
+
+        try {
+            await firebaseSendPasswordResetEmail(auth, email);
+            return "Um e-mail de redefinição de senha foi enviado.";
+        } catch (error) {
+            let systemErrorMessage;
+
+            if (error.code === "auth/user-not-found") {
+                systemErrorMessage = "Nenhum usuário encontrado com este e-mail.";
+            } else {
+                systemErrorMessage = "Ocorreu um erro, por favor tente mais tarde.";
+            }
+
+            console.error("Erro ao enviar e-mail de redefinição de senha:", error);
+            setError(systemErrorMessage);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const logout = async () => {
         handleCancellation();
         setLoading(true);
@@ -216,6 +242,7 @@ export const useAuth = () => {
         auth,
         createUser,
         updatePasswordUser,
+        sendPasswordResetEmail,
         error,
         logout,
         login,

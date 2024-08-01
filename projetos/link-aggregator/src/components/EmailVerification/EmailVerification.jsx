@@ -39,7 +39,7 @@ const EmailVerification = () => {
 
                             setMessage('Seu e-mail foi verificado com sucesso. Você será redirecionado em breve.');
                             setTimeout(() => {
-                                navigate('/');
+                                navigate('/dashboard');
                             }, 5000); // Redireciona após 5 segundos
                         } else {
                             setMessage('Ocorreu um erro ao verificar seu e-mail. Por favor, tente novamente.');

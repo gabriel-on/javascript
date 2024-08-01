@@ -1,42 +1,91 @@
-/* src/components/UserProfileEditor/UserProfileEditor.css */
 .user-profile-editor {
+    max-width: 600px;
+    margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    color: #333;
 }
 
 .user-profile-editor h2 {
+    text-align: center;
     margin-bottom: 20px;
 }
 
 .user-profile-editor label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    font-weight: bold;
 }
 
-.user-profile-editor input {
-    padding: 10px;
+.user-profile-editor input[type="text"],
+.user-profile-editor input[type="email"],
+.user-profile-editor input[type="password"] {
     width: 100%;
-    margin-bottom: 20px;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+.user-profile-editor input[type="text"]:focus,
+.user-profile-editor input[type="email"]:focus,
+.user-profile-editor input[type="password"]:focus {
+    border-color: #007bff;
+    /* Cor de foco */
+    outline: none;
 }
 
 .user-profile-editor button {
     padding: 10px 15px;
-    background-color: #28a745;
+    background-color: #007bff;
+    /* Cor do botão */
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    margin-right: 10px;
+    /* Espaçamento entre os botões */
 }
 
 .user-profile-editor button:hover {
-    background-color: #218838;
-}
-
-.error {
-    color: red;
+    background-color: #0056b3;
+    /* Cor do botão ao passar o mouse */
 }
 
 .success {
-    color: green;
+    color: #28a745;
+    /* Verde para mensagens de sucesso */
+    margin-bottom: 15px;
+}
+
+.error {
+    color: #dc3545;
+    /* Vermelho para mensagens de erro */
+    margin-bottom: 15px;
+}
+
+/* Estilos adicionais para os botões de mostrar/ocultar senha */
+.user-profile-editor button[type="button"] {
+    background-color: transparent;
+    color: #007bff;
+    text-decoration: underline;
+    margin-left: 5px;
+    /* Espaçamento à esquerda */
+    cursor: pointer;
+    border: none;
+    /* Remover borda */
+}
+
+.user-profile-editor p {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    font-size: 0.9em;
+    /* Tamanho da fonte para força da senha */
+    color: #6c757d;
+    /* Cor de texto neutro */
 }

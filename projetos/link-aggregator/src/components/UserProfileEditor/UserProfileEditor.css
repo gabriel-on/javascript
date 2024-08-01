@@ -69,6 +69,10 @@
     margin-bottom: 15px;
 }
 
+.error-input {
+    border: 1px solid red; /* Borda vermelha para indicar erro */
+}
+
 /* Estilos adicionais para os botões de mostrar/ocultar senha */
 .user-profile-editor button[type="button"] {
     background-color: transparent;

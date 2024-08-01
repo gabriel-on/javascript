@@ -18,12 +18,10 @@ const UserProfileEditor = () => {
         handlePasswordChange
     } = useUserProfile(currentUser);
 
-    // Estado para controlar a visibilidade das senhas
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    // Função para determinar a força da senha
     const getPasswordStrength = (password) => {
         if (password.length < 6) return 'fraca';
         if (password.length < 10) return 'média';
@@ -34,7 +32,6 @@ const UserProfileEditor = () => {
         <div className="user-profile-editor">
             <h2>Editar Perfil</h2>
             {successMessage && <p className="success">{successMessage}</p>}
-            {error && <p className="error">{error}</p>}
             <ProfilePictureUploader />
             <BannerUploader />
             <div>
@@ -73,9 +70,13 @@ const UserProfileEditor = () => {
                 </label>
             </div>
             <div>
+                {error && <p className="error">Senha inválida ou incorreta.</p>}
                 <form onSubmit={(e) => e.preventDefault()}>
                     <label htmlFor="current-password">
-                        <span>Senha Atual:</span>
+                        <span>Senha Atual <span style={{ color: 'red' }}>*</span></span>
+                        <span style={{ display: 'block', fontSize: '0.9em', color: '#6c757d' }}>
+                            Insira sua senha atual para confirmar a atualização.
+                        </span>
                         <input
                             type={showCurrentPassword ? 'text' : 'password'}
                             id="current-password"
@@ -83,6 +84,7 @@ const UserProfileEditor = () => {
                             onChange={(e) => setCurrentPassword(e.target.value)}
                             placeholder="Digite a senha atual"
                             required
+                            className={currentPassword ? '' : 'error-input'}
                         />
                         <button type="button" onClick={() => setShowCurrentPassword(!showCurrentPassword)}>
                             {showCurrentPassword ? 'Ocultar' : 'Mostrar'}
@@ -121,7 +123,9 @@ const UserProfileEditor = () => {
                 </form>
             </div>
             <button onClick={handleSave} disabled={isLoading}>Salvar Informações</button>
-            <button onClick={() => handlePasswordChange(updatePasswordUser)} disabled={isLoading}>Atualizar Senha</button>
+            <button onClick={() => handlePasswordChange(updatePasswordUser)} disabled={isLoading || !currentPassword}>
+                Atualizar Senha
+            </button>
         </div>
     );
 };

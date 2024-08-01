@@ -119,7 +119,7 @@ const UserProfile = () => {
                             </li>
                         ))
                     ) : (
-                        <li>Nenhum link disponível para este usuário.</li>
+                        <li>Nenhum link disponível ou usuário não existe.</li>
                     )}
                 </ul>
             </div>

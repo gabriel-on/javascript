@@ -6,7 +6,7 @@ import BannerUploader from '../../components/BannerUploader/BannerUploader';
 import './UserProfileEditor.css';
 
 const UserProfileEditor = () => {
-    const { currentUser, updatePasswordUser } = useAuth();
+    const { currentUser } = useAuth();
     const {
         name, setName,
         mention, setMention,
@@ -31,8 +31,6 @@ const UserProfileEditor = () => {
     return (
         <div className="user-profile-editor">
             <h2>Editar Perfil</h2>
-            {successMessage && <p className="success">{successMessage}</p>}
-            {error && <p className="error">{error}</p>}
             <ProfilePictureUploader />
             <BannerUploader />
             <div>
@@ -117,6 +115,10 @@ const UserProfileEditor = () => {
                     </button>
                 </label>
             </div>
+            <>
+                {successMessage && <p className="success">{successMessage}</p>}
+                {error && <p className="error">{error}</p>}
+            </>
             <button onClick={handleSubmit} disabled={isLoading}>
                 Salvar
             </button>

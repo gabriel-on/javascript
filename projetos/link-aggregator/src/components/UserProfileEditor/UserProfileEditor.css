@@ -57,19 +57,17 @@
     /* Cor do botão ao passar o mouse */
 }
 
-.success {
+.user-profile-editor > .success {
     color: #28a745;
-    /* Verde para mensagens de sucesso */
     margin-bottom: 15px;
 }
 
-.error {
+.user-profile-editor > .error {
     color: #dc3545;
-    /* Vermelho para mensagens de erro */
     margin-bottom: 15px;
 }
 
-.error-input {
+.user-profile-editor > .error-input {
     border: 1px solid red; /* Borda vermelha para indicar erro */
 }
 

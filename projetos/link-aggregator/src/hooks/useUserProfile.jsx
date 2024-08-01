@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getDatabase, ref, get, update } from 'firebase/database';
-import { getAuth, updateProfile, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
+import { getAuth, updateProfile, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
 
 const useUserProfile = (currentUser) => {
     const [name, setName] = useState('');
@@ -33,20 +33,17 @@ const useUserProfile = (currentUser) => {
         return true; // Menção disponível
     };
 
-    // useUserProfile.js
     const handleSubmit = async () => {
         setError('');
         setSuccessMessage('');
         setIsLoading(true);
 
-        // Verifica se a senha atual é necessária para salvar as informações
         if (!currentPassword) {
             setError('Por favor, insira sua senha atual para salvar as informações.');
             setIsLoading(false);
             return;
         }
 
-        // Reautenticar o usuário com a senha atual
         const auth = getAuth();
         const credential = EmailAuthProvider.credential(currentUser.email, currentPassword);
 
@@ -58,7 +55,6 @@ const useUserProfile = (currentUser) => {
             return;
         }
 
-        // Verifica se todos os campos obrigatórios estão preenchidos
         if (!mention) {
             setError('Por favor, preencha todos os campos obrigatórios.');
             setIsLoading(false);
@@ -75,12 +71,10 @@ const useUserProfile = (currentUser) => {
         try {
             const user = auth.currentUser;
 
-            // Atualiza o perfil no Firebase Auth
             await updateProfile(user, {
                 displayName: name,
             });
 
-            // Atualiza o perfil no Realtime Database
             const db = getDatabase();
             const userRef = ref(db, `users/${user.uid}`);
             await update(userRef, {
@@ -88,7 +82,6 @@ const useUserProfile = (currentUser) => {
                 mentionName: mention,
             });
 
-            // Atualiza a senha se uma nova senha foi fornecida
             if (newPassword) {
                 if (newPassword.length < 6) {
                     setError('A nova senha deve conter pelo menos 6 caracteres.');
@@ -102,8 +95,8 @@ const useUserProfile = (currentUser) => {
                     return;
                 }
 
-                // Atualizar a senha
-                await updatePasswordUser(newPassword);
+                // Usar a função updatePassword do Firebase Auth
+                await updatePassword(user, newPassword);
             }
 
             setSuccessMessage('Informações salvas com sucesso!');

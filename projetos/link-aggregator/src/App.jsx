@@ -74,7 +74,7 @@ function App() {
               <Route path="/error" element={<ErrorPage />} />
               <Route path="*" element={<Navigate to="/error" />} />
 
-              <Route path="/" element={<EmailVerification />} />
+              <Route path="/email-verification/" element={<EmailVerification />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
 
               <Route path="/:mentionName" element={<UserProfile />} />

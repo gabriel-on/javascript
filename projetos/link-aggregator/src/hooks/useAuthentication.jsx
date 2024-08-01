@@ -59,7 +59,18 @@ export const useAuth = () => {
             const { user } = await createUserWithEmailAndPassword(auth, data.email, data.password);
             await updateProfileAuth(user, { displayName: data.displayName });
 
-            await sendEmailVerification(user);
+            // Salva o e-mail no local storage
+            window.localStorage.setItem('emailForSignIn', data.email);
+
+            // Configura a URL de redirecionamento para a verificação de e-mail
+            const actionCodeSettings = {
+                url: 'http://localhost:5173/email-verification', // URL base do seu aplicativo
+                handleCodeInApp: true, // Para lidar com o código no aplicativo
+            };
+
+            // Envie o e-mail de verificação
+            await sendEmailVerification(user, actionCodeSettings);
+
             setError('Um e-mail de verificação foi enviado. Por favor, verifique sua caixa de entrada.');
 
             const joinedAt = getUnixTime(new Date());
@@ -190,8 +201,8 @@ export const useAuth = () => {
         } catch (error) {
             let systemErrorMessage;
 
-            if (error.message) {
-                systemErrorMessage = "E-mail inválido ou Senha incorreta";
+            if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+                systemErrorMessage = "E-mail inválido ou senha incorreta";
             } else {
                 systemErrorMessage = "Ocorreu um erro, por favor tente mais tarde.";
             }

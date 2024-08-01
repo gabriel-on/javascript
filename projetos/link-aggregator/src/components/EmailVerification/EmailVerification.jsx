@@ -1,56 +1,93 @@
 import React, { useEffect, useState } from 'react';
-import { getAuth, isSignInWithEmailLink, signInWithEmailLink } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuthentication';
+import { getAuth, applyActionCode, sendEmailVerification } from "firebase/auth";
 
 const EmailVerification = () => {
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-    const auth = getAuth();
-    const emailForSignIn = window.localStorage.getItem('emailForSignIn');
+    const location = useLocation();
+    const { currentUser } = useAuth();
 
     useEffect(() => {
         const verifyEmail = async () => {
-            if (isSignInWithEmailLink(auth, window.location.href)) {
-                if (!emailForSignIn) {
-                    setMessage('Nenhum e-mail encontrado para verificação.');
-                    setLoading(false);
-                    return;
-                }
+            const searchParams = new URLSearchParams(location.search);
+            const mode = searchParams.get('mode');
+            const oobCode = searchParams.get('oobCode');
 
+            console.log(`Mode: ${mode}, OOB Code: ${oobCode}`);
+
+            if (mode === 'verifyEmail' && oobCode) {
                 try {
-                    // Autentica o usuário com o link
-                    const userCredential = await signInWithEmailLink(auth, emailForSignIn, window.location.href);
-                    const user = userCredential.user;
+                    const auth = getAuth();
 
-                    // Verifica se o e-mail foi verificado
-                    if (user.emailVerified) {
+                    // Verifica se o usuário já está autenticado e se o e-mail foi verificado
+                    const user = auth.currentUser;
+
+                    if (user && user.emailVerified) {
                         setMessage('Seu e-mail já foi verificado.');
                     } else {
-                        setMessage('Seu e-mail foi verificado com sucesso!');
-                        // Aqui você pode atualizar o estado do usuário ou realizar outras ações
-                    }
+                        await applyActionCode(auth, oobCode);
+                        setMessage('Seu e-mail foi verificado com sucesso. Você será redirecionado em breve.');
 
-                    // Redirecionar após a verificação
-                    navigate('/'); // Redireciona para a página desejada
+                        // Atualizar o estado do usuário
+                        await auth.currentUser.reload();
+
+                        if (auth.currentUser.emailVerified) {
+                            setTimeout(() => {
+                                navigate('/');
+                            }, 3000); // Redireciona após 3 segundos
+                        } else {
+                            setMessage('Ocorreu um erro ao verificar seu e-mail. Por favor, tente novamente.');
+                        }
+                    }
                 } catch (error) {
-                    setMessage(`Erro ao verificar o e-mail: ${error.message}`);
-                } finally {
-                    setLoading(false);
+                    console.error("Erro ao verificar e-mail:", error);
+                    if (error.code === 'auth/expired-action-code' || error.code === 'auth/invalid-action-code') {
+                        setMessage('O código de verificação é inválido ou já foi usado. Por favor, solicite um novo e-mail de verificação.');
+                    } else {
+                        setMessage('Ocorreu um erro ao verificar seu e-mail. Por favor, tente novamente.');
+                    }
                 }
             } else {
-                setMessage('Link de verificação inválido.');
-                setLoading(false);
+                setMessage('Modo ou código inválido.');
             }
+
+            setLoading(false);
         };
 
         verifyEmail();
-    }, [auth, emailForSignIn, navigate]);
+    }, [location, navigate]);
+
+    const handleResendVerificationEmail = async () => {
+        setLoading(true);
+        setMessage(''); // Limpa a mensagem anterior
+        try {
+            if (currentUser) {
+                const auth = getAuth();
+                await sendEmailVerification(auth.currentUser);
+                setMessage('Um novo e-mail de verificação foi enviado. Por favor, verifique sua caixa de entrada.');
+            } else {
+                setMessage('Nenhum usuário autenticado.');
+            }
+        } catch (error) {
+            console.error("Erro ao reenviar e-mail de verificação:", error);
+            setMessage('Ocorreu um erro ao tentar reenviar o e-mail de verificação. Por favor, tente novamente mais tarde.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div>
             <h2>Verificação de E-mail</h2>
             {loading ? <p>Verificando...</p> : <p>{message}</p>}
+            {!loading && message.includes('O código de verificação é inválido ou já foi usado.') && (
+                <button onClick={handleResendVerificationEmail}>
+                    Reenviar e-mail de verificação
+                </button>
+            )}
         </div>
     );
 };

@@ -84,7 +84,7 @@ const UserProfileEditor = () => {
                         required
                         className={currentPassword ? '' : 'error-input'}
                     />
-                    <p>Esqueceu a Senha? <Link to="/forgot-password">Clique a Aqui</Link>.</p>
+                    <p>Esqueceu a Senha? <Link to="/forgot-password">Clique Aqui</Link>.</p>
 
                     <button type="button" onClick={() => setShowCurrentPassword(!showCurrentPassword)}>
                         {showCurrentPassword ? 'Ocultar' : 'Mostrar'}

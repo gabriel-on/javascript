@@ -44,9 +44,6 @@ function Navbar() {
           </li>
         </ul>
         <ul>
-          <li className='nav-page'>
-            <NavLink to={"/"}>Home</NavLink>
-          </li>
           {currentUser && (
             <li className='nav-page'>
               <NavLink to={"/dashboard"}>Dashboard</NavLink>
@@ -54,7 +51,7 @@ function Navbar() {
           )}
           {!currentUser && (
             <li>
-              <NavLink to={"/login"}>Login</NavLink>
+              <NavLink to={"/login"}>Entrar</NavLink>
             </li>
           )}
           {!currentUser && (

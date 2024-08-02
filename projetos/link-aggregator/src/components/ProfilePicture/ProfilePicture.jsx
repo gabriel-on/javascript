@@ -7,9 +7,14 @@ const ProfilePicture = ({ userId }) => {
     useEffect(() => {
         if (userId) {
             const db = getDatabase();
-            const userRef = ref(db, `users/${userId}/profileImage`);
+            const userRef = ref(db, `users/${userId}/profilePicture`);
             const unsubscribe = onValue(userRef, (snapshot) => {
-                setProfileImage(snapshot.val());
+                const data = snapshot.val();
+                if (data && data.image) {
+                    setProfileImage(data.image);
+                } else {
+                    setProfileImage('');
+                }
             });
 
             // Limpeza do listener ao desmontar

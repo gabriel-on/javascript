@@ -19,7 +19,7 @@ const ImageCropperModal = ({ image, onCrop, onClose }) => {
                 <Cropper
                     ref={cropperRef}
                     src={image}
-                    style={{ height: 200, width: '100%' }}
+                    style={{ height: 400, width: '100%' }}
                     initialAspectRatio={16 / 9}
                     aspectRatio={16 / 9}
                     guides={false}

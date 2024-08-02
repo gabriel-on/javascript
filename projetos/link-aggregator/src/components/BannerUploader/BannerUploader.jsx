@@ -1,8 +1,7 @@
-// src/components/BannerUploader/BannerUploader.jsx
 import React, { useState } from 'react';
 import useBanner from '../../hooks/useBanner';
 import './BannerUploader.css';
-import ImageCropperModal from '../ImageCropModal/ImageCropModal';
+import ImageCropperModal from '../ImageCropperModal/ImageCropperModal';
 
 const BannerUploader = () => {
     const { bannerData, handleSaveImage } = useBanner();
@@ -28,7 +27,7 @@ const BannerUploader = () => {
     };
 
     const saveCroppedImage = () => {
-        handleSaveImage(previewImage); // Chamando a função do hook com a imagem recortada
+        handleSaveImage(previewImage);
     };
 
     const displayBanner = () => {
@@ -52,9 +51,9 @@ const BannerUploader = () => {
                         alt="Preview"
                         style={{
                             width: '100%',
-                            height: '150px',
+                            height: '200px',
                             borderRadius: '8px',
-                            position: 'absolute',
+                            position: 'relative',
                             top: 0,
                             left: 0,
                             objectFit: 'cover'

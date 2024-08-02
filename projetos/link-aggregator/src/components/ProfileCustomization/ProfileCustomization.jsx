@@ -26,7 +26,11 @@ const ProfileCustomization = ({ userId }) => {
         setFontFamily(e.target.value);
     };
 
-    const handleColorChange = (e) => {
+    const handleColorChange = (color) => {
+        setTextColor(color);
+    };
+
+    const handleColorInputChange = (e) => {
         setTextColor(e.target.value);
     };
 
@@ -55,6 +59,9 @@ const ProfileCustomization = ({ userId }) => {
         }
     };
 
+    // Lista de cores pré-determinadas
+    const colorOptions = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', '#000000', '#FFFFFF'];
+
     return (
         <div className="customization-container">
             <h3>Personalizar Perfil</h3>
@@ -69,17 +76,41 @@ const ProfileCustomization = ({ userId }) => {
                 </select>
             </div>
             <div className="form-group">
-                <label htmlFor="textColor">Cor do Texto:</label>
+                <label>Cor do Texto:</label>
+                <div className="color-options">
+                    {colorOptions.map((color) => (
+                        <button
+                            key={color}
+                            onClick={() => handleColorChange(color)}
+                            style={{
+                                backgroundColor: color,
+                                width: '30px',
+                                height: '30px',
+                                border: 'none',
+                                cursor: 'pointer',
+                                margin: '0 5px',
+                                outline: textColor === color ? '2px solid #000' : 'none' // Adiciona um contorno para a cor selecionada
+                            }}
+                        />
+                    ))}
+                </div>
+                {/* Seletor de cor */}
                 <input
                     type="color"
-                    id="textColor"
                     value={textColor}
-                    onChange={handleColorChange}
+                    onChange={handleColorInputChange}
+                    style={{ marginLeft: '10px' }}
                 />
                 {/* Amostra da cor selecionada */}
                 <div
                     className="color-sample"
-                    style={{ backgroundColor: textColor, width: '50px', height: '50px', border: '1px solid #ccc', marginLeft: '10px' }}
+                    style={{
+                        backgroundColor: textColor,
+                        width: '50px',
+                        height: '50px',
+                        border: '1px solid #ccc',
+                        marginLeft: '10px'
+                    }}
                 />
             </div>
             <button className="save-btn" onClick={handleSave} disabled={loading}>

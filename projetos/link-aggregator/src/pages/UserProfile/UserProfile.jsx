@@ -54,6 +54,18 @@ const UserProfile = () => {
                 const userLinks = linkList.filter(link => link.userId === userId);
                 setLinks(userLinks);
             });
+
+            // Recupera as configurações de personalização do usuário
+            const customizationsRef = ref(database, `users/${userId}/customizations`);
+            onValue(customizationsRef, (snapshot) => {
+                const customizations = snapshot.val();
+                if (customizations) {
+                    setUserStyles({
+                        fontFamily: customizations.fontFamily || 'Arial',
+                        textColor: customizations.textColor || '#000',
+                    });
+                }
+            });
         }
     }, [userId]);
 

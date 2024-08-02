@@ -13,7 +13,7 @@ const UserProfile = () => {
     const [userId, setUserId] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedLink, setSelectedLink] = useState(null);
-    const [userStyles, setUserStyles] = useState({ fontFamily: 'Arial', textColor: '#000' });
+    const [userStyles, setUserStyles] = useState({ fontFamily: 'Arial', textColor: '#FFF' });
 
     useEffect(() => {
         const fetchUserId = () => {
@@ -27,7 +27,7 @@ const UserProfile = () => {
                             // Armazena a fonte e cor do usuário
                             setUserStyles({
                                 fontFamily: data[key].fontFamily || 'Arial',
-                                textColor: data[key].textColor || '#000',
+                                textColor: data[key].textColor || '#FFF',
                             });
                             break;
                         }
@@ -101,7 +101,7 @@ const UserProfile = () => {
                     {links.length > 0 ? (
                         links.map(link => (
                             <li key={link.id}>
-                                <a href={link.url} target="_blank" rel="noopener noreferrer">{link.title}</a>
+                                <a href={link.url} target="_blank" rel="noopener noreferrer" style={{ color: userStyles.textColor }}>{link.title}</a>
                                 <button onClick={() => handleShareClick(link)} style={{ marginLeft: '10px' }}>⋮</button>
                             </li>
                         ))

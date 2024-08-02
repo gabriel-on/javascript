@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { ref, update } from 'firebase/database';
+import { ref, update, onValue } from 'firebase/database'; // Adicione onValue para ler dados
 import { database } from '../../firebase/config';
 import './ProfileCustomization.css';
 import { useAuth } from '../../hooks/useAuthentication';
 
-const ProfileCustomization = ({ userId, currentStyles }) => {
+const ProfileCustomization = ({ userId }) => { // Removi currentStyles, pois vamos buscar do Firebase
     const { currentUser } = useAuth();
-    const [fontFamily, setFontFamily] = useState(currentStyles?.fontFamily || 'Arial'); // Valor padrão
-    const [textColor, setTextColor] = useState(currentStyles?.textColor || '#000'); // Valor padrão
+    const [fontFamily, setFontFamily] = useState('Arial'); // Valor padrão
+    const [textColor, setTextColor] = useState('#000'); // Valor padrão
     const [loading, setLoading] = useState(false);
 
+    // useEffect para buscar as configurações atuais
     useEffect(() => {
-        if (currentStyles) {
-            setFontFamily(currentStyles.fontFamily || 'Arial');
-            setTextColor(currentStyles.textColor || '#000');
-        }
-    }, [currentStyles]);
+        const userCustomizationRef = ref(database, `users/${userId}/customizations`);
+        onValue(userCustomizationRef, (snapshot) => {
+            const customizations = snapshot.val();
+            if (customizations) {
+                setFontFamily(customizations.fontFamily || 'Arial');
+                setTextColor(customizations.textColor || '#000');
+            }
+        });
+    }, [userId]); // Dependência do userId
 
     const handleFontChange = (e) => {
         setFontFamily(e.target.value);

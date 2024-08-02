@@ -3,11 +3,12 @@ import { useAuth } from '../../hooks/useAuthentication';
 import useUserProfile from '../../hooks/useUserProfile';
 import ProfilePictureUploader from '../../components/ProfilePictureUploader/ProfilePictureUploader';
 import BannerUploader from '../../components/BannerUploader/BannerUploader';
+import ConfirmDeleteModal from '../../components/ConfirmDeleteModal/ConfirmDeleteModal';
 import './UserProfileEditor.css';
 import { Link } from 'react-router-dom';
 
 const UserProfileEditor = () => {
-    const { currentUser, deleteAccount } = useAuth();
+    const { currentUser, deleteAccount, validateCurrentPassword } = useAuth();
     const {
         name, setName,
         mention, setMention,
@@ -21,6 +22,8 @@ const UserProfileEditor = () => {
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [deleteError, setDeleteError] = useState('');
 
     const getPasswordStrength = (password) => {
         if (password.length < 6) return 'fraca';
@@ -28,17 +31,14 @@ const UserProfileEditor = () => {
         return 'forte';
     };
 
-    const handleDeleteAccount = async () => {
-        if (window.confirm("Tem certeza que deseja deletar sua conta? Esta ação não pode ser desfeita.")) {
-            try {
-                const success = await deleteAccount(currentPassword); // Usa a senha atual do perfil
-                if (success) {
-                    alert("Conta deletada com sucesso.");
-                    // Redirecionar ou realizar outras ações conforme necessário
-                }
-            } catch (error) {
-                alert("Erro ao deletar conta. Tente novamente.");
-            }
+    const handleDeleteAccount = async (modalPassword) => {
+        setDeleteError(''); // Limpa a mensagem de erro anterior
+        const isPasswordCorrect = await validateCurrentPassword(currentUser.email, modalPassword);
+        if (isPasswordCorrect) {
+            await deleteAccount(modalPassword);
+            setIsModalOpen(false);
+        } else {
+            setDeleteError("Senha incorreta. Tente novamente.");
         }
     };
 
@@ -86,7 +86,7 @@ const UserProfileEditor = () => {
                 <label htmlFor="current-password">
                     <span>Senha Atual <span style={{ color: 'red' }}>*</span></span>
                     <span style={{ display: 'block', fontSize: '0.9em', color: '#6c757d' }}>
-                        Insira sua senha atual para confirmar.
+                        Insira sua senha atual para confirmar a atualização.
                     </span>
                     <input
                         type={showCurrentPassword ? 'text' : 'password'}
@@ -134,13 +134,21 @@ const UserProfileEditor = () => {
             <>
                 {successMessage && <p className="success">{successMessage}</p>}
                 {error && <p className="error">{error}</p>}
+                {deleteError && <p className="error">{deleteError}</p>} {/* Mensagem de erro para deletar conta */}
             </>
             <button onClick={handleSubmit} disabled={isLoading}>
                 Salvar
             </button>
-            <button onClick={handleDeleteAccount} className="delete-account-button" disabled={isLoading || !currentPassword}>
+            <button onClick={() => setIsModalOpen(true)} className="delete-account-button">
                 Deletar Conta
             </button>
+
+            {/* Modal de confirmação para deletar conta */}
+            <ConfirmDeleteModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onConfirm={handleDeleteAccount} // Passa a função para o modal
+            />
         </div>
     );
 };

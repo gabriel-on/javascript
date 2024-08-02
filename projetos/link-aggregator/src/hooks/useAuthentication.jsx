@@ -133,6 +133,15 @@ export const useAuth = () => {
         }
     };
 
+    const validateCurrentPassword = async (email, password) => {
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            return true; // Senha está correta
+        } catch {
+            return false; // Senha incorreta
+        }
+    };
+
     // Função para enviar e-mail de redefinição de senha
     const sendPasswordResetEmail = async (email) => {
         handleCancellation();
@@ -158,13 +167,19 @@ export const useAuth = () => {
         }
     };
 
-    const deleteAccount = async () => {
+    const deleteAccount = async (password) => {
         handleCancellation();
         setLoading(true);
 
         try {
             const user = auth.currentUser;
             if (user) {
+                const isPasswordCorrect = await validateCurrentPassword(user.email, password);
+                if (!isPasswordCorrect) {
+                    setError("Senha atual incorreta.");
+                    return;
+                }
+
                 // Delete user from Authentication
                 await deleteUser(user);
 
@@ -287,6 +302,7 @@ export const useAuth = () => {
         updatePasswordUser,
         sendPasswordResetEmail,
         deleteAccount,
+        validateCurrentPassword,
         error,
         logout,
         login,

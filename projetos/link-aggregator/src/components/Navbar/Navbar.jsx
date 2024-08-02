@@ -36,7 +36,7 @@ function Navbar() {
   return (
     <div className={`navbar-container ${isScrolled ? 'scrolled' : ''}`}>
       <div className='navbar'>
-        <ul >
+        <ul>
           <li className='brand'>
             <NavLink to={"/"}>
               <h1>HighLinks</h1>
@@ -59,11 +59,9 @@ function Navbar() {
               <NavLink to={"/register"}>Cadastrar</NavLink>
             </li>
           )}
-          {currentUser && (
-            <li className='display-name'>
-              <span>Olá, {currentUser.displayName}!</span>
-            </li>
-          )}
+          <li className='display-name'>
+            <span>Olá, {currentUser ? currentUser.displayName : 'Visitante'}!</span>
+          </li>
           {currentUser && (
             <li className='logout-btn'>
               <button onClick={handleLogout}>Sair</button>

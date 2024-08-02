@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import Modal from '../../components/Modal/Modal';
 import UserProfileEditor from '../../components/UserProfileEditor/UserProfileEditor';
 import { getAuth } from "firebase/auth";
+import ProfileCustomization from '../../components/ProfileCustomization/ProfileCustomization';
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
@@ -62,6 +63,10 @@ const Dashboard = () => {
     <div>
       <h1>Dashboard</h1>
       <UserProfileEditor />
+      <div>
+        <h2>Configurações Adicionais</h2>
+        <ProfileCustomization userId={currentUser.uid} />
+      </div>
 
       {/* Indicativo de verificação de e-mail */}
       <div>

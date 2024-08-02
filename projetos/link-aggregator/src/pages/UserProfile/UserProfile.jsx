@@ -13,6 +13,7 @@ const UserProfile = () => {
     const [userId, setUserId] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedLink, setSelectedLink] = useState(null);
+    const [userStyles, setUserStyles] = useState({ fontFamily: 'Arial', textColor: '#000' });
 
     useEffect(() => {
         const fetchUserId = () => {
@@ -23,6 +24,11 @@ const UserProfile = () => {
                     for (const key in data) {
                         if (data[key].mentionName === mentionName) {
                             setUserId(key);
+                            // Armazena a fonte e cor do usuário
+                            setUserStyles({
+                                fontFamily: data[key].fontFamily || 'Arial',
+                                textColor: data[key].textColor || '#000',
+                            });
                             break;
                         }
                     }
@@ -68,7 +74,7 @@ const UserProfile = () => {
             <div className='profile-user'>
                 {userId && <ProfileBanner userId={userId} />}
             </div>
-            <div className='user-links-container'>
+            <div className='user-links-container' style={{ fontFamily: userStyles.fontFamily, color: userStyles.textColor }}>
                 <div className='profile-picture-info'>
                     <div className='profile-info'>
                         {userId && <ProfilePicture userId={userId} />}

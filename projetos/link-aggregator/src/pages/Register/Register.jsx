@@ -30,6 +30,7 @@ const Register = () => {
 
         try {
             await createUser(userCredentials);
+            window.location.reload(); // Recarrega a página após registro
         } catch (error) {
             setError('Erro ao criar o usuário: ' + error.message);
         }

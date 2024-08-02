@@ -83,7 +83,7 @@ function App() {
               <Route path='/dashboard' element={<Dashboard userId={userId} />} />
               <Route path='dashboard/edit/:id' element={<Edit userId={userId} />} />
 
-              <Route path='/login' element={!user ? <Login /> : <Navigate to={`/profile/${userId}`} />} />
+              <Route path='/login' element={!user ? <Login /> : <Navigate to={`/dashboard/`} />} />
               <Route path='/register' element={!user ? <Register /> : <Navigate to="/dashboard" />} />
             </Routes>
           </div>

@@ -76,6 +76,7 @@
 .link-list>li {
     width: 800px;
     display: flex;
+    gap: 10px;
 }
 
 .link-list>li>a {

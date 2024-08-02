@@ -13,7 +13,12 @@ const UserProfile = () => {
     const [userId, setUserId] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedLink, setSelectedLink] = useState(null);
-    const [userStyles, setUserStyles] = useState({ fontFamily: 'Arial', textColor: '#FFF', backgroundColor: '#f5f5f5' });
+    const [userStyles, setUserStyles] = useState({
+        fontFamily: 'Arial',
+        textColor: '#000',
+        backgroundColor: '#f5f5f5',
+        hoverBackgroundColor: '#808080'
+    });
 
     useEffect(() => {
         const fetchUserId = () => {
@@ -24,11 +29,11 @@ const UserProfile = () => {
                     for (const key in data) {
                         if (data[key].mentionName === mentionName) {
                             setUserId(key);
-                            // Armazena a fonte e cor do usuário
                             setUserStyles({
                                 fontFamily: data[key].fontFamily || 'Arial',
-                                textColor: data[key].textColor || '#FFF',
-                                backgroundColor: data[key].backgroundColor || '#f5f5f5', // Adicionando cor de fundo
+                                textColor: data[key].textColor || '#000',
+                                backgroundColor: data[key].backgroundColor || '#f5f5f5',
+                                hoverBackgroundColor: data[key].hoverBackgroundColor || '#808080'
                             });
                             break;
                         }
@@ -64,7 +69,8 @@ const UserProfile = () => {
                     setUserStyles({
                         fontFamily: customizations.fontFamily || 'Arial',
                         textColor: customizations.textColor || '#000',
-                        backgroundColor: customizations.backgroundColor || '#f5f5f5', // Adicionando cor de fundo
+                        backgroundColor: customizations.backgroundColor || '#f5f5f5',
+                        hoverBackgroundColor: customizations.hoverBackgroundColor || '#808080'
                     });
                 }
             });
@@ -97,14 +103,38 @@ const UserProfile = () => {
                             <h2>{"displayName"}</h2>
                         </div>
                     </div>
-                    <button className='share-btn' onClick={handleProfileShareClick}>⋮</button>
+                    <button className='share-btn' onClick={handleProfileShareClick}
+                        style={{
+                            color: userStyles.textColor,
+                            backgroundColor: userStyles.backgroundColor,
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = userStyles.hoverBackgroundColor}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = userStyles.backgroundColor}
+                    >⋮</button>
                 </div>
                 <ul className='link-list'>
                     {links.length > 0 ? (
                         links.map(link => (
-                            <li key={link.id}>
-                                <a href={link.url} target="_blank" rel="noopener noreferrer" style={{ color: userStyles.textColor, backgroundColor: userStyles.backgroundColor, padding: '10px', margin: '5px 0', borderRadius: '5px' }}>{link.title}</a>
-                                <button onClick={() => handleShareClick(link)} style={{ marginLeft: '10px' }}>⋮</button>
+                            <li key={link.id} style={{ margin: '5px 0' }}>
+                                <a
+                                    href={link.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{
+                                        color: userStyles.textColor,
+                                        backgroundColor: userStyles.backgroundColor,
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = userStyles.hoverBackgroundColor}
+                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = userStyles.backgroundColor}
+                                >
+                                    {link.title}
+                                </a>
+                                <button onClick={() => handleShareClick(link)} style={{
+                                    color: userStyles.textColor,
+                                    backgroundColor: userStyles.backgroundColor,
+                                }}
+                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = userStyles.hoverBackgroundColor}
+                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = userStyles.backgroundColor}>⋮</button>
                             </li>
                         ))
                     ) : (

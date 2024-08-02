@@ -9,6 +9,7 @@ const ProfileCustomization = ({ userId }) => {
     const [fontFamily, setFontFamily] = useState('Arial'); // Valor padrão
     const [textColor, setTextColor] = useState('#000'); // Valor padrão
     const [backgroundColor, setBackgroundColor] = useState('#f5f5f5'); // Valor padrão
+    const [hoverBackgroundColor, setHoverBackgroundColor] = useState('#e0e0e0'); // Valor padrão para hover
     const [loading, setLoading] = useState(false);
 
     // useEffect para buscar as configurações atuais
@@ -20,6 +21,7 @@ const ProfileCustomization = ({ userId }) => {
                 setFontFamily(customizations.fontFamily || 'Arial');
                 setTextColor(customizations.textColor || '#000');
                 setBackgroundColor(customizations.backgroundColor || '#f5f5f5'); // Nova cor de fundo
+                setHoverBackgroundColor(customizations.hoverBackgroundColor || '#e0e0e0'); // Nova cor de fundo para hover
             }
         });
     }, [userId]); // Dependência do userId
@@ -44,6 +46,14 @@ const ProfileCustomization = ({ userId }) => {
         setBackgroundColor(e.target.value);
     };
 
+    const handleHoverBackgroundColorChange = (color) => {
+        setHoverBackgroundColor(color);
+    };
+
+    const handleHoverBackgroundColorInputChange = (e) => {
+        setHoverBackgroundColor(e.target.value);
+    };
+
     const handleSave = async () => {
         if (!currentUser) {
             alert('Você precisa estar autenticado para salvar as configurações.');
@@ -61,6 +71,7 @@ const ProfileCustomization = ({ userId }) => {
                 fontFamily: fontFamily || 'Arial',
                 textColor: textColor || '#000000',
                 backgroundColor: backgroundColor || '#f5f5f5', // Salvando a nova cor de fundo
+                hoverBackgroundColor: hoverBackgroundColor || '#e0e0e0', // Salvando a nova cor de fundo para hover
             });
             alert('Configurações salvas com sucesso!');
         } catch (error) {
@@ -75,6 +86,9 @@ const ProfileCustomization = ({ userId }) => {
 
     // Lista de cores de fundo pré-determinadas
     const backgroundOptions = ['#f5f5f5', '#FFD700', '#ADD8E6', '#90EE90', '#FFB6C1', '#DDA0DD', '#FFFFFF'];
+
+    // Lista de cores de hover pré-determinadas
+    const hoverOptions = ['#e0e0e0', '#cccccc', '#b3b3b3', '#a6a6a6', '#999999'];
 
     return (
         <div className="customization-container">
@@ -154,6 +168,42 @@ const ProfileCustomization = ({ userId }) => {
                     className="color-sample"
                     style={{
                         backgroundColor: backgroundColor,
+                        width: '50px',
+                        height: '50px',
+                        border: '1px solid #ccc',
+                        marginLeft: '10px'
+                    }}
+                />
+            </div>
+            <div className="form-group">
+                <label>Cor de Fundo para Hover:</label>
+                <div className="color-options">
+                    {hoverOptions.map((color) => (
+                        <button
+                            key={color}
+                            onClick={() => handleHoverBackgroundColorChange(color)}
+                            style={{
+                                backgroundColor: color,
+                                width: '30px',
+                                height: '30px',
+                                border: 'none',
+                                cursor: 'pointer',
+                                margin: '0 5px',
+                                outline: hoverBackgroundColor === color ? '2px solid #000' : 'none' // Contorno para a cor selecionada
+                            }}
+                        />
+                    ))}
+                </div>
+                <input
+                    type="color"
+                    value={hoverBackgroundColor}
+                    onChange={handleHoverBackgroundColorInputChange}
+                    style={{ marginLeft: '10px' }}
+                />
+                <div
+                    className="color-sample"
+                    style={{
+                        backgroundColor: hoverBackgroundColor,
                         width: '50px',
                         height: '50px',
                         border: '1px solid #ccc',

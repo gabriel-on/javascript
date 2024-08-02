@@ -12,10 +12,18 @@ const BannerUploader = () => {
     const handleImageSelect = (e) => {
         const file = e.target.files[0];
         if (file) {
+            const img = new Image();
             const reader = new FileReader();
             reader.onloadend = () => {
-                setImageToCrop(reader.result);
-                setShowCropper(true);
+                img.src = reader.result;
+                img.onload = () => {
+                    if (img.width < 900 || img.height < 200) {
+                        alert('A imagem deve ter pelo menos 900x200 pixels.');
+                    } else {
+                        setImageToCrop(reader.result);
+                        setShowCropper(true);
+                    }
+                };
             };
             reader.readAsDataURL(file);
         }
@@ -61,14 +69,12 @@ const BannerUploader = () => {
                     />
                 )}
             </div>
-            <div>
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageSelect}
-                />
-                <button onClick={saveCroppedImage}>Salvar Imagem</button>
-            </div>
+            <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageSelect}
+            />
+            <button onClick={saveCroppedImage}>Salvar Imagem</button>
             <span>Tamanho mínimo permitido é de 900x200, a imagem deve ter um formato retangular, proporção de 9:2.</span>
 
             {showCropper && (

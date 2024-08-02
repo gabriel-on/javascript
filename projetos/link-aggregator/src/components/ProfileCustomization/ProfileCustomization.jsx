@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ref, update, onValue } from 'firebase/database'; // Adicione onValue para ler dados
+import { ref, update, onValue } from 'firebase/database';
 import { database } from '../../firebase/config';
 import './ProfileCustomization.css';
 import { useAuth } from '../../hooks/useAuthentication';
@@ -8,6 +8,7 @@ const ProfileCustomization = ({ userId }) => {
     const { currentUser } = useAuth();
     const [fontFamily, setFontFamily] = useState('Arial'); // Valor padrão
     const [textColor, setTextColor] = useState('#000'); // Valor padrão
+    const [backgroundColor, setBackgroundColor] = useState('#f5f5f5'); // Valor padrão
     const [loading, setLoading] = useState(false);
 
     // useEffect para buscar as configurações atuais
@@ -18,6 +19,7 @@ const ProfileCustomization = ({ userId }) => {
             if (customizations) {
                 setFontFamily(customizations.fontFamily || 'Arial');
                 setTextColor(customizations.textColor || '#000');
+                setBackgroundColor(customizations.backgroundColor || '#f5f5f5'); // Nova cor de fundo
             }
         });
     }, [userId]); // Dependência do userId
@@ -32,6 +34,14 @@ const ProfileCustomization = ({ userId }) => {
 
     const handleColorInputChange = (e) => {
         setTextColor(e.target.value);
+    };
+
+    const handleBackgroundColorChange = (color) => {
+        setBackgroundColor(color);
+    };
+
+    const handleBackgroundColorInputChange = (e) => {
+        setBackgroundColor(e.target.value);
     };
 
     const handleSave = async () => {
@@ -50,6 +60,7 @@ const ProfileCustomization = ({ userId }) => {
             await update(userRef, {
                 fontFamily: fontFamily || 'Arial',
                 textColor: textColor || '#000000',
+                backgroundColor: backgroundColor || '#f5f5f5', // Salvando a nova cor de fundo
             });
             alert('Configurações salvas com sucesso!');
         } catch (error) {
@@ -61,6 +72,9 @@ const ProfileCustomization = ({ userId }) => {
 
     // Lista de cores pré-determinadas
     const colorOptions = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', '#000000', '#FFFFFF'];
+
+    // Lista de cores de fundo pré-determinadas
+    const backgroundOptions = ['#f5f5f5', '#FFD700', '#ADD8E6', '#90EE90', '#FFB6C1', '#DDA0DD', '#FFFFFF'];
 
     return (
         <div className="customization-container">
@@ -89,23 +103,57 @@ const ProfileCustomization = ({ userId }) => {
                                 border: 'none',
                                 cursor: 'pointer',
                                 margin: '0 5px',
-                                outline: textColor === color ? '2px solid #000' : 'none' // Adiciona um contorno para a cor selecionada
+                                outline: textColor === color ? '2px solid #000' : 'none' // Contorno para a cor selecionada
                             }}
                         />
                     ))}
                 </div>
-                {/* Seletor de cor */}
                 <input
                     type="color"
                     value={textColor}
                     onChange={handleColorInputChange}
                     style={{ marginLeft: '10px' }}
                 />
-                {/* Amostra da cor selecionada */}
                 <div
                     className="color-sample"
                     style={{
                         backgroundColor: textColor,
+                        width: '50px',
+                        height: '50px',
+                        border: '1px solid #ccc',
+                        marginLeft: '10px'
+                    }}
+                />
+            </div>
+            <div className="form-group">
+                <label>Cor de Fundo:</label>
+                <div className="color-options">
+                    {backgroundOptions.map((color) => (
+                        <button
+                            key={color}
+                            onClick={() => handleBackgroundColorChange(color)}
+                            style={{
+                                backgroundColor: color,
+                                width: '30px',
+                                height: '30px',
+                                border: 'none',
+                                cursor: 'pointer',
+                                margin: '0 5px',
+                                outline: backgroundColor === color ? '2px solid #000' : 'none' // Contorno para a cor selecionada
+                            }}
+                        />
+                    ))}
+                </div>
+                <input
+                    type="color"
+                    value={backgroundColor}
+                    onChange={handleBackgroundColorInputChange}
+                    style={{ marginLeft: '10px' }}
+                />
+                <div
+                    className="color-sample"
+                    style={{
+                        backgroundColor: backgroundColor,
                         width: '50px',
                         height: '50px',
                         border: '1px solid #ccc',

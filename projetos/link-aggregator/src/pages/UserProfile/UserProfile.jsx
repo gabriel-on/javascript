@@ -13,7 +13,7 @@ const UserProfile = () => {
     const [userId, setUserId] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedLink, setSelectedLink] = useState(null);
-    const [userStyles, setUserStyles] = useState({ fontFamily: 'Arial', textColor: '#FFF' });
+    const [userStyles, setUserStyles] = useState({ fontFamily: 'Arial', textColor: '#FFF', backgroundColor: '#f5f5f5' });
 
     useEffect(() => {
         const fetchUserId = () => {
@@ -28,6 +28,7 @@ const UserProfile = () => {
                             setUserStyles({
                                 fontFamily: data[key].fontFamily || 'Arial',
                                 textColor: data[key].textColor || '#FFF',
+                                backgroundColor: data[key].backgroundColor || '#f5f5f5', // Adicionando cor de fundo
                             });
                             break;
                         }
@@ -63,6 +64,7 @@ const UserProfile = () => {
                     setUserStyles({
                         fontFamily: customizations.fontFamily || 'Arial',
                         textColor: customizations.textColor || '#000',
+                        backgroundColor: customizations.backgroundColor || '#f5f5f5', // Adicionando cor de fundo
                     });
                 }
             });
@@ -101,7 +103,7 @@ const UserProfile = () => {
                     {links.length > 0 ? (
                         links.map(link => (
                             <li key={link.id}>
-                                <a href={link.url} target="_blank" rel="noopener noreferrer" style={{ color: userStyles.textColor }}>{link.title}</a>
+                                <a href={link.url} target="_blank" rel="noopener noreferrer" style={{ color: userStyles.textColor, backgroundColor: userStyles.backgroundColor, padding: '10px', margin: '5px 0', borderRadius: '5px' }}>{link.title}</a>
                                 <button onClick={() => handleShareClick(link)} style={{ marginLeft: '10px' }}>⋮</button>
                             </li>
                         ))

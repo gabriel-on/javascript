@@ -6,33 +6,25 @@ import './BannerUploader.css';
 const BannerUploader = () => {
     const {
         bannerData,
-        color,
         previewImage,
         isTestingImage,
         handleImageChange,
-        handleColorChange,
-        handleSaveImage,
-        handleSaveColor
+        handleSaveImage
     } = useBanner();
-    const [isTestingColor, setIsTestingColor] = useState(false);
 
     const displayBanner = () => {
         const imageUpdated = new Date(bannerData.imageUpdatedAt);
-        const colorUpdated = new Date(bannerData.colorUpdatedAt);
 
         console.log('Image updated at:', imageUpdated);
-        console.log('Color updated at:', colorUpdated);
 
         if (isTestingImage && previewImage) {
             return { backgroundImage: `url(${previewImage})`, backgroundColor: 'transparent' };
-        } else if (isTestingColor) {
-            return { backgroundImage: 'none', backgroundColor: color };
-        } else if (imageUpdated >= colorUpdated && bannerData.image) {
+        } else if (bannerData.image && imageUpdated) {
             console.log('Displaying image:', bannerData.image);
             return { backgroundImage: `url(${bannerData.image})`, backgroundColor: 'transparent' };
         } else {
-            console.log('Displaying color:', color);
-            return { backgroundImage: 'none', backgroundColor: color };
+            console.log('No image to display');
+            return { backgroundImage: 'none', backgroundColor: 'transparent' }; // ou uma cor padrão
         }
     };
 
@@ -71,7 +63,7 @@ const BannerUploader = () => {
                         }}
                     />
                 )}
-                {!isTestingImage && bannerData.image && new Date(bannerData.imageUpdatedAt) >= new Date(bannerData.colorUpdatedAt) && (
+                {!isTestingImage && bannerData.image && (
                     <img
                         src={bannerData.image}
                         alt="Banner"
@@ -89,7 +81,6 @@ const BannerUploader = () => {
                 )}
                 {!isTestingImage && !bannerData.image && (
                     <div style={{
-                        backgroundColor: color,
                         height: '150px',
                         width: '100%',
                         position: 'absolute',
@@ -98,22 +89,13 @@ const BannerUploader = () => {
                         zIndex: 0,
                     }} />
                 )}
-                <p style={{ zIndex: 3 }}>Cor: {color}</p>
             </div>
             <input
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
             />
-            <input
-                type="color"
-                value={color}
-                onChange={handleColorChange}
-                onFocus={() => setIsTestingColor(true)}
-                onBlur={() => setIsTestingColor(false)}
-            />
             <button onClick={handleSaveImage}>Salvar Imagem</button>
-            <button onClick={handleSaveColor}>Salvar Cor</button>
         </div>
     );
 };

@@ -14,7 +14,7 @@ const BannerUploader = () => {
         if (file) {
             const fileSizeInKB = file.size / 1024; // Tamanho em KB
             const maxSizeInKB = 500; // Limite máximo de tamanho em KB
-            
+
             if (fileSizeInKB > maxSizeInKB) {
                 alert(`O arquivo deve ter no máximo ${maxSizeInKB} KB. Você enviou ${fileSizeInKB.toFixed(2)} KB.`);
                 return;

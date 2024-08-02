@@ -23,9 +23,12 @@ const ImageCropperModal = ({ image, onCrop, onClose }) => {
                     initialAspectRatio={16 / 9}
                     aspectRatio={16 / 9}
                     guides={false}
+                    viewMode={1}
                 />
-                <button onClick={handleCrop}>Recortar</button>
-                <button onClick={onClose}>Cancelar</button>
+                <div className="modal-actions">
+                    <button onClick={handleCrop}>Recortar</button>
+                    <button onClick={onClose}>Cancelar</button>
+                </div>
             </div>
         </div>
     );

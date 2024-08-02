@@ -3,12 +3,12 @@ import './ConfirmDeleteModal.css';
 
 const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm }) => {
     const [modalPassword, setModalPassword] = useState('');
+    const [modalError, setModalError] = useState('');
 
     if (!isOpen) return null;
 
     const handleConfirm = () => {
-        onConfirm(modalPassword);
-        setModalPassword(''); // Limpa a senha após a confirmação
+        onConfirm(modalPassword, setModalError);
     };
 
     return (
@@ -23,6 +23,7 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm }) => {
                     placeholder="Senha atual"
                     required
                 />
+                {modalError && <p className="error">{modalError}</p>}
                 <div className="modal-actions">
                     <button onClick={handleConfirm}>
                         Confirmar

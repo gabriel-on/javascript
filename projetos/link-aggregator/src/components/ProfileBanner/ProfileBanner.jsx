@@ -1,47 +1,48 @@
-// src/components/ProfileBanner/ProfileBanner.jsx
 import React, { useState, useEffect } from 'react';
-import { ref, get } from 'firebase/database';
+import { ref, onValue } from 'firebase/database';
 import { database } from '../../firebase/config';
 import './ProfileBanner.css';
 
 const ProfileBanner = ({ userId }) => {
-    const [bannerImage, setBannerImage] = useState('');
-    const [bgColor, setBgColor] = useState('#ffffff');
+    const [bannerData, setBannerData] = useState({ image: '', color: '#ffffff', imageUpdatedAt: null, colorUpdatedAt: null });
 
     useEffect(() => {
-        const fetchBannerData = async () => {
+        if (userId) {
             const bannerRef = ref(database, `users/${userId}/banner`);
-            try {
-                const snapshot = await get(bannerRef);
+            onValue(bannerRef, (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
-                    setBannerImage(data.image || '');
-                    setBgColor(data.color || '#ffffff');
+                    setBannerData(data);
                 }
-            } catch (error) {
-                console.error("Erro ao buscar dados do banner:", error);
-            }
-        };
-
-        if (userId) {
-            fetchBannerData();
+            });
         }
     }, [userId]);
+
+    const displayBanner = () => {
+        if (bannerData.imageUpdatedAt && bannerData.colorUpdatedAt) {
+            return new Date(bannerData.imageUpdatedAt) > new Date(bannerData.colorUpdatedAt)
+                ? { backgroundImage: `url(${bannerData.image})`, backgroundColor: 'transparent' }
+                : { backgroundImage: 'none', backgroundColor: bannerData.color };
+        } else if (bannerData.imageUpdatedAt) {
+            return { backgroundImage: `url(${bannerData.image})`, backgroundColor: 'transparent' };
+        } else if (bannerData.colorUpdatedAt) {
+            return { backgroundImage: 'none', backgroundColor: bannerData.color };
+        }
+        return { backgroundImage: 'none', backgroundColor: '#ffffff' }; // Cor padrão
+    };
 
     return (
         <div
             className="profile-banner"
             style={{
-                backgroundImage: `url(${bannerImage})`,
-                backgroundColor: bgColor,
+                ...displayBanner(),
                 backgroundSize: 'cover',
-                height: '150px',
+                height: '200px',
                 width: '100%',
                 borderRadius: '8px',
-                position: 'relative',
             }}
         >
-            {!bannerImage && !bgColor && <p>Sem Banner</p>}
+            {!bannerData.image && !bannerData.color && <p>Sem Banner</p>}
         </div>
     );
 };

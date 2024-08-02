@@ -6,7 +6,7 @@ const useProfileCustomization = (userId) => {
     const [fontFamily, setFontFamily] = useState('Arial');
     const [textColor, setTextColor] = useState('#000');
     const [backgroundColor, setBackgroundColor] = useState('#f5f5f5');
-    const [hoverBackgroundColor, setHoverBackgroundColor] = useState('#e0e0e0');
+    const [hoverBackgroundColor, setHoverBackgroundColor] = useState('#808080');
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const useProfileCustomization = (userId) => {
                 setFontFamily(customizations.fontFamily || 'Arial');
                 setTextColor(customizations.textColor || '#000');
                 setBackgroundColor(customizations.backgroundColor || '#f5f5f5');
-                setHoverBackgroundColor(customizations.hoverBackgroundColor || '#e0e0e0');
+                setHoverBackgroundColor(customizations.hoverBackgroundColor || '#808080');
             }
         });
     }, [userId]);

@@ -6,7 +6,6 @@ import { useAuth } from './useAuthentication';
 
 const useProfilePictureUploader = () => {
     const { currentUser } = useAuth();
-    const [image, setImage] = useState(null);
     const [profileData, setProfileData] = useState({ image: '', imageUpdatedAt: null });
 
     useEffect(() => {
@@ -38,10 +37,10 @@ const useProfilePictureUploader = () => {
                     imageUpdatedAt: new Date().toISOString(),
                 });
 
-                alert('Imagem do perfil atualizada com sucesso!');
+                alert('Imagem de perfil atualizada com sucesso!');
             } catch (error) {
-                console.error("Erro ao salvar a imagem do perfil:", error);
-                alert('Falha ao salvar a imagem do perfil.');
+                console.error("Erro ao salvar a imagem de perfil:", error);
+                alert('Falha ao salvar a imagem de perfil.');
             }
         }
     };

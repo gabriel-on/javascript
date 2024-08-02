@@ -1,4 +1,3 @@
-// src/components/BannerUploader/BannerUploader.jsx
 import React, { useState } from 'react';
 import useBanner from '../../hooks/useBanner';
 import './BannerUploader.css';

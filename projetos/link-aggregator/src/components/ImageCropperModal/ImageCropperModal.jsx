@@ -30,6 +30,7 @@ const ImageCropperModal = ({ image, onCrop, onClose }) => {
                     movable={false}
                     aspectRatio={aspectRatio}
                 />
+                <span>Mínimo 900x200</span>
                 <div className="modal-actions">
                     <button onClick={handleCrop}>Recortar</button>
                     <button onClick={onClose}>Cancelar</button>

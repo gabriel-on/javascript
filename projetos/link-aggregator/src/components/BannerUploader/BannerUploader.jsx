@@ -61,12 +61,15 @@ const BannerUploader = () => {
                     />
                 )}
             </div>
-            <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageSelect}
-            />
-            <button onClick={saveCroppedImage}>Salvar Imagem</button>
+            <div>
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageSelect}
+                />
+                <button onClick={saveCroppedImage}>Salvar Imagem</button>
+            </div>
+            <span>Tamanho mínimo permitido é de 900x200, a imagem deve ter um formato retangular, proporção de 9:2.</span>
 
             {showCropper && (
                 <ImageCropperModal

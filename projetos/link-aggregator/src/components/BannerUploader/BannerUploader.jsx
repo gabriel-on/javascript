@@ -1,52 +1,52 @@
+// src/components/BannerUploader/BannerUploader.jsx
 import React, { useState } from 'react';
 import useBanner from '../../hooks/useBanner';
 import './BannerUploader.css';
+import ImageCropperModal from '../ImageCropModal/ImageCropModal';
 
 const BannerUploader = () => {
-    const {
-        bannerData,
-        previewImage,
-        isTestingImage,
-        handleImageChange,
-        handleSaveImage
-    } = useBanner();
+    const { bannerData, handleSaveImage } = useBanner();
+    const [showCropper, setShowCropper] = useState(false);
+    const [imageToCrop, setImageToCrop] = useState('');
+    const [previewImage, setPreviewImage] = useState('');
+
+    const handleImageSelect = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImageToCrop(reader.result);
+                setShowCropper(true);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleCrop = (croppedImage) => {
+        setShowCropper(false);
+        setPreviewImage(croppedImage);
+    };
+
+    const saveCroppedImage = () => {
+        handleSaveImage(previewImage); // Chamando a função do hook com a imagem recortada
+    };
 
     const displayBanner = () => {
         const imageUpdated = new Date(bannerData.imageUpdatedAt);
-
-        console.log('Image updated at:', imageUpdated);
-
-        if (isTestingImage && previewImage) {
+        if (previewImage) {
             return { backgroundImage: `url(${previewImage})`, backgroundColor: 'transparent' };
         } else if (bannerData.image && imageUpdated) {
-            console.log('Displaying image:', bannerData.image);
             return { backgroundImage: `url(${bannerData.image})`, backgroundColor: 'transparent' };
         } else {
-            console.log('No image to display');
-            return { backgroundImage: 'none', backgroundColor: 'transparent' }; // ou uma cor padrão
+            return { backgroundImage: 'none', backgroundColor: 'transparent' };
         }
     };
 
     return (
         <div className="banner-uploader">
             <h2>Atualizar Banner</h2>
-            <div className="banner-preview" style={{
-                ...displayBanner(),
-                backgroundSize: 'cover',
-                height: '150px',
-                width: '100%',
-                borderRadius: '8px',
-                marginBottom: '10px',
-                position: 'relative',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                color: '#fff',
-                fontWeight: 'bold',
-                textAlign: 'center',
-                overflow: 'hidden',
-            }}>
-                {isTestingImage && previewImage && (
+            <div className="banner-preview" style={displayBanner()}>
+                {previewImage && (
                     <img
                         src={previewImage}
                         alt="Preview"
@@ -57,44 +57,25 @@ const BannerUploader = () => {
                             position: 'absolute',
                             top: 0,
                             left: 0,
-                            zIndex: 2,
                             objectFit: 'cover'
                         }}
                     />
-                )}
-                {!isTestingImage && bannerData.image && (
-                    <img
-                        src={bannerData.image}
-                        alt="Banner"
-                        style={{
-                            width: '100%',
-                            height: '150px',
-                            borderRadius: '8px',
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            zIndex: 1,
-                            objectFit: 'cover'
-                        }}
-                    />
-                )}
-                {!isTestingImage && !bannerData.image && (
-                    <div style={{
-                        height: '150px',
-                        width: '100%',
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        zIndex: 0,
-                    }} />
                 )}
             </div>
             <input
                 type="file"
                 accept="image/*"
-                onChange={handleImageChange}
+                onChange={handleImageSelect}
             />
-            <button onClick={handleSaveImage}>Salvar Imagem</button>
+            <button onClick={saveCroppedImage}>Salvar Imagem</button>
+
+            {showCropper && (
+                <ImageCropperModal
+                    image={imageToCrop}
+                    onCrop={handleCrop}
+                    onClose={() => setShowCropper(false)}
+                />
+            )}
         </div>
     );
 };

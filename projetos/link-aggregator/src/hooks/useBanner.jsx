@@ -8,8 +8,6 @@ import { useAuth } from './useAuthentication';
 const useBanner = () => {
     const { currentUser } = useAuth();
     const [image, setImage] = useState(null);
-    const [previewImage, setPreviewImage] = useState('');
-    const [isTestingImage, setIsTestingImage] = useState(false);
     const [bannerData, setBannerData] = useState({ image: '', imageUpdatedAt: null });
 
     useEffect(() => {
@@ -18,35 +16,22 @@ const useBanner = () => {
             onValue(bannerRef, (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
-                    console.log('Banner data fetched:', data);
                     setBannerData(data);
                 }
             });
         }
     }, [currentUser]);
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setImage(file);
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreviewImage(reader.result);
-                setIsTestingImage(true);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
-    const handleSaveImage = async () => {
-        if (currentUser && image) {
-            const storageRef = ref(storage, `banners/${currentUser.uid}/${image.name}`);
+    const handleSaveImage = async (croppedImage) => { // Aceitando a imagem recortada como argumento
+        if (currentUser && croppedImage) {
+            const blob = await fetch(croppedImage).then(res => res.blob()); // Convertendo a imagem recortada em Blob
+            const storageRef = ref(storage, `banners/${currentUser.uid}/${Date.now()}.png`);
             try {
                 if (bannerData.image) {
                     const oldImageRef = ref(storage, bannerData.image);
                     await deleteObject(oldImageRef);
                 }
-                await uploadBytes(storageRef, image);
+                await uploadBytes(storageRef, blob);
                 const imageUrl = await getDownloadURL(storageRef);
                 const bannerRef = dbRef(database, `users/${currentUser.uid}/banner`);
                 await dbSet(bannerRef, {
@@ -55,8 +40,6 @@ const useBanner = () => {
                 });
 
                 alert('Imagem do banner atualizada com sucesso!');
-                setIsTestingImage(false);
-                setPreviewImage('');
             } catch (error) {
                 console.error("Erro ao salvar a imagem do banner:", error);
                 alert('Falha ao salvar a imagem do banner.');
@@ -66,10 +49,7 @@ const useBanner = () => {
 
     return {
         bannerData,
-        previewImage,
-        isTestingImage,
-        handleImageChange,
-        handleSaveImage
+        handleSaveImage // Retornando a função para salvar a imagem
     };
 };
 

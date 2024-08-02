@@ -4,7 +4,7 @@ import { database } from '../../firebase/config';
 import './ProfileCustomization.css';
 import { useAuth } from '../../hooks/useAuthentication';
 
-const ProfileCustomization = ({ userId }) => { // Removi currentStyles, pois vamos buscar do Firebase
+const ProfileCustomization = ({ userId }) => {
     const { currentUser } = useAuth();
     const [fontFamily, setFontFamily] = useState('Arial'); // Valor padrão
     const [textColor, setTextColor] = useState('#000'); // Valor padrão
@@ -75,6 +75,11 @@ const ProfileCustomization = ({ userId }) => { // Removi currentStyles, pois vam
                     id="textColor"
                     value={textColor}
                     onChange={handleColorChange}
+                />
+                {/* Amostra da cor selecionada */}
+                <div
+                    className="color-sample"
+                    style={{ backgroundColor: textColor, width: '50px', height: '50px', border: '1px solid #ccc', marginLeft: '10px' }}
                 />
             </div>
             <button className="save-btn" onClick={handleSave} disabled={loading}>

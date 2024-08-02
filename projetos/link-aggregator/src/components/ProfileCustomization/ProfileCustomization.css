@@ -7,6 +7,9 @@
 }
 
 .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     margin-bottom: 15px;
 }
 
@@ -18,7 +21,7 @@ label {
 
 select,
 input[type="color"] {
-    padding: 8px;
+    padding: 10px;
     font-size: 16px;
 }
 

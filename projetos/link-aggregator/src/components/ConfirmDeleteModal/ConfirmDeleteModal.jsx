@@ -8,6 +8,10 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm }) => {
     if (!isOpen) return null;
 
     const handleConfirm = () => {
+        if (modalPassword.trim() === '') {
+            setModalError('A senha é obrigatória.');
+            return;
+        }
         onConfirm(modalPassword, setModalError);
     };
 

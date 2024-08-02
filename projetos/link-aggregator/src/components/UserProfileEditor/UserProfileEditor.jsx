@@ -23,6 +23,7 @@ const UserProfileEditor = () => {
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [deleteError, setDeleteError] = useState('');
 
     const getPasswordStrength = (password) => {
         if (password.length < 6) return 'fraca';
@@ -36,6 +37,7 @@ const UserProfileEditor = () => {
         if (isPasswordCorrect) {
             await deleteAccount(modalPassword);
             setIsModalOpen(false);
+            window.alert('Sua conta foi deletada com sucesso.');
         } else {
             setModalError("Senha incorreta. Tente novamente.");
         }
@@ -133,6 +135,7 @@ const UserProfileEditor = () => {
             <>
                 {successMessage && <p className="success">{successMessage}</p>}
                 {error && <p className="error">{error}</p>}
+                {deleteError && <p className="error">{deleteError}</p>} {/* Mensagem de erro para deletar conta */}
             </>
             <button onClick={handleSubmit} disabled={isLoading}>
                 Salvar

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useBanner from '../../hooks/useBanner';
 import './BannerUploader.css';
-import ImageCropperModal from '../ImageCropperModal/ImageCropperModal';
+import ImageBannerCropperModal from '../ImageBannerCropperModal/ImageBannerCropperModal';
 
 const BannerUploader = () => {
     const { bannerData, handleSaveImage } = useBanner();
@@ -86,7 +86,7 @@ const BannerUploader = () => {
             <span>Tamanho mínimo permitido é de 900x200, a imagem deve ter um formato retangular, proporção de 9:2.</span>
 
             {showCropper && (
-                <ImageCropperModal
+                <ImageBannerCropperModal
                     image={imageToCrop}
                     onCrop={handleCrop}
                     onClose={() => setShowCropper(false)}

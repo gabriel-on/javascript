@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
-import './ImageCropperModal.css';
+import './ImageBannerCropperModal.css';
 
-const ImageCropperModal = ({ image, onCrop, onClose }) => {
+const ImageBannerCropperModal = ({ image, onCrop, onClose }) => {
     const cropperRef = useRef(null);
 
     const handleCrop = () => {
@@ -40,4 +40,4 @@ const ImageCropperModal = ({ image, onCrop, onClose }) => {
     );
 };
 
-export default ImageCropperModal;
+export default ImageBannerCropperModal;

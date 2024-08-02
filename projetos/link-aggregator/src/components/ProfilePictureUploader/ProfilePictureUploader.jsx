@@ -1,90 +1,86 @@
-// src/components/ProfilePictureUploader/ProfilePictureUploader.jsx
-import React, { useState, useEffect } from 'react';
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-import { useAuth } from '../../hooks/useAuthentication';
-import { getDatabase, ref as dbRef, update, get } from 'firebase/database';
+import React, { useState } from 'react';
+import useProfilePictureUploader from '../../hooks/useProfilePictureUploader';
+import './ProfilePictureUploader.css';
+import ImageProfileCropperModal from '../ImageProfileCropperModal/ImageProfileCropperModal';
 
 const ProfilePictureUploader = () => {
-  const { currentUser } = useAuth();
-  const [file, setFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState(null);
-  const [currentImage, setCurrentImage] = useState('');
+  const { profileData, handleSaveImage } = useProfilePictureUploader();
+  const [showCropper, setShowCropper] = useState(false);
+  const [imageToCrop, setImageToCrop] = useState('');
+  const [previewImage, setPreviewImage] = useState('');
 
-  useEffect(() => {
-    // Certifique-se de que currentUser não é null
-    if (currentUser) {
-      const fetchProfileImage = async () => {
-        const db = getDatabase();
-        const userRef = dbRef(db, `users/${currentUser.uid}/profileImage`);
-        const snapshot = await get(userRef);
-        if (snapshot.exists()) {
-          setCurrentImage(snapshot.val());
-        }
-      };
-      
-      fetchProfileImage();
-    }
-  }, [currentUser]);
+  const handleImageSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const fileSizeInKB = file.size / 1024; // Tamanho em KB
+      const maxSizeInKB = 200; // Limite máximo de tamanho em KB
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
-  const handleUpload = async () => {
-    if (!file) return;
-
-    const storage = getStorage();
-    const storageRef = ref(storage, `profile_pictures/${currentUser.uid}/${file.name}`);
-    
-    setUploading(true);
-    setError(null);
-
-    try {
-      // Se houver uma imagem anterior, exclua-a
-      if (currentImage) {
-        const oldImageRef = ref(storage, currentImage);
-        await deleteObject(oldImageRef);
+      if (fileSizeInKB > maxSizeInKB) {
+        alert(`O arquivo deve ter no máximo ${maxSizeInKB} KB. Você enviou ${fileSizeInKB.toFixed(2)} KB.`);
+        return;
       }
 
-      // Fazer upload do novo arquivo
-      await uploadBytes(storageRef, file);
-      // Obter a URL do novo arquivo
-      const url = await getDownloadURL(storageRef);
-
-      // Atualizar a URL da imagem no Realtime Database
-      const db = getDatabase();
-      const userRef = dbRef(db, `users/${currentUser.uid}`);
-      await update(userRef, { profileImage: url });
-      
-      // Atualizar a imagem atual
-      setCurrentImage(url);
-    } catch (err) {
-      console.error('Erro ao fazer upload da imagem:', err);
-      setError('Falha ao fazer upload da imagem.');
-    } finally {
-      setUploading(false);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageToCrop(reader.result);
+        setShowCropper(true);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
-  if (!currentUser) {
-    return null; // Ou um loading spinner
-  }
+  const handleCrop = (croppedImage) => {
+    setShowCropper(false);
+    setPreviewImage(croppedImage);
+  };
+
+  const saveCroppedImage = () => {
+    handleSaveImage(previewImage);
+  };
 
   return (
-    <div>
-      <h2>Upload Profile Picture</h2>
-      {currentImage && (
-        <div>
-          <img src={currentImage} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
-          <p>Current Profile Picture</p>
-        </div>
+    <div className="profile-picture-uploader">
+      <h2>Atualizar Imagem de Perfil</h2>
+      <div className="profile-picture-preview">
+        {previewImage ? (
+          <img
+            src={previewImage}
+            alt="Preview"
+            style={{
+              width: '100px',
+              height: '100px',
+              borderRadius: '50%',
+              objectFit: 'cover'
+            }}
+          />
+        ) : (
+          profileData.image && (
+            <img
+              src={profileData.image}
+              alt="Profile"
+              style={{
+                width: '100px',
+                height: '100px',
+                borderRadius: '50%',
+                objectFit: 'cover'
+              }}
+            />
+          )
+        )}
+      </div>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleImageSelect}
+      />
+      <button onClick={saveCroppedImage}>Salvar Imagem</button>
+      {showCropper && (
+        <ImageProfileCropperModal
+          image={imageToCrop}
+          onCrop={handleCrop}
+          onClose={() => setShowCropper(false)}
+        />
       )}
-      <input type="file" accept="image/*" onChange={handleFileChange} />
-      <button onClick={handleUpload} disabled={uploading}>
-        {uploading ? 'Uploading...' : 'Upload'}
-      </button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 };

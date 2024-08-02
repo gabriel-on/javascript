@@ -4,7 +4,7 @@ import './ProfilePictureUploader.css';
 import ImageProfileCropperModal from '../ImageProfileCropperModal/ImageProfileCropperModal';
 
 const ProfilePictureUploader = () => {
-  const { profileData, handleSaveImage } = useProfilePictureUploader();
+  const { handleSaveImage } = useProfilePictureUploader();
   const [showCropper, setShowCropper] = useState(false);
   const [imageToCrop, setImageToCrop] = useState('');
   const [previewImage, setPreviewImage] = useState('');
@@ -13,7 +13,7 @@ const ProfilePictureUploader = () => {
     const file = e.target.files[0];
     if (file) {
       const fileSizeInKB = file.size / 1024; // Tamanho em KB
-      const maxSizeInKB = 200; // Limite máximo de tamanho em KB
+      const maxSizeInKB = 250; // Limite máximo de tamanho em KB
 
       if (fileSizeInKB > maxSizeInKB) {
         alert(`O arquivo deve ter no máximo ${maxSizeInKB} KB. Você enviou ${fileSizeInKB.toFixed(2)} KB.`);
@@ -42,7 +42,7 @@ const ProfilePictureUploader = () => {
     <div className="profile-picture-uploader">
       <h2>Atualizar Imagem de Perfil</h2>
       <div className="profile-picture-preview">
-        {previewImage ? (
+        {previewImage && (
           <img
             src={previewImage}
             alt="Preview"
@@ -53,19 +53,6 @@ const ProfilePictureUploader = () => {
               objectFit: 'cover'
             }}
           />
-        ) : (
-          profileData.image && (
-            <img
-              src={profileData.image}
-              alt="Profile"
-              style={{
-                width: '100px',
-                height: '100px',
-                borderRadius: '50%',
-                objectFit: 'cover'
-              }}
-            />
-          )
         )}
       </div>
       <input

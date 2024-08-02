@@ -57,18 +57,19 @@
     /* Cor do botão ao passar o mouse */
 }
 
-.user-profile-editor > .success {
+.user-profile-editor>.success {
     color: #28a745;
     margin-bottom: 15px;
 }
 
-.user-profile-editor > .error {
+.user-profile-editor>.error {
     color: #dc3545;
     margin-bottom: 15px;
 }
 
-.user-profile-editor > .error-input {
-    border: 1px solid red; /* Borda vermelha para indicar erro */
+.user-profile-editor>.error-input {
+    border: 1px solid red;
+    /* Borda vermelha para indicar erro */
 }
 
 /* Estilos adicionais para os botões de mostrar/ocultar senha */

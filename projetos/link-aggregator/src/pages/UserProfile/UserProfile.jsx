@@ -96,7 +96,6 @@ const UserProfile = () => {
                     height: '200px',
                     width: '100%',
                     borderRadius: '8px',
-                    marginBottom: '10px'
                 }}></div>
             </div>
             <div className='user-links-container'>

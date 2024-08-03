@@ -8,48 +8,83 @@ footer {
     margin-top: 100px;
 }
 
-footer > div {
+footer>div {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-}
-
-.hr-footer{
-    width: 1200px;
-    border-bottom: 1px solid #BABABA;
-}
-    
-footer > div > p {
-    color: yellow;
-}
-.links-associate {
-    align-content: center;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
     width: 100%;
+}
+
+.hr-footer {
+    width: 100%;
+    max-width: 900px;
+    border-bottom: 1px solid #BABABA;
+    margin: 20px 0;
+    /* Adiciona margem para espaçamento */
+}
+
+footer>div>p {
+    color: #000;
+}
+
+.links-associate {
+    display: flex;
+    flex-direction: column;
+    /* Mantém os links em uma coluna */
+    width: 100%;
+    /* Ocupa a largura total */
     justify-content: center;
     gap: 10px;
 }
 
-.links-associate > p {
+.links-associate>p {
     text-transform: uppercase;
     font-weight: bold;
     color: rgb(255, 0, 0);
     opacity: 0.6;
 }
 
-.links-associate > a{
+.links-associate>a {
     color: red;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    opacity: 1;
+    display: block;
+    /* Para que o link ocupe toda a largura disponível */
+    transition: 0.3s;
+    text-align: center;
+    /* Centraliza o texto do link */
+}
+
+.links-associate>a:hover {
+    opacity: 0.5;
     transition: 0.3s;
 }
 
-.links-associate > a:hover{
-    opacity: 0.5;
-    transition: 0.3s;
+/* Estilos para o modo claro */
+.light-mode footer {
+    background: #CED4DA;
+    /* Cor de fundo do footer no modo claro */
+    color: #000000;
+    /* Cor do texto no modo claro */
+}
+
+.dark-mode footer>div>p {
+    color: yellow;
+}
+
+.light-mode .links-associate>a {
+    color: #ff0000;
+    /* Cor dos links no modo claro */
+}
+
+/* Estilos para o modo escuro */
+.dark-mode footer {
+    background: #000;
+    /* Cor de fundo do footer no modo escuro */
+    color: #ffffff;
+    /* Cor do texto no modo escuro */
+}
+
+.dark-mode .links-associate>a {
+    color: #ff0000;
+    /* Cor dos links no modo escuro */
 }

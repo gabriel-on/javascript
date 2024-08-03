@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuthentication';
 import { getAuth, applyActionCode, sendEmailVerification } from "firebase/auth";
-import { getDatabase, ref, update } from "firebase/database"; // Alterado para importar update
+import { getDatabase, ref, update } from "firebase/database";
 
 const EmailVerification = () => {
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const location = useLocation();
-    const { currentUser } = useAuth();
+    const auth = getAuth();
 
     useEffect(() => {
         const verifyEmail = async () => {
@@ -17,33 +16,34 @@ const EmailVerification = () => {
             const mode = searchParams.get('mode');
             const oobCode = searchParams.get('oobCode');
 
-            console.log(`Mode: ${mode}, OOB Code: ${oobCode}`);
+            // Verifique se o usuário está autenticado
+            const user = auth.currentUser;
 
+            if (!user) {
+                setMessage('Você precisa estar logado para verificar seu e-mail.');
+                setLoading(false);
+                return;
+            }
+
+            // Verifique se o modo e o oobCode são válidos
             if (mode === 'verifyEmail' && oobCode) {
                 try {
-                    const auth = getAuth();
-                    const user = auth.currentUser;
+                    await applyActionCode(auth, oobCode);
+                    await auth.currentUser.reload(); // Atualiza o estado do usuário após a aplicação do código
 
-                    if (user && user.emailVerified) {
-                        setMessage('Seu e-mail já foi verificado.');
+                    if (auth.currentUser.emailVerified) {
+                        // Atualiza o estado do usuário no Realtime Database
+                        const db = getDatabase();
+                        await update(ref(db, 'users/' + user.uid), {
+                            emailVerified: true,
+                        });
+
+                        setMessage('Seu e-mail foi verificado com sucesso. Você será redirecionado em breve.');
+                        setTimeout(() => {
+                            navigate('/dashboard');
+                        }, 5000); // Redireciona após 5 segundos
                     } else {
-                        await applyActionCode(auth, oobCode);
-                        await auth.currentUser.reload(); // Atualiza o estado do usuário após a aplicação do código
-
-                        if (auth.currentUser.emailVerified) {
-                            // Atualiza o estado do usuário no Realtime Database
-                            const db = getDatabase();
-                            await update(ref(db, 'users/' + user.uid), {
-                                emailVerified: true,
-                            });
-
-                            setMessage('Seu e-mail foi verificado com sucesso. Você será redirecionado em breve.');
-                            setTimeout(() => {
-                                navigate('/dashboard');
-                            }, 5000); // Redireciona após 5 segundos
-                        } else {
-                            setMessage('Ocorreu um erro ao verificar seu e-mail. Por favor, tente novamente.');
-                        }
+                        setMessage('Ocorreu um erro ao verificar seu e-mail. Por favor, tente novamente.');
                     }
                 } catch (error) {
                     console.error("Erro ao verificar e-mail:", error);
@@ -61,15 +61,15 @@ const EmailVerification = () => {
         };
 
         verifyEmail();
-    }, [location, navigate]);
+    }, [location, navigate, auth]);
 
     const handleResendVerificationEmail = async () => {
         setLoading(true);
         setMessage(''); // Limpa a mensagem anterior
         try {
-            if (currentUser) {
-                const auth = getAuth();
-                await sendEmailVerification(auth.currentUser);
+            const user = auth.currentUser;
+            if (user) {
+                await sendEmailVerification(user);
                 setMessage('Um novo e-mail de verificação foi enviado. Por favor, verifique sua caixa de entrada.');
             } else {
                 setMessage('Nenhum usuário autenticado.');

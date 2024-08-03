@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
 import { Link } from 'react-router-dom';
-import './Register.css'
+import './Register.css';
 
 const Register = () => {
     const [displayName, setDisplayName] = useState('');
@@ -31,7 +31,6 @@ const Register = () => {
 
         try {
             await createUser(userCredentials);
-            window.location.reload(); // Recarrega a página após registro
         } catch (error) {
             setError('Erro ao criar o usuário: ' + error.message);
         }

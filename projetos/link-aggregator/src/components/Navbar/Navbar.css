@@ -71,6 +71,21 @@ li {
     background: red;
 }
 
+.toggle-links-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    /* Ajuste o tamanho conforme necessário */
+    color: inherit;
+    /* Herda a cor do texto do Navbar */
+}
+
+.toggle-links-btn:focus {
+    outline: none;
+    /* Remove o contorno padrão ao focar */
+}
+
 /* Modos de Tema */
 .light-mode {
     background: #ffffff;

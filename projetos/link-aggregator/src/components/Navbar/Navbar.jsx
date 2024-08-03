@@ -11,6 +11,7 @@ function Navbar() {
     const savedMode = localStorage.getItem('darkMode');
     return savedMode === 'true';
   });
+  const [showLinks, setShowLinks] = useState(false); // Estado para controlar a visibilidade dos links
 
   const handleLogout = async () => {
     try {
@@ -22,6 +23,10 @@ function Navbar() {
 
   const toggleDarkMode = () => {
     setIsDarkMode(prevMode => !prevMode);
+  };
+
+  const toggleLinksVisibility = () => {
+    setShowLinks(prev => !prev); // Alterna a visibilidade dos links
   };
 
   useEffect(() => {
@@ -56,28 +61,37 @@ function Navbar() {
           </li>
         </ul>
         <ul>
-          {currentUser && (
-            <li className='nav-page'>
-              <NavLink to={"/dashboard"}>Dashboard</NavLink>
-            </li>
-          )}
-          {!currentUser && (
-            <li>
-              <NavLink to={"/login"}>Entrar</NavLink>
-            </li>
-          )}
-          {!currentUser && (
-            <li>
-              <NavLink to={"/register"}>Cadastrar</NavLink>
-            </li>
-          )}
-          <li className='display-name'>
-            <span>Olá, {currentUser ? currentUser.displayName : 'Visitante'}!</span>
+          <li>
+            <button onClick={toggleLinksVisibility} className="toggle-links-btn">
+              <i className="bi bi-three-dots-vertical"></i> {/* Ícone de três pontos verticais */}
+            </button>
           </li>
-          {currentUser && (
-            <li className='logout-btn'>
-              <button onClick={handleLogout}>Sair</button>
-            </li>
+          {showLinks && ( // Exibe os links somente se showLinks for verdadeiro
+            <>
+              {currentUser && (
+                <li className='nav-page'>
+                  <NavLink to={"/dashboard"}>Dashboard</NavLink>
+                </li>
+              )}
+              {!currentUser && (
+                <li>
+                  <NavLink to={"/login"}>Entrar</NavLink>
+                </li>
+              )}
+              {!currentUser && (
+                <li>
+                  <NavLink to={"/register"}>Cadastrar</NavLink>
+                </li>
+              )}
+              <li className='display-name'>
+                <span>Olá, {currentUser ? currentUser.displayName : 'Visitante'}!</span>
+              </li>
+              {currentUser && (
+                <li className='logout-btn'>
+                  <button onClick={handleLogout}>Sair</button>
+                </li>
+              )}
+            </>
           )}
           <li>
             <button onClick={toggleDarkMode} className="dark-mode-toggle">

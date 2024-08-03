@@ -19,7 +19,7 @@ const useProfileCustomization = (userId) => {
                 setTextColor(customizations.textColor || '#000');
                 setBackgroundColor(customizations.backgroundColor || '#f5f5f5');
                 setHoverBackgroundColor(customizations.hoverBackgroundColor || '#e0e0e0');
-                setBorderColor(customizations.borderColor || '#000'); // Nova propriedade
+                setBorderColor(customizations.borderColor || '#000');
             }
         });
     }, [userId]);

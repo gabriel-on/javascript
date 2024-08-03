@@ -84,7 +84,7 @@ const UserProfileEditor = () => {
                     />
                 </label>
             </div>
-            <div>
+            <div className='bio-container'>
                 <label htmlFor="bio">
                     Biografia (opcional):
                     <textarea

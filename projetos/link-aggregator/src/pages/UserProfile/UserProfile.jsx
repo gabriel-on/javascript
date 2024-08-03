@@ -118,7 +118,7 @@ const UserProfile = () => {
                         <ProfilePicture userId={userId} />
                         <div>
                             <h2>@{mentionName}</h2>
-                            <h2>{userId && userId.displayName ? userId.displayName : 'Nome de Exibição'}</h2>
+                            <h2>{'Bio do Usuário'}</h2>
                         </div>
                     </div>
                     <button

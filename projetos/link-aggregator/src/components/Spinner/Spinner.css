@@ -1,0 +1,34 @@
+.spinner-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+.spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3);
+    /* Cor da borda (fundo) */
+    border-top: 8px solid #3498db;
+    /* Cor da borda (topo) */
+    border-radius: 50%;
+    /* Faz o spinner ser circular */
+    width: 50px;
+    /* Tamanho do spinner */
+    height: 50px;
+    /* Tamanho do spinner */
+    animation: spin 1s linear infinite;
+    /* Animação */
+    margin: auto;
+    /* Centraliza o spinner */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+        /* Rotação inicial */
+    }
+
+    100% {
+        transform: rotate(360deg);
+        /* Rotação final */
+    }
+}

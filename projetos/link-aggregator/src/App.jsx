@@ -24,6 +24,7 @@ import ErrorPage from './pages/ErrorPage/ErrorPage.jsx';
 import UserProfile from './pages/UserProfile/UserProfile.jsx';
 import EmailVerification from './components/EmailVerification/EmailVerification.jsx';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword.jsx';
+import Spinner from './components/Spinner/Spinner';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -34,7 +35,7 @@ function App() {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userId = user.uid; // Obtém o ID do usuário
-        console.log('ID do usuário:', userId); // Imprime o ID do usuário no console
+        console.log('ID do usuário:', userId);
 
         const database = getDatabase();
         const dbRef = ref(database, 'users/' + userId);
@@ -42,7 +43,6 @@ function App() {
         try {
           const snapshot = await get(dbRef);
           if (snapshot.exists()) {
-            // Aqui você pode processar os dados do usuário, se necessário
             console.log('Dados do usuário:', snapshot.val());
           } else {
             console.log('Usuário não encontrado no banco de dados.');
@@ -61,7 +61,7 @@ function App() {
   const userId = user ? user.uid : null;
 
   if (loading) {
-    return <div>Loading...</div>; // Pode adicionar um componente de carregamento
+    return <Spinner />; // Use o Spinner aqui
   }
 
   return (

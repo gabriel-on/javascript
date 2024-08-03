@@ -6,6 +6,7 @@ import Modal from '../../components/Modal/Modal';
 import UserProfileEditor from '../../components/UserProfileEditor/UserProfileEditor';
 import { getAuth } from "firebase/auth";
 import ProfileCustomization from '../../components/ProfileCustomization/ProfileCustomization';
+import Spinner from '../../components/Spinner/Spinner';
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
@@ -21,16 +22,26 @@ const Dashboard = () => {
     const fetchUserData = async () => {
       if (currentUser) {
         const auth = getAuth();
-        await auth.currentUser.reload(); // Reload the user to get the latest data
-        setIsLoading(false); // Set loading to false after fetching
+        await auth.currentUser.reload();
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
       }
     };
 
     fetchUserData();
   }, [currentUser]);
 
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   if (!currentUser) {
-    return <p>Faça <a href="/login">Login</a> para visualizar seu dashboard.</p>;
+    return (
+      <div>
+        <p>Faça <NavLink to="/login">Login</NavLink> para visualizar seu dashboard.</p>
+      </div>
+    );
   }
 
   const handleAddLink = () => {
@@ -70,9 +81,7 @@ const Dashboard = () => {
 
       {/* Indicativo de verificação de e-mail */}
       <div>
-        {isLoading ? (
-          <p>Carregando...</p>
-        ) : currentUser.emailVerified ? (
+        {currentUser.emailVerified ? (
           <p style={{ color: 'green' }}>✅ Seu e-mail está verificado!</p>
         ) : (
           <p style={{ color: 'red' }}>⚠️ Seu e-mail não foi verificado. Verifique sua caixa de entrada.</p>
@@ -80,19 +89,18 @@ const Dashboard = () => {
       </div>
 
       <ul>
-        {currentUser && (
-          <li className='profile-link-page'>
-            <NavLink to={`/${currentUser.mentionName}`}>Ver Links</NavLink>
-          </li>
-        )}
+        <li className='profile-link-page'>
+          <NavLink to={`/${currentUser.mentionName}`}>Ver Links</NavLink>
+        </li>
       </ul>
+
       <div>
         <h2>Adicionar um novo link</h2>
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
+          placeholder="Título"
           disabled={!currentUser.emailVerified}
         />
         <input
@@ -102,13 +110,14 @@ const Dashboard = () => {
           placeholder="URL"
           disabled={!currentUser.emailVerified}
         />
-        <button onClick={handleAddLink} disabled={!currentUser.emailVerified}>
+        <button onClick={handleAddLink} disabled={!currentUser.emailVerified || !title || !url}>
           Adicionar Link
         </button>
         {!currentUser.emailVerified && (
           <p style={{ color: 'red' }}>⚠️ Verifique seu e-mail para poder adicionar novos links.</p>
         )}
       </div>
+
       <div>
         <h2>Seus links</h2>
         <ul>
@@ -118,7 +127,7 @@ const Dashboard = () => {
               <li key={link.id}>
                 <a href={link.url} target="_blank" rel="noopener noreferrer">{link.title}</a>
                 <button onClick={() => openModal(link)}>Editar</button>
-                <span> (Added on: {new Date(link.createdAt * 1000).toLocaleString()})</span>
+                <span> (Adicionado em: {new Date(link.createdAt * 1000).toLocaleString()})</span>
               </li>
             ))}
         </ul>

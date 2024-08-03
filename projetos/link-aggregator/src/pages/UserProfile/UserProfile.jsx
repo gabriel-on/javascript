@@ -6,6 +6,7 @@ import ProfilePicture from '../../components/ProfilePicture/ProfilePicture';
 import ProfileBanner from '../../components/ProfileBanner/ProfileBanner';
 import ShareModal from '../../components/ShareModal/ShareModal';
 import './UserProfile.css';
+import Spinner from '../../components/Spinner/Spinner';
 
 const UserProfile = () => {
     const { mentionName } = useParams();
@@ -19,7 +20,7 @@ const UserProfile = () => {
         backgroundColor: '#f5f5f5',
         hoverBackgroundColor: '#808080',
         borderColor: '#000',
-        hoverTextColor: '#000' // new state for hover text color
+        hoverTextColor: '#000',
     });
 
     useEffect(() => {
@@ -37,7 +38,7 @@ const UserProfile = () => {
                                 backgroundColor: data[key].backgroundColor || '#f5f5f5',
                                 hoverBackgroundColor: data[key].hoverBackgroundColor || '#808080',
                                 borderColor: data[key].borderColor || '#000',
-                                hoverTextColor: data[key].hoverTextColor || '#000' // set initial hover text color
+                                hoverTextColor: data[key].hoverTextColor || '#000',
                             });
                             break;
                         }
@@ -57,7 +58,7 @@ const UserProfile = () => {
                 const linkList = data
                     ? Object.keys(data).map(key => ({
                         id: key,
-                        ...data[key]
+                        ...data[key],
                     }))
                     : [];
 
@@ -69,14 +70,15 @@ const UserProfile = () => {
             onValue(customizationsRef, (snapshot) => {
                 const customizations = snapshot.val();
                 if (customizations) {
-                    setUserStyles({
-                        fontFamily: customizations.fontFamily || 'Arial',
-                        textColor: customizations.textColor || '#000',
-                        backgroundColor: customizations.backgroundColor || '#f5f5f5',
-                        hoverBackgroundColor: customizations.hoverBackgroundColor || '#808080',
-                        borderColor: customizations.borderColor || '#000',
-                        hoverTextColor: customizations.hoverTextColor || '#000' // set initial hover text color
-                    });
+                    setUserStyles(prevStyles => ({
+                        ...prevStyles,
+                        fontFamily: customizations.fontFamily || prevStyles.fontFamily,
+                        textColor: customizations.textColor || prevStyles.textColor,
+                        backgroundColor: customizations.backgroundColor || prevStyles.backgroundColor,
+                        hoverBackgroundColor: customizations.hoverBackgroundColor || prevStyles.hoverBackgroundColor,
+                        borderColor: customizations.borderColor || prevStyles.borderColor,
+                        hoverTextColor: customizations.hoverTextColor || prevStyles.hoverTextColor,
+                    }));
                 }
             });
         }
@@ -94,21 +96,27 @@ const UserProfile = () => {
         setModalOpen(true);
     };
 
+    if (!userId) {
+        return <Spinner />; // Exibe o spinner enquanto aguarda a busca do usuário
+    }
+
     return (
-        <div className='user-container'>
+        <div className='user-container' style={{ fontFamily: userStyles.fontFamily }}>
             <div className='profile-user'>
-                {userId && <ProfileBanner userId={userId} />}
+                <ProfileBanner userId={userId} />
             </div>
-            <div className='user-links-container' style={{ fontFamily: userStyles.fontFamily, color: userStyles.textColor }}>
+            <div className='user-links-container' style={{ color: userStyles.textColor }}>
                 <div className='profile-picture-info'>
                     <div className='profile-info'>
-                        {userId && <ProfilePicture userId={userId} />}
+                        <ProfilePicture userId={userId} />
                         <div>
                             <h2>@{mentionName}</h2>
-                            <h2>{"displayName"}</h2>
+                            <h2>{userId && userId.displayName ? userId.displayName : 'Nome de Exibição'}</h2> {/* Atualize aqui */}
                         </div>
                     </div>
-                    <button className='share-btn' onClick={handleProfileShareClick}
+                    <button
+                        className='share-btn'
+                        onClick={handleProfileShareClick}
                         style={{
                             color: userStyles.textColor,
                             backgroundColor: userStyles.backgroundColor,
@@ -121,7 +129,9 @@ const UserProfile = () => {
                             e.currentTarget.style.backgroundColor = userStyles.backgroundColor;
                             e.currentTarget.style.color = userStyles.textColor;
                         }}
-                    >⋮</button>
+                    >
+                        ⋮
+                    </button>
                 </div>
                 <ul className='link-list'>
                     {links.length > 0 ? (
@@ -136,7 +146,7 @@ const UserProfile = () => {
                                         backgroundColor: userStyles.backgroundColor,
                                         borderColor: userStyles.borderColor,
                                         borderWidth: '1px',
-                                        borderStyle: 'solid'
+                                        borderStyle: 'solid',
                                     }}
                                     onMouseEnter={(e) => {
                                         e.currentTarget.style.backgroundColor = userStyles.hoverBackgroundColor;
@@ -149,10 +159,12 @@ const UserProfile = () => {
                                 >
                                     {link.title}
                                 </a>
-                                <button onClick={() => handleShareClick(link)} style={{
-                                    color: userStyles.textColor,
-                                    backgroundColor: userStyles.backgroundColor,
-                                }}
+                                <button
+                                    onClick={() => handleShareClick(link)}
+                                    style={{
+                                        color: userStyles.textColor,
+                                        backgroundColor: userStyles.backgroundColor,
+                                    }}
                                     onMouseEnter={(e) => {
                                         e.currentTarget.style.backgroundColor = userStyles.hoverBackgroundColor;
                                         e.currentTarget.style.color = userStyles.hoverTextColor;
@@ -161,7 +173,9 @@ const UserProfile = () => {
                                         e.currentTarget.style.backgroundColor = userStyles.backgroundColor;
                                         e.currentTarget.style.color = userStyles.textColor;
                                     }}
-                                >⋮</button>
+                                >
+                                    ⋮
+                                </button>
                             </li>
                         ))
                     ) : (

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuthentication';
 import { Link } from 'react-router-dom';
+import './Register.css'
 
 const Register = () => {
     const [displayName, setDisplayName] = useState('');
-    const [mentionName, setMentionName] = useState(''); // Novo estado para o nome de menção
+    const [mentionName, setMentionName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');

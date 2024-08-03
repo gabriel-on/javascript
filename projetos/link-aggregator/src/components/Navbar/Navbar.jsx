@@ -7,14 +7,21 @@ function Navbar() {
   const { currentUser, logout } = useAuth();
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedMode = localStorage.getItem('darkMode');
+    return savedMode === 'true';
+  });
 
   const handleLogout = async () => {
     try {
       await logout();
     } catch (error) {
       console.error('Erro ao fazer logout:', error);
-      // Aqui você pode mostrar um alert ou notificação para o usuário
     }
+  };
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(prevMode => !prevMode);
   };
 
   useEffect(() => {
@@ -32,6 +39,13 @@ function Navbar() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  useEffect(() => {
+    // Adicione ou remova classes de tema do body
+    document.body.className = isDarkMode ? 'dark-mode' : 'light-mode';
+    // Salve o estado do modo escuro no localStorage
+    localStorage.setItem('darkMode', isDarkMode);
+  }, [isDarkMode]);
 
   return (
     <div className={`navbar-container ${isScrolled ? 'scrolled' : ''}`}>
@@ -67,6 +81,11 @@ function Navbar() {
               <button onClick={handleLogout}>Sair</button>
             </li>
           )}
+          <li>
+            <button onClick={toggleDarkMode}>
+              {isDarkMode ? 'Modo Claro' : 'Modo Escuro'}
+            </button>
+          </li>
         </ul>
       </div>
     </div>

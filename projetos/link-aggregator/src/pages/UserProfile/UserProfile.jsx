@@ -14,6 +14,7 @@ const UserProfile = () => {
     const [userId, setUserId] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedLink, setSelectedLink] = useState(null);
+    const [bio, setBio] = useState('');
     const [userStyles, setUserStyles] = useState({
         fontFamily: 'Arial',
         textColor: '#000',
@@ -33,6 +34,7 @@ const UserProfile = () => {
                     for (const key in data) {
                         if (data[key].mentionName === mentionName) {
                             setUserId(key);
+                            setBio(data[key].bio || '');
                             setUserStyles({
                                 fontFamily: data[key].fontFamily || 'Arial',
                                 textColor: data[key].textColor || '#000',
@@ -118,7 +120,7 @@ const UserProfile = () => {
                         <ProfilePicture userId={userId} />
                         <div>
                             <h2>@{mentionName}</h2>
-                            <h2>{'Bio do Usuário'}</h2>
+                            <h2>{bio}</h2>
                         </div>
                     </div>
                     <button

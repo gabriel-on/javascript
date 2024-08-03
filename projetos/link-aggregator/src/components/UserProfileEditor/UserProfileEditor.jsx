@@ -15,6 +15,7 @@ const UserProfileEditor = () => {
         currentPassword, setCurrentPassword,
         newPassword, setNewPassword,
         confirmPassword, setConfirmPassword,
+        bio, setBio, // Adicione isto
         error, successMessage,
         isLoading, handleSubmit
     } = useUserProfile(currentUser);
@@ -80,6 +81,17 @@ const UserProfileEditor = () => {
                         value={currentUser ? currentUser.email : ''}
                         disabled
                         placeholder="Seu e-mail"
+                    />
+                </label>
+            </div>
+            <div>
+                <label htmlFor="bio">
+                    Biografia (opcional):
+                    <textarea
+                        id="bio"
+                        value={bio}
+                        onChange={(e) => setBio(e.target.value)}
+                        placeholder="Fale um pouco sobre você"
                     />
                 </label>
             </div>

@@ -8,14 +8,23 @@ const useUserProfile = (currentUser) => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [bio, setBio] = useState('');
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (currentUser) {
-            setName(currentUser.displayName || '');
-            setMention(currentUser.mentionName || '');
+            const db = getDatabase();
+            const userRef = ref(db, `users/${currentUser.uid}`);
+            get(userRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    setName(userData.displayName || '');
+                    setMention(userData.mentionName || '');
+                    setBio(userData.bio || '');
+                }
+            });
         }
     }, [currentUser]);
 
@@ -80,6 +89,7 @@ const useUserProfile = (currentUser) => {
             await update(userRef, {
                 displayName: name,
                 mentionName: mention,
+                bio: bio,
             });
 
             if (newPassword) {
@@ -95,14 +105,13 @@ const useUserProfile = (currentUser) => {
                     return;
                 }
 
-                // Usar a função updatePassword do Firebase Auth
                 await updatePassword(user, newPassword);
             }
 
             setSuccessMessage('Informações salvas com sucesso!');
-            setCurrentPassword(''); // Limpar o campo de senha após sucesso
-            setNewPassword(''); // Limpar o campo de nova senha
-            setConfirmPassword(''); // Limpar o campo de confirmação de senha
+            setCurrentPassword('');
+            setNewPassword('');
+            setConfirmPassword('');
         } catch (error) {
             setError('Erro ao salvar as informações: ' + error.message);
         } finally {
@@ -119,6 +128,8 @@ const useUserProfile = (currentUser) => {
         setCurrentPassword,
         newPassword,
         setNewPassword,
+        bio,
+        setBio,
         confirmPassword,
         setConfirmPassword,
         error,

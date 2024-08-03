@@ -7,6 +7,7 @@ import UserProfileEditor from '../../components/UserProfileEditor/UserProfileEdi
 import { getAuth } from "firebase/auth";
 import ProfileCustomization from '../../components/ProfileCustomization/ProfileCustomization';
 import Spinner from '../../components/Spinner/Spinner';
+import './Dashboard.css'
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
@@ -71,7 +72,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
+    <div className='dashboard-container'>
       <h1>Dashboard</h1>
       <UserProfileEditor />
       <div>

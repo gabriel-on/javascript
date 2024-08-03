@@ -41,9 +41,7 @@ function Navbar() {
   }, [location.pathname]);
 
   useEffect(() => {
-    // Adicione ou remova classes de tema do body
     document.body.className = isDarkMode ? 'dark-mode' : 'light-mode';
-    // Salve o estado do modo escuro no localStorage
     localStorage.setItem('darkMode', isDarkMode);
   }, [isDarkMode]);
 
@@ -82,8 +80,12 @@ function Navbar() {
             </li>
           )}
           <li>
-            <button onClick={toggleDarkMode}>
-              {isDarkMode ? 'Modo Claro' : 'Modo Escuro'}
+            <button onClick={toggleDarkMode} className="dark-mode-toggle">
+              {isDarkMode ? (
+                <i className="bi bi-sun" title="Modo Claro"></i> // Ícone do modo claro
+              ) : (
+                <i className="bi bi-moon" title="Modo Escuro"></i> // Ícone do modo escuro
+              )}
             </button>
           </li>
         </ul>

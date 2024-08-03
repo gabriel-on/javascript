@@ -63,14 +63,8 @@ export const useAuth = () => {
             // Salva o e-mail no local storage
             window.localStorage.setItem('emailForSignIn', data.email);
 
-            // Configura a URL de redirecionamento para a verificação de e-mail
-            const actionCodeSettings = {
-                url: 'http://localhost:5173/email-verification', // URL base do seu aplicativo
-                handleCodeInApp: true, // Para lidar com o código no aplicativo
-            };
-
             // Envie o e-mail de verificação
-            await sendEmailVerification(user, actionCodeSettings);
+            await sendEmailVerification(user);
 
             setError('Um e-mail de verificação foi enviado. Por favor, verifique sua caixa de entrada.');
 

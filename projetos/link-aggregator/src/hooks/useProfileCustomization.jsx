@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { ref, update, onValue } from 'firebase/database';
-import { database } from '../firebase/config';
+import { database } from '../firebase/config'; // Ajuste o caminho conforme sua estrutura
 
 const useProfileCustomization = (userId) => {
     const [fontFamily, setFontFamily] = useState('Arial');
     const [textColor, setTextColor] = useState('#000');
     const [backgroundColor, setBackgroundColor] = useState('#f5f5f5');
-    const [hoverBackgroundColor, setHoverBackgroundColor] = useState('#808080');
+    const [hoverBackgroundColor, setHoverBackgroundColor] = useState('#e0e0e0');
+    const [borderColor, setBorderColor] = useState('#000'); // Nova propriedade
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -17,7 +18,8 @@ const useProfileCustomization = (userId) => {
                 setFontFamily(customizations.fontFamily || 'Arial');
                 setTextColor(customizations.textColor || '#000');
                 setBackgroundColor(customizations.backgroundColor || '#f5f5f5');
-                setHoverBackgroundColor(customizations.hoverBackgroundColor || '#808080');
+                setHoverBackgroundColor(customizations.hoverBackgroundColor || '#e0e0e0');
+                setBorderColor(customizations.borderColor || '#000'); // Nova propriedade
             }
         });
     }, [userId]);
@@ -32,6 +34,7 @@ const useProfileCustomization = (userId) => {
                 textColor,
                 backgroundColor,
                 hoverBackgroundColor,
+                borderColor, // Nova propriedade
             });
             alert('Configurações salvas com sucesso!');
         } catch (error) {
@@ -50,6 +53,8 @@ const useProfileCustomization = (userId) => {
         setBackgroundColor,
         hoverBackgroundColor,
         setHoverBackgroundColor,
+        borderColor, // Nova propriedade
+        setBorderColor, // Nova propriedade
         loading,
         handleSave,
     };

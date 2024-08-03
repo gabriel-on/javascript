@@ -12,41 +12,14 @@ const ProfileCustomization = ({ userId }) => {
         setBackgroundColor,
         hoverBackgroundColor,
         setHoverBackgroundColor,
+        borderColor,
+        setBorderColor,
         loading,
         handleSave,
     } = useProfileCustomization(userId);
 
-    const handleColorChange = (color) => {
-        setTextColor(color);
-    };
-
-    const handleColorInputChange = (e) => {
-        setTextColor(e.target.value);
-    };
-
-    const handleBackgroundColorChange = (color) => {
-        setBackgroundColor(color);
-    };
-
-    const handleBackgroundColorInputChange = (e) => {
-        setBackgroundColor(e.target.value);
-    };
-
-    const handleHoverBackgroundColorChange = (color) => {
-        setHoverBackgroundColor(color);
-    };
-
-    const handleHoverBackgroundColorInputChange = (e) => {
-        setHoverBackgroundColor(e.target.value);
-    };
-
-    // Lista de cores pré-determinadas
     const colorOptions = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', '#000000', '#FFFFFF'];
-
-    // Lista de cores de fundo pré-determinadas
     const backgroundOptions = ['#f5f5f5', '#FFD700', '#ADD8E6', '#90EE90', '#FFB6C1', '#DDA0DD', '#FFFFFF'];
-
-    // Lista de cores de hover pré-determinadas
     const hoverOptions = ['#e0e0e0', '#cccccc', '#b3b3b3', '#a6a6a6', '#999999'];
 
     return (
@@ -68,7 +41,7 @@ const ProfileCustomization = ({ userId }) => {
                     {colorOptions.map((color) => (
                         <button
                             key={color}
-                            onClick={() => handleColorChange(color)}
+                            onClick={() => setTextColor(color)}
                             style={{
                                 backgroundColor: color,
                                 width: '30px',
@@ -84,7 +57,7 @@ const ProfileCustomization = ({ userId }) => {
                 <input
                     type="color"
                     value={textColor}
-                    onChange={handleColorInputChange}
+                    onChange={(e) => setTextColor(e.target.value)}
                     style={{ marginLeft: '10px' }}
                 />
                 <div
@@ -104,7 +77,7 @@ const ProfileCustomization = ({ userId }) => {
                     {backgroundOptions.map((color) => (
                         <button
                             key={color}
-                            onClick={() => handleBackgroundColorChange(color)}
+                            onClick={() => setBackgroundColor(color)}
                             style={{
                                 backgroundColor: color,
                                 width: '30px',
@@ -120,7 +93,7 @@ const ProfileCustomization = ({ userId }) => {
                 <input
                     type="color"
                     value={backgroundColor}
-                    onChange={handleBackgroundColorInputChange}
+                    onChange={(e) => setBackgroundColor(e.target.value)}
                     style={{ marginLeft: '10px' }}
                 />
                 <div
@@ -140,7 +113,7 @@ const ProfileCustomization = ({ userId }) => {
                     {hoverOptions.map((color) => (
                         <button
                             key={color}
-                            onClick={() => handleHoverBackgroundColorChange(color)}
+                            onClick={() => setHoverBackgroundColor(color)}
                             style={{
                                 backgroundColor: color,
                                 width: '30px',
@@ -156,7 +129,7 @@ const ProfileCustomization = ({ userId }) => {
                 <input
                     type="color"
                     value={hoverBackgroundColor}
-                    onChange={handleHoverBackgroundColorInputChange}
+                    onChange={(e) => setHoverBackgroundColor(e.target.value)}
                     style={{ marginLeft: '10px' }}
                 />
                 <div
@@ -166,6 +139,25 @@ const ProfileCustomization = ({ userId }) => {
                         width: '50px',
                         height: '50px',
                         border: '1px solid #ccc',
+                        marginLeft: '10px'
+                    }}
+                />
+            </div>
+            <div className="form-group">
+                <label>Cor da Borda:</label>
+                <input
+                    type="color"
+                    value={borderColor}
+                    onChange={(e) => setBorderColor(e.target.value)}
+                    style={{ marginLeft: '10px' }}
+                />
+                <div
+                    className="color-sample"
+                    style={{
+                        backgroundColor: borderColor,
+                        width: '50px',
+                        height: '50px',
+                        border: `1px solid ${borderColor}`,
                         marginLeft: '10px'
                     }}
                 />

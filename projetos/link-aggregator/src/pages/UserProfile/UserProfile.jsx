@@ -17,7 +17,8 @@ const UserProfile = () => {
         fontFamily: 'Arial',
         textColor: '#000',
         backgroundColor: '#f5f5f5',
-        hoverBackgroundColor: '#808080'
+        hoverBackgroundColor: '#808080',
+        borderColor: '#000'
     });
 
     useEffect(() => {
@@ -33,7 +34,8 @@ const UserProfile = () => {
                                 fontFamily: data[key].fontFamily || 'Arial',
                                 textColor: data[key].textColor || '#000',
                                 backgroundColor: data[key].backgroundColor || '#f5f5f5',
-                                hoverBackgroundColor: data[key].hoverBackgroundColor || '#808080'
+                                hoverBackgroundColor: data[key].hoverBackgroundColor || '#808080',
+                                borderColor: data[key].borderColor || '#000'
                             });
                             break;
                         }
@@ -61,7 +63,6 @@ const UserProfile = () => {
                 setLinks(userLinks);
             });
 
-            // Recupera as configurações de personalização do usuário
             const customizationsRef = ref(database, `users/${userId}/customizations`);
             onValue(customizationsRef, (snapshot) => {
                 const customizations = snapshot.val();
@@ -70,7 +71,8 @@ const UserProfile = () => {
                         fontFamily: customizations.fontFamily || 'Arial',
                         textColor: customizations.textColor || '#000',
                         backgroundColor: customizations.backgroundColor || '#f5f5f5',
-                        hoverBackgroundColor: customizations.hoverBackgroundColor || '#808080'
+                        hoverBackgroundColor: customizations.hoverBackgroundColor || '#808080',
+                        borderColor: customizations.borderColor || '#000'
                     });
                 }
             });
@@ -123,6 +125,9 @@ const UserProfile = () => {
                                     style={{
                                         color: userStyles.textColor,
                                         backgroundColor: userStyles.backgroundColor,
+                                        borderColor: userStyles.borderColor,
+                                        borderWidth: '1px',
+                                        borderStyle: 'solid'
                                     }}
                                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = userStyles.hoverBackgroundColor}
                                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = userStyles.backgroundColor}

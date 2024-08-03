@@ -120,7 +120,7 @@ const UserProfile = () => {
                         <ProfilePicture userId={userId} />
                         <div>
                             <h2>@{mentionName}</h2>
-                            <h2>{bio}</h2>
+                            <p>{bio}</p>
                         </div>
                     </div>
                     <button

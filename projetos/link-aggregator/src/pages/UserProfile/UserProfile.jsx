@@ -18,7 +18,8 @@ const UserProfile = () => {
         textColor: '#000',
         backgroundColor: '#f5f5f5',
         hoverBackgroundColor: '#808080',
-        borderColor: '#000'
+        borderColor: '#000',
+        hoverTextColor: '#000' // new state for hover text color
     });
 
     useEffect(() => {
@@ -35,7 +36,8 @@ const UserProfile = () => {
                                 textColor: data[key].textColor || '#000',
                                 backgroundColor: data[key].backgroundColor || '#f5f5f5',
                                 hoverBackgroundColor: data[key].hoverBackgroundColor || '#808080',
-                                borderColor: data[key].borderColor || '#000'
+                                borderColor: data[key].borderColor || '#000',
+                                hoverTextColor: data[key].hoverTextColor || '#000' // set initial hover text color
                             });
                             break;
                         }
@@ -72,7 +74,8 @@ const UserProfile = () => {
                         textColor: customizations.textColor || '#000',
                         backgroundColor: customizations.backgroundColor || '#f5f5f5',
                         hoverBackgroundColor: customizations.hoverBackgroundColor || '#808080',
-                        borderColor: customizations.borderColor || '#000'
+                        borderColor: customizations.borderColor || '#000',
+                        hoverTextColor: customizations.hoverTextColor || '#000' // set initial hover text color
                     });
                 }
             });
@@ -110,8 +113,14 @@ const UserProfile = () => {
                             color: userStyles.textColor,
                             backgroundColor: userStyles.backgroundColor,
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = userStyles.hoverBackgroundColor}
-                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = userStyles.backgroundColor}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = userStyles.hoverBackgroundColor;
+                            e.currentTarget.style.color = userStyles.hoverTextColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = userStyles.backgroundColor;
+                            e.currentTarget.style.color = userStyles.textColor;
+                        }}
                     >⋮</button>
                 </div>
                 <ul className='link-list'>
@@ -129,8 +138,14 @@ const UserProfile = () => {
                                         borderWidth: '1px',
                                         borderStyle: 'solid'
                                     }}
-                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = userStyles.hoverBackgroundColor}
-                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = userStyles.backgroundColor}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.backgroundColor = userStyles.hoverBackgroundColor;
+                                        e.currentTarget.style.color = userStyles.hoverTextColor;
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.backgroundColor = userStyles.backgroundColor;
+                                        e.currentTarget.style.color = userStyles.textColor;
+                                    }}
                                 >
                                     {link.title}
                                 </a>
@@ -138,8 +153,15 @@ const UserProfile = () => {
                                     color: userStyles.textColor,
                                     backgroundColor: userStyles.backgroundColor,
                                 }}
-                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = userStyles.hoverBackgroundColor}
-                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = userStyles.backgroundColor}>⋮</button>
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.backgroundColor = userStyles.hoverBackgroundColor;
+                                        e.currentTarget.style.color = userStyles.hoverTextColor;
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.backgroundColor = userStyles.backgroundColor;
+                                        e.currentTarget.style.color = userStyles.textColor;
+                                    }}
+                                >⋮</button>
                             </li>
                         ))
                     ) : (

@@ -14,6 +14,8 @@ const ProfileCustomization = ({ userId }) => {
         setHoverBackgroundColor,
         borderColor,
         setBorderColor,
+        hoverTextColor,
+        setHoverTextColor,
         loading,
         handleSave,
     } = useProfileCustomization(userId);
@@ -26,6 +28,17 @@ const ProfileCustomization = ({ userId }) => {
     return (
         <div className="customization-container">
             <h3>Personalizar Perfil</h3>
+            <div className="preview" style={{ fontFamily, color: textColor, backgroundColor }}>
+                <h4>Pré-visualização do Perfil</h4>
+                <p style={{ color: hoverTextColor }}>Texto de Exemplo</p>
+                <div style={{
+                    border: `2px solid ${borderColor}`,
+                    padding: '10px',
+                    backgroundColor: hoverBackgroundColor,
+                }}>
+                    Caixa de Exemplo
+                </div>
+            </div>
             <div className="form-group">
                 <label htmlFor="fontFamily">Fonte:</label>
                 <select id="fontFamily" value={fontFamily} onChange={(e) => setFontFamily(e.target.value)}>
@@ -42,6 +55,7 @@ const ProfileCustomization = ({ userId }) => {
                     {colorOptions.map((color) => (
                         <button
                             key={color}
+                            aria-label={`Selecionar cor do texto ${color}`}
                             onClick={() => setTextColor(color)}
                             style={{
                                 backgroundColor: color,
@@ -60,16 +74,35 @@ const ProfileCustomization = ({ userId }) => {
                     value={textColor}
                     onChange={(e) => setTextColor(e.target.value)}
                     style={{ marginLeft: '10px' }}
+                    aria-label="Selecionar cor do texto"
                 />
-                <div
-                    className="color-sample"
-                    style={{
-                        backgroundColor: textColor,
-                        width: '50px',
-                        height: '50px',
-                        border: '1px solid #ccc',
-                        marginLeft: '10px'
-                    }}
+            </div>
+            <div className="form-group">
+                <label>Cor do Texto Secundário:</label>
+                <div className="color-options">
+                    {colorOptions.map((color) => (
+                        <button
+                            key={color}
+                            aria-label={`Selecionar cor do texto secundário ${color}`}
+                            onClick={() => setHoverTextColor(color)}
+                            style={{
+                                backgroundColor: color,
+                                width: '30px',
+                                height: '30px',
+                                border: 'none',
+                                cursor: 'pointer',
+                                margin: '0 5px',
+                                outline: hoverTextColor === color ? '2px solid #000' : 'none'
+                            }}
+                        />
+                    ))}
+                </div>
+                <input
+                    type="color"
+                    value={hoverTextColor}
+                    onChange={(e) => setHoverTextColor(e.target.value)}
+                    style={{ marginLeft: '10px' }}
+                    aria-label="Selecionar cor do texto secundário"
                 />
             </div>
             <div className="form-group">
@@ -78,6 +111,7 @@ const ProfileCustomization = ({ userId }) => {
                     {backgroundOptions.map((color) => (
                         <button
                             key={color}
+                            aria-label={`Selecionar cor de fundo ${color}`}
                             onClick={() => setBackgroundColor(color)}
                             style={{
                                 backgroundColor: color,
@@ -96,16 +130,7 @@ const ProfileCustomization = ({ userId }) => {
                     value={backgroundColor}
                     onChange={(e) => setBackgroundColor(e.target.value)}
                     style={{ marginLeft: '10px' }}
-                />
-                <div
-                    className="color-sample"
-                    style={{
-                        backgroundColor: backgroundColor,
-                        width: '50px',
-                        height: '50px',
-                        border: '1px solid #ccc',
-                        marginLeft: '10px'
-                    }}
+                    aria-label="Selecionar cor de fundo"
                 />
             </div>
             <div className="form-group">
@@ -114,6 +139,7 @@ const ProfileCustomization = ({ userId }) => {
                     {hoverOptions.map((color) => (
                         <button
                             key={color}
+                            aria-label={`Selecionar cor de fundo secundária ${color}`}
                             onClick={() => setHoverBackgroundColor(color)}
                             style={{
                                 backgroundColor: color,
@@ -132,16 +158,7 @@ const ProfileCustomization = ({ userId }) => {
                     value={hoverBackgroundColor}
                     onChange={(e) => setHoverBackgroundColor(e.target.value)}
                     style={{ marginLeft: '10px' }}
-                />
-                <div
-                    className="color-sample"
-                    style={{
-                        backgroundColor: hoverBackgroundColor,
-                        width: '50px',
-                        height: '50px',
-                        border: '1px solid #ccc',
-                        marginLeft: '10px'
-                    }}
+                    aria-label="Selecionar cor de fundo secundária"
                 />
             </div>
             <div className="form-group">
@@ -150,6 +167,7 @@ const ProfileCustomization = ({ userId }) => {
                     {borderOptions.map((color) => (
                         <button
                             key={color}
+                            aria-label={`Selecionar cor da borda ${color}`}
                             onClick={() => setBorderColor(color)}
                             style={{
                                 backgroundColor: color,
@@ -168,16 +186,7 @@ const ProfileCustomization = ({ userId }) => {
                     value={borderColor}
                     onChange={(e) => setBorderColor(e.target.value)}
                     style={{ marginLeft: '10px' }}
-                />
-                <div
-                    className="color-sample"
-                    style={{
-                        backgroundColor: borderColor,
-                        width: '50px',
-                        height: '50px',
-                        border: `1px solid ${borderColor}`,
-                        marginLeft: '10px'
-                    }}
+                    aria-label="Selecionar cor da borda"
                 />
             </div>
             <button className="save-btn" onClick={handleSave} disabled={loading}>

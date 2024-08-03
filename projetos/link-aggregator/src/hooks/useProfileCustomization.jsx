@@ -7,7 +7,8 @@ const useProfileCustomization = (userId) => {
     const [textColor, setTextColor] = useState('#000');
     const [backgroundColor, setBackgroundColor] = useState('#f5f5f5');
     const [hoverBackgroundColor, setHoverBackgroundColor] = useState('#e0e0e0');
-    const [borderColor, setBorderColor] = useState('#000'); // Nova propriedade
+    const [borderColor, setBorderColor] = useState('#000');
+    const [hoverTextColor, setHoverTextColor] = useState('#000');
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -20,6 +21,7 @@ const useProfileCustomization = (userId) => {
                 setBackgroundColor(customizations.backgroundColor || '#f5f5f5');
                 setHoverBackgroundColor(customizations.hoverBackgroundColor || '#e0e0e0');
                 setBorderColor(customizations.borderColor || '#000');
+                setHoverTextColor(customizations.hoverTextColor || '#000');
             }
         });
     }, [userId]);
@@ -34,7 +36,8 @@ const useProfileCustomization = (userId) => {
                 textColor,
                 backgroundColor,
                 hoverBackgroundColor,
-                borderColor, // Nova propriedade
+                borderColor,
+                hoverTextColor,
             });
             alert('Configurações salvas com sucesso!');
         } catch (error) {
@@ -53,8 +56,10 @@ const useProfileCustomization = (userId) => {
         setBackgroundColor,
         hoverBackgroundColor,
         setHoverBackgroundColor,
-        borderColor, // Nova propriedade
-        setBorderColor, // Nova propriedade
+        borderColor,
+        setBorderColor,
+        hoverTextColor,
+        setHoverTextColor,
         loading,
         handleSave,
     };

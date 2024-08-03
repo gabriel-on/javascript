@@ -21,6 +21,7 @@ const ProfileCustomization = ({ userId }) => {
     const colorOptions = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', '#000000', '#FFFFFF'];
     const backgroundOptions = ['#f5f5f5', '#FFD700', '#ADD8E6', '#90EE90', '#FFB6C1', '#DDA0DD', '#FFFFFF'];
     const hoverOptions = ['#e0e0e0', '#cccccc', '#b3b3b3', '#a6a6a6', '#999999'];
+    const borderOptions = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', '#000000', '#FFFFFF'];
 
     return (
         <div className="customization-container">
@@ -108,7 +109,7 @@ const ProfileCustomization = ({ userId }) => {
                 />
             </div>
             <div className="form-group">
-                <label>Cor de Fundo para Hover:</label>
+                <label>Cor de Fundo Secundária:</label>
                 <div className="color-options">
                     {hoverOptions.map((color) => (
                         <button
@@ -145,6 +146,23 @@ const ProfileCustomization = ({ userId }) => {
             </div>
             <div className="form-group">
                 <label>Cor da Borda:</label>
+                <div className="color-options">
+                    {borderOptions.map((color) => (
+                        <button
+                            key={color}
+                            onClick={() => setBorderColor(color)}
+                            style={{
+                                backgroundColor: color,
+                                width: '30px',
+                                height: '30px',
+                                border: 'none',
+                                cursor: 'pointer',
+                                margin: '0 5px',
+                                outline: borderColor === color ? '2px solid #000' : 'none'
+                            }}
+                        />
+                    ))}
+                </div>
                 <input
                     type="color"
                     value={borderColor}

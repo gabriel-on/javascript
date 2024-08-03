@@ -94,6 +94,9 @@ export const useAuth = () => {
                 emailVerified: false, // Inicialmente definido como falso
             });
 
+            // Recarrega a página após o registro
+            window.location.reload();
+
             return user;
         } catch (error) {
             let systemErrorMessage;

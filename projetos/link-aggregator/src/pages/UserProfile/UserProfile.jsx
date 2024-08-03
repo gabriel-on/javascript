@@ -22,6 +22,7 @@ const UserProfile = () => {
         borderColor: '#000',
         hoverTextColor: '#000',
     });
+    const [error, setError] = useState(null); // Estado de erro
 
     useEffect(() => {
         const fetchUserId = () => {
@@ -40,10 +41,12 @@ const UserProfile = () => {
                                 borderColor: data[key].borderColor || '#000',
                                 hoverTextColor: data[key].hoverTextColor || '#000',
                             });
-                            break;
+                            setError(null); // Resetar erro se o usuário foi encontrado
+                            return; // Encerrar a busca ao encontrar o usuário
                         }
                     }
                 }
+                setError('Usuário não encontrado.'); // Definir erro se o usuário não for encontrado
             });
         };
 
@@ -96,6 +99,10 @@ const UserProfile = () => {
         setModalOpen(true);
     };
 
+    if (error) {
+        return <div className='error-message'>{error}</div>; // Exibir mensagem de erro
+    }
+
     if (!userId) {
         return <Spinner />; // Exibe o spinner enquanto aguarda a busca do usuário
     }
@@ -111,7 +118,7 @@ const UserProfile = () => {
                         <ProfilePicture userId={userId} />
                         <div>
                             <h2>@{mentionName}</h2>
-                            <h2>{userId && userId.displayName ? userId.displayName : 'Nome de Exibição'}</h2> {/* Atualize aqui */}
+                            <h2>{userId && userId.displayName ? userId.displayName : 'Nome de Exibição'}</h2>
                         </div>
                     </div>
                     <button
@@ -179,7 +186,7 @@ const UserProfile = () => {
                             </li>
                         ))
                     ) : (
-                        <li>Nenhum link disponível ou usuário não existe.</li>
+                        <li>Nenhum link disponível.</li>
                     )}
                 </ul>
             </div>

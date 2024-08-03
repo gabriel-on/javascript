@@ -15,33 +15,29 @@ const EmailVerification = () => {
             const searchParams = new URLSearchParams(location.search);
             const mode = searchParams.get('mode');
             const oobCode = searchParams.get('oobCode');
-
-            // Verifique se o usuário está autenticado
             const user = auth.currentUser;
 
+            // Verifica se o usuário está autenticado
             if (!user) {
                 setMessage('Você precisa estar logado para verificar seu e-mail.');
                 setLoading(false);
                 return;
             }
 
-            // Verifique se o modo e o oobCode são válidos
+            // Verifica se o modo e o oobCode são válidos
             if (mode === 'verifyEmail' && oobCode) {
                 try {
                     await applyActionCode(auth, oobCode);
                     await auth.currentUser.reload(); // Atualiza o estado do usuário após a aplicação do código
 
                     if (auth.currentUser.emailVerified) {
-                        // Atualiza o estado do usuário no Realtime Database
                         const db = getDatabase();
-                        await update(ref(db, 'users/' + user.uid), {
-                            emailVerified: true,
-                        });
+                        await update(ref(db, 'users/' + user.uid), { emailVerified: true });
 
                         setMessage('Seu e-mail foi verificado com sucesso. Você será redirecionado em breve.');
                         setTimeout(() => {
                             navigate('/dashboard');
-                        }, 5000); // Redireciona após 5 segundos
+                        }, 3000); // Redireciona após 3 segundos
                     } else {
                         setMessage('Ocorreu um erro ao verificar seu e-mail. Por favor, tente novamente.');
                     }
@@ -66,20 +62,21 @@ const EmailVerification = () => {
     const handleResendVerificationEmail = async () => {
         setLoading(true);
         setMessage(''); // Limpa a mensagem anterior
-        try {
-            const user = auth.currentUser;
-            if (user) {
+        const user = auth.currentUser;
+
+        if (user) {
+            try {
                 await sendEmailVerification(user);
                 setMessage('Um novo e-mail de verificação foi enviado. Por favor, verifique sua caixa de entrada.');
-            } else {
-                setMessage('Nenhum usuário autenticado.');
+            } catch (error) {
+                console.error("Erro ao reenviar e-mail de verificação:", error);
+                setMessage('Ocorreu um erro ao tentar reenviar o e-mail de verificação. Por favor, tente novamente mais tarde.');
             }
-        } catch (error) {
-            console.error("Erro ao reenviar e-mail de verificação:", error);
-            setMessage('Ocorreu um erro ao tentar reenviar o e-mail de verificação. Por favor, tente novamente mais tarde.');
-        } finally {
-            setLoading(false);
+        } else {
+            setMessage('Nenhum usuário autenticado.');
         }
+
+        setLoading(false);
     };
 
     return (

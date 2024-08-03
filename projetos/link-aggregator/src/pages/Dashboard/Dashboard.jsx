@@ -75,10 +75,8 @@ const Dashboard = () => {
     <div className='dashboard-container'>
       <h1>Dashboard</h1>
       <UserProfileEditor />
-      <div>
-        <h2>Configurações Adicionais</h2>
-        <ProfileCustomization userId={currentUser.uid} />
-      </div>
+      <h2>Configurações Adicionais</h2>
+      <ProfileCustomization userId={currentUser.uid} />
 
       {/* Indicativo de verificação de e-mail */}
       <div>

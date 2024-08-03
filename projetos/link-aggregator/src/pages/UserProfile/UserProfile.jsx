@@ -120,7 +120,7 @@ const UserProfile = () => {
                         <ProfilePicture userId={userId} />
                         <div>
                             <h2>@{mentionName}</h2>
-                            <p>{bio}</p>
+                            <p>{bio || `${mentionName} ainda não adicionou uma biografia.`}</p>
                         </div>
                     </div>
                     <button

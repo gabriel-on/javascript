@@ -27,6 +27,7 @@ import ForgotPassword from './components/ForgotPassword/ForgotPassword.jsx';
 import Spinner from './components/Spinner/Spinner';
 import TermsOfService from './components/LegalDocuments/TermsOfService.jsx';
 import PrivacyPolicy from './components/LegalDocuments/PrivacyPolicy.jsx';
+import CookieManager from './components/LegalDocuments/CookieManager.jsx';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -91,6 +92,7 @@ function App() {
               <Route path='/register' element={!user ? <Register /> : <Navigate to="/dashboard" />} />
             </Routes>
           </div>
+          <CookieManager />
           <ToTop />
           <Footer />
         </BrowserRouter>

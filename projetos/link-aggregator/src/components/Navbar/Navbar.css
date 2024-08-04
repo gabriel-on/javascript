@@ -52,8 +52,13 @@ li {
     text-transform: uppercase;
 }
 
-.navbar>ul>.nav-page>a {
+.dark-mode .nav-page>a {
     color: yellow;
+    text-transform: uppercase;
+}
+
+.light-mode .nav-page>a {
+    color: black;
     text-transform: uppercase;
 }
 
@@ -62,7 +67,7 @@ li {
     font-weight: bold;
 }
 
-/* Define a animação deslizante */
+/* Defina a animação deslizante */
 @keyframes slideIn {
     from {
         transform: translateX(-20px);
@@ -75,18 +80,18 @@ li {
     }
 }
 
-/* Aplica a animação aos itens do menu */
+/* Altera a exibição dos links para linha */
 .nav-links {
     display: flex;
     gap: 10px;
     align-items: center;
+    flex-direction: row;
 }
 
+/* Aplica a animação aos itens do menu */
 .nav-links li {
     opacity: 0;
-    /* Inicia invisível */
     animation: slideIn 0.5s forwards;
-    /* Aplica a animação */
 }
 
 /* Animação de atraso para cada link */

@@ -66,8 +66,8 @@ function Navbar() {
               <i className="bi bi-three-dots-vertical"></i>
             </button>
           </li>
-          {showLinks && ( // Exibe os links somente se showLinks for verdadeiro
-            <div className="nav-links"> {/* Adiciona uma div para os links */}
+          {showLinks && (
+            <div className="nav-links">
               <>
                 {currentUser && (
                   <li className='nav-page'>

@@ -76,3 +76,15 @@
 .modal-buttons button:nth-child(3):hover {
     background-color: #e7d000;
 }
+
+.confirm-delete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.confirm-delete p {
+    margin: 0;
+    margin-right: 10px;
+}

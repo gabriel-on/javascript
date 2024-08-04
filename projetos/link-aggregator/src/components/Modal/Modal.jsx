@@ -25,8 +25,11 @@ const Modal = ({ isOpen, onClose, link, onEdit, onDelete }) => {
 
     const handleDelete = () => {
         if (link) {
-            onDelete(link.id);
-            onClose();
+            const confirmDelete = window.confirm('Tem certeza que deseja deletar este link?');
+            if (confirmDelete) {
+                onDelete(link.id);
+                onClose();
+            }
         }
     };
 

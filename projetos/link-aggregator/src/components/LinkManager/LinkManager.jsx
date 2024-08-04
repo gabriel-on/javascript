@@ -67,7 +67,7 @@ const LinkManager = ({ links, addLink, editLink, deleteLink, emailVerified }) =>
                 <ul>
                     {links.map(link => (
                         <li key={link.id}>
-                            <a href={link.url} target="_blank" rel="noopener noreferrer"><i class="bi bi-box-arrow-up-right"></i>{link.title}</a>
+                            <a href={link.url} target="_blank" rel="noopener noreferrer"><i className="bi bi-box-arrow-up-right"></i>{link.title}</a>
                             <button onClick={() => openModal(link)}>Editar</button>
                             <span>Adicionado em: {new Date(link.createdAt * 1000).toLocaleString()}</span>
                         </li>

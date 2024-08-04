@@ -29,6 +29,17 @@ const Dashboard = () => {
     fetchUserData();
   }, [currentUser]);
 
+  const handleCopyProfileLink = () => {
+    const profileLink = `${window.location.origin}/${currentUser.mentionName}`;
+    navigator.clipboard.writeText(profileLink)
+      .then(() => {
+        alert('Link do perfil copiado para a área de transferência!');
+      })
+      .catch(err => {
+        console.error('Erro ao copiar o link: ', err);
+      });
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -58,7 +69,8 @@ const Dashboard = () => {
 
       <ul>
         <li className='profile-link-page'>
-          <NavLink to={`/${currentUser.mentionName}`}>Ver Perfil</NavLink>
+          <NavLink to={`/${currentUser.mentionName}`}><i class="bi bi-box-arrow-up-right"></i> Ver Perfil</NavLink>
+          <button onClick={handleCopyProfileLink} className='copy-link-button'>Copiar Link</button>
         </li>
       </ul>
 

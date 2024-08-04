@@ -72,12 +72,12 @@ const ShareModal = ({ isOpen, onClose, link }) => {
                 {/* Componente QRCodeGenerator para gerar o QR Code */}
                 <QRCodeGenerator value={link.url} />
 
-                <div>
+                <div className='social-container'>
                     <h3>Compartilhar via:</h3>
-                    <button onClick={() => shareLink('facebook')}>Facebook</button>
-                    <button onClick={() => shareLink('twitter')}>Twitter</button>
-                    <button onClick={() => shareLink('whatsapp')}>WhatsApp</button>
-                    <button onClick={() => shareLink('email')}>E-mail</button>
+                    <button onClick={() => shareLink('facebook')} className='facebook'>Facebook</button>
+                    <button onClick={() => shareLink('twitter')} className='twitter'>X (Twitter)</button>
+                    <button onClick={() => shareLink('whatsapp')} className='whatsapp'>WhatsApp</button>
+                    <button onClick={() => shareLink('email')} className='email'>E-mail</button>
                 </div>
                 <button onClick={copyLink}>Copiar Link</button>
                 <button onClick={onClose}>Fechar</button>

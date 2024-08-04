@@ -1,21 +1,20 @@
-.terms-container,
-.privacy-container {
+.terms-container {
     padding: 20px;
     max-width: 900px;
     margin: 0 auto;
 }
 
-h1 {
+.terms-container h1 {
     font-size: 2em;
     margin-bottom: 20px;
 }
 
-h2 {
+.terms-container h2 {
     font-size: 1.5em;
     margin-top: 20px;
 }
 
-p {
+.terms-container p {
     margin: 10px 0;
     line-height: 1.5;
 }

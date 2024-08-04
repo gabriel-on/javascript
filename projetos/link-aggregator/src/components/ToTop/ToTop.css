@@ -1,7 +1,8 @@
 .to-top {
+    max-width: 900px;
     position: fixed;
     bottom: 40px;
-    right: 40px;
+    right: 205px;
     z-index: 1000;
 }
 

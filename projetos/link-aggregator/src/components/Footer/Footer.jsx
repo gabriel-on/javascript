@@ -11,7 +11,10 @@ function Footer() {
           <NavLink to="/terms-of-service">Termos de Uso</NavLink>
           <span> | </span>
           <NavLink to="/privacy-policy">Política de Privacidade</NavLink>
-          {/* Adicione mais links aqui, se necessário */}
+          <span> | </span>
+          <NavLink to="/contact">Contato</NavLink>
+          <span> | </span>
+          <NavLink to="/faq">FAQ</NavLink>
         </div>
       </div>
     </footer>

@@ -29,9 +29,9 @@ footer>div>p {
 
 .links-associate {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     width: 100%;
-    align-items: center;
+    justify-content: center;
     gap: 10px;
 }
 

@@ -34,7 +34,7 @@
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background:#707070;
+    background: #707070;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -62,5 +62,6 @@
 }
 
 .modal-content .email {
-    background: #D44638; /* Cor do botão de e-mail */
+    background: #D44638;
+    /* Cor do botão de e-mail */
 }

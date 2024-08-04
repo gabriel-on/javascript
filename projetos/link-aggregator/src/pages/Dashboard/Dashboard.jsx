@@ -72,7 +72,7 @@ const Dashboard = () => {
 
       <ul>
         <li className='profile-link-page'>
-          <NavLink to={`/${currentUser.mentionName}`} target='_blank'><i className="bi bi-box-arrow-up-right"></i> Ver Perfil</NavLink>
+          <NavLink to={`/${currentUser.mentionName}`}><i className="bi bi-box-arrow-up-right"></i> Ver Perfil</NavLink>
           <button onClick={handleCopyProfileLink} className='copy-link-button'>Copiar Link</button>
         </li>
       </ul>

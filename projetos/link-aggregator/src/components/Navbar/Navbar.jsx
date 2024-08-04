@@ -27,6 +27,11 @@ function Navbar() {
 
   const toggleLinksVisibility = () => {
     setShowLinks(prev => !prev);
+    // Adiciona a classe 'active' ao botão de três pontos
+    const toggleButton = document.querySelector('.toggle-links-btn');
+    if (toggleButton) {
+      toggleButton.classList.toggle('active', !showLinks);
+    }
   };
 
   useEffect(() => {
@@ -62,7 +67,7 @@ function Navbar() {
         </ul>
         <ul>
           <li>
-            <button onClick={toggleLinksVisibility} className="toggle-links-btn">
+            <button onClick={toggleLinksVisibility} className={`toggle-links-btn ${showLinks ? 'active' : ''}`}>
               <i className="bi bi-three-dots-vertical"></i>
             </button>
           </li>

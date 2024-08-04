@@ -1,9 +1,11 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import QRCodeGenerator from '../QRCodeGenerator/QRCodeGenerator';
 import './ShareModal.css';
+import CopyConfirmationModal from '../CopyConfirmationModal/CopyConfirmationModal';
 
 const ShareModal = ({ isOpen, onClose, link }) => {
     const modalRef = useRef(); // Referência para o conteúdo do modal
+    const [isCopyModalOpen, setCopyModalOpen] = useState(false);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -55,11 +57,9 @@ const ShareModal = ({ isOpen, onClose, link }) => {
     const copyLink = async () => {
         try {
             await navigator.clipboard.writeText(link.url); // Copia o link para a área de transferência
-            alert(`Link copiado: ${link.url}`); // Mensagem de confirmação
+            setCopyModalOpen(true); // Abre o modal de confirmação de cópia
         } catch (error) {
             console.error('Erro ao copiar o link:', error);
-        } finally {
-            onClose(); // Fecha o modal após a cópia
         }
     };
 
@@ -72,7 +72,6 @@ const ShareModal = ({ isOpen, onClose, link }) => {
                 {/* Componente QRCodeGenerator para gerar o QR Code */}
                 <QRCodeGenerator value={link.url} />
 
-                <button onClick={copyLink}>Copiar Link</button> {/* Botão para copiar o link */}
                 <div>
                     <h3>Compartilhar via:</h3>
                     <button onClick={() => shareLink('facebook')}>Facebook</button>
@@ -80,8 +79,15 @@ const ShareModal = ({ isOpen, onClose, link }) => {
                     <button onClick={() => shareLink('whatsapp')}>WhatsApp</button>
                     <button onClick={() => shareLink('email')}>E-mail</button>
                 </div>
+                <button onClick={copyLink}>Copiar Link</button>
                 <button onClick={onClose}>Fechar</button>
             </div>
+
+            <CopyConfirmationModal
+                isOpen={isCopyModalOpen}
+                onClose={() => setCopyModalOpen(false)}
+                autoCloseTime={2000}
+            />
         </div>
     );
 };

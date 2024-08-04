@@ -25,6 +25,8 @@ import UserProfile from './pages/UserProfile/UserProfile.jsx';
 import EmailVerification from './components/EmailVerification/EmailVerification.jsx';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword.jsx';
 import Spinner from './components/Spinner/Spinner';
+import TermsOfService from './components/LegalDocuments/TermsOfService.jsx';
+import PrivacyPolicy from './components/LegalDocuments/PrivacyPolicy.jsx';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -81,15 +83,17 @@ function App() {
               <Route path='/' element={<Home />} />
 
               <Route path='/dashboard' element={<Dashboard userId={userId} />} />
-              <Route path='dashboard/edit/:id' element={<Edit userId={userId} />} />
+
+              <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
               <Route path='/login' element={!user ? <Login /> : <Navigate to={`/dashboard/`} />} />
               <Route path='/register' element={!user ? <Register /> : <Navigate to="/dashboard" />} />
             </Routes>
           </div>
           <ToTop />
+          <Footer />
         </BrowserRouter>
-        <Footer />
       </AuthProvider>
     </div>
   );

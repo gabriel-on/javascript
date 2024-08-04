@@ -8,12 +8,12 @@ footer {
     margin-top: 100px;
 }
 
-footer>div {
+.footer-content {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    width: 100%;
+    width: 900px;
 }
 
 .hr-footer {
@@ -21,7 +21,6 @@ footer>div {
     max-width: 900px;
     border-bottom: 1px solid #BABABA;
     margin: 20px 0;
-    /* Adiciona margem para espaçamento */
 }
 
 footer>div>p {
@@ -31,10 +30,8 @@ footer>div>p {
 .links-associate {
     display: flex;
     flex-direction: column;
-    /* Mantém os links em uma coluna */
     width: 100%;
-    /* Ocupa a largura total */
-    justify-content: center;
+    align-items: center;
     gap: 10px;
 }
 
@@ -48,15 +45,12 @@ footer>div>p {
 .links-associate>a {
     color: red;
     display: block;
-    /* Para que o link ocupe toda a largura disponível */
-    transition: 0.3s;
+    transition: opacity 0.3s;
     text-align: center;
-    /* Centraliza o texto do link */
 }
 
 .links-associate>a:hover {
     opacity: 0.5;
-    transition: 0.3s;
 }
 
 /* Estilos para o modo claro */
@@ -65,10 +59,6 @@ footer>div>p {
     /* Cor de fundo do footer no modo claro */
     color: #000000;
     /* Cor do texto no modo claro */
-}
-
-.dark-mode footer>div>p {
-    color: yellow;
 }
 
 .light-mode .links-associate>a {
@@ -87,4 +77,9 @@ footer>div>p {
 .dark-mode .links-associate>a {
     color: #ff0000;
     /* Cor dos links no modo escuro */
+}
+
+.dark-mode footer>div>p {
+    color: yellow;
+    /* Cor do texto no modo escuro */
 }

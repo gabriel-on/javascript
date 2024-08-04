@@ -27,7 +27,7 @@ const ProfileCustomization = ({ userId }) => {
 
     return (
         <div className="customization-container">
-            <h3>Personalizar Perfil</h3>
+            <h3>Personalizar Links do Perfil</h3>
             <div className="preview" style={{ fontFamily, color: textColor, backgroundColor }}>
                 <h4>Pré-visualização do Perfil</h4>
                 <p style={{ color: hoverTextColor }}>Texto de Exemplo</p>

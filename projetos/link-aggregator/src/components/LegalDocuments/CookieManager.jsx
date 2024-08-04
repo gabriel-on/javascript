@@ -55,7 +55,9 @@ const CookieManager = () => {
 
     return (
         <div className='cookie-container'>
-            <h2>Gerenciador de Cookies</h2>
+            <div>
+                <h2><i className="bi bi-cookie"></i> Gerenciador de Cookies</h2>
+            </div>
             <p>
                 Este site utiliza cookies para oferecer uma melhor experiência. Ao continuar, você concorda com o uso de cookies.
             </p>

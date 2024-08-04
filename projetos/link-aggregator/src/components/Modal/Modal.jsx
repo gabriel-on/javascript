@@ -52,23 +52,25 @@ const Modal = ({ isOpen, onClose, link, onEdit, onDelete }) => {
     return (
         <div className="modal-overlay">
             <div className="modal-content" ref={modalRef}>
-                <h2>Edit Link</h2>
-                <input
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="Title"
-                />
-                <input
-                    type="url"
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                    placeholder="URL"
-                />
+                <h2>Editar Link</h2>
+                <div className='inputs-content'>
+                    <input
+                        type="text"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        placeholder="Title"
+                    />
+                    <input
+                        type="url"
+                        value={url}
+                        onChange={(e) => setUrl(e.target.value)}
+                        placeholder="URL"
+                    />
+                </div>
                 <div className="modal-buttons">
-                    <button onClick={handleEdit}>Save</button>
-                    <button onClick={handleDelete}>Delete</button>
-                    <button onClick={onClose}>Cancel</button>
+                    <button onClick={handleEdit}>Salvar</button>
+                    <button onClick={handleDelete}>Deletar</button>
+                    <button onClick={onClose}>Cancelar</button>
                 </div>
             </div>
         </div>

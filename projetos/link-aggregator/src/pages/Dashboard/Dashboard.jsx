@@ -8,10 +8,12 @@ import ProfileCustomization from '../../components/ProfileCustomization/ProfileC
 import Spinner from '../../components/Spinner/Spinner';
 import LinkManager from '../../components/LinkManager/LinkManager';
 import './Dashboard.css';
+import CopyConfirmationModal from '../../components/CopyConfirmationModal/CopyConfirmationModal';
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
+  const [isCopyModalOpen, setCopyModalOpen] = useState(false);
 
   const { links, addLink, editLink, deleteLink } = useLinks(currentUser ? currentUser.uid : null);
 
@@ -33,12 +35,13 @@ const Dashboard = () => {
     const profileLink = `${window.location.origin}/${currentUser.mentionName}`;
     navigator.clipboard.writeText(profileLink)
       .then(() => {
-        alert('Link do perfil copiado para a área de transferência!');
+        setCopyModalOpen(true);
       })
       .catch(err => {
         console.error('Erro ao copiar o link: ', err);
       });
   };
+
 
   if (isLoading) {
     return <Spinner />;
@@ -69,7 +72,7 @@ const Dashboard = () => {
 
       <ul>
         <li className='profile-link-page'>
-          <NavLink to={`/${currentUser.mentionName}`}><i class="bi bi-box-arrow-up-right"></i> Ver Perfil</NavLink>
+          <NavLink to={`/${currentUser.mentionName}`} target='_blank'><i className="bi bi-box-arrow-up-right"></i> Ver Perfil</NavLink>
           <button onClick={handleCopyProfileLink} className='copy-link-button'>Copiar Link</button>
         </li>
       </ul>
@@ -81,6 +84,12 @@ const Dashboard = () => {
         editLink={editLink}
         deleteLink={deleteLink}
         emailVerified={currentUser.emailVerified}
+      />
+
+      <CopyConfirmationModal
+        isOpen={isCopyModalOpen}
+        onClose={() => setCopyModalOpen(false)}
+        autoCloseTime={2000} // Tempo em milissegundos
       />
     </div>
   );

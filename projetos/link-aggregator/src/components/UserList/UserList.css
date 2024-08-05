@@ -1,145 +1,31 @@
 .user-list-container {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
     padding: 20px;
     text-align: center;
 }
 
-.light-mode .user-list-container h2 {
-    color: black;
-}
-
-.dark-mode .user-list-container h2 {
-    color: white;
-}
-
-.user-list-container ul {
-    list-style: none;
-    padding: 0;
-}
-
 .user-item {
     display: flex;
+    flex-direction: column;
+    /* Muda para coluna para melhor layout */
     align-items: center;
-    margin: 10px 0;
+    /* Centraliza os itens */
 }
 
 .profile-picture {
-    width: 40px;
-    /* Ajuste o tamanho conforme necessário */
-    height: 40px;
-    /* Ajuste o tamanho conforme necessário */
+    width: 80px;
+    /* Ajuste conforme necessário */
+    height: 80px;
+    /* Ajuste conforme necessário */
     border-radius: 50%;
-    margin-right: 10px;
-    /* Espaçamento entre a imagem e o texto */
+    /* Para fazer a imagem circular */
 }
 
 .placeholder-picture {
-    width: 40px;
+    width: 80px;
     /* Ajuste conforme necessário */
-    height: 40px;
+    height: 80px;
     /* Ajuste conforme necessário */
     border-radius: 50%;
     background-color: #e0e0e0;
     /* Cor de fundo para o placeholder */
-    display: inline-block;
-    margin-right: 10px;
-    /* Espaçamento entre o placeholder e o texto */
-}
-
-.user-item a {
-    color: #007bff;
-    text-decoration: none;
-    font-size: 1.1rem;
-}
-
-.user-item a:hover {
-    text-decoration: underline;
-}
-
-.user-list-container {
-    position: relative;
-    padding: 20px;
-    text-align: center;
-}
-
-.carousel {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    max-width: 600px;
-    /* Ajuste conforme necessário */
-    margin: auto;
-}
-
-.carousel-inner {
-    display: flex;
-    overflow: hidden;
-    width: 100%;
-}
-
-.carousel-list {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.user-item {
-    flex: 1 0 100%;
-    /* Cada item ocupa 100% da largura do carrossel */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-}
-
-.profile-picture {
-    width: 80px;
-    /* Ajuste conforme necessário */
-    height: 80px;
-    /* Ajuste conforme necessário */
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.placeholder-picture {
-    width: 80px;
-    /* Ajuste conforme necessário */
-    height: 80px;
-    /* Ajuste conforme necessário */
-    border-radius: 50%;
-    background-color: #e0e0e0;
-    display: inline-block;
-    margin-right: 10px;
-}
-
-.user-item a {
-    color: #007bff;
-    text-decoration: none;
-    font-size: 1.2rem;
-}
-
-.user-item a:hover {
-    text-decoration: underline;
-}
-
-.prev,
-.next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    z-index: 1;
-}
-
-.prev {
-    left: 10px;
-}
-
-.next {
-    right: 10px;
 }

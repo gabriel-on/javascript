@@ -31,13 +31,17 @@ function UserList() {
     }, []);
 
     useEffect(() => {
+        startSlideInterval(); // Inicia o intervalo assim que os usuários forem definidos
+
+        return () => clearInterval(slideInterval.current); // Limpa o intervalo ao desmontar
+    }, [users]);
+
+    const startSlideInterval = () => {
         const interval = setInterval(() => {
             setCurrentIndex(prevIndex => (prevIndex + 1) % users.length);
-        }, 3000); // Altere o intervalo para o tempo desejado em milissegundos
+        }, 3000); // Intervalo de 3 segundos
         slideInterval.current = interval;
-
-        return () => clearInterval(interval);
-    }, [users.length]);
+    };
 
     const handlePrev = () => {
         setCurrentIndex(prevIndex => (prevIndex - 1 + users.length) % users.length);
@@ -47,10 +51,18 @@ function UserList() {
         setCurrentIndex(prevIndex => (prevIndex + 1) % users.length);
     };
 
+    const handleMouseEnter = () => {
+        clearInterval(slideInterval.current); // Para a rotação ao passar o mouse
+    };
+
+    const handleMouseLeave = () => {
+        startSlideInterval(); // Retoma a rotação ao sair do mouse
+    };
+
     return (
         <div className="user-list-container">
             <h2>Usuários que usam o HIGHLINKS</h2>
-            <div className="carousel">
+            <div className="carousel" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 <button className="prev" onClick={handlePrev}>❮</button>
                 <div className="carousel-inner" ref={sliderRef}>
                     <ul className="carousel-list" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>

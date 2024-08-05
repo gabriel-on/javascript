@@ -1,0 +1,39 @@
+.user-list-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.user-list-container h2 {
+    margin-bottom: 20px;
+}
+
+.user-list-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.profile-picture {
+    width: 40px;
+    /* Ajuste o tamanho conforme necessário */
+    height: 40px;
+    /* Ajuste o tamanho conforme necessário */
+    border-radius: 50%;
+    margin-right: 10px;
+    /* Espaçamento entre a imagem e o texto */
+}
+
+.user-item a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.user-item a:hover {
+    text-decoration: underline;
+}

@@ -6,7 +6,10 @@ function Footer() {
   return (
     <footer>
       <div className="footer-content">
-        <p>&copy; Alpha - Version: 1.0</p>
+        <>
+          <p>&copy; 2024 HIGHLINKS. Todos os direitos reservados.</p>
+          <p>Alpha - Version: 2.0</p>
+        </>
         <div className="links-associate">
           <NavLink to="/terms-of-service">Termos de Uso</NavLink>
           <span> | </span>

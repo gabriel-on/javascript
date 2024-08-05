@@ -1,10 +1,17 @@
 .user-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
     padding: 20px;
     text-align: center;
 }
 
-.user-list-container h2 {
-    margin-bottom: 20px;
+.light-mode .user-list-container h2 {
+    color: black;
+}
+
+.dark-mode .user-list-container h2 {
+    color: white;
 }
 
 .user-list-container ul {
@@ -27,6 +34,20 @@
     margin-right: 10px;
     /* Espaçamento entre a imagem e o texto */
 }
+
+.placeholder-picture {
+    width: 40px;
+    /* Ajuste conforme necessário */
+    height: 40px;
+    /* Ajuste conforme necessário */
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    /* Cor de fundo para o placeholder */
+    display: inline-block;
+    margin-right: 10px;
+    /* Espaçamento entre o placeholder e o texto */
+}
+
 
 .user-item a {
     color: #007bff;

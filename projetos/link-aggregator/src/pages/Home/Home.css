@@ -7,10 +7,19 @@
 }
 
 .home-header {
-    background-color: #007bff;
-    color: #fff;
     padding: 20px;
     text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .home-header {
+    background: #ccc;
+    color: black;
+}
+
+.dark-mode .home-header {
+    background: yellow;
+    color: black;
 }
 
 .home-header h1 {
@@ -30,7 +39,17 @@
 }
 
 .service-presentation {
-    margin-bottom: 40px;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.light-mode .service-presentation {
+    color: black;
+}
+
+.dark-mode .service-presentation {
+    color: white;
 }
 
 .service-presentation h2 {
@@ -39,6 +58,7 @@
 }
 
 .service-presentation p {
+    text-align: left;
     font-size: 1.1rem;
     line-height: 1.6;
 }

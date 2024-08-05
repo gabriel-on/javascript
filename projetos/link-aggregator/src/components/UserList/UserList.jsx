@@ -10,12 +10,20 @@ function UserList() {
         const usersRef = ref(database, 'users');
         onValue(usersRef, (snapshot) => {
             const data = snapshot.val();
-            const userList = Object.keys(data).map(key => ({
-                ...data[key],
-                id: key,
-                profilePicture: data[key].profilePicture.image // Ajustando para acessar a URL da imagem
-            }));
-            setUsers(userList);
+            if (data) { // Verifica se os dados existem
+                const userList = Object.keys(data).map(key => {
+                    const userData = data[key];
+                    return {
+                        id: key,
+                        displayName: userData.displayName,
+                        mentionName: userData.mentionName,
+                        profilePicture: userData.profilePicture?.image || '', // Acesso seguro com fallback
+                    };
+                });
+                setUsers(userList);
+            } else {
+                setUsers([]); // Se não houver dados, define como uma lista vazia
+            }
         });
     }, []);
 
@@ -25,7 +33,15 @@ function UserList() {
             <ul>
                 {users.map(user => (
                     <li key={user.id} className="user-item">
-                        <img src={user.profilePicture} alt={`${user.displayName}'s profile`} className="profile-picture" />
+                        {user.profilePicture ? ( // Verifica se a imagem de perfil existe
+                            <img
+                                src={user.profilePicture}
+                                alt={`${user.displayName}'s profile`}
+                                className="profile-picture"
+                            />
+                        ) : (
+                            <div className="placeholder-picture"></div> // Placeholder se não houver imagem
+                        )}
                         <a href={`/${user.mentionName}`}>{user.displayName}</a>
                     </li>
                 ))}

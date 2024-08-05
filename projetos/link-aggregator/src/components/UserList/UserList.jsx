@@ -36,11 +36,25 @@ function UserList() {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 1,
+        slidesToShow: 3, // Exibe 3 usuários por vez
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
         cssEase: "linear",
+        responsive: [
+            {
+                breakpoint: 768, // Para telas menores
+                settings: {
+                    slidesToShow: 2, // Exibe 2 usuários em telas menores
+                },
+            },
+            {
+                breakpoint: 480, // Para telas ainda menores
+                settings: {
+                    slidesToShow: 1, // Exibe 1 usuário em telas pequenas
+                },
+            },
+        ],
     };
 
     return (

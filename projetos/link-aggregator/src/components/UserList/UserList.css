@@ -3,6 +3,14 @@
     text-align: center;
 }
 
+.light-mode .user-list-container h2 {
+    color: black;
+}
+
+.dark-mode .user-list-container h2 {
+    color: white;
+}
+
 .user-item {
     display: flex;
     flex-direction: column;

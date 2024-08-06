@@ -10,7 +10,7 @@
 /* Variáveis CSS para Modos Claro e Escuro */
 :root {
     /* Cores para o modo claro */
-    --bg-light: #fff;
+    --bg-light: #ffffff;
     /* Fundo claro */
     --text-light: #212529;
     /* Texto escuro */
@@ -18,6 +18,8 @@
     /* Cor do link */
     --link-hover-light: #FFA000;
     /* Cor do link ao passar o mouse */
+    --grey-light: #5a5a5a;
+    /* Texto cinza claro */
 
     /* Cores para o modo escuro */
     --bg-dark: #121212;
@@ -28,6 +30,8 @@
     /* Cor do link */
     --link-hover-dark: #FFA000;
     /* Cor do link ao passar o mouse */
+    --grey-dark: #CED4DA;
+    /* Texto cinza claro no modo escuro */
 
     /* Cores secundárias */
     --yellow: #ffff00;
@@ -98,6 +102,18 @@ body.dark-mode .button:hover {
     background-color: var(--link-hover-dark);
 }
 
+/* Estilos para botões desabilitados */
+.button:disabled {
+    background-color: var(--grey-light);
+    color: #9a9a9a;
+    cursor: not-allowed;
+}
+
+body.dark-mode .button:disabled {
+    background-color: var(--grey-dark);
+    color: #6c757d;
+}
+
 /* Estilos para cabeçalhos */
 h1,
 h2,
@@ -116,12 +132,12 @@ body.dark-mode h3 {
 /* Estilos para parágrafos */
 p {
     line-height: 1.6;
-    color: var(--grey);
+    color: var(--grey-light);
     /* Cor de texto padrão */
 }
 
 body.dark-mode p {
-    color: var(--grey);
+    color: var(--grey-dark);
     /* Usar a mesma cor no modo escuro */
 }
 
@@ -186,4 +202,8 @@ body.dark-mode #toggle-mode {
 
 body.dark-mode #toggle-mode:hover {
     background-color: var(--link-hover-dark);
+}
+
+.dark-mode section {
+    background: #2f2f2f;
 }

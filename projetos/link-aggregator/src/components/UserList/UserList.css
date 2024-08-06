@@ -8,10 +8,6 @@
     align-items: center;
 }
 
-.light-mode .user-list-container h2 {
-    color: black;
-}
-
 .slick-slider {
     display: flex;
     flex-wrap: nowrap;
@@ -26,15 +22,15 @@
     width: 800px;
 }
 
-.slick-prev{
+.slick-prev {
     left: -50px;
 }
 
-.slick-next{
+.slick-next {
     right: -50px;
 }
 
-.slick-next:before{
+.slick-next:before {
     display: flex;
 }
 
@@ -51,10 +47,6 @@
 .slick-next::before {
     font-size: 50px;
     display: flex;
-}
-
-.dark-mode .user-list-container h2 {
-    color: white;
 }
 
 .light-mode .slick-prev::before {

@@ -21,8 +21,8 @@ const CopyConfirmationModal = ({ isOpen, onClose, autoCloseTime = 2000 }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="copy-modal-overlay">
-            <div className="copy-modal-content">
+        <div className="modal-overlay">
+            <div className="modal-content">
                 <h2>Link Copiado!</h2>
                 <p>O link do perfil foi copiado para a área de transferência.</p>
                 <p>Fechando em {countdown} segundos...</p>

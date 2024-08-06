@@ -11,27 +11,17 @@
 :root {
     /* Cores para o modo claro */
     --bg-light: #ffffff;
-    /* Fundo claro */
     --text-light: #212529;
-    /* Texto escuro */
     --link-light: #FFC107;
-    /* Cor do link */
     --link-hover-light: #FFA000;
-    /* Cor do link ao passar o mouse */
     --grey-light: #5a5a5a;
-    /* Texto cinza claro */
 
     /* Cores para o modo escuro */
     --bg-dark: #121212;
-    /* Fundo escuro */
     --text-dark: #FFEA00;
-    /* Texto amarelo */
     --link-dark: #FFC107;
-    /* Cor do link */
     --link-hover-dark: #FFA000;
-    /* Cor do link ao passar o mouse */
     --grey-dark: #CED4DA;
-    /* Texto cinza claro no modo escuro */
 
     /* Cores secundárias */
     --yellow: #ffff00;
@@ -52,12 +42,10 @@ body.light-mode {
 
 body.light-mode a {
     color: var(--link-light);
-    /* Cor do link no modo claro */
 }
 
 body.light-mode a:hover {
     color: var(--link-hover-light);
-    /* Cor do link ao passar o mouse no modo claro */
 }
 
 /* Estilos para o modo escuro */
@@ -68,19 +56,16 @@ body.dark-mode {
 
 body.dark-mode a {
     color: var(--link-dark);
-    /* Cor do link no modo escuro */
 }
 
 body.dark-mode a:hover {
     color: var(--link-hover-dark);
-    /* Cor do link ao passar o mouse no modo escuro */
 }
 
 /* Estilos para botões */
 .button {
     background-color: var(--link-light);
     color: #212529;
-    /* Texto escuro */
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -91,7 +76,6 @@ body.dark-mode a:hover {
 body.dark-mode .button {
     background-color: var(--link-dark);
     color: #FFFFFF;
-    /* Texto claro */
 }
 
 .button:hover {
@@ -119,41 +103,32 @@ h1,
 h2,
 h3 {
     color: var(--text-light);
-    /* Cor padrão para o modo claro */
 }
 
 body.dark-mode h1,
 body.dark-mode h2,
 body.dark-mode h3 {
     color: var(--text-dark);
-    /* Cor para o modo escuro */
 }
 
 /* Estilos para parágrafos */
 p {
     line-height: 1.6;
     color: var(--grey-light);
-    /* Cor de texto padrão */
 }
 
 body.dark-mode p {
     color: var(--grey-dark);
-    /* Usar a mesma cor no modo escuro */
 }
 
 /* Estilos para containers */
 .container {
     width: 90%;
-    /* Reduzir a largura em telas menores */
     max-width: 900px;
-    /* Limitar a largura máxima */
     margin: 80px auto;
     padding: 20px;
-    /* Adicionar preenchimento */
     border-radius: 10px;
-    /* Bordas arredondadas */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    /* Sombra suave */
 }
 
 /* Estilos para mensagens de sucesso e erro */
@@ -170,14 +145,11 @@ body.dark-mode p {
 /* Estilos para links em lista */
 ul {
     list-style-type: none;
-    /* Remover marcadores de lista */
     padding: 0;
-    /* Remover preenchimento */
 }
 
 li {
     margin: 10px 0;
-    /* Espaçamento entre os itens da lista */
 }
 
 /* Estilo para o botão de alternar modo */
@@ -205,5 +177,9 @@ body.dark-mode #toggle-mode:hover {
 }
 
 .dark-mode section {
+    background: #2f2f2f;
+}
+
+.dark-mode .modal-content {
     background: #2f2f2f;
 }

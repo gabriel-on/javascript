@@ -38,7 +38,7 @@ const LinkManager = ({ links, addLink, editLink, deleteLink, emailVerified }) =>
     return (
         <div className='link-container'>
             <div className='add-links'>
-                <h2>Adicionar um novo link</h2>
+                <h2>Adicionar Novos Links</h2>
                 <div>
                     <input
                         type="text"

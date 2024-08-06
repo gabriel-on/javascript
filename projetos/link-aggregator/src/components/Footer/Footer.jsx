@@ -17,7 +17,7 @@ function Footer() {
           <span> | </span>
           <NavLink to="/contact">Contato</NavLink>
           <span> | </span>
-          <NavLink to="/faq">FAQ</NavLink>
+          <NavLink to="/faqs">FAQs</NavLink>
         </div>
       </div>
     </footer>

@@ -34,7 +34,7 @@ body {
     transition: 0.3s;
 }
 
-/* Estilos para o modo claro */
+/* Modo Claro */
 body.light-mode {
     background-color: var(--bg-light);
     color: var(--text-light);
@@ -48,7 +48,11 @@ body.light-mode a:hover {
     color: var(--link-hover-light);
 }
 
-/* Estilos para o modo escuro */
+.modal-content {
+    background: var(--bg-light);
+}
+
+/* Modo Escuro */
 body.dark-mode {
     background-color: var(--bg-dark);
     color: var(--text-dark);
@@ -62,15 +66,30 @@ body.dark-mode a:hover {
     color: var(--link-hover-dark);
 }
 
+body.dark-mode .modal-content,
+body.dark-mode section {
+    background: #2f2f2f;
+}
+
 /* Estilos para botões */
+
+.social-container button {
+    color: var(--text-dark);
+}
+
+.social-container button:hover {
+    color: var(--grey-light);
+    background: var(--link-hover-light);
+}
+
 button {
     background-color: var(--link-light);
-    color: #212529;
+    color: var(--text-light);
 }
 
 button:hover {
     background-color: var(--link-hover-light);
-    color: #212529;
+    color: var(--text-light);
 }
 
 body.dark-mode button {
@@ -80,6 +99,7 @@ body.dark-mode button {
 
 body.dark-mode button:hover {
     background-color: var(--link-hover-dark);
+    color: var(--text-dark);
 }
 
 /* Estilos para botões desabilitados */
@@ -94,31 +114,22 @@ body.dark-mode button:disabled {
     color: #6c757d;
 }
 
+/* Estilos para botões sem fundo */
+.toggle-links-btn,
 .dark-mode .toggle-links-btn,
-.light-mode .toggle-links-btn {
-    background: none;
-}
-
-.dark-mode .toggle-links-btn:hover,
-.Light-mode .toggle-links-btn:hover {
-    background: none;
-}
-
+.light-mode .toggle-links-btn,
 .dark-mode .dark-mode-toggle,
-.light-mode .dark-mode-toggle {
-    background: none;
-}
-
-.dark-mode .dark-mode-toggle:hover,
-.light-mode .dark-mode-toggle:hover {
-    background: none;
-}
-
+.light-mode .dark-mode-toggle,
 .dark-mode .toggle-button,
 .light-mode .toggle-button {
     background: none;
 }
 
+.toggle-links-btn:hover,
+.dark-mode .toggle-links-btn:hover,
+.light-mode .toggle-links-btn:hover,
+.dark-mode .dark-mode-toggle:hover,
+.light-mode .dark-mode-toggle:hover,
 .dark-mode .toggle-button:hover,
 .light-mode .toggle-button:hover {
     background: none;
@@ -168,7 +179,7 @@ body.dark-mode p {
     margin-top: 10px;
 }
 
-/* Estilos para links em lista */
+/* Estilos para listas */
 ul {
     list-style-type: none;
     padding: 0;
@@ -178,30 +189,17 @@ li {
     margin: 10px 0;
 }
 
-.dark-mode section {
-    background: #2f2f2f;
-}
-
-.dark-mode .modal-content {
-    background: #2f2f2f;
-}
-
-.light-mode .modal-content {
-    background: var(--bg-light);
-}
-
+/* Slick Arrow Buttons */
 body.dark-mode button.slick-arrow {
     background: none;
 }
 
-body.dark-mode .slick-prev::before {
-    color: var(--text-dark);
-}
-
+body.dark-mode .slick-prev::before,
 body.dark-mode .slick-next::before {
     color: var(--text-dark);
 }
 
+/* Email Container Input */
 .dark-mode .email-container input {
     color: var(--grey-dark);
 }

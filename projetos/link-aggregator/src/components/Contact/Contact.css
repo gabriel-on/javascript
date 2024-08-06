@@ -1,0 +1,61 @@
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.contact-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.contact-container .form-group {
+    width: 100%;
+    /* Largura total */
+    margin-bottom: 15px;
+}
+
+.contact-container .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.contact-container .form-group input,
+.contact-container .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+    /* Transição na borda */
+}
+
+.contact-container .form-group textarea {
+    resize: vertical;
+    /* Permitir redimensionamento vertical */
+}
+
+.contact-container button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.contact-container .success-message {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.contact-container .error-message {
+    text-align: center;
+    margin-bottom: 10px;
+}

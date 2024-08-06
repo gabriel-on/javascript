@@ -29,6 +29,7 @@ import TermsOfService from './components/LegalDocuments/TermsOfService.jsx';
 import PrivacyPolicy from './components/LegalDocuments/PrivacyPolicy.jsx';
 import CookieManager from './components/LegalDocuments/CookieManager.jsx';
 import FAQs from './components/FAQs/FAQs.jsx';
+import Contact from './components/Contact/Contact.jsx';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -89,6 +90,7 @@ function App() {
               <Route path="/terms-of-service" element={<TermsOfService />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/faqs" element={<FAQs />} />
+              <Route path="/contact" element={<Contact />} />
 
               <Route path='/login' element={!user ? <Login /> : <Navigate to={`/dashboard/`} />} />
               <Route path='/register' element={!user ? <Register /> : <Navigate to="/dashboard" />} />

@@ -1,49 +1,65 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 
+/* Reset CSS */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/* Variáveis CSS para Modos Claro e Escuro */
 :root {
     /* Cores para o modo claro */
     --bg-light: #F3F3F1;
-    --text-light: #000000;
-    --link-light: #007bff;
+    /* Fundo claro */
+    --text-light: #212529;
+    /* Texto escuro */
+    --link-light: #FFC107;
+    /* Cor do link */
+    --link-hover-light: #FFA000;
+    /* Cor do link ao passar o mouse */
 
     /* Cores para o modo escuro */
-    --bg-dark: #333333;
-    --text-dark: #ffffff;
-    --link-dark: #66b3ff;
+    --bg-dark: #121212;
+    /* Fundo escuro */
+    --text-dark: #FFEA00;
+    /* Texto amarelo */
+    --link-dark: #FFC107;
+    /* Cor do link */
+    --link-hover-dark: #FFA000;
+    /* Cor do link ao passar o mouse */
 
     /* Cores secundárias */
-    --red: #ff0000;
     --yellow: #ffff00;
     --grey: #CED4DA;
 }
 
 /* CSS Global */
-body.light-mode {
-    background-color: var(--bg-light);
-    color: var(--text-light);
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-body.dark-mode {
-    background-color: var(--bg-dark);
-    color: var(--text-dark);
-    font-family: Arial, Helvetica, sans-serif;
-}
-
 body {
+    font-family: Arial, Helvetica, sans-serif;
     transition: background-color 0.3s, color 0.3s;
 }
 
-a {
-    text-decoration: none;
+/* Estilos para o modo claro */
+body.light-mode {
+    background-color: var(--bg-light);
+    color: var(--text-light);
+}
+
+body.light-mode a {
     color: var(--link-light);
     /* Cor do link no modo claro */
+}
+
+body.light-mode a:hover {
+    color: var(--link-hover-light);
+    /* Cor do link ao passar o mouse no modo claro */
+}
+
+/* Estilos para o modo escuro */
+body.dark-mode {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
 }
 
 body.dark-mode a {
@@ -51,7 +67,123 @@ body.dark-mode a {
     /* Cor do link no modo escuro */
 }
 
+body.dark-mode a:hover {
+    color: var(--link-hover-dark);
+    /* Cor do link ao passar o mouse no modo escuro */
+}
+
+/* Estilos para botões */
+.button {
+    background-color: var(--link-light);
+    color: #212529;
+    /* Texto escuro */
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode .button {
+    background-color: var(--link-dark);
+    color: #FFFFFF;
+    /* Texto claro */
+}
+
+.button:hover {
+    background-color: var(--link-hover-light);
+}
+
+body.dark-mode .button:hover {
+    background-color: var(--link-hover-dark);
+}
+
+/* Estilos para cabeçalhos */
+h1,
+h2,
+h3 {
+    color: var(--text-light);
+    /* Cor padrão para o modo claro */
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3 {
+    color: var(--text-dark);
+    /* Cor para o modo escuro */
+}
+
+/* Estilos para parágrafos */
+p {
+    line-height: 1.6;
+    color: var(--grey);
+    /* Cor de texto padrão */
+}
+
+body.dark-mode p {
+    color: var(--grey);
+    /* Usar a mesma cor no modo escuro */
+}
+
+/* Estilos para containers */
 .container {
-    width: 900px;
+    width: 90%;
+    /* Reduzir a largura em telas menores */
+    max-width: 900px;
+    /* Limitar a largura máxima */
     margin: 80px auto;
+    padding: 20px;
+    /* Adicionar preenchimento */
+    border-radius: 10px;
+    /* Bordas arredondadas */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+}
+
+/* Estilos para mensagens de sucesso e erro */
+.success-message {
+    color: green;
+    margin-top: 10px;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+/* Estilos para links em lista */
+ul {
+    list-style-type: none;
+    /* Remover marcadores de lista */
+    padding: 0;
+    /* Remover preenchimento */
+}
+
+li {
+    margin: 10px 0;
+    /* Espaçamento entre os itens da lista */
+}
+
+/* Estilo para o botão de alternar modo */
+#toggle-mode {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: var(--link-light);
+    color: #212529;
+}
+
+#toggle-mode:hover {
+    background-color: var(--link-hover-light);
+}
+
+body.dark-mode #toggle-mode {
+    background-color: var(--link-dark);
+    color: #FFFFFF;
+}
+
+body.dark-mode #toggle-mode:hover {
+    background-color: var(--link-hover-dark);
 }

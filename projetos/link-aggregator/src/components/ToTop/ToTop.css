@@ -7,8 +7,6 @@
 }
 
 .light-mode .to-top-button {
-    background: #333;
-    color: #fff;
     border: none;
     border-radius: 50%;
     width: 50px;
@@ -23,8 +21,6 @@
 }
 
 .dark-mode .to-top-button {
-    background: #F0F3F5;
-    color: #333;
     border: none;
     border-radius: 50%;
     width: 50px;
@@ -39,6 +35,5 @@
 }
 
 .to-top-button:hover {
-    background-color: #555;
     transform: translateY(-5px);
 }

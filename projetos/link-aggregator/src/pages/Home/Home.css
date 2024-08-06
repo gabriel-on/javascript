@@ -9,7 +9,6 @@
     text-align: center;
     margin-bottom: 40px;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -17,12 +16,10 @@
 .home-header h1 {
     font-size: 2.5em;
     margin: 0;
-    color: #444;
 }
 
 .home-header p {
     font-size: 1.2em;
-    color: #666;
 }
 
 .home-content {
@@ -31,12 +28,11 @@
 }
 
 .service-presentation {
-    background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 40px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
 .service-presentation:hover {
@@ -46,17 +42,14 @@
 .service-presentation h2 {
     font-size: 2em;
     margin-top: 0;
-    color: #444;
 }
 
 .service-presentation p {
     font-size: 1.1em;
     line-height: 1.5;
-    color: #666;
 }
 
 .cta-section {
-    background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 40px;
@@ -66,24 +59,20 @@
 
 .cta-section h2 {
     font-size: 2em;
-    color: #444;
 }
 
 .cta-section p {
     font-size: 1.2em;
-    color: #666;
     margin-bottom: 20px;
 }
 
 .cta-button {
-    background: #007BFF;
-    color: #fff;
     border: none;
     padding: 10px 20px;
     font-size: 1.2em;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transition: 0.3s ease-in-out, 0.3s ease-in-out;
     text-decoration: none;
     /* Ensure text-decoration is none for link */
     display: inline-block;
@@ -91,7 +80,6 @@
 }
 
 .cta-button:hover {
-    background: #0056b3;
     transform: translateY(-5px);
 }
 
@@ -101,12 +89,11 @@
 }
 
 .user-list li {
-    background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     margin: 10px 0;
     padding: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
 .user-list li:hover {
@@ -115,7 +102,6 @@
 
 .user-list li a {
     text-decoration: none;
-    color: #007BFF;
     font-weight: bold;
 }
 

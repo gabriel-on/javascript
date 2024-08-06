@@ -4,7 +4,6 @@ footer {
     flex-wrap: wrap;
     justify-content: center;
     padding: 60px 0;
-    background: black;
     margin-top: 100px;
 }
 
@@ -19,12 +18,7 @@ footer {
 .hr-footer {
     width: 100%;
     max-width: 900px;
-    border-bottom: 1px solid #BABABA;
     margin: 20px 0;
-}
-
-footer>div>p {
-    color: #000;
 }
 
 .links-associate {
@@ -38,12 +32,10 @@ footer>div>p {
 .links-associate>p {
     text-transform: uppercase;
     font-weight: bold;
-    color: rgb(255, 0, 0);
     opacity: 0.6;
 }
 
 .links-associate>a {
-    color: red;
     display: block;
     transition: opacity 0.3s;
     text-align: center;
@@ -51,35 +43,4 @@ footer>div>p {
 
 .links-associate>a:hover {
     opacity: 0.5;
-}
-
-/* Estilos para o modo claro */
-.light-mode footer {
-    background: #CED4DA;
-    /* Cor de fundo do footer no modo claro */
-    color: #000000;
-    /* Cor do texto no modo claro */
-}
-
-.light-mode .links-associate>a {
-    color: #ff0000;
-    /* Cor dos links no modo claro */
-}
-
-/* Estilos para o modo escuro */
-.dark-mode footer {
-    background: #000;
-    /* Cor de fundo do footer no modo escuro */
-    color: #ffffff;
-    /* Cor do texto no modo escuro */
-}
-
-.dark-mode .links-associate>a {
-    color: #ff0000;
-    /* Cor dos links no modo escuro */
-}
-
-.dark-mode footer>div>p {
-    color: yellow;
-    /* Cor do texto no modo escuro */
 }

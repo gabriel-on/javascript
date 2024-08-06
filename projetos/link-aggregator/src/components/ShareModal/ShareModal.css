@@ -12,8 +12,6 @@
 }
 
 .modal-content {
-    background: white;
-    color: black;
     padding: 20px;
     border-radius: 8px;
     max-width: 500px;
@@ -34,15 +32,9 @@
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background: #707070;
-    color: white;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: 0.3s;
     margin: 5px;
-}
-
-.modal-content button:hover {
-    background-color: #a09a45;
 }
 
 .modal-content .qr-code-container {
@@ -63,5 +55,4 @@
 
 .modal-content .email {
     background: #D44638;
-    /* Cor do botão de e-mail */
 }

@@ -12,8 +12,6 @@
 }
 
 .copy-modal-content {
-    background: #fff;
-    color: black;
     padding: 20px;
     border-radius: 8px;
     width: 90%;
@@ -30,12 +28,6 @@
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #4CAF50;
-    color: white;
     cursor: pointer;
     transition: 0.3s;
-}
-
-.copy-modal-content button:hover {
-    background-color: #45a049;
 }

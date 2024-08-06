@@ -10,7 +10,7 @@
 /* Variáveis CSS para Modos Claro e Escuro */
 :root {
     /* Cores para o modo claro */
-    --bg-light: #F3F3F1;
+    --bg-light: #fff;
     /* Fundo claro */
     --text-light: #212529;
     /* Texto escuro */

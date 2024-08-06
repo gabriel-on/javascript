@@ -24,10 +24,31 @@
     font-size: 1.5em;
     margin-bottom: 10px;
     color: #007BFF;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.faq-item p {
+.toggle-button {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #007BFF;
+}
+
+.faq-answer {
     font-size: 1.1em;
     line-height: 1.5;
     color: #666;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-answer.show {
+    max-height: 500px;
+    /* Ajuste conforme necessário */
+    padding: 10px 0;
 }

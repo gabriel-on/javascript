@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './FAQs.css';
 
 const FAQs = () => {
-    const [expandedIndex, setExpandedIndex] = useState(null);
+    const [expandedIndex, setExpandedIndex] = useState(0);
 
     const handleToggle = (index) => {
         setExpandedIndex(expandedIndex === index ? null : index);

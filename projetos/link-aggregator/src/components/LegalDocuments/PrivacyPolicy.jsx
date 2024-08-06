@@ -1,5 +1,6 @@
 import React from 'react';
 import './PrivacyPolicy.css';
+import { Link } from 'react-router-dom';
 
 const PrivacyPolicy = () => {
     return (
@@ -39,7 +40,7 @@ const PrivacyPolicy = () => {
             <p>Podemos atualizar nossa Política de Privacidade periodicamente. Informaremos sobre quaisquer mudanças publicando a nova Política de Privacidade no site.</p>
 
             <h2 id="contato">8. Contato</h2>
-            <p>Se você tiver dúvidas sobre esta Política de Privacidade, entre em contato conosco em [seu e-mail de contato].</p>
+            <p>Se você tiver dúvidas sobre esta Política de Privacidade, entre em contato conosco em <Link to="/contact">Contato</Link>.</p>
         </div>
     );
 };

@@ -1,88 +1,155 @@
 .home-container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-    color: #333;
+    align-items: center;
+    padding: 20px;
 }
 
 .home-header {
-    padding: 20px;
     text-align: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.light-mode .home-header {
-    background: #ccc;
-    color: black;
-}
-
-.dark-mode .home-header {
-    background: yellow;
-    color: black;
+    margin-bottom: 40px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .home-header h1 {
+    font-size: 2.5em;
     margin: 0;
-    font-size: 2.5rem;
+    color: #444;
 }
 
 .home-header p {
-    margin: 10px 0 0;
-    font-size: 1.2rem;
+    font-size: 1.2em;
+    color: #666;
 }
 
 .home-content {
-    flex: 1;
-    padding: 20px;
-    text-align: center;
+    width: 100%;
+    max-width: 800px;
 }
 
 .service-presentation {
-    justify-content: center;
-    display: flex;
-    flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
 }
 
-.light-mode .service-presentation {
-    color: black;
-}
-
-.dark-mode .service-presentation {
-    color: white;
+.service-presentation:hover {
+    transform: translateY(-10px);
 }
 
 .service-presentation h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
+    font-size: 2em;
+    margin-top: 0;
+    color: #444;
 }
 
 .service-presentation p {
-    text-align: left;
-    font-size: 1.1rem;
-    line-height: 1.6;
+    font-size: 1.1em;
+    line-height: 1.5;
+    color: #666;
 }
 
-.links-examples h2 {
-    font-size: 2rem;
+.cta-section {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.cta-section h2 {
+    font-size: 2em;
+    color: #444;
+}
+
+.cta-section p {
+    font-size: 1.2em;
+    color: #666;
     margin-bottom: 20px;
 }
 
-.links-examples ul {
+.cta-button {
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+    text-decoration: none;
+    /* Ensure text-decoration is none for link */
+    display: inline-block;
+    /* Ensure it behaves like a button */
+}
+
+.cta-button:hover {
+    background: #0056b3;
+    transform: translateY(-5px);
+}
+
+.user-list {
     list-style: none;
     padding: 0;
 }
 
-.links-examples li {
+.user-list li {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
     margin: 10px 0;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
 }
 
-.links-examples a {
-    color: #007bff;
+.user-list li:hover {
+    transform: translateY(-5px);
+}
+
+.user-list li a {
     text-decoration: none;
-    font-size: 1.1rem;
+    color: #007BFF;
+    font-weight: bold;
 }
 
-.links-examples a:hover {
+.user-list li a:hover {
     text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .home-header h1 {
+        font-size: 2em;
+    }
+
+    .home-header p {
+        font-size: 1em;
+    }
+
+    .service-presentation h2 {
+        font-size: 1.5em;
+    }
+
+    .service-presentation p {
+        font-size: 1em;
+    }
+
+    .cta-section h2 {
+        font-size: 1.5em;
+    }
+
+    .cta-section p {
+        font-size: 1em;
+    }
+
+    .cta-button {
+        font-size: 1em;
+        padding: 8px 16px;
+    }
 }

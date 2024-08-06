@@ -64,16 +64,18 @@ function UserList() {
                 {users.length > 0 ? (
                     users.map(user => (
                         <div key={user.id} className="user-item">
-                            {user.profilePicture ? (
-                                <img
-                                    src={user.profilePicture}
-                                    alt={`${user.displayName}'s profile`}
-                                    className="profile-picture"
-                                />
-                            ) : (
-                                <div className="placeholder-picture"></div>
-                            )}
-                            <a href={`/${user.mentionName}`}>{user.displayName}</a>
+                            <div>
+                                {user.profilePicture ? (
+                                    <img
+                                        src={user.profilePicture}
+                                        alt={`${user.displayName}'s profile`}
+                                        className="profile-picture"
+                                    />
+                                ) : (
+                                    <div className="placeholder-picture"></div>
+                                )}
+                                <a href={`/${user.mentionName}`}>{user.displayName}</a>
+                            </div>
                         </div>
                     ))
                 ) : (

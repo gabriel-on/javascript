@@ -1,6 +1,10 @@
 .user-list-container {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
     padding: 20px;
     text-align: center;
+    gap: 20px;
 }
 
 .light-mode .user-list-container h2 {
@@ -11,29 +15,72 @@
     color: white;
 }
 
-.user-item {
+.light-mode .slick-prev::before {
+    color: black;
+}
+
+.light-mode .slick-next::before {
+    color: black;
+}
+
+.dark-mode .slick-prev::before {
+    color: yellow;
+}
+
+.dark-mode .slick-next::before {
+    color: yellow;
+}
+
+
+.user-item>div {
+    max-width: 250px;
     display: flex;
-    flex-direction: column;
-    /* Muda para coluna para melhor layout */
     align-items: center;
-    /* Centraliza os itens */
+    padding: 10px;
+    gap: 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-item a:hover {
+    text-decoration: underline;
 }
 
 .profile-picture {
     width: 80px;
-    /* Ajuste conforme necessário */
     height: 80px;
-    /* Ajuste conforme necessário */
     border-radius: 50%;
-    /* Para fazer a imagem circular */
 }
 
 .placeholder-picture {
     width: 80px;
-    /* Ajuste conforme necessário */
     height: 80px;
-    /* Ajuste conforme necessário */
     border-radius: 50%;
     background-color: #e0e0e0;
-    /* Cor de fundo para o placeholder */
+}
+
+@media (max-width: 768px) {
+    .user-item {
+        padding: 5px;
+    }
+
+    .profile-picture,
+    .placeholder-picture {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-item {
+        padding: 3px;
+    }
+
+    .profile-picture,
+    .placeholder-picture {
+        width: 60px;
+        height: 60px;
+    }
 }

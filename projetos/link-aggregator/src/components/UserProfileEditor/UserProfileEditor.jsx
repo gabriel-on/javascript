@@ -72,7 +72,7 @@ const UserProfileEditor = () => {
                     />
                 </label>
             </div>
-            <div>
+            <div className='email-container'>
                 <label htmlFor="email">
                     E-mail:
                     <input

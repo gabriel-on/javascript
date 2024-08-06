@@ -57,14 +57,6 @@
     color: black;
 }
 
-.dark-mode .slick-prev::before {
-    color: yellow;
-}
-
-.dark-mode .slick-next::before {
-    color: yellow;
-}
-
 .user-item>div {
     max-width: 260px;
     display: flex;

@@ -73,9 +73,7 @@
     cursor: pointer;
     transition: 0.3s ease-in-out, 0.3s ease-in-out;
     text-decoration: none;
-    /* Ensure text-decoration is none for link */
     display: inline-block;
-    /* Ensure it behaves like a button */
 }
 
 .cta-button:hover {
